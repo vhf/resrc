@@ -1,0 +1,8 @@
+{% load profile %}
+
+{% with profile=member|profile %}
+<a href="{{ member.get_absolute_url }}" class="member-item">
+    <img src="{{ profile.get_avatar_url }}" width="16" height="16" alt="Avatar" />
+    {{ member.username }}
+</a>
+{% endwith %}

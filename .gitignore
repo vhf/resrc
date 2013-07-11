@@ -1,4 +1,12 @@
 *.log
 *.pot
 *.pyc
+venv
+64venv
 local_settings.py
+*.db
+*~
+*.swp
+*.old
+*.bak
+assets/.sass-cache

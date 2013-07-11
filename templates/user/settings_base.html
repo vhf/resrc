@@ -1,0 +1,21 @@
+{% extends "user/base.html" %}
+{% load markup %}
+
+{% block title %}
+   Settings
+{% endblock %}
+
+{% block headline %}
+   Settings
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="large-12 columns">
+            <dl class="sub-nav">
+                {% block subnav %}{% endblock %}
+            </dl>
+        </div>
+    </div>
+    {% block settings_form %}{% endblock %}
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+
+{% block menu_home %}
+class="active"
+{% endblock %}
+
+{% load staticfiles %}
+
+{# Titles #}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block meta %}
+    <meta name="description" content="re-src, the root of actual learning" />
+{% endblock %}
+
+{# Content #}
+
+{% block content %}
+
+    <div class="large-12 columns comments">
+      <!-- COMMENT -->
+      <div class="row">
+        <div class="large-12 columns comment">
+          <section class="top">
+            <h6 class="byline">
+              <a href="#">ABC Winters</a> | <span class="data">4h ago</span>
+            </h6>
+          </section>
+          <section class="content">
+            <p>Nice start, Becky. I really like some of the elements you have going so far. The header and footer tie in nicely and the ribbon on tiles works well. The font is great also and looks readable. Here are a few areas you can keep iterating on:</p>
+            <p>Simplify your color palette.</p>
+          </section>
+          <section class="actions">
+            <ul class="inline-list">
+              <li><a href="#">^</a></li>
+              <li><a href="#">Reply</a></li>
+            </ul>
+          </section>
+
+          <!-- INDENTED COMMENT -->
+          <div class="row">
+            <div class="large-11 push-1 columns indented comment">
+              <section class="top">
+                <h6 class="byline">
+                  <a href="#">DEF Schmidt</a> | <span class="data">4h ago</span>
+                </h6>
+              </section>
+              <section class="content">
+                <p>Wow, guys. Lots of great feedback.</p>
+                <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
+                <p><a>@albanesetr</a>, thanks for all the good feedback. The pricing plans are definitely still WIP, the yellow $150 should have a "Most Popular" header, you're right. Other mockups had it, not sure why I haven't put it up yet.</p>
+              </section>
+              <section class="actions">
+                <ul class="inline-list">
+                  <li><a href="#">^</a></li>
+                  <li><a href="#">Reply</a></li>
+                </ul>
+              </section>
+            </div>
+
+            <div class="large-11 push-1 columns indented comment">
+              <section class="top">
+                <h6 class="byline">
+                  <a href="#">IJK Schmidt</a> | <span class="data">4h ago</span>
+                </h6>
+              </section>
+              <section class="content">
+                <p>I'll try reducing the header, the active state was just conceptual at this point. For the one shown, I was considering a fixed header and wanted the user to see where they were at when scrolling. So the thick yellow bar would slide when you scroll.</p>
+              </section>
+              <section class="actions">
+                <ul class="inline-list">
+                  <li><a href="#">^</a></li>
+                  <li><a href="#">Reply</a></li>
+                </ul>
+              </section>
+              <div class="row">
+
+                <div class="large-11 push-1 columns indented comment">
+                  <section class="top">
+                    <h6 class="byline">
+                      <a href="#">LMN Schmidt</a> | <span class="data">4h ago</span>
+                    </h6>
+                  </section>
+                  <section class="content">
+                    <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
+                  </section>
+                  <section class="actions">
+                    <ul class="inline-list">
+                      <li><a href="#">^</a></li>
+                      <li><a href="#">Reply</a></li>
+                    </ul>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            <div class="large-11 push-1 columns indented comment">
+              <section class="top">
+                <h6 class="byline">
+                  <a href="#">OPQ Schmidt</a> | <span class="data">4h ago</span>
+                </h6>
+              </section>
+              <section class="content">
+                <p><a>@Hans</a>, I usually try to go for drop shadows pumped with a little color, may not be the case here but thanks for the comment. And for the header noise, and noise overall in the site, I need to try reducing it all around before we go live.</p>
+              </section>
+              <section class="actions">
+                <ul class="inline-list">
+                  <li><a href="#">^</a></li>
+                  <li><a href="#">Reply</a></li>
+                </ul>
+              </section>
+            </div>
+          </div>
+        </div>
+        <!-- end colcomment -->
+      </div>
+      <!-- end rowcomment -->
+    </div>
+
+    <!-- Nav Sidebar -->
+    <!-- This is source ordered to be pulled to the left on larger screens --><!--
+    <div class="large-3 columns ">
+      <div class="panel">
+        <a href="#"><img src="http://placehold.it/300x240&text=[img]" /></a>
+        <h5><a href="#">Your Name</a></h5>
+          <div class="section-container vertical-nav" data-section data-options="deep_linking: false; one_up: true">
+          <section class="section">
+            <h5 class="title"><a href="#">Section 1</a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#">Section 2</a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#">Section 3</a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#">Section 4</a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#">Section 5</a></h5>
+          </section>
+          <section class="section">
+            <h5 class="title"><a href="#">Section 6</a></h5>
+          </section>
+        </div>
+      </div>
+    </div>-->
+
+  </div>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+Registration successful
+{% endblock %}
+
+{% block headline %}
+Registration successful
+{% endblock %}
+
+{% block breadcrumb %}
+Registration
+{% endblock %}
+
+{% block content %}
+
+<p>
+You have successfully registred. Go to your <a href="{% url "resrc.user.views.details" user.username %}">profil</a>.
+</p>
+
+{% endblock %}

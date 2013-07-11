@@ -1,0 +1,19 @@
+h6.byline {
+  position: relative;
+  font-size: emCalc(13px);
+  .data {
+  }
+  .label {
+  }
+  margin-bottom: 6px;
+  margin-top: 4px;
+
+}
+
+.indented.comment {
+  padding-left: 10px;
+  border-left: 3px solid #666;
+  &:last-child {
+    float: none;
+  }
+}

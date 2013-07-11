@@ -1,0 +1,20 @@
+{% extends "user/settings_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block breadcrumb %}
+    <li><a href="{% url "resrc.user.views.settings_profile" %}">Settings</a></li>
+    <li class="current"><a href="#">Account</a></li>
+{% endblock %}
+
+{% block subnav %}
+    <dd><a href="{% url "resrc.user.views.settings_profile" %}">Profil</a></dd>
+    <dd class="active"><a href="{% url "resrc.user.views.settings_account" %}">Account</a></dd>
+{% endblock %}
+
+{% block settings_form %}
+<div class="row">
+    <div class="large-12 columns">
+        {% crispy form %}
+    </div>
+</div>
+{% endblock %}

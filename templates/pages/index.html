@@ -1,0 +1,25 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+    Pages
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block headline %}
+    Pages
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="large-12 columns">
+        <ul>
+            <li><a href="{% url "resrc.page.views.about" %}">About</a></li>
+        </ul>
+    </div>
+</div>
+
+{% endblock %}

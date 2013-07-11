@@ -1,0 +1,35 @@
+{% extends "user/base.html" %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block headline %}
+    Users
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="large-12 columns">
+        <p>
+            {{ members.count }} users.
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <p>
+            {% for user in users %}
+                {% include "user/user_item_common.part.html" %}
+            {% endfor %}
+        </p>
+    </div>
+</div>
+
+{% endblock %}

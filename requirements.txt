@@ -1,0 +1,14 @@
+django>=1.5,<1.6
+markdown>=2.1
+bleach
+pygments
+south
+pytz
+pil
+django-dynamic-fixture
+django-crispy-forms
+django-simple-captcha
+django-email-obfuscator
+django-debug-toolbar
+crispy-forms-foundation
+django-mptt
