@@ -10,7 +10,7 @@ from crispy_forms_foundation.layout import Layout, Row, Div, Column, Fieldset, S
 
 from captcha.fields import CaptchaField
 
-from resrc.user.models import Profile
+from resrc.userprofile.models import Profile
 
 
 class LoginForm(forms.Form):

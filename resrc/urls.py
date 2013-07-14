@@ -2,19 +2,19 @@
 
 from django.conf.urls import patterns, include, url
 
-from django.contrib import admin
-admin.autodiscover()
+import djadmin2
+djadmin2.default.autodiscover()
 
 import page.views
 import settings
 
 urlpatterns = patterns(
     '',
-    url(r'^u/',  include('resrc.user.urls')),
+    url(r'^u/',  include('resrc.userprofile.urls')),
     url(r'^lk/', include('resrc.link.urls')),
-#    url(r'^ls/', include('resrc.list.urls')),
+    # url(r'^ls/', include('resrc.list.urls')),
     url(r'^p/',  include('resrc.page.urls')),
-    url(r'^a/',  include(admin.site.urls)),
+    url(r'^a/',  include(djadmin2.default.urls)),
 
     url(r'^captcha/', include('captcha.urls')),
 
@@ -24,5 +24,6 @@ urlpatterns = patterns(
 if settings.DEBUG:
     urlpatterns += patterns(
         '',
-        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+         'document_root': settings.MEDIA_ROOT}),
     )

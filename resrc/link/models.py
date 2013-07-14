@@ -1,7 +1,10 @@
+# coding: utf-8
+
 from django.db import models
 
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from resrc.tag.models import Tag
 
 
 class Link(models.Model):
@@ -20,6 +23,8 @@ class Link(models.Model):
 
     upvotes = models.IntegerField('upvotes', null=True, blank=True)
     downvotes = models.IntegerField('downvotes', null=True, blank=True)
+
+    tags = models.ManyToManyField(Tag, related_name="%(app_label)s_%(class)s_related")
 
     def __unicode__(self):
         return self.title

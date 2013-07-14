@@ -152,10 +152,13 @@ INSTALLED_APPS = (
     'email_obfuscator',
     'debug_toolbar',
     'mptt',
+    'djadmin2',
+    'floppyforms',
 
-    'resrc.user',
+    'resrc.userprofile',
     'resrc.link',
     'resrc.list',
+    'resrc.tag',
     'resrc.page',
     'resrc.utils',
     # Uncomment the next line to enable the admin:

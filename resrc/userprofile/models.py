@@ -23,6 +23,8 @@ class Profile(models.Model):
 
     karma = models.IntegerField('karma', null=True, blank=True)
 
+    favs = models.ManyToManyField(Link, related_name="%(app_label)s_%(class)s_related")
+
     def __unicode__(self):
         return self.user.username
 
@@ -35,21 +37,21 @@ class Profile(models.Model):
         else:
             return 'http://gravatar.com/avatar/{0}?d=identicon'.format(md5(self.user.email).hexdigest())
 
-    def get_link_count(self):
-        return Link.objects.all().filter(author__pk=self.user.pk).count()
-
-    def get_list_count(self):
-        return List.objects.all().filter(author=self.user).count()
-
     # Links
 
     def get_links(self):
-        return Link.objects.all().filter(author=self.user)
+        return Link.objects.all().filter(owner__pk=self.user.pk)
+
+    def get_link_count(self):
+        return self.get_links().count()
 
     # Lists
 
     def get_lists(self):
-        return List.objects.filter(authors=self.user.pk)
+        return List.objects.filter(owner__pk=self.user.pk)
+
+    def get_list_count(self):
+        return self.get_lists().count()
 
     def get_public_lists(self):
         return self.get_lists().filter(is_public=True)
