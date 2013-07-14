@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -24,7 +23,8 @@ class Link(models.Model):
     upvotes = models.IntegerField('upvotes', null=True, blank=True)
     downvotes = models.IntegerField('downvotes', null=True, blank=True)
 
-    tags = models.ManyToManyField(Tag, related_name="%(app_label)s_%(class)s_related")
+    tags = models.ManyToManyField(
+        Tag, related_name="%(app_label)s_%(class)s_related")
 
     def __unicode__(self):
         return self.title

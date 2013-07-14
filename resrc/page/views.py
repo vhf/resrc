@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from resrc.utils import render_template
 
 
@@ -19,6 +18,7 @@ def faq(request):
 
 def about(request):
     return render_template('pages/about.html')
+
 
 def test(request):
     return render_template('pages/test.html')

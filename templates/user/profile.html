@@ -35,8 +35,8 @@
                 email : {{ usr.email|obfuscate_mailto }}<br />
             {% endif %}
 
-            joined : {{ usr.date_joined }},
-            last seen : {{ usr.last_login }}.
+            joined : {{ usr.date_joined|timesince }}<br />
+            last seen : {{ usr.last_login|timesince }}.
         </p>
     </div>
 </div>

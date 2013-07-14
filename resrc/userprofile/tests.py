@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -10,6 +9,7 @@ from models import Profile
 
 
 class SimpleTest(TestCase):
+
     def test_index(self):
         resp = self.client.get(reverse('resrc.user.views.index'))
         self.assertEqual(resp.status_code, 200)

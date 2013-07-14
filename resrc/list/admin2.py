@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-:
 from .models import List
 
 import djadmin2

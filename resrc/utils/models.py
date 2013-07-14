@@ -1,3 +1,3 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-:
 
-# This file is necessary for tests but is unused.
+# Empty on purpose.

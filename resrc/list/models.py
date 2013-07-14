@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -15,7 +14,8 @@ class List(models.Model):
 
     title = models.CharField('title', max_length=80)
 
-    links = models.ManyToManyField(Link, related_name="%(app_label)s_%(class)s_related")
+    links = models.ManyToManyField(
+        Link, related_name="%(app_label)s_%(class)s_related")
 
     owner = models.ForeignKey(User, related_name="list_owner")
 

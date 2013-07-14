@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django.test import TestCase
 from django_dynamic_fixture import G
 
@@ -11,6 +10,7 @@ from .templatetags.profile import profile
 
 
 class TemplateTagsTests(TestCase):
+
     def test_profile_none(self):
         '''Test the output of profile templatetag if profile does not exist'''
         user = G(User)

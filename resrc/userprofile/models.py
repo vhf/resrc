@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from hashlib import md5
 
 from django.db import models
@@ -10,20 +9,22 @@ from resrc.list.models import List
 
 
 class Profile(models.Model):
-    '''User profile'''
+
     class Meta:
         verbose_name = 'user'
         verbose_name_plural = 'users'
 
     user = models.ForeignKey(User, unique=True, verbose_name='user')
 
-    avatar_url = models.CharField('avatar URL', max_length=128, null=True, blank=True)
+    avatar_url = models.CharField(
+        'avatar URL', max_length=128, null=True, blank=True)
 
     about = models.TextField('about', blank=True)
 
     karma = models.IntegerField('karma', null=True, blank=True)
 
-    favs = models.ManyToManyField(Link, related_name="%(app_label)s_%(class)s_related")
+    favs = models.ManyToManyField(
+        Link, related_name="%(app_label)s_%(class)s_related")
 
     def __unicode__(self):
         return self.user.username

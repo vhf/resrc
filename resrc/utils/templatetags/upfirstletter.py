@@ -1,8 +1,8 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django import template
 
 register = template.Library()
+
 
 @register.filter()
 def upfirstletter(value):
