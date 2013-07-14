@@ -1,35 +1,65 @@
 resrc
 =====
 
-- links
-- a link can be commented
-- a user can create lists of links
-- a list can be commented
-- a list can be either public or private
-- a link is tagged
-- a link, a list, a comment can be up/down voted, have karma
-- a user holds karma of his own published links, lists, comments
-- a user have two default lists : favorites (star ?) and to read (check mark ?)
-- a list is ordered or not (list owner has the choice)
-- lists can be filtered
-- lists can be sorted
-- a link can be flagged dead
+# basic features
+- **links**
+- a **link** can be commented
+- a **user** can create **lists** of **links**
+- a **list** can be commented
+- a **list** can be either public or private
+- a **link** is tagged
+- a **link**, a **list**, a comment can be up/down voted, have karma
+- a **user** holds karma of his own published **links**, **lists**, comments
+- a **user** has two default **lists** : `favorites` (star ?) and `toread` (check mark ?)
+- a **list** is ordered or not (**list** owner has the choice)
+- user can filter a **list** according to criteria
+- a **list** is (un)ordered
+- a **link** can be flagged dead
+- **user** can `fav`, `toread` a **link**, **list**
+- **user** can suggest **link** to **list**
 
-MAYBE
-=====
+## feature requests
 
-- links are cached (?)
-- lists can be collaborative work (various owners)
+- **links** are cached (?)
+- **lists** can be collaborative work (various owners)
+- **links** have TL;DR
 
-COMMON
-======
+# Templates
+## Public
+### Frontpage
+- Tag tree
+- Featured lists
 
-- Frontpage
-- List of public lists
-- Search / Browse by tree
+### Lists
+- List of public **lists**
 
-USER
-====
+### Search
+- Elaborate search engine
 
-- My lists
+### Tags
+- Browse links/lists by tag
+- Browse tag tree
+
+## Private (user)
+- My **lists**
 - My comments
+
+# Tag implementation ideas and examples
+> http://12devs.co.uk/articles/204/
+>
+> Middleman IS_IN Ruby
+>
+> Ruby IS_A Programming Language
+>
+> Middleman IS_A Static site generator
+>
+> link#1 IS_ABOUT Middleman
+>
+> -> hence filing shows :
+>
+> Ruby (Language) > Middleman (Static site generator)
+>
+> Link title : Building static websites(TAG) with Middleman(TAG), deploying to Heroku(TAG)
+
+howto, guide, course
+
