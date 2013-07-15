@@ -151,7 +151,6 @@ INSTALLED_APPS = (
     'email_obfuscator',
     'debug_toolbar',
     'mptt',
-    'djadmin2',
     'floppyforms',
 
     'resrc.userprofile',

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-:
 from django import template
 
-from resrc.user.models import Profile
+from resrc.userprofile.models import Profile
 
 register = template.Library()
 

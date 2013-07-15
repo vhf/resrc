@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-:
 from django.conf.urls import patterns, include, url
+from django.contrib import admin
 
-import djadmin2
-djadmin2.default.autodiscover()
+admin.autodiscover()
 
 import page.views
 import settings
@@ -13,7 +13,7 @@ urlpatterns = patterns(
     url(r'^lk/', include('resrc.link.urls')),
     # url(r'^ls/', include('resrc.list.urls')),
     url(r'^p/',  include('resrc.page.urls')),
-    url(r'^a/',  include(djadmin2.default.urls)),
+    url(r'^a/',  include(admin.site.urls)),
 
     url(r'^captcha/', include('captcha.urls')),
 

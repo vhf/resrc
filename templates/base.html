@@ -40,17 +40,17 @@
                       </a>
                   <ul class="dropdown">
                       <li><a href="{{ profile.get_absolute_url }}">Profil</a></li>
-                      <li><a href="{% url "resrc.user.views.settings_profile" %}">Settings</a></li>
-                      <li><a href="{% url "resrc.user.views.logout_view" %}">Logout</a></li>
+                      <li><a href="{% url "resrc.userprofile.views.settings_profile" %}">Settings</a></li>
+                      <li><a href="{% url "resrc.userprofile.views.logout_view" %}">Logout</a></li>
                   </ul>
                   {% endwith %}
               </li>
               {% else %}
               <li>
-                  <a href="{% url "resrc.user.views.register_view" %}">Register</a>
+                  <a href="{% url "resrc.userprofile.views.register_view" %}">Register</a>
               </li>
               <li>
-                  <a href="{% url "resrc.user.views.login_view" %}">Login</a>
+                  <a href="{% url "resrc.userprofile.views.login_view" %}">Login</a>
               </li>
               {% endif %}
           </ul>

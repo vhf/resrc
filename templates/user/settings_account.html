@@ -2,13 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block breadcrumb %}
-    <li><a href="{% url "resrc.user.views.settings_profile" %}">Settings</a></li>
+    <li><a href="{% url "resrc.userprofile.views.settings_profile" %}">Settings</a></li>
     <li class="current"><a href="#">Account</a></li>
 {% endblock %}
 
 {% block subnav %}
-    <dd><a href="{% url "resrc.user.views.settings_profile" %}">Profil</a></dd>
-    <dd class="active"><a href="{% url "resrc.user.views.settings_account" %}">Account</a></dd>
+    <dd><a href="{% url "resrc.userprofile.views.settings_profile" %}">Profil</a></dd>
+    <dd class="active"><a href="{% url "resrc.userprofile.views.settings_account" %}">Account</a></dd>
 {% endblock %}
 
 {% block settings_form %}
