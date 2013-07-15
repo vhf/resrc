@@ -24,7 +24,7 @@
             {% endif %}
 
             <p>
-                If you don't already have an account, please <a href="{% url "resrc.user.views.register_view" %}" >register</a>.
+                If you don't already have an account, please <a href="{% url "resrc.userprofile.views.register_view" %}" >register</a>.
             </p>
         {% else %}
             <p>
@@ -37,7 +37,7 @@
 {% if not user.is_authenticated %}
 <div class="row">
     <div class="large-7 large-offset-1 columns">
-        <form method="post" action="{% url "resrc.user.views.login_view" %}" class="form-horizontal">
+        <form method="post" action="{% url "resrc.userprofile.views.login_view" %}" class="form-horizontal">
             <div class="row">
                 <div class="small-4 columns">
                     <label class="right inline" for="id_username">username</label>
