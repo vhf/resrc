@@ -35,7 +35,7 @@ class="active"
       <p style="font-size: 35px">
         <a class="lsf symbol" style="color: black">addstar</a>
         <a class="lsf symbol" style="color: black">save</a>
-        <a class="lsf symbol" style="color: black">list</a>
+        <a class="lsf symbol" style="color: black" data-reveal-id="add-to-list">list</a>
       </p>
     </div>
   </div>
@@ -182,4 +182,86 @@ class="active"
       </div>
     </div>-->
 
+{% endblock %}
+
+{% block last_body %}
+  <div id="add-to-list" class="small reveal-modal">
+    <form>
+      <fieldset>
+        <legend>Add to list</legend>
+        <div class="row">
+          <div class="small-8 columns">
+            <label for="list-437">
+                <input type="checkbox" value="437" name="sel_listes[437]" id="list-437" />
+                My own private list <span>(5 links)</span>
+            </label>
+            <label for="list-902">
+              <input type="checkbox" value="902" name="sel_listes[902]" id="list-902" />
+              My new public list <span>(2 links)</span>
+            </label>
+            <label for="list-661">
+              <input type="checkbox" value="661" name="sel_listes[661]" id="list-661" />
+              Stars <span>(172 links)</span>
+            </label>
+            <label for="list-92">
+              <input type="checkbox" value="92" name="sel_listes[92]" id="list-92" />
+              To read <span>(44 links)</span>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-6 columns">
+            <button type="submit" name="move" class="small button">Add</button>
+          </div>
+          <div class="small-6 columns text-right">
+            <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> New List</a>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+
+  <div id="create-list" class="small reveal-modal">
+    <form>
+      <fieldset>
+        <legend>Create a list</legend>
+
+        <div class="row">
+          <div class="large-4 columns">
+            <label for="ordered">
+              <input type="checkbox" id="ordered" name="ordered"> Ordered
+            </label>
+          </div>
+          <div class="large-4 columns">
+            <label for="private">
+              <input type="checkbox" id="private" name="private"> Private
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-12 columns">
+            <label for="private">
+              <label>Title *</label>
+              <input type="text" name="title">
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>Description</label>
+            <textarea name="description" id="description" data-container="description"></textarea>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-12 columns">
+            <input type="submit" class="button" value="Create" />
+          </div>
+        </div>
+      </fieldset>
+    </form>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
 {% endblock %}
