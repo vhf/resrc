@@ -10,6 +10,7 @@
   <title>{% block title %}{% endblock %}{% block title_base %}{% endblock %} &#183; re-src</title>
   {% block meta %}{% endblock %}
   <link rel="stylesheet" href="{% static "css/app.css" %}">
+  <link rel="stylesheet" href="{% static "css/ligaturesymbols.css" %}">
   <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 </head>
 <body>
@@ -57,8 +58,6 @@
       </section>
   </nav>
   <!-- End Header and Nav -->
-
-  <div class="row">
 
     <!-- content -->
     {% block content %}{% endblock %}

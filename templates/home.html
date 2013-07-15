@@ -19,107 +19,140 @@ class="active"
 {# Content #}
 
 {% block content %}
+  <div class="row">
+    <div class="small-9 columns">
+        <p>
+          <ul class="inline-list">
+            <li><a href="#" class="radius secondary label">Tag 1</a></li>
+            <li><a href="#" class="radius secondary label">Tag 2</a></li>
+            <li><a href="#" class="radius secondary label">Tag 3</a></li>
+            <li><a href="#" class="radius secondary label">Tag 4</a></li>
+            <li><a href="#" class="radius secondary label">Tag 5</a></li>
+          </ul>
+        </p>
+    </div>
+    <div class="small-3 columns">
+      <p style="font-size: 35px">
+        <a class="lsf symbol" style="color: black">addstar</a>
+        <a class="lsf symbol" style="color: black">save</a>
+        <a class="lsf symbol" style="color: black">list</a>
+      </p>
+    </div>
+  </div>
 
-    <div class="large-12 columns comments">
-      <!-- COMMENT -->
-      <div class="row">
-        <div class="large-12 columns comment">
-          <section class="top">
-            <h6 class="byline">
-              <a href="#">ABC Winters</a> | <span class="data">4h ago</span>
-            </h6>
-          </section>
-          <section class="content">
-            <p>Nice start, Becky. I really like some of the elements you have going so far. The header and footer tie in nicely and the ribbon on tiles works well. The font is great also and looks readable. Here are a few areas you can keep iterating on:</p>
-            <p>Simplify your color palette.</p>
-          </section>
-          <section class="actions">
-            <ul class="inline-list">
-              <li><a href="#">^</a></li>
-              <li><a href="#">Reply</a></li>
-            </ul>
-          </section>
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+        <h3><a href="http://12devs.co.uk/articles/204/">Building <acronym title="All resrc about static websites">static websites</acronym> with <acronym title="All resrc about Middleman">Middleman</acronym>, deploying to <acronym title="All resrc about Heroku">Heroku</acronym></a></h3>
+      </p>
+      <p>
+        <h6 class="byline">
+          by <a href="#">vhf</a> | <span class="data">66 years ago</span>
+        </h6>
+        <hr />
+      </p>
+    </div>
+  </div>
 
-          <!-- INDENTED COMMENT -->
-          <div class="row">
-            <div class="large-11 push-1 columns indented comment">
-              <section class="top">
-                <h6 class="byline">
-                  <a href="#">DEF Schmidt</a> | <span class="data">4h ago</span>
-                </h6>
-              </section>
-              <section class="content">
-                <p>Wow, guys. Lots of great feedback.</p>
-                <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
-                <p><a>@albanesetr</a>, thanks for all the good feedback. The pricing plans are definitely still WIP, the yellow $150 should have a "Most Popular" header, you're right. Other mockups had it, not sure why I haven't put it up yet.</p>
-              </section>
-              <section class="actions">
-                <ul class="inline-list">
-                  <li><a href="#">^</a></li>
-                  <li><a href="#">Reply</a></li>
-                </ul>
-              </section>
-            </div>
+  <div class="comments">
+    <!-- COMMENT -->
+    <div class="row">
+      <div class="small-12 columns comment">
+        <section class="top">
+          <h6 class="byline">
+            <a href="#">ABC Winters</a> | <span class="data">4h ago</span>
+          </h6>
+        </section>
+        <section class="content">
+          <p>Nice start, Becky. I really like some of the elements you have going so far. The header and footer tie in nicely and the ribbon on tiles works well. The font is great also and looks readable. Here are a few areas you can keep iterating on:</p>
+          <p>Simplify your color palette.</p>
+        </section>
+        <section class="actions">
+          <ul class="inline-list">
+            <li><a href="#">^</a></li>
+            <li><a href="#">Reply</a></li>
+          </ul>
+        </section>
 
-            <div class="large-11 push-1 columns indented comment">
-              <section class="top">
-                <h6 class="byline">
-                  <a href="#">IJK Schmidt</a> | <span class="data">4h ago</span>
-                </h6>
-              </section>
-              <section class="content">
-                <p>I'll try reducing the header, the active state was just conceptual at this point. For the one shown, I was considering a fixed header and wanted the user to see where they were at when scrolling. So the thick yellow bar would slide when you scroll.</p>
-              </section>
-              <section class="actions">
-                <ul class="inline-list">
-                  <li><a href="#">^</a></li>
-                  <li><a href="#">Reply</a></li>
-                </ul>
-              </section>
-              <div class="row">
+        <!-- INDENTED COMMENT -->
+        <div class="row">
+          <div class="small-11 small-offset-1 columns indented comment">
+            <section class="top">
+              <h6 class="byline">
+                <a href="#">DEF Schmidt</a> | <span class="data">4h ago</span>
+              </h6>
+            </section>
+            <section class="content">
+              <p>Wow, guys. Lots of great feedback.</p>
+              <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
+              <p><a>@albanesetr</a>, thanks for all the good feedback. The pricing plans are definitely still WIP, the yellow $150 should have a "Most Popular" header, you're right. Other mockups had it, not sure why I haven't put it up yet.</p>
+            </section>
+            <section class="actions">
+              <ul class="inline-list">
+                <li><a href="#">^</a></li>
+                <li><a href="#">Reply</a></li>
+              </ul>
+            </section>
+          </div>
 
-                <div class="large-11 push-1 columns indented comment">
-                  <section class="top">
-                    <h6 class="byline">
-                      <a href="#">LMN Schmidt</a> | <span class="data">4h ago</span>
-                    </h6>
-                  </section>
-                  <section class="content">
-                    <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
-                  </section>
-                  <section class="actions">
-                    <ul class="inline-list">
-                      <li><a href="#">^</a></li>
-                      <li><a href="#">Reply</a></li>
-                    </ul>
-                  </section>
-                </div>
+          <div class="small-11 small-offset-1 columns indented comment">
+            <section class="top">
+              <h6 class="byline">
+                <a href="#">IJK Schmidt</a> | <span class="data">4h ago</span>
+              </h6>
+            </section>
+            <section class="content">
+              <p>I'll try reducing the header, the active state was just conceptual at this point. For the one shown, I was considering a fixed header and wanted the user to see where they were at when scrolling. So the thick yellow bar would slide when you scroll.</p>
+            </section>
+            <section class="actions">
+              <ul class="inline-list">
+                <li><a href="#">^</a></li>
+                <li><a href="#">Reply</a></li>
+              </ul>
+            </section>
+            <div class="row">
+
+              <div class="small-11 small-offset-1 columns indented comment">
+                <section class="top">
+                  <h6 class="byline">
+                    <a href="#">LMN Schmidt</a> | <span class="data">4h ago</span>
+                  </h6>
+                </section>
+                <section class="content">
+                  <p>First, <a href="#">@Milkmusket</a>, I agree. I've struggled with that section and might take advice for <a href="#">@albanesetr</a> and focus on a single feature rather than the whole screenshot.</p>
+                </section>
+                <section class="actions">
+                  <ul class="inline-list">
+                    <li><a href="#">^</a></li>
+                    <li><a href="#">Reply</a></li>
+                  </ul>
+                </section>
               </div>
             </div>
+          </div>
 
-            <div class="large-11 push-1 columns indented comment">
-              <section class="top">
-                <h6 class="byline">
-                  <a href="#">OPQ Schmidt</a> | <span class="data">4h ago</span>
-                </h6>
-              </section>
-              <section class="content">
-                <p><a>@Hans</a>, I usually try to go for drop shadows pumped with a little color, may not be the case here but thanks for the comment. And for the header noise, and noise overall in the site, I need to try reducing it all around before we go live.</p>
-              </section>
-              <section class="actions">
-                <ul class="inline-list">
-                  <li><a href="#">^</a></li>
-                  <li><a href="#">Reply</a></li>
-                </ul>
-              </section>
-            </div>
+          <div class="small-11 small-offset-1 columns indented comment">
+            <section class="top">
+              <h6 class="byline">
+                <a href="#">OPQ Schmidt</a> | <span class="data">4h ago</span>
+              </h6>
+            </section>
+            <section class="content">
+              <p><a>@Hans</a>, I usually try to go for drop shadows pumped with a little color, may not be the case here but thanks for the comment. And for the header noise, and noise overall in the site, I need to try reducing it all around before we go live.</p>
+            </section>
+            <section class="actions">
+              <ul class="inline-list">
+                <li><a href="#">^</a></li>
+                <li><a href="#">Reply</a></li>
+              </ul>
+            </section>
           </div>
         </div>
-        <!-- end colcomment -->
       </div>
-      <!-- end rowcomment -->
+      <!-- end colcomment -->
     </div>
-
+    <!-- end rowcomment -->
+  </div>
     <!-- Nav Sidebar -->
     <!-- This is source ordered to be pulled to the left on larger screens --><!--
     <div class="large-3 columns ">
@@ -149,5 +182,4 @@ class="active"
       </div>
     </div>-->
 
-  </div>
 {% endblock %}
