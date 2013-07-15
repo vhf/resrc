@@ -4,7 +4,7 @@ from django_dynamic_fixture import G
 
 from django.contrib.auth.models import User
 
-from resrc.user.models import Profile
+from resrc.userprofile.models import Profile
 
 from .templatetags.profile import profile
 
