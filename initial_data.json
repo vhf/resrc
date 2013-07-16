@@ -1,0 +1,551 @@
+[
+  {
+    "pk": 1,
+    "model": "south.migrationhistory",
+    "fields": {
+      "applied": "2013-07-16T16:18:12.614Z",
+      "app_name": "captcha",
+      "migration": "0001_initial"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "tag.tag",
+    "fields": {
+      "rght": 4,
+      "name": "Programming Language",
+      "parent": null,
+      "level": 0,
+      "lft": 1,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "tag.tag",
+    "fields": {
+      "rght": 3,
+      "name": "Ruby",
+      "parent": 1,
+      "level": 1,
+      "lft": 2,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "tag.tag",
+    "fields": {
+      "rght": 4,
+      "name": "Tool",
+      "parent": null,
+      "level": 0,
+      "lft": 1,
+      "tree_id": 2
+    }
+  },
+  {
+    "pk": 4,
+    "model": "tag.tag",
+    "fields": {
+      "rght": 3,
+      "name": "Static Website Generator",
+      "parent": 3,
+      "level": 1,
+      "lft": 2,
+      "tree_id": 2
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_permission",
+      "name": "Can add permission",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_permission",
+      "name": "Can change permission",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_permission",
+      "name": "Can delete permission",
+      "content_type": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_group",
+      "name": "Can add group",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 5,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_group",
+      "name": "Can change group",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 6,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_group",
+      "name": "Can delete group",
+      "content_type": 2
+    }
+  },
+  {
+    "pk": 7,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_user",
+      "name": "Can add user",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 8,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_user",
+      "name": "Can change user",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 9,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_user",
+      "name": "Can delete user",
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 10,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_contenttype",
+      "name": "Can add content type",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 11,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_contenttype",
+      "name": "Can change content type",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 12,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_contenttype",
+      "name": "Can delete content type",
+      "content_type": 4
+    }
+  },
+  {
+    "pk": 13,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_session",
+      "name": "Can add session",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 14,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_session",
+      "name": "Can change session",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 15,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_session",
+      "name": "Can delete session",
+      "content_type": 5
+    }
+  },
+  {
+    "pk": 16,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_site",
+      "name": "Can add site",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 17,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_site",
+      "name": "Can change site",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 18,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_site",
+      "name": "Can delete site",
+      "content_type": 6
+    }
+  },
+  {
+    "pk": 19,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_migrationhistory",
+      "name": "Can add migration history",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 20,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_migrationhistory",
+      "name": "Can change migration history",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 21,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_migrationhistory",
+      "name": "Can delete migration history",
+      "content_type": 7
+    }
+  },
+  {
+    "pk": 22,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_profile",
+      "name": "Can add user",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 23,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_profile",
+      "name": "Can change user",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 24,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_profile",
+      "name": "Can delete user",
+      "content_type": 8
+    }
+  },
+  {
+    "pk": 25,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_link",
+      "name": "Can add Link",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 26,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_link",
+      "name": "Can change Link",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 27,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_link",
+      "name": "Can delete Link",
+      "content_type": 9
+    }
+  },
+  {
+    "pk": 28,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_list",
+      "name": "Can add List",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 29,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_list",
+      "name": "Can change List",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 30,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_list",
+      "name": "Can delete List",
+      "content_type": 10
+    }
+  },
+  {
+    "pk": 31,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tag",
+      "name": "Can add tag",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 32,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tag",
+      "name": "Can change tag",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 33,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tag",
+      "name": "Can delete tag",
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 34,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_logentry",
+      "name": "Can add log entry",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 35,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_logentry",
+      "name": "Can change log entry",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 36,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 37,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_captchastore",
+      "name": "Can add captcha store",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 38,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_captchastore",
+      "name": "Can change captcha store",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 39,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_captchastore",
+      "name": "Can delete captcha store",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 1,
+    "model": "auth.user",
+    "fields": {
+      "username": "root",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-07-16T16:19:49.510Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$bVCzcmxjvOrX$Z/wnFanQaCt4PrVEsqUG5d1i5Ih/Tnh6Z2xE2pynglE=",
+      "email": "root@root.rt",
+      "date_joined": "2013-07-16T16:18:02.631Z"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "auth.user",
+    "fields": {
+      "username": "victor",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-07-16T16:20:37.069Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$yUcwNWkTtgw0$Am/9KkNfwXcPjY101CwzDmjvR5QU1YLjtq53xSBAnEQ=",
+      "email": "victorfelder@gmail.com",
+      "date_joined": "2013-07-16T16:19:11Z"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "userprofile.profile",
+    "fields": {
+      "favs": [],
+      "about": "",
+      "avatar_url": null,
+      "user": 2,
+      "karma": null
+    }
+  },
+  {
+    "pk": 1,
+    "model": "link.link",
+    "fields": {
+      "pubdate": "2013-07-16T16:23:15.287Z",
+      "author": 2,
+      "url": "http://12devs.co.uk/articles/204/",
+      "downvotes": null,
+      "title": "Building static websites with Middleman, deploying to heroku",
+      "upvotes": null,
+      "tags": [
+        2,
+        4
+      ]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 2,
+      "action_time": "2013-07-16T16:20:20.100Z",
+      "object_repr": "victor",
+      "object_id": "2",
+      "change_message": "Changed password, is_staff and is_superuser.",
+      "user": 1,
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 2,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-16T16:20:55.357Z",
+      "object_repr": "Programming Language",
+      "object_id": "1",
+      "change_message": "",
+      "user": 2,
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 3,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-16T16:21:18.024Z",
+      "object_repr": "Ruby",
+      "object_id": "2",
+      "change_message": "",
+      "user": 2,
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 4,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-16T16:21:29.122Z",
+      "object_repr": "Tool",
+      "object_id": "3",
+      "change_message": "",
+      "user": 2,
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 5,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-16T16:21:40.771Z",
+      "object_repr": "Static Website Generator",
+      "object_id": "4",
+      "change_message": "",
+      "user": 2,
+      "content_type": 11
+    }
+  },
+  {
+    "pk": 6,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-16T16:23:15.292Z",
+      "object_repr": "Building static websites with Middleman, deploying to heroku",
+      "object_id": "1",
+      "change_message": "",
+      "user": 2,
+      "content_type": 9
+    }
+  }
+]

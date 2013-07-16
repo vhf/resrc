@@ -1,0 +1,251 @@
+    {% load i18n %}
+
+    <script type="text/javascript">
+    //<![CDATA[
+
+    var comments_loaded = []
+    var replies_loaded = []
+    var bound_links = []
+
+    function is_in(list, item) {
+        for (var i=0;i<list.length;i++) {
+            if (list[i] == item) return true
+        }
+        return false
+    }
+
+    $(document).ready(function(){
+
+        var comment_level_re = new RegExp("comment_level_(\\d+)", "")
+        var comment_pk_re = new RegExp("comment_(\\d+)", "")
+
+        var posted_re = new RegExp("this_is_a_comment", "g")
+
+        function repopulate_loaded_comments() {
+
+            comments_loaded = []
+
+            $('.comment').each(function(){
+
+                var classes = $(this).attr('class')
+                var id = $(this).attr('id')
+
+                var pk = parseInt(comment_pk_re.exec(id)[1])
+                var level = parseInt(comment_level_re.exec(classes)[1])
+
+                comments_loaded.push({id: id, pk: pk, level: level})
+
+            })
+
+        }
+
+        function bind_submit(form, nxt) {
+
+            var post_data = {}
+            $("input[type=submit]", form).bind("mousedown", function() {
+                post_data = {}
+                post_data[this.name] = this.value
+            })
+
+            form.bind("submit", function() {
+
+                var data_dict = $(":input", form).serializeArray()
+                $.each(data_dict, function() {
+                    post_data[this.name] = this.value
+                })
+
+                post_data['is_ajax'] = 1
+
+                $.post(form.attr("action"), post_data, function(data, textStatus){
+
+                    if (posted_re.test(data)) {
+                        if (nxt.hasClass('new_comment_form_wrapper')) {
+                            $('#mptt-comments-tree').append(data)
+                            nxt.replaceWith('<p>{% trans "Your comment was posted." %}</p>')
+                        }
+                        else {
+                            nxt.replaceWith(data)
+                            bind_replies()
+                        }
+                    }
+                    else {
+                        nxt.empty()
+                        nxt.append(data)
+                        nxt.slideDown("slow")
+
+                        var new_form = $("form", nxt)
+                        bind_submit(new_form, nxt)
+                    }
+                }, "html")
+
+                return false
+            })
+        }
+
+        function bind_replies() {
+
+            $('.comment_reply, .comment_new').each(function() {
+
+                var reply_link = $(this)
+                var parent = reply_link.parent('p')
+
+                parent.after('<div class="comment_form_wrapper"></div>')
+
+                $(this).bind("click", function(e) {
+
+                    $('.comment_form_wrapper').slideUp("slow")
+
+                    $.get(reply_link.attr('href') + '?is_ajax=1', function(data, textStatus){
+                        var nxt = parent.next('.comment_form_wrapper')
+                        nxt.empty()
+                        nxt.append(data)
+                        nxt.slideDown("slow")
+
+                        var form = $("form", nxt)
+                        bind_submit(form, nxt)
+
+                    }, "html")
+
+                    return false
+                })
+            })
+
+
+            $('.comment_replies').each(function() {
+
+                var replies_link = $(this)
+
+                replies_link.bind("click", function(e) {
+
+                    var href = replies_link.attr('href')
+
+                    var id = 'comment_' + (new RegExp("(\\d+)/$").exec(href)[1])
+
+                    if (!is_in(replies_loaded, id)) {
+
+                        $.get($(this).attr('href') + '?is_ajax=1', {}, function(data, textStatus){
+
+                            var comments_tree = data.comments_tree
+
+                            if (comments_tree) {  //
+                                $('#' + id).append( comments_tree.html )
+                            }
+
+                            bind_replies()
+
+                        }, "json")
+
+                        replies_loaded.push(id)
+                    }
+                    return false
+                })
+            })
+
+            $('.comment_expand').each(function() {
+
+                var expand_link = $(this)
+
+                var href = expand_link.attr('href')
+                var id = 'comment_' + (new RegExp("(\\d+)/$").exec(href)[1])
+
+                var comment_el = $('#' + id)
+                var content_el = $('.comment_content', comment_el)
+
+                if (!is_in(bound_links, id)) {
+                    expand_link.bind("click", function(e) {
+
+                        if (content_el.hasClass('comment_collapsed_below')) {
+                            content_el.removeClass('comment_collapsed_below')
+                        }
+                        else {
+                            if (comment_el.hasClass('comment_collapsed')) {
+                                comment_el.removeClass('comment_collapsed')
+                            }
+                            else {
+                                comment_el.addClass('comment_collapsed')
+                            }
+                        }
+                        return false
+                    })
+
+                    bound_links.push(id)
+                }
+
+            })
+
+        }
+
+        $('#comments_more').bind("click", function() {
+
+            repopulate_loaded_comments()
+
+            $.get($(this).attr('href') + '?is_ajax=1', { }, function(data, textStatus){
+
+                var comments_for_update = data.comments_for_update
+
+                if (comments_for_update) {
+                    for (var c=0;c<comments_for_update.length;c++){
+                        var append_to_id = ''
+                        var comment = comments_for_update[c]
+                        for (var l=0;l<comments_loaded.length;l++) {
+                            var loaded_comment = comments_loaded[l]
+                            if (comment.level-1 == loaded_comment.level) append_to_id = loaded_comment.id
+                        }
+                        $('#' + append_to_id).append(comment.html)
+                        comments_loaded.push({id: 'comment_' + comment.pk, pk: comment.pk, level: comment.level})
+                    }
+                }
+
+                var comments_tree = data.comments_tree
+
+                if (comments_tree) {
+                    $('#mptt-comments-tree').append(comments_tree.html)
+                }
+
+                repopulate_loaded_comments()
+
+                var remaining_count = data.remaining_count
+                if (remaining_count>0) {
+                    $('#comments_more_remaining').html(remaining_count)
+
+                    var old_href = $('#comments_more').attr('href')
+
+                    $('#comments_more').attr('href',
+                        old_href.replace(new RegExp("\\d+/$"), comments_loaded[comments_loaded.length-1].pk + '/')
+                    )
+                }
+                else {
+                     $('#comments_more').parent().hide()
+                }
+
+               bind_replies()
+
+            }, "json")
+
+            return false
+        })
+
+        $('.new_comment_form_wrapper').each(function(){
+            var nxt = $(this)
+            var frm = $('form', nxt)
+            bind_submit(frm, nxt)
+        })
+
+        bind_replies() // intercept links
+
+
+    })
+    //]]>
+    </script>
+
+    <style type="text/css">
+        .comment_reply { text-decoration: underline; cursor: hand; }
+        .comment_title { font-size: 0.9em; font-weight: bold; margin-bottom: 2px; background: #eeeeee; padding: 3px;}
+        .comment_meta { font-weight: bold; }
+        .comment { margin-left: 0.5em; margin-top: 0.5em; padding-left: 0.5em; border-left: solid 4px #dddddd; }
+        .comment_collapsed .comment, .comment_collapsed .comment_content { display: none; }
+        .comment_collapsed .comment_title {
+        .comment_collapsed_below { display: none; }
+
+    </style>
+

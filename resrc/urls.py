@@ -15,7 +15,9 @@ urlpatterns = patterns(
     url(r'^p/',  include('resrc.page.urls')),
     url(r'^a/',  include(admin.site.urls)),
 
-    url(r'^captcha/', include('captcha.urls')),
+    # third party includes
+    url(r'^ca/', include('captcha.urls')),
+    url(r'^co/', include('resrc.mptt_comments.urls')),
 
     url(r'^$', page.views.home),
 )

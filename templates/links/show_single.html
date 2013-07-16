@@ -1,0 +1,38 @@
+{% extends "links/base.html" %}
+
+{% block extrahead %}
+  {% load mptt_comments_tags %}
+  {% mptt_comments_media %}
+{% endblock extrahead %}
+
+{% block title %}
+    lala
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="large-12 columns">
+        <p>
+            asdf
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="large-12 columns">
+        <p>
+        {% display_comment_toplevel_for user %}
+        </p>
+    </div>
+</div>
+
+{% endblock %}

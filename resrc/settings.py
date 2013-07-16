@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-:
 import os
-import locale
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -142,6 +142,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.comments',
     'django.contrib.markup',
 
     'south',
@@ -151,6 +152,7 @@ INSTALLED_APPS = (
     'email_obfuscator',
     'debug_toolbar',
     'mptt',
+    'resrc.mptt_comments',
     'floppyforms',
 
     'resrc.userprofile',
