@@ -5,5 +5,6 @@ import views
 
 urlpatterns = patterns(
     '',
+    url(r'^(?P<link_pk>\d+)/$', views.single),
     url(r'^(?P<link_pk>\d+)/(?P<link_slug>.+)/$', views.single),
 )

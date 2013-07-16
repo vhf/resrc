@@ -12,6 +12,7 @@ import resrc.mptt_comments
 from django.contrib.comments import signals
 from resrc.mptt_comments.models import MpttComment
 from django.utils import datastructures, simplejson
+from django.views.decorators.csrf import csrf_exempt
 
 
 class CommentPostBadRequest(http.HttpResponseBadRequest):
@@ -59,6 +60,7 @@ def new_comment(request, comment_id=None):
     )
 
 
+@csrf_exempt
 def post_comment(request, next=None):
     """
     Post a comment.
@@ -167,7 +169,9 @@ def post_comment(request, next=None):
         request=request
     )
 
-    return next_redirect(data, next, 'comments-comment-done%s' % (is_ajax and '-ajax' or ''), c=comment._get_pk_val())
+    next_view = 'comments-comment-done%s' % (is_ajax and '-ajax' or '')
+
+    return next_redirect(request, fallback=next or next_view, c=comment._get_pk_val())
 
 
 def confirmation_view(template, doc="Display a confirmation view."):

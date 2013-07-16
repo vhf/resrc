@@ -1,5 +1,5 @@
 {% extends "links/base.html" %}
-
+{% load profile %}
 {% block extrahead %}
   {% load mptt_comments_tags %}
   {% mptt_comments_media %}
@@ -19,18 +19,48 @@
 
 {% block content %}
 
-<div class="row">
-    <div class="large-12 columns">
+  <div class="row">
+    <div class="small-9 columns">
         <p>
-            asdf
+          <ul class="inline-list">
+            <li><a href="#" class="radius secondary label">Tag 1</a></li>
+            <li><a href="#" class="radius secondary label">Tag 2</a></li>
+            <li><a href="#" class="radius secondary label">Tag 3</a></li>
+            <li><a href="#" class="radius secondary label">Tag 4</a></li>
+            <li><a href="#" class="radius secondary label">Tag 5</a></li>
+          </ul>
         </p>
     </div>
-</div>
+    <div class="small-3 columns">
+      <p style="font-size: 35px">
+        <a class="lsf symbol" style="color: black">addstar</a>
+        <a class="lsf symbol" style="color: black">save</a>
+        <a class="lsf symbol" style="color: black" data-reveal-id="add-to-list">list</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+        <h3><a href="{{ link.url }}">{{ link.title }}</a></h3>
+      </p>
+      <p>
+        <h6 class="byline">
+          {% with profile=link.author|profile %}
+          by <a href="{{ profile.get_absolute_url }}">{{ link.author.username }}</a> | <span class="data">{{ link.pubdate|timesince }} ago</span>
+          {%endwith%}
+        </h6>
+        <hr />
+      </p>
+    </div>
+  </div>
+
 
 <div class="row">
     <div class="large-12 columns">
         <p>
-        {% display_comment_toplevel_for user %}
+        {% display_comment_toplevel_for link %}
         </p>
     </div>
 </div>

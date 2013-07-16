@@ -29,5 +29,8 @@ class Link(models.Model):
     def __unicode__(self):
         return self.title
 
+    def get_slug(self):
+        return slugify(self.title)
+
     def get_absolute_url(self):
-        return '/lk/{0}/{1}'.format(self.pk, slugify(self.title))
+        return '/lk/{0}/{1}'.format(self.pk, self.get_slug())
