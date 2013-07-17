@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if subcomments_remaining and subcomments %}
+<p>
+    {% with subcomments|last as last_subcomment %}
+    <a class="comments_more" href="{% url "comments-more-in-tree" last_subcomment.pk %}">
+        {% trans "Still" %} <span class="comments_more_remaining">{{ subcomments_remaining }}</span> {% trans "comments left" %}
+    </a>
+    {% endwith %}
+</p>
+{% endif %}

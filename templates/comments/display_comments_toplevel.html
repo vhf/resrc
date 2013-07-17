@@ -1,0 +1,32 @@
+{% load i18n %}
+{% load mptt_comments_tags %}
+
+{% get_mptt_comment_list for object as comments %}
+    
+{% if comments %}
+
+<h2>{% trans "Comments" %}</h2>
+
+{% endif %}
+    
+<div id="mptt-comments-tree" class="block-comments-tree">
+ 
+{% if comments %}
+
+    {% include "comments/display_comments_tree.html" %}    
+    
+{% endif %}
+
+</div>
+    
+{% include "comments/_comments_remaining.html" %}
+
+
+<h2 id="post_new_comment">{% trans "Post a new comment" %}</h2>
+
+<div class="new_comment_form_wrapper">
+{% get_mptt_comment_form for object as form %}
+
+{% include "comments/form.html" %}
+</div> 
+
