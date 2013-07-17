@@ -152,7 +152,7 @@ INSTALLED_APPS = (
     'email_obfuscator',
     'debug_toolbar',
     'mptt',
-    'resrc.mptt_comments',
+    'mptt_comments',
     'floppyforms',
 
     'resrc.userprofile',
@@ -195,6 +195,8 @@ LOGGING = {
         },
     }
 }
+
+COMMENTS_APP = "mptt_comments"
 
 # simple captcha
 CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'

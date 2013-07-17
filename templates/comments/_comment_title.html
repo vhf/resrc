@@ -1,0 +1,10 @@
+{% load i18n %}
+<p class="comment_title">
+    <a class="comment_expand" href="{% url "comment-detail" comment.pk %}">
+        {% if comment.is_removed %}
+            {% trans "Comment removed" %}
+        {% else %}
+            {{ comment.title }}
+        {% endif %}
+    </a>
+</p>

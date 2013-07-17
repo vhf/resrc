@@ -1,0 +1,26 @@
+{% load mptt_comments_tags %}
+{% load i18n %}
+{% if comment.pk %}
+    <p class="comment_reply_links" id="c-reply-counts-c{{ comment.pk }}">
+        {% if comment|children_count %}
+            {% if comment.level == cutoff_level %}
+                <a class="comment_replies comment_cutoff" data-commentscount="{{ comment|children_count }}" href="{% url "comments-subtree" comment.pk %}">{% blocktrans with comment|children_count as count %}{{ count }} hidden replies{% endblocktrans %}</a>
+            {% else %}
+                <span class="comment_replies" data-commentscount="{{ comment|children_count }}">{% blocktrans with comment|children_count as count %}{{ count }} replies{% endblocktrans %}</span>
+            {% endif %} |
+        {% else %}
+            <span class="comment_replies" data-commentscount="0"></span>
+        {% endif %}
+        {% if not comment.is_removed %}
+            <a class="comment_post_new" href="#post_new_comment">
+                {% trans "Post a new comment" %}
+            </a> |
+            <a class="comment_reply" href="{% url "comment-reply" comment.pk %}">
+                {% trans "Reply to this comment" %}
+            </a> |
+            <a class="comment_flag" href="{% url "comments-flag" comment.pk %}">
+                {% trans "Flag this comment" %}
+            </a>
+        {% endif %}
+    </p>
+{% endif %}

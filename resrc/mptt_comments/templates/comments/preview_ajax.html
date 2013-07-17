@@ -1,9 +1,0 @@
-    {% load markup %}
-    {% load i18n %}
-    <div class="comment">
-    <h3>{% trans "Comment preview" %}</h3>
-    {% if comment %}
-        {{ comment|markdown }}
-    {% endif %}
-    </div>
-    {% include "comments/form.html" %}

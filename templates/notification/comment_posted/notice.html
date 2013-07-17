@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans with comment.get_absolute_url as comment_url and object.get_absolute_url as object_url %}You have posted a <a href="{{ comment_url }}">new comment</a> on <em><a href="{{ object_url }}">{{ object }}</a></em>.{% endblocktrans %}

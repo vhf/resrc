@@ -17,9 +17,11 @@ urlpatterns = patterns(
 
     # third party includes
     url(r'^ca/', include('captcha.urls')),
-    url(r'^co/', include('resrc.mptt_comments.urls')),
+    url(r'^co/', include('mptt_comments.urls')),
 
     url(r'^$', page.views.home),
+
+    url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
 )
 
 if settings.DEBUG:
