@@ -1,0 +1,1 @@
+{% load mptt_comments_tags %} comment {% if preview %}preview{% endif %} comment_level_{{ comment.level }} {% mptt_comment_print_collapse_state comment %} {% if comment.is_removed %}is_removed{% endif %} {% if detail_comment == comment %}detail_comment{% endif %}

@@ -47,8 +47,8 @@
       </p>
       <p>
         <h6 class="byline">
-          {% with profile=link.author|profile %}
-          by <a href="{{ profile.get_absolute_url }}">{{ link.author.username }}</a> | <span class="data">{{ link.pubdate|timesince }} ago</span>
+          {% with author=link.author|profile %}
+          by <a href="{{ author.get_absolute_url }}">{{ author.user.username }}</a> | <span class="data">{{ link.pubdate|timesince }} ago</span>
           {%endwith%}
         </h6>
         <hr />

@@ -1,3 +1,0 @@
-{% load i18n %}
-{% url profile_detail username=parent_comment_user as other_user_url %}
-{% blocktrans with comment.get_absolute_url as comment_url and parent_comment.get_absolute_url as parent_comment_url %}You have <a href="{{ comment_url }}">replied</a> to a <a href="{{ parent_comment_url }}">comment</a> by <a href="{{ other_user_url }}">{{ parent_comment_user }}</a> on <em><a href="{{ object.get_absolute_url }}">{{ object }}</a></em>.{% endblocktrans %}

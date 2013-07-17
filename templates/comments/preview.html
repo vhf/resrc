@@ -1,0 +1,11 @@
+{% extends "comments/base.html" %}
+{% load mptt_comments_tags %}
+{# replace with your own base template and content block #}
+
+{% block extrahead %}
+	{% mptt_comments_media_css %}
+{% endblock %}
+
+{% block content %}
+    {% include "comments/preview_comment.html" %}
+{% endblock %}
