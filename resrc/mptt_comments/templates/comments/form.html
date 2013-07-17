@@ -1,6 +1,7 @@
     {% load comments %}
     {% load i18n %}
 
+{% if user.is_authenticated %}
     <form action="{% comment_form_target %}" method="POST">
         <fieldset>
             <ol>
@@ -30,3 +31,4 @@
             </ol>
         </fieldset>
     </form>
+{% endif %}

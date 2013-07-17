@@ -78,11 +78,7 @@ def post_comment(request, next=None):
     # Fill out some initial data fields from an authenticated user, if present
     data = request.POST.copy()
 
-    if request.user.is_authenticated():
-        if not data.get('name', ''):
-            data["name"] = request.user.get_full_name()
-        if not data.get('email', ''):
-            data["email"] = request.user.email
+    data["user"] = request.user
 
     # Look up the object we're trying to comment about
     ctype = data.get("content_type")

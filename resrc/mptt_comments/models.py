@@ -16,9 +16,7 @@ class MpttCommentManager(CommentManager):
             object_pk=object_pk,
             defaults={
                 'comment': 'Root comment placeholder',
-                'user_name': 'Noname',
-                'user_email': 'no@user.no',
-                'user_url': '',
+                'user': '',
                 'submit_date': datetime.datetime.now(),
                 'site_id': settings.SITE_ID
             })
