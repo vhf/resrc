@@ -1,44 +1,70 @@
-    {% load markup %}
     {% load i18n %}
     {% load mptt_tags %}
     {% load mptt_comments_tags %}
     {% load comparison %}
+    
+    {% if tree %}
+        {% if not tree.new_level %}
+            </div>
+        {% endif %}
+    {% endif %}
 
-    <div class="comment comment_level_{{ comment.level }}
-            {% if_greater comment.level collapse_levels_above %} comment_collapsed{% endif_greater %}
-            " id="comment_{{ comment.pk }}">
+    <div class="comment comment_level_{{ comment.level }} {% mptt_comment_print_collapse_state comment %} {% if comment.is_removed %}is_removed{% endif %}" id="comment_{{ comment.pk }}">
     <!-- this_is_a_comment -->
-
-    <p class="comment_title"><a class="comment_expand" href="{% url comment-detail comment.pk %}">{{ comment.title }}</a></p>
-
-    <div class="comment_content {% if_less comment.level collapse_levels_below %} comment_collapsed_below{% endif_less %}">
-
+        
+    <p class="comment_title">
+        <a class="comment_expand" href="{% url comment-detail comment.pk %}">
+            {% if comment.is_removed %}
+                {% trans "Comment removed" %}
+            {% else %}
+                {{ comment.title }}
+            {% endif %}
+        </a>
+    </p>
+    
+    <div class="comment_content">
+        
     <p class="comment_meta">
         <span class="commented_by">{% trans "Commented by" %} {{ comment.name }}</span> -
         <span class="commented_day">{{ comment.submit_date|date:"l" }}</span>,
         <span class="commented_date">{{ comment.submit_date|date:"j F" }}</span>
-        {% trans "at" %} <span class="commented_time">{{ comment.submit_date|date:"H:i" }}<span>
+        {% trans "at" %} <span class="commented_time">{{ comment.submit_date|date:"H:i" }}<span> 
     </p>
-
-    {{ comment.comment|markdown }}
-
-    <p>
-        {% if comment|children_count %}{% ifequal comment.level cutoff_level %}
-            <a class="comment_replies" href="{% url comments-subtree comment.pk %}">
-                {{ comment|children_count }} {% trans "hidden replies" %}
-            </a>
-        {% else %}
-            {{ comment|children_count }} {% trans "replies" %}
-        {% endifequal %} |{% endif %}
-         <a class="comment_post_new" href="#post_new_comment">
-            {% trans "Post a new comment" %}
-        </a> |
-        <a class="comment_reply" href="{% url comment-reply comment.pk %}">
-            {% trans "Reply to this comment" %}
-        </a>
-    </p>
-
+        
+    {% if comment.is_removed %}
+        {% trans "Comment removed" %}
+    {% else %}
+        {{ comment.comment|linebreaks }}
+    {% endif %}
+    
+    {% if debug %}
+        {% include "comments/_comment_debug.html" %}
+    {% endif %}
+    
+    {% include "comments/_comment_replies.html" %}
+    
     </div>
 
+    {% if tree %}
+        {% for level in tree.closed_levels %}
+            {% if forloop.parentloop.last %}
+            
+                {% if subcomments_remaining %}
+                    {% ifequal level 0 %}
+                        {% include "comments/_subcomments_remaining.html" %}
+                    {% endifequal %}
+                {% endif %}
 
-    </div>
+                {# not the topmost tree, skip closing some levels #}
+                {% if_greater_or_equal level bottom_level %}
+                    </div>
+                {% endif_greater_or_equal %}
+                
+            {% else %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        
+    {% else %}
+        </div>
+    {% endif %}

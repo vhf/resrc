@@ -1,5 +1,10 @@
 {% extends "base.html" %}
+{% load mptt_comments_tags %}
 {# replace with your own base template #}
+
+{% block extrahead %}
+	{% mptt_comments_media_css %}
+{% endblock %}
 
 {% block content %}
     {% load i18n %}

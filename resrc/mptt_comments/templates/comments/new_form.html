@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% load mptt_comments_tags %}
+
+{% block extrahead %}
+	{% mptt_comments_media_css %}
+{% endblock %}
 
 {% block content %}
-    <div class="comment_form">
     {% include "comments/form.html" %}
-    </div>
 {% endblock content %}

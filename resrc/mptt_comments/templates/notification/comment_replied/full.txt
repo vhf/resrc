@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans with comment.get_absolute_url as comment_url %}You have replied to a comment by {{ parent_comment_user }} on {{ object }}
+http://{{ current_site }}{{ comment_url }}
+{% endblocktrans %}

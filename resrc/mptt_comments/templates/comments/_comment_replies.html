@@ -1,0 +1,25 @@
+{% load mptt_comments_tags %}
+{% load i18n %}
+
+    <p class="comment_reply_links">
+        {% if comment|children_count %}
+            {% ifequal comment.level cutoff_level %}
+                <a class="comment_replies" href="{% url comments-subtree comment.pk %}">
+                    {{ comment|children_count }} {% trans "hidden replies" %}
+                </a>
+            {% else %}
+                <span class="comment_replies">{{ comment|children_count }} {% trans "replies" %}</span>
+            {% endifequal %} |        
+        {% else %}
+            <span class="comment_replies"></span>
+        {% endif %}
+         <a class="comment_post_new" href="#post_new_comment">
+            {% trans "Post a new comment" %}
+        </a> |
+        <a class="comment_reply" href="{% url comment-reply comment.pk %}">
+            {% trans "Reply to this comment" %}
+        </a> |
+        <a class="comment_flag" href="{% url comments-flag comment.pk %}">
+            {% trans "Flag this comment" %}
+        </a>
+    </p>
