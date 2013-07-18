@@ -1,11 +1,170 @@
 [
   {
     "pk": 1,
-    "model": "south.migrationhistory",
+    "model": "contenttypes.contenttype",
     "fields": {
-      "applied": "2013-07-16T16:18:12.614Z",
-      "app_name": "captcha",
-      "migration": "0001_initial"
+      "model": "permission",
+      "name": "permission",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "group",
+      "name": "group",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "user",
+      "name": "user",
+      "app_label": "auth"
+    }
+  },
+  {
+    "pk": 4,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "contenttype",
+      "name": "content type",
+      "app_label": "contenttypes"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "session",
+      "name": "session",
+      "app_label": "sessions"
+    }
+  },
+  {
+    "pk": 6,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "site",
+      "name": "site",
+      "app_label": "sites"
+    }
+  },
+  {
+    "pk": 7,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "comment",
+      "name": "comment",
+      "app_label": "comments"
+    }
+  },
+  {
+    "pk": 8,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "commentflag",
+      "name": "comment flag",
+      "app_label": "comments"
+    }
+  },
+  {
+    "pk": 9,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "migrationhistory",
+      "name": "migration history",
+      "app_label": "south"
+    }
+  },
+  {
+    "pk": 10,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "mpttcomment",
+      "name": "mptt comment",
+      "app_label": "mptt_comments"
+    }
+  },
+  {
+    "pk": 11,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "profile",
+      "name": "user",
+      "app_label": "userprofile"
+    }
+  },
+  {
+    "pk": 12,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "link",
+      "name": "Link",
+      "app_label": "link"
+    }
+  },
+  {
+    "pk": 13,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "list",
+      "name": "List",
+      "app_label": "list"
+    }
+  },
+  {
+    "pk": 14,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "tag",
+      "name": "tag",
+      "app_label": "tag"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "logentry",
+      "name": "log entry",
+      "app_label": "admin"
+    }
+  },
+  {
+    "pk": 16,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "captchastore",
+      "name": "captcha store",
+      "app_label": "captcha"
+    }
+  },
+  {
+    "pk": "fcxt9xggi8r31nb3624270y87wfa2frz",
+    "model": "sessions.session",
+    "fields": {
+      "expire_date": "2013-08-01T20:56:31.576Z",
+      "session_data": "NWFiMTAxNTQzYzRlY2U4MDY4YjMxNjEyNTk1NDBjMTVmMjI0YTRhZTqAAn1xAShYDwAAAF9zZXNzaW9uX2V4cGlyeXECSwBVCWdldF90b2tlbnEDVQxkMTA3NjlhZTEyYTdVEl9hdXRoX3VzZXJfYmFja2VuZHEEVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEFVQ1fYXV0aF91c2VyX2lkcQZLAnUu"
+    }
+  },
+  {
+    "pk": "iuns9r00cc1oacqah3hfrcu2q89gzo14",
+    "model": "sessions.session",
+    "fields": {
+      "expire_date": "2013-08-01T18:51:27.401Z",
+      "session_data": "NmI3ZWRiZmNmNGEwZjM4M2UzMmRjNGFkZmNlOTg1MWU4MzU0Yjg0NDqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLA3Uu"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "sites.site",
+    "fields": {
+      "domain": "example.com",
+      "name": "example.com"
     }
   },
   {
@@ -408,6 +567,96 @@
     }
   },
   {
+    "pk": 40,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_list",
+      "name": "Can delete List",
+      "content_type": 13
+    }
+  },
+  {
+    "pk": 41,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_tag",
+      "name": "Can add tag",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 42,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_tag",
+      "name": "Can change tag",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 43,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_tag",
+      "name": "Can delete tag",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 44,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_logentry",
+      "name": "Can add log entry",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 45,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_logentry",
+      "name": "Can change log entry",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 46,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
+      "content_type": 15
+    }
+  },
+  {
+    "pk": 47,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_captchastore",
+      "name": "Can add captcha store",
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 48,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_captchastore",
+      "name": "Can change captcha store",
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 49,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_captchastore",
+      "name": "Can delete captcha store",
+      "content_type": 16
+    }
+  },
+  {
     "pk": 1,
     "model": "auth.user",
     "fields": {
@@ -435,12 +684,210 @@
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2013-07-16T16:20:37.069Z",
+      "last_login": "2013-07-18T20:56:31.228Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$10000$yUcwNWkTtgw0$Am/9KkNfwXcPjY101CwzDmjvR5QU1YLjtq53xSBAnEQ=",
       "email": "victorfelder@gmail.com",
       "date_joined": "2013-07-16T16:19:11Z"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "auth.user",
+    "fields": {
+      "username": "foobar",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "is_superuser": false,
+      "is_staff": false,
+      "last_login": "2013-07-18T18:51:26.969Z",
+      "groups": [],
+      "user_permissions": [],
+      "password": "pbkdf2_sha256$10000$QnR8yA4jG3eK$hhzeaXu6nch6qUNtDpgXlFhOEopGAinUyo9/lFNAanA=",
+      "email": "foo@example.com",
+      "date_joined": "2013-07-18T18:51:26.169Z"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "First !",
+      "user_url": "",
+      "submit_date": "2013-07-18T20:56:42.729Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 3,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "foobar",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 2,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "Congrats",
+      "user_url": "",
+      "submit_date": "2013-07-18T20:57:25.358Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 2,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "victor",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "Thank you, kind sir.",
+      "user_url": "",
+      "submit_date": "2013-07-18T20:57:55.659Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 3,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "foobar",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 4,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "Do you know the joke with the 19 wapitis ?",
+      "user_url": "",
+      "submit_date": "2013-07-18T20:58:47.595Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 2,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "victor",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 5,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "Nope. Anyway, I like giraffes better.",
+      "user_url": "",
+      "submit_date": "2013-07-18T20:59:51.540Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 3,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "foobar",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 6,
+    "model": "comments.comment",
+    "fields": {
+      "comment": "Second !",
+      "user_url": "",
+      "submit_date": "2013-07-18T21:00:25.233Z",
+      "ip_address": "127.0.0.1",
+      "object_pk": "1",
+      "site": 1,
+      "is_removed": false,
+      "user": 2,
+      "content_type": 12,
+      "is_public": true,
+      "user_name": "victor",
+      "user_email": ""
+    }
+  },
+  {
+    "pk": 1,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 10,
+      "parent": null,
+      "level": 0,
+      "title": "",
+      "lft": 1,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 9,
+      "parent": 1,
+      "level": 1,
+      "title": "",
+      "lft": 2,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 8,
+      "parent": 2,
+      "level": 2,
+      "title": "",
+      "lft": 3,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 4,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 7,
+      "parent": 3,
+      "level": 3,
+      "title": "",
+      "lft": 4,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 5,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 6,
+      "parent": 4,
+      "level": 4,
+      "title": "",
+      "lft": 5,
+      "tree_id": 1
+    }
+  },
+  {
+    "pk": 6,
+    "model": "mptt_comments.mpttcomment",
+    "fields": {
+      "rght": 2,
+      "parent": null,
+      "level": 0,
+      "title": "",
+      "lft": 1,
+      "tree_id": 2
     }
   },
   {
@@ -451,6 +898,17 @@
       "about": "",
       "avatar_url": null,
       "user": 2,
+      "karma": null
+    }
+  },
+  {
+    "pk": 2,
+    "model": "userprofile.profile",
+    "fields": {
+      "favs": [],
+      "about": "",
+      "avatar_url": null,
+      "user": 3,
       "karma": null
     }
   },

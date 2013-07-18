@@ -1,4 +1,3 @@
-{% load i18n %}
 {% load mptt_comments_tags %}
 
 {% if user.is_authenticated %}
@@ -11,16 +10,10 @@
 
 {% get_mptt_comment_list for object as comments %}
 
-{% if comments %}
-
-{% endif %}
-
 <div id="mptt-comments-tree" class="block-comments-tree">
-
-{% if comments %}
-  {% include "comments/display_comments_tree.html" %}
-{% endif %}
-
+  {% if comments %}
+    {% include "comments/display_comments_tree.html" %}
+  {% endif %}
 </div>
 
 {% include "comments/_comments_remaining.html" %}

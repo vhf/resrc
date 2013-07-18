@@ -1,10 +1,10 @@
-{% extends "comments/base.html" %}
+{% extends "links/base.html" %}
 {% load mptt_comments_tags %}
 
-{% block extrafooterjs %}
-	{% mptt_comments_media_css %}
+{% block last_body %}
+  {% mptt_comments_media_css %}
 {% endblock %}
 
 {% block content %}
-    {% include "comments/form.html" %}
+  {% include "comments/form.html" %}
 {% endblock content %}

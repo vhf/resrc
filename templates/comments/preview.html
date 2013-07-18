@@ -1,8 +1,7 @@
-{% extends "comments/base.html" %}
+{% extends "links/base.html" %}
 {% load mptt_comments_tags %}
-{# replace with your own base template and content block #}
 
-{% block extrafooterjs %}
+{% block last_body %}
   {% mptt_comments_media_css %}
 {% endblock %}
 

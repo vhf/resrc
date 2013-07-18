@@ -11,10 +11,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+SITE_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'base.db',
+        'NAME': '%s/base.db' % SITE_ROOT,
         'USER': '',
         'PASSWORD': '',
         'HOST': '',
@@ -48,8 +50,6 @@ USE_L10N = True
 
 # If you set this to False, Django will not use timezone-aware datetimes.
 USE_TZ = True
-
-SITE_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"

@@ -3,12 +3,10 @@
 <div class="comment_form">
   <form action="{% comment_form_target %}" method="POST">
     {% csrf_token %}
-    <fieldset>
-      <ul>
+      <ul class="no-bullet">
       {% for field in form %}
         {% if not field.is_hidden %}
         <li class="{% if not field.field.required %}not{% endif %}required{% if field.errors %} errors{% endif %}{% if field.name == 'honeypot' %} hide{% endif %}">
-          {{ field.label_tag }}
           {{ field }}
           {{ field.errors }}
         </li>
@@ -24,11 +22,10 @@
           {% endif %}
         {% endfor %}
         {% if allow_post %}
-          <input type="submit" name="submit" class="submit-post" value="{% trans 'Post' %}">
+          <input type="submit" name="submit" class="small button" value="{% trans 'Post' %}">
         {% endif %}
-          <input type="submit" name="preview" class="submit-preview" value="{% trans 'Preview' %}">
+          <input type="submit" name="preview" class="small secondary button" value="{% trans 'Preview' %}">
       </li>
       </ul>
-    </fieldset>
   </form>
 </div>

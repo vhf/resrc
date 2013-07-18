@@ -1,14 +1,11 @@
-{% extends "comments/base.html" %}
+{% extends "links/base.html" %}
 {% load mptt_comments_tags %}
-{# replace with your own base template #}
 
-{% block extrafooterjs %}
-	{% mptt_comments_media_css %}
+{% block last_body %}
+  {% mptt_comments_media_css %}
 {% endblock %}
 
 {% block content %}
-    {% load i18n %}
-
-    <h1>Thanks for your comment</h1>
-    <p><a href="{{ comment.get_absolute_url }}">Back to the page you commented on</a></p>
+  <h1>Thanks for your comment</h1>
+  <p><a href="{{ comment.get_absolute_url }}">Back to the page you commented on</a></p>
 {% endblock %}

@@ -1,19 +1,57 @@
-h6.byline {
-  position: relative;
-  font-size: emCalc(13px);
-  .data {
-  }
-  .label {
-  }
-  margin-bottom: 6px;
-  margin-top: 4px;
-
+.comment_reply {
+  text-decoration: underline;
+  cursor: hand;
 }
 
-.indented.comment {
-  padding-left: 10px;
-  border-left: 3px solid #666;
-  &:last-child {
-    float: none;
+.comment_title {
+  font-size: emCalc(13px);
+  margin-bottom: 2px;
+  background: #eeeeee;
+  padding: 3px;
+}
+
+.comment_meta {
+  font-weight: bold;
+}
+
+.comment {
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  padding-left: 0.5em;
+  border-left: solid 4px #dddddd;
+}
+
+.preview {
+  border-color: #f0e6d6;
+}
+
+.preview.comment_title {
+  background: #eee5d7;
+}
+
+.comment_collapsed {
+  > .comment_outer {
+    > .comment_content {
+      display: none;
+    }
+  }
+}
+
+.comment_expanded {
+  > .comment_outer {
+    > .comment_content {
+      display: block;
+    }
+  }
+}
+
+.comment_debug {
+  font-size: 0.8em;
+  border: 1px solid black;
+  border-collapse: collapse;
+  & td, & th {
+    border: 1px solid black;
+    text-align: center;
+    padding: 0.3em;
   }
 }

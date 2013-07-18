@@ -1,6 +1,15 @@
 resrc
 =====
 
+# run the project
+- python manage.py syncdb && python manage.py migrate
+- accounts : root:qwer (superuser only), victor:qwer (superuser + user), foobar:qwer (user only)
+
+# temporary priority list
+1. lists
+2. tags
+3. template
+
 # basic features
 - **links**
 - a **link** can be commented

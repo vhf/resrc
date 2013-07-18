@@ -1,0 +1,22 @@
+.big-black-ic {
+  > .symbol {
+    font-size: emCalc(35px);
+    color: black;
+  }
+}
+
+i {
+  font-style: normal;
+}
+
+.symbol {
+  display: inline;
+  width: auto;
+  height: auto;
+  line-height: normal;
+  vertical-align: baseline;
+  margin-top: 0;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+}

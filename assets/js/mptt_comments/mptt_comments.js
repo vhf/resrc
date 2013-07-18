@@ -193,6 +193,10 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+    $('div.comment_collapsed > div > p > a.comment_expand.lsf.symbol').each(function() {
+        var nxt = $(this).text('right');
+    });
+
     $('.comments_more').live("click", function(e) {
         $.get($(this).attr('href') + '?is_ajax=1', { }, function(data, textStatus) {
             var comments_for_update = data.comments_for_update;

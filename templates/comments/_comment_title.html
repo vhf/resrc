@@ -11,6 +11,8 @@
       flag
   </a>
 
+  {% if debug %}{% include "comments/_comment_debug.html" %}{% endif %}
+
   {% if comment.is_removed %}
     Comment removed
   {% endif %}
@@ -18,7 +20,4 @@
     (PREVIEW)
   {% endif %}
 
-  {% if debug %}
-    {% include "comments/_comment_debug.html" %}
-  {% endif %}
 </p>

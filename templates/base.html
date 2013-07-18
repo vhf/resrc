@@ -110,10 +110,6 @@
     $(document).foundation();
   </script>
 
-  <!-- Application Javascript, safe to override -->
-  <script src="{% static "js/foundation/foundation.js" %}"></script>
-  {% block extrafooterjs %}{% endblock %}
-  <script src="{% static "js/resrc/threads.js" %}"></script>
   {# Google Analytics #}
   {% if not DEBUG %}
   <script type="text/javascript">

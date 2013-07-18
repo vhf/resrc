@@ -1,22 +1,14 @@
-{% extends "comments/base.html" %}
-{# replace with your own base template and content block #}
+{% extends "links/base.html" %}
 {% load mptt_comments_tags %}
 
 
-{% block extrafooterjs %}
-    {% mptt_comments_media %}
-{% endblock extrafooterjs %}
+{% block last_body %}
+    {% mptt_comments_media_js %}
+{% endblock last_body %}
 
 {% block content %}
-
-{% load i18n %}
-
-{% if comments %}<h2>Comments</h2>{% endif %}
-
-<div id="mptt-comments-tree" class="block-comments-tree">
-
-{% include "comments/display_comments_tree.html" %}
-
-</div>
-
+  {% if comments %}<h2>Comments</h2>{% endif %}
+  <div id="mptt-comments-tree" class="block-comments-tree">
+    {% include "comments/display_comments_tree.html" %}
+  </div>
 {% endblock %}
