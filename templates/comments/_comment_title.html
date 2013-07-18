@@ -1,10 +1,24 @@
-{% load i18n %}
 <p class="comment_title">
-    <a class="comment_expand" href="{% url "comment-detail" comment.pk %}">
-        {% if comment.is_removed %}
-            {% trans "Comment removed" %}
-        {% else %}
-            {{ comment.title }}
-        {% endif %}
-    </a>
+  <a class="comment_expand lsf symbol" href="{% url "comment-detail" comment_id %}">down</a>
+  {{ comment.name }}
+  |
+  {{ comment.submit_date|timesince }} ago
+  |
+  <a href="{% url "comment-detail" comment_id %}">link</a>
+  |
+
+  <a class="comment_flag" href="{% url "comments-flag" comment.pk %}">
+      flag
+  </a>
+
+  {% if comment.is_removed %}
+    Comment removed
+  {% endif %}
+  {% if preview %}
+    (PREVIEW)
+  {% endif %}
+
+  {% if debug %}
+    {% include "comments/_comment_debug.html" %}
+  {% endif %}
 </p>

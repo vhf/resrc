@@ -1,0 +1,12 @@
+.comment_reply { text-decoration: underline; cursor: hand; }
+.comment_title { font-size: 0.9em; font-weight: bold; margin-bottom: 2px; background: #eeeeee; padding: 3px;}
+.comment_meta { font-weight: bold; }
+.comment { margin-left: 0.5em; margin-top: 0.5em; padding-left: 0.5em; border-left: solid 4px #dddddd; }
+.preview { border-color: #f0e6d6; }
+.preview .comment_title { background: #eee5d7; }
+.comment_collapsed > .comment_outer > .comment_content { display: none; }
+.comment_collapsed .comment_title { }
+.comment_expanded > .comment_outer > .comment_content { display: block; }
+.comment_form li.hidden { display: none; }
+.comment_debug { font-size: 0.8em; border: 1px solid black; border-collapse: collapse; }
+.comment_debug td, .comment_debug th { border: 1px solid black; text-align: center; padding: 0.3em; }

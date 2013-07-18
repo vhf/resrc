@@ -1,4 +1,3 @@
-{% load i18n %}
 {% load comments %}
 {% load mptt_comments_tags %}
 {% load pagination_tags %}
@@ -10,7 +9,7 @@
 {% if comments %}
     {% get_comment_count for object as comment_count %}
     {% get_mptt_comment_toplevel_count for object as comment_toplevel_count %}
-    <h2>{% trans "Comments" %} {% blocktrans %}(<span id="comment_count">{{ comment_count }}</span> comments in <span id="comment_toplevel_count">{{ comment_toplevel_count }}</span> threads){% endblocktrans %}</h2>
+    <h2>Comments {% blocktrans %}(<span id="comment_count">{{ comment_count }}</span> comments in <span id="comment_toplevel_count">{{ comment_toplevel_count }}</span> threads){% endblocktrans %}</h2>
     {% if not internal_pagination %}
         {% paginate %}
     {% endif %}
@@ -24,9 +23,9 @@
     {% endif %}
     {# FIXME: else, fix "remaining" to use it in alternate mode #}
 {% endif %}
-<h2 id="post_new_comment">{% trans "Post a new comment" %}</h2>
+<h2 id="post_new_comment">Post a new comment</h2>
 <div class="new_comment_form_wrapper">
 {% get_mptt_comment_form for object as form %}
 {% include "comments/form.html" %}
-</div> 
+</div>
 

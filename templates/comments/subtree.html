@@ -3,20 +3,20 @@
 {% load mptt_comments_tags %}
 
 
-{% block extrahead %}
+{% block extrafooterjs %}
     {% mptt_comments_media %}
-{% endblock extrahead %}
+{% endblock extrafooterjs %}
 
 {% block content %}
 
 {% load i18n %}
 
-{% if comments %}<h2>{% trans "Comments" %}</h2>{% endif %}
- 
+{% if comments %}<h2>Comments</h2>{% endif %}
+
 <div id="mptt-comments-tree" class="block-comments-tree">
-        
-{% include "comments/display_comments_tree.html" %}    
-       
+
+{% include "comments/display_comments_tree.html" %}
+
 </div>
 
 {% endblock %}

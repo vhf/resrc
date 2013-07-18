@@ -2,10 +2,10 @@
 {% load mptt_comments_tags %}
 {# replace with your own base template and content block #}
 
-{% block extrahead %}
-	{% mptt_comments_media_css %}
+{% block extrafooterjs %}
+  {% mptt_comments_media_css %}
 {% endblock %}
 
 {% block content %}
-    {% include "comments/preview_comment.html" %}
+  {% include "comments/preview_comment.html" %}
 {% endblock %}

@@ -1,64 +1,60 @@
-    {% load i18n %}
-    {% load mptt_tags %}
-    {% load mptt_comments_tags %}
+{% load mptt_tags %}
+{% load mptt_comments_tags %}
+{% load emarkdown %}
 
-    {% if tree %}
-        {% if not tree.new_level %}
-            </div>
-        {% endif %}
-    {% endif %}
-
-    <div class="{% include 'comments/_comment_class.html' %}" id="c{{ comment.pk }}">
-
-    <div class="comment_outer">
-        {% block comment_header %}
-            {% include "comments/_comment_title.html" %}
-        {% endblock %}
-
-        <div class="comment_content">
-            {% block comment_meta %}
-                {% include "comments/_comment_meta.html" %}
-            {% endblock %}
-
-            {% block comment_body %}
-                {% if comment.is_removed %}
-                    {% trans "Comment removed" %}
-                {% else %}
-                    {{ comment.comment|linebreaks }}
-                {% endif %}
-            {% endblock %}
-
-            {% if debug %}
-                {% include "comments/_comment_debug.html" %}
-            {% endif %}
-
-            {% block comment_footer %}
-                {% include "comments/_comment_replies.html" %}
-            {% endblock %}
-
-        </div>
+{% if tree %}
+  {% if not tree.new_level %}
     </div>
+  {% endif %}
+{% endif %}
 
-    {% if tree %}
-        {% for level in tree.closed_levels %}
-            {% if forloop.parentloop.last %}
+{% with comment_id=comment.pk|default:"preview" %}
+<div class="{% include 'comments/_comment_class.html' %}" id="c{{ comment_id }}">
 
-                {% if subcomments_remaining %}
-                    {% if level == 0 %}
-                        {% include "comments/_subcomments_remaining.html" %}
-                    {% endif %}
-                {% endif %}
 
-                {# not the topmost tree, skip closing some levels #}
-                {% if level >= bottom_level %}
-                    </div>
-                {% endif %}
+<div class="comment_outer">
+  {% block comment_header %}
+    {% include "comments/_comment_title.html" with comment_id=comment_id %}
+  {% endblock %}
 
-            {% else %}
-                </div>
-            {% endif %}
-        {% endfor %}
+  <div class="comment_content">
+
+    {% block comment_body %}
+      {% if comment.is_removed %}
+        Comment removed
+      {% else %}
+        {{ comment.comment|emarkdown }}
+      {% endif %}
+    {% endblock %}
+
+    {% block comment_footer %}
+      {% include "comments/_comment_replies.html" %}
+    {% endblock %}
+
+  </div>
+</div>
+
+{% if tree %}
+  {% for level in tree.closed_levels %}
+    {% if forloop.parentloop.last %}
+
+      {% if subcomments_remaining %}
+        {% if level == 0 %}
+          {% include "comments/_subcomments_remaining.html" %}
+        {% endif %}
+      {% endif %}
+
+      {# not the topmost tree, skip closing some levels #}
+      {% if level >= bottom_level %}
+        </div>
+      {% endif %}
 
     {% else %}
-        </div>
+      </div>
     {% endif %}
+  {% endfor %}
+
+{% else %}
+  </div>
+{% endif %}
+{% endwith %}

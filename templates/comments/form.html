@@ -1,34 +1,34 @@
-        
-    {% load comments %}
-    {% load i18n %}
-    <div class="comment_form">
-    <form action="{% comment_form_target %}" method="POST">{% csrf_token %}
-        <fieldset>
-            <ul>
-            {% for field in form %}
-                {% if not field.is_hidden %}
-                <li class="{% if not field.field.required %}not{% endif %}required{% if field.errors %} errors{% endif %}{% if field.name == 'honeypot' %} hidden{% endif %}">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    {{ field.errors }}
-                </li>
-                {% endif %}
-            {% endfor %}
-                {% if form.non_field_errors %}
-                <li class="errors">{{ form.non_field_errors }}</li>
-                {% endif %}
-                <li>
-                {% for field in form %}
-                    {% if field.is_hidden %}
-                        {{ field }}
-                    {% endif %}
-                {% endfor %}
-                {% if allow_post %}
-                  <input type="submit" name="submit" class="submit-post" value="{% trans 'Post' %}">
-                {% endif %}
-                  <input type="submit" name="preview" class="submit-preview" value="{% trans 'Preview' %}">
-                </li>
-            </ul>
-        </fieldset>
-    </form>
-    </div>
+{% load comments %}
+{% load i18n %}
+<div class="comment_form">
+  <form action="{% comment_form_target %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+      <ul>
+      {% for field in form %}
+        {% if not field.is_hidden %}
+        <li class="{% if not field.field.required %}not{% endif %}required{% if field.errors %} errors{% endif %}{% if field.name == 'honeypot' %} hide{% endif %}">
+          {{ field.label_tag }}
+          {{ field }}
+          {{ field.errors }}
+        </li>
+        {% endif %}
+      {% endfor %}
+      {% if form.non_field_errors %}
+        <li class="errors">{{ form.non_field_errors }}</li>
+      {% endif %}
+      <li>
+        {% for field in form %}
+          {% if field.is_hidden %}
+            {{ field }}
+          {% endif %}
+        {% endfor %}
+        {% if allow_post %}
+          <input type="submit" name="submit" class="submit-post" value="{% trans 'Post' %}">
+        {% endif %}
+          <input type="submit" name="preview" class="submit-preview" value="{% trans 'Preview' %}">
+      </li>
+      </ul>
+    </fieldset>
+  </form>
+</div>
