@@ -2,8 +2,9 @@ resrc
 =====
 
 # run the project
-- python manage.py syncdb && python manage.py migrate
-- accounts : root:qwer (superuser only), victor:qwer (superuser + user), foobar:qwer (user only)
+1. python manage.py syncdb python manage.py migrate
+2. Say no to superuser creation. Use credentials root:qwer
+3. sample accounts : victor:qwer (superuser + user), foobar:qwer (user only)
 
 # temporary priority list
 1. lists

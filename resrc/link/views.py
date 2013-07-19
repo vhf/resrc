@@ -16,8 +16,6 @@ def single(request, link_pk, link_slug=None):
 
     return render_template('links/show_single.html', {
         'link': link,
-        'got': link_slug,
-        'expected': link.get_slug(),
         'user': request.user,
         'request': request
     })

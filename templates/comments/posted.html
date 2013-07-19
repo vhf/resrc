@@ -6,6 +6,13 @@
 {% endblock %}
 
 {% block content %}
-  <h1>Thanks for your comment</h1>
-  <p><a href="{{ comment.get_absolute_url }}">Back to the page you commented on</a></p>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+        <h1>Thanks for your comment</h1>
+        <p><a href="{{ comment.get_absolute_url }}">Back to the page you commented on</a></p>
+      </p>
+    </div>
+  </div>
 {% endblock %}

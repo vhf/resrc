@@ -1,0 +1,69 @@
+{% extends "lists/base.html" %}
+{% load profile %}
+{% load mptt_comments_tags %}
+
+{% block title %}
+    lala
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="small-9 columns">
+        <p>
+          <ul class="inline-list">
+            <li><a href="#" class="radius secondary label">tags</a></li>
+            <li><a href="#" class="radius secondary label">most</a></li>
+            <li><a href="#" class="radius secondary label">common</a></li>
+            <li><a href="#" class="radius secondary label">in</a></li>
+            <li><a href="#" class="radius secondary label">list</a></li>
+          </ul>
+        </p>
+    </div>
+    <div class="small-3 columns text-right big-black-ic">
+        <i class="lsf symbol">addstar</i>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <h3><a href="{{ list.url }}">{{ list.title }}</a></h3>
+      <p class="byline">
+        {% with author=list.owner %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} (should be DAYSINCE not TIMESINCE, DATE field here...) ago
+        {%endwith%}
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="large-12 columns">
+      <p>
+      {% with links=list.links.all %}
+        {% for link in links %}
+        <hr />
+        <h4>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.title }}</a></h4>
+        <p class="byline">
+          {% with author=link.author %}
+          by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago
+          {%endwith%}
+        </p>
+        {% endfor %}
+      {% endwith %}
+      </p>
+    </div>
+  </div>
+
+{% endblock %}
+
+
+{% block last_body %}
+{% endblock last_body %}

@@ -29,7 +29,7 @@ $(document).ready(function() {
     function append_data_and_rebind_form(node, data) {
         node.empty();
         node.append(data);
-        node.slideDown("slow");
+        node.toggle(); console.log('32')
 
         var form = $("form", node);
         bind_submit(form, node);
@@ -60,7 +60,7 @@ $(document).ready(function() {
             $('.' + classname, nxt).html(data);
         }
         if (nxt.is(':hidden')) {
-            nxt.show();
+            nxt.toggle(); console.log('63')
         }
     }
 
@@ -149,25 +149,32 @@ $(document).ready(function() {
         }
         else if (!nxt.length) {
             nxt = $('<div class="comment_form_wrapper"></div>').insertAfter(parent);
-            nxt.hide();
+            nxt.toggle();
         }
-        else {
-            nxt.slideUp("slow");
+        visible = nxt.is(':visible');
+        if(!visible && nxt.find('form').length == 0) {
+            load_new_comment_form($(this).attr('href') + '?is_ajax=1', nxt);
+        } else {
+            nxt.toggle()
         }
-
-        load_new_comment_form($(this).attr('href') + '?is_ajax=1', nxt);
         e.preventDefault();
     });
 
     $('a.comment_cutoff').live("click", function(e) {
         var href = $(this).attr('href');
         var id = 'c' + (new RegExp("(\\d+)/$").exec(href)[1]);
+        var link = $(this);
+        var loaded = false;
 
         if (!is_in(replies_loaded, id)) {
             $.get($(this).attr('href') + '?is_ajax=1', {}, function(data, textStatus) {
                 var comments_tree = data.comments_tree;
                 if (comments_tree) {
                     $('#' + id).append(comments_tree.html);
+                    count = link.text().match(/\d+/);
+                    count = parseInt(count[0], 10);
+                    text = count+(count > 1 ? ' replies' : ' reply');
+                    link.replaceWith('<span class="comment_replies" data-commentscount="'+count+'">'+text+'</span>');
                 }
                 replies_loaded.push(id);
             }, "json");
@@ -241,7 +248,7 @@ $(document).ready(function() {
                 more.attr('href', old_href.replace(new RegExp("\\d+/$"), last_comment_pk + '/'));
             }
             else {
-                morep.hide();
+                morep.toggle(); console.log('250')
             }
 
         }, "json");

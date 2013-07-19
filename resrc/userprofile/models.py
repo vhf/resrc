@@ -16,12 +16,11 @@ class Profile(models.Model):
 
     user = models.ForeignKey(User, unique=True, verbose_name='user')
 
-    avatar_url = models.CharField(
-        'avatar URL', max_length=128, null=True, blank=True)
-
     about = models.TextField('about', blank=True)
 
     karma = models.IntegerField('karma', null=True, blank=True)
+
+    show_email = models.BooleanField(default=False)
 
     favs = models.ManyToManyField(
         Link, related_name="%(app_label)s_%(class)s_related")
@@ -32,14 +31,8 @@ class Profile(models.Model):
     def get_absolute_url(self):
         return '/u/user/{0}'.format(self.user.username)
 
-    def get_avatar_url(self):
-        if self.avatar_url:
-            return self.avatar_url
-        else:
-            return 'http://gravatar.com/avatar/{0}?d=identicon'.format(md5(self.user.email).hexdigest())
 
     # Links
-
     def get_links(self):
         return Link.objects.all().filter(owner__pk=self.user.pk)
 
@@ -47,7 +40,6 @@ class Profile(models.Model):
         return self.get_links().count()
 
     # Lists
-
     def get_lists(self):
         return List.objects.filter(owner__pk=self.user.pk)
 

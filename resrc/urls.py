@@ -11,7 +11,7 @@ urlpatterns = patterns(
     '',
     url(r'^u/',  include('resrc.userprofile.urls')),
     url(r'^lk/', include('resrc.link.urls')),
-    # url(r'^ls/', include('resrc.list.urls')),
+    url(r'^ls/', include('resrc.list.urls')),
     url(r'^p/',  include('resrc.page.urls')),
     url(r'^a/',  include(admin.site.urls)),
 

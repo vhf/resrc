@@ -2,58 +2,59 @@
 {% load emarkdown %}
 {% load markup %}
 {% load email_obfuscator %}
+{% load gravatar %}
 
 {% block title %}
-    {{ usr.username }}
+  {{ usr.username }}
 {% endblock %}
 
 {% block headline %}
-    {{ usr.username }}
+  {{ usr.username }}
 {% endblock %}
 
 {% block breadcrumb %}
-    <li class="current"><a href="#">{{ usr.username }}</a></li>
+  <li class="current"><a href="#">{{ usr.username }}</a></li>
 {% endblock %}
 
 {% block headline-actions %}
-    {% ifequal profile.user user %}
-        <a href="{% url "resrc.userprofile.views.settings_profile" %}" class="button">
-            Settings
-        </a>
-    {% endifequal %}
+  {% ifequal profile.user user %}
+    <a href="{% url "resrc.userprofile.views.settings_profile" %}" class="button">
+      Settings
+    </a>
+  {% endifequal %}
 {% endblock %}
 
 {% block content %}
 
 <div class="row">
-    <div class="large-2 columns">
-        <img src="{{ profile.get_avatar_url }}" alt="Avatar" width="80" height="80" class="th"/>
-    </div>
-    <div class="large-10 columns">
-        <p>
-            {% if profile.show_email and user.is_authenticated %}
-                email : {{ usr.email|obfuscate_mailto }}<br />
-            {% endif %}
-
-            joined : {{ usr.date_joined|timesince }}<br />
-            last seen : {{ usr.last_login|timesince }}.
-        </p>
-    </div>
+  <div class="left text-center">
+    <h2>{{ usr.username }}</h2>
+    <span class="hide-for-small">
+      {% gravatar usr.email %}
+    </span>
+  </div>
+  <div class="left" style="padding-top: 10px; margin-left: 20px;">
+    <p class="hide-for-small">
+      joined : {{ usr.date_joined|timesince }} ago
+      <br />
+      last seen : {{ usr.last_login|timesince }} ago.
+    </p>
+    <p>
+      {% if profile.show_email and user.is_authenticated %}
+        email : {{ usr.email|obfuscate_mailto }}<br />
+      {% endif %}
+    </p>
+    <p>
+      {% if profile.about %}
+        <h5>about me :</h5>
+        {{ profile.about|emarkdown }}
+      {% endif %}
+    </p>
+  </div>
 </div>
+
 
 {# links : {{ profile.get_links }} #}
 
-{# Biography #}
-
-{% if profile.about %}
-
-<div class="row">
-    <div class="large-12 columns">
-        <h2>about</h2>
-        {{ profile.about|emarkdown }}
-    </div>
-</div>
-
-{% endif %}
 
 {% endblock %}

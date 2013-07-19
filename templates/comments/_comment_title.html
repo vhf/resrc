@@ -1,6 +1,6 @@
 <p class="comment_title">
   <a class="comment_expand lsf symbol" href="{% url "comment-detail" comment_id %}">down</a>
-  {{ comment.name }}
+  <a href="{% url "user-url" comment.name %}">{{ comment.name }}</a>
   |
   {{ comment.submit_date|timesince }} ago
   |

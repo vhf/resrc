@@ -20,3 +20,5 @@ class List(models.Model):
     owner = models.ForeignKey(User, related_name="list_owner")
 
     is_public = models.BooleanField(default=True)
+
+    pubdate = models.DateField(auto_now_add=True)

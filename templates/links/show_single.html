@@ -32,7 +32,6 @@
         <i class="lsf symbol">addstar</i>
         <i class="lsf symbol">save</i>
         <i class="lsf symbol" data-reveal-id="add-to-list">list</i>
-      </p>
     </div>
   </div>
 
@@ -40,8 +39,8 @@
     <div class="large-12 columns">
       <h3><a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
-        {% with author=link.author|profile %}
-        by <a href="{{ author.get_absolute_url }}">{{ author.user.username }}</a> | {{ link.pubdate|timesince }} ago
+        {% with author=link.author %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago
         {%endwith%}
       </p>
     </div>

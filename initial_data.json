@@ -160,6 +160,14 @@
     }
   },
   {
+    "pk": "m4cwock58r2o9iplwibpb73ufajic6mv",
+    "model": "sessions.session",
+    "fields": {
+      "expire_date": "2013-08-02T16:44:23.721Z",
+      "session_data": "YjhhYjBjMzg5MzViZTI3ZTY0YTU2ZDE2ZmQ4ZmIwMmJlMThkYjQzZTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAnUu"
+    }
+  },
+  {
     "pk": 1,
     "model": "sites.site",
     "fields": {
@@ -684,7 +692,7 @@
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2013-07-18T20:56:31.228Z",
+      "last_login": "2013-07-19T16:44:23.452Z",
       "groups": [],
       "user_permissions": [],
       "password": "pbkdf2_sha256$10000$yUcwNWkTtgw0$Am/9KkNfwXcPjY101CwzDmjvR5QU1YLjtq53xSBAnEQ=",
@@ -894,9 +902,9 @@
     "pk": 1,
     "model": "userprofile.profile",
     "fields": {
+      "show_email": true,
       "favs": [],
       "about": "",
-      "avatar_url": null,
       "user": 2,
       "karma": null
     }
@@ -905,9 +913,9 @@
     "pk": 2,
     "model": "userprofile.profile",
     "fields": {
+      "show_email": true,
       "favs": [],
       "about": "",
-      "avatar_url": null,
       "user": 3,
       "karma": null
     }
@@ -926,6 +934,19 @@
         2,
         4
       ]
+    }
+  },
+  {
+    "pk": 1,
+    "model": "list.list",
+    "fields": {
+      "owner": 2,
+      "is_public": true,
+      "links": [
+        1
+      ],
+      "pubdate": "2013-07-19",
+      "title": "Reading list"
     }
   },
   {
@@ -1004,6 +1025,19 @@
       "change_message": "",
       "user": 2,
       "content_type": 9
+    }
+  },
+  {
+    "pk": 7,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-07-19T16:44:44.545Z",
+      "object_repr": "List object",
+      "object_id": "1",
+      "change_message": "",
+      "user": 2,
+      "content_type": 13
     }
   }
 ]

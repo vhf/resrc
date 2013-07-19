@@ -21,11 +21,12 @@ from resrc.link.models import Link
 from resrc.list.models import List
 
 
-def index(request):
+def user_list(request):
     '''user directory'''
-    users = User.objects.order_by('date_joined')
-    return render_template('user/index.html', {
-        'users': users
+    #profiles = Profile.objects.select_related('User').order_by('user__date_joined')
+    users = User.objects.exclude(username='root')
+    return render_template('user/list.html', {
+        'users': list(users)
     })
 
 
@@ -39,7 +40,8 @@ def details(request, user_name):
         raise Http404
 
     return render_template('user/profile.html', {
-        'usr': usr, 'profile': profile
+        'usr': usr,
+        'profile': profile
     })
 
 
