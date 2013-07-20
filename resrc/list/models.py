@@ -14,11 +14,24 @@ class List(models.Model):
 
     title = models.CharField('title', max_length=80)
 
+    description = models.TextField('description')
+
     links = models.ManyToManyField(
-        Link, related_name="%(app_label)s_%(class)s_related")
+        Link,
+        through='ListLinks',
+        related_name="%(app_label)s_%(class)s_related")
 
     owner = models.ForeignKey(User, related_name="list_owner")
 
     is_public = models.BooleanField(default=True)
 
+    is_ordered = models.BooleanField(default=False)
+
     pubdate = models.DateField(auto_now_add=True)
+
+
+# https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
+class ListLinks(models.Model):
+    alist = models.ForeignKey(List)
+    links = models.ForeignKey(Link)
+    position_in_list = models.IntegerField(blank=True)

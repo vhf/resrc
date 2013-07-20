@@ -2,6 +2,7 @@
 from hashlib import md5
 
 from django.db import models
+from django.core import urlresolvers
 from django.contrib.auth.models import User
 
 from resrc.link.models import Link
@@ -29,8 +30,7 @@ class Profile(models.Model):
         return self.user.username
 
     def get_absolute_url(self):
-        return '/u/user/{0}'.format(self.user.username)
-
+        return urlresolvers.reverse("user-url", args=(self.user.username, ))
 
     # Links
     def get_links(self):

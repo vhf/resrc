@@ -36,6 +36,7 @@
   <div class="row">
     <div class="large-12 columns">
       <h3><a href="{{ list.url }}">{{ list.title }}</a></h3>
+      <p>{{ list.description }}</p>
       <p class="byline">
         {% with author=list.owner %}
         by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} (should be DAYSINCE not TIMESINCE, DATE field here...) ago
@@ -52,9 +53,7 @@
         <hr />
         <h4>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.title }}</a></h4>
         <p class="byline">
-          {% with author=link.author %}
-          by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago
-          {%endwith%}
+          <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
         </p>
         {% endfor %}
       {% endwith %}

@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-:
 from django.db import models
 
-from django.contrib.auth.models import User
+from django.core import urlresolvers
 from django.template.defaultfilters import slugify
+from django.contrib.comments import get_model
+from django.contrib.auth.models import User
+
 from resrc.tag.models import Tag
 
 
@@ -32,5 +35,14 @@ class Link(models.Model):
     def get_slug(self):
         return slugify(self.title)
 
+    def get_comment_count(self):
+        return get_model().objects.filter(object_pk=self.pk).count()
+
     def get_absolute_url(self):
-        return '/lk/{0}/{1}'.format(self.pk, self.get_slug())
+        return urlresolvers.reverse("link-single-slug", args=(
+            self.pk,
+            self.get_slug()
+        ))
+
+    # def get_absolute_url(self):
+    #     return '/lk/{0}/{1}'.format(self.pk, self.get_slug())

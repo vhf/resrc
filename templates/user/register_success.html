@@ -14,8 +14,11 @@ Registration
 
 {% block content %}
 
-<p>
-You have successfully registred. Go to your <a href="{% url "resrc.userprofile.views.details" user.username %}">profil</a>.
-</p>
+<div class="row">
+  <div class="large-12 columns">
+    <h3>Registration successful.</h3>
+    <p>Go to your <a href="{% url "resrc.userprofile.views.details" user.username %}">account</a>.</p>
+  </div>
+</div>
 
 {% endblock %}
