@@ -117,13 +117,18 @@ def settings_profile(request):
         }
         if form.is_valid():
             profile.about = form.data['about']
-            profile.avatar_url = form.data['avatar_url']
+            request.user.email = form.data['email']
+            if 'show_email' in form.data:
+                profile.show_email = form.data['show_email']
+            else:
+                profile.show_email = False
 
             # Save the profile
             # and redirect the user to the configuration space
             # with message indicate the state of the operation
             try:
                 profile.save()
+                request.user.save()
             except:
                 messages.error(request, 'Error')
                 return redirect('/u/edit')
@@ -136,7 +141,9 @@ def settings_profile(request):
     else:
         form = ProfileForm(request.user, initial={
             'about': profile.about,
-            'avatar_url': profile.avatar_url}
+            'email': request.user.email,
+            'show_email': profile.show_email
+            }
         )
         c = {
             'form': form

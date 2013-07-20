@@ -1,17 +1,20 @@
 resrc
 =====
 
-# run the project
+### TODO and FIXME everywhere
+`grep TODO -R *` kthxbye
+
+### run the project
 1. python manage.py syncdb python manage.py migrate
 2. Say no to superuser creation. Use credentials root:qwer
 3. sample accounts : victor:qwer (superuser + user), foobar:qwer (user only)
 
-# temporary priority list
+### temporary priority list
 1. lists
 2. tags
 3. template
 
-# basic features
+## basic features
 - **links**
 - a **link** can be commented
 - a **user** can create **lists** of **links**

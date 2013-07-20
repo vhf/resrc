@@ -21,7 +21,7 @@ class Profile(models.Model):
 
     karma = models.IntegerField('karma', null=True, blank=True)
 
-    show_email = models.BooleanField(default=False)
+    show_email = models.BooleanField('show_email', default=False)
 
     favs = models.ManyToManyField(
         Link, related_name="%(app_label)s_%(class)s_related")

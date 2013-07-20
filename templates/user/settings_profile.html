@@ -2,19 +2,19 @@
 {% load crispy_forms_tags %}
 
 {% block breadcrumb %}
-    <li><a href="{% url "resrc.userprofile.views.settings_profile" %}">Settings</a></li>
-    <li class="current"><a href="#">Profil</a></li>
+  <li><a href="{% url "resrc.userprofile.views.settings_profile" %}">Settings</a></li>
+  <li class="current"><a href="#">Profile</a></li>
 {% endblock %}
 
 {% block subnav %}
-    <dd class="active"><a href="{% url "resrc.userprofile.views.settings_profile" %}">Profil</a></dd>
-    <dd><a href="{% url "resrc.userprofile.views.settings_account" %}">Account</a></dd>
+  <dd class="active"><a href="{% url "resrc.userprofile.views.settings_profile" %}">Public profile</a></dd>
+  <dd><a href="{% url "resrc.userprofile.views.settings_account" %}">Change password</a></dd>
 {% endblock %}
 
 {% block settings_form %}
-    <div class="row">
-        <div class="large-12 columns">
-            {% crispy form %}
-        </div>
-    </div>
+<div class="row">
+  <div class="large-12 columns">
+    {% crispy form %}
+  </div>
+</div>
 {% endblock %}

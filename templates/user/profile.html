@@ -27,14 +27,19 @@
 {% block content %}
 
 <div class="row">
-  <div class="left text-center">
+  <div class="large-12 columns">
     <h2>{{ usr.username }}</h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-2 columns">
     <span class="hide-for-small">
       {% gravatar usr.email %}
     </span>
   </div>
-  <div class="left" style="padding-top: 10px; margin-left: 20px;">
-    <p class="hide-for-small">
+  <div class="large-10 columns">
+    <p>
       joined : {{ usr.date_joined|timesince }} ago
       <br />
       last seen : {{ usr.last_login|timesince }} ago.
@@ -46,7 +51,11 @@
     </p>
     <p>
       {% if profile.about %}
-        <h5>about me :</h5>
+        {% if usr.is_authenticated %}
+          <h5>about me :</h5>
+          {% else %}
+          <h5>about {{ usr.username }} :</h5>
+          {% endif %}
         {{ profile.about|emarkdown }}
       {% endif %}
     </p>

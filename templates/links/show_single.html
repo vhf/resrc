@@ -1,6 +1,7 @@
 {% extends "links/base.html" %}
 {% load profile %}
 {% load mptt_comments_tags %}
+{% load staticfiles %}
 
 {% block title %}
     lala
@@ -28,9 +29,9 @@
           </ul>
         </p>
     </div>
-    <div class="small-3 columns text-right big-black-ic">
-        <i class="lsf symbol">addstar</i>
-        <i class="lsf symbol">save</i>
+    <div class="small-3 columns text-right big-black-ic"><!-- FIXME: this is ugly. Need classes instead of inline styles. -->
+        <i class="lsf symbol" id="bookmark" style="color:{% if 'Bookmarks' in titles %}#2ba6cb{%else%}black{%endif%}">addstar</i>
+        <i class="lsf symbol" id="toread" style="color:{% if 'Reading list' in titles %}#2ba6cb{%else%}black{%endif%}">save</i>
         <i class="lsf symbol" data-reveal-id="add-to-list">list</i>
     </div>
   </div>
@@ -59,34 +60,52 @@
 
 
 {% block last_body %}
+  <script>
+  function add_to_list(list) {
+    $("#"+list).css('color', '#bbb');
+    $.ajax({
+      type:"POST",
+      url:"{% url "ajax_add_to_default_list" %}",
+      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list,
+      error: function(xhr) {
+        result = $.parseJSON(xhr.response).result;
+        if (result == 'added') {
+          $("#"+list).css('color', '#2ba6cb');
+        } else {
+            $("#"+list).css('color', 'black');
+        }
+      }
+    });
+  }
+  $("#bookmark").click(function() {
+    add_to_list('bookmark');
+  });
+  $("#toread").click(function() {
+    add_to_list('toread');
+  });
+  </script>
+
   {% mptt_comments_media_js %}
   <div id="add-to-list" class="small reveal-modal">
+    <!-- TODO: We'd better this modal's content only when opened. It would be way lighter in terms of markup **and SQL Queries** -->
+    <!-- EASY :] http://foundation.zurb.com/docs/components/reveal.html -->
     <form>
       <fieldset>
         <legend>Add to list</legend>
         <div class="row">
           <div class="small-8 columns">
-            <label for="list-437">
-                <input type="checkbox" value="437" name="sel_listes[437]" id="list-437" />
-                My own private list <span>(5 links)</span>
+            {% for list in lists %}
+            <label for="list-{{ list.pk }}">
+                <input type="checkbox" value="{{ list.pk }}" name="sel_listes[{{ list.pk }}]" id="list-{{ list.pk }}" {% if list.title in titles %}checked="checked"{% endif %}/>
+                {{ list.title }} <span>({{ list.links.count }} links)</span>
             </label>
-            <label for="list-902">
-              <input type="checkbox" value="902" name="sel_listes[902]" id="list-902" />
-              My new public list <span>(2 links)</span>
-            </label>
-            <label for="list-661">
-              <input type="checkbox" value="661" name="sel_listes[661]" id="list-661" />
-              Stars <span>(172 links)</span>
-            </label>
-            <label for="list-92">
-              <input type="checkbox" value="92" name="sel_listes[92]" id="list-92" />
-              To read <span>(44 links)</span>
-            </label>
+            {% endfor %}
           </div>
         </div>
         <div class="row">
           <div class="small-6 columns">
-            <button type="submit" name="move" class="small button">Add</button>
+            <!-- FIXME: Do we really want these two modals to be forms ? Ajax goodness anyone ?-->
+            <button type="submit" name="move" class="small button">Update</button>
           </div>
           <div class="small-6 columns text-right">
             <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> New List</a>
@@ -102,7 +121,7 @@
     <form>
       <fieldset>
         <legend>Create a list</legend>
-
+        <!-- TODO: use Crispy Forms here. Crispy Form through Ajax. Yeah. Hmmm. Cf. l107-->
         <div class="row">
           <div class="large-4 columns">
             <label for="ordered">

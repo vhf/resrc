@@ -14,6 +14,7 @@ class ListLinksInline(admin.TabularInline):
     extra = 1
     exclude = ['position_in_list']
 
+
 class ListLinksInline_ordered(admin.TabularInline):
     model = ListLinks
     extra = 1

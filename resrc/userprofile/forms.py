@@ -89,29 +89,22 @@ class RegisterForm(forms.Form):
 
 class ProfileForm(forms.Form):
     # update extra information about user
-    about = forms.CharField(
-        label='about',
-        required=False,
-        widget=forms.Textarea(
-            attrs={'placeholder': 'about you. markdown allowed'}))
-    avatar_url = forms.CharField(
-        label='Avatar',
-        required=False,
-        widget=forms.TextInput(
-            attrs={'placeholder': 'Link to your avatar. Gravatar used if empty.'}))
+    about = forms.CharField(label='about yourself', required=False, widget=forms.Textarea())
+    email = forms.EmailField(label='email')
+    show_email = forms.BooleanField(label='show email', required=False)
 
     def __init__(self, user, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
 
-        self.user = user
-        profile = Profile.objects.get(user=self.user)
+        profile = Profile.objects.get(user=user)
 
         self.helper.layout = Layout(
             Fieldset(
-                u'Public',
+                u'Public profile',
                 Field('about'),
-                Field('avatar_url'),
+                Field('email'),
+                Field('show_email'),
             ),
             Div(
                 Submit('submit', 'Edit my profile'),

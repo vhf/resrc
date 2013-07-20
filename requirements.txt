@@ -12,3 +12,4 @@ django-email-obfuscator
 django-debug-toolbar
 crispy-forms-foundation
 django-mptt
+simplejson
