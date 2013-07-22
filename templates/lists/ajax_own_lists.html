@@ -1,0 +1,56 @@
+<form>
+  <fieldset>
+    <legend>Add to list</legend>
+    <div class="row">
+      <div class="small-8 columns">
+        {% if lists %}
+          {% for list in lists %}
+          <label for="list-{{ list.pk }}">
+              <input class="list" type="checkbox" value="{{ list.pk }}" id="list-{{ list.pk }}" {% if list.title in titles %}checked="checked"{% endif %}/>
+              {{ list.title }} <span>({{ list.links.count }} link{{ list.links.count|pluralize }})</span>
+          </label>
+          {% endfor %}
+          <p>
+            <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> New List</a>
+          </p>
+        {% else %}
+          <label>You don't have any list.</label>
+          <p>
+            <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> Create a list ?</a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+<a class="close-reveal-modal">&#215;</a>
+
+<script>
+function add_to_own_list(list) {
+  list.prop('disabled', true)
+  $.ajax({
+    type:"POST",
+    url:"{% url "ajax_add_to_default_list" %}",
+    data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link_pk }}&ls='+list.val(),
+    error: function(xhr) {
+      //console.log(xhr.response)
+      result = $.parseJSON(xhr.response).result;
+      if (result == 'added') {
+        list.prop('checked', true);
+      } else {
+        list.prop('checked', false);
+      }
+      list.prop('disabled', false)
+    }
+  });
+}
+
+$('.list').each(function(index, item) {
+  $(item).click(function() {
+    add_to_list($(item));
+  });
+});
+
+</script>
+</body>

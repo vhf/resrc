@@ -23,38 +23,41 @@ def single(request, list_pk, list_slug=None):
 
 
 def ajax_add_to_default_list(request):
-    if request.method == 'POST':
+    if request.user.is_authenticated() and request.method == 'POST':
         link_pk = request.POST['lk']
 
         if 't' in request.POST:
-            list_type = request.POST['t']  # bookmark or toread
+            # bookmark or toread
+            list_type = request.POST['t']
         else:
             list_type = 'personnal'
+            list_pk = request.POST['ls']
 
-        if list_type == 'bookmark':
-            list_title = 'Bookmarks'
-        if list_type == 'toread':
-            list_title = 'Reading list'
+        if list_type not in ['bookmark', 'toread', 'personnal']:
+            raise Http404
 
-        if list_type == 'bookmark' or 'toread':
-            link = Link.objects.get(pk=link_pk)
+        link = get_object_or_404(Link, pk=link_pk)
+
+        if list_type in ['bookmark', 'toread']:
+            list_title = None
+            description = None
+            if list_type == 'bookmark':
+                list_title = 'Bookmarks'
+                description = 'My bookmarks.'
+            if list_type == 'toread':
+                list_title = 'Reading list'
+                description = 'My reading list.'
             try:
                 alist = List.objects.get(title=list_title, owner=request.user)
             except ObjectDoesNotExist:
-                if list_type == 'bookmark':
-                    alist = List.objects.create(
-                        title=list_title,
-                        description='My bookmarks.',
-                        owner=request.user,
-                        is_public=False,
-                    )
-                elif list_type == 'toread':
-                    alist = List.objects.create(
-                        title=list_title,
-                        description='My reading list.',
-                        owner=request.user,
-                        is_public=False,
-                    )
+                alist = List.objects.create(
+                    title=list_title,
+                    description=description,
+                    owner=request.user,
+                    is_public=False,
+                )
+        else:
+            alist = get_object_or_404(List, pk=list_pk)
 
         if alist.is_ordered:
             position_in_list = alist.links.all().count() + 1
@@ -85,3 +88,23 @@ def ajax_add_to_default_list(request):
             'result': 'fail'
         }, indent=4)
         return HttpResponse(data, mimetype="application/javascript")
+
+
+def ajax_own_lists(request, link_pk):
+    if not request.user.is_authenticated():
+        raise Http404
+
+    all_lists = List.objects.prefetch_related('links') \
+        .filter(owner=request.user) \
+        .exclude(title__in=['Bookmarks', 'Reading list'])
+
+    titles = List.objects.prefetch_related('links') \
+        .filter(owner=request.user, links__pk=link_pk) \
+        .exclude(title__in=['Bookmarks', 'Reading list']) \
+        .values_list('title', flat=True)
+
+    return render_template('lists/ajax_own_lists.html', {
+        'lists': all_lists,
+        'titles': list(titles),
+        'link_pk': link_pk
+    })

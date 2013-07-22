@@ -5,7 +5,7 @@
             {% if comment.level == cutoff_level %}
                 <a class="comment_replies comment_cutoff" data-commentscount="{{ comment|children_count }}" href="{% url "comments-subtree" comment.pk %}">(load {% with comment|children_count as count %}{{ count }} more{% endwith %})</a>
             {% else %}
-                <span class="comment_replies" data-commentscount="{{ comment|children_count }}">{% with comment|children_count as count %}{{ count }} {% if count > 1 %}replies{% else %}reply{% endif %}{% endwith %}</span>
+                <span class="comment_replies" data-commentscount="{{ comment|children_count }}">{% with count=comment|children_count %}{{ count }} repl{{ count|pluralize:"y,ies" }}{% endwith %}</span>
             {% endif %} |
         {% else %}
             <span class="comment_replies" data-commentscount="0"></span>
