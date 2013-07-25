@@ -8,9 +8,10 @@ import simplejson
 from resrc.list.models import List, ListLinks
 from resrc.link.models import Link
 
+from .forms import NewListForm
+
 
 def single(request, list_pk, list_slug=None):
-    '''Displays details about a profile'''
     alist = get_object_or_404(List, pk=list_pk)
 
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
@@ -108,3 +109,55 @@ def ajax_own_lists(request, link_pk):
         'titles': list(titles),
         'link_pk': link_pk
     })
+
+
+def ajax_create_list(request, link_pk):
+    if request.method == 'POST' and request.user.is_authenticated():
+        form = NewListForm(request.user, link_pk, request.POST)
+        c = {
+            'form': form,
+        }
+        if form.is_valid():
+            is_ordered = False
+            is_private = False
+
+            if 'ordered' in form.data:
+                is_ordered = form.data['ordered']
+            if 'private' in form.data:
+                is_private = form.data['private']
+
+            try:
+                alist = List.objects.create(
+                    title=form.data['title'],
+                    description=form.data['description'],
+                    owner=request.user,
+                    is_public=not is_private,
+                    is_ordered=is_ordered
+                )
+                alist.save()
+
+                link = get_object_or_404(Link, pk=link_pk)
+
+                listlink = ListLinks.objects.create(
+                    alist=alist,
+                    links=link,
+                    position_in_list=0
+                )
+                listlink.save()
+
+                data = simplejson.dumps({
+                    'result': 'success'
+                }, indent=4)
+                return HttpResponse(data, mimetype="application/javascript")
+            except:
+                data = simplejson.dumps({
+                    'result': 'fail'
+                }, indent=4)
+                return HttpResponse(data, mimetype="application/javascript")
+        else:
+            data = simplejson.dumps({
+                'result': 'invalid'
+            }, indent=4)
+            return HttpResponse(data, mimetype="application/javascript")
+    else:
+        raise Http404

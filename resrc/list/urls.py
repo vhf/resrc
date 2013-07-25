@@ -9,6 +9,7 @@ urlpatterns = patterns(
     url(r'^(?P<list_pk>\d+)/(?P<list_slug>.+)/$',
         views.single, name="list-single-slug"),
     url(r'^a/(?P<link_pk>\d+)/$', views.ajax_own_lists, name="ajax-own-lists"),
+    url(r'^c/(?P<link_pk>\d+)/$', views.ajax_create_list, name="ajax-create-list"),
 
     url(r'^add_default/$', views.ajax_add_to_default_list,
         name="ajax_add_to_default_list")

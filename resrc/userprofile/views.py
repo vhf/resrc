@@ -17,12 +17,8 @@ from resrc.utils import render_template
 from .models import Profile
 from .forms import LoginForm, ProfileForm, RegisterForm, ChangePasswordForm
 
-from resrc.link.models import Link
-from resrc.list.models import List
-
 
 def user_list(request):
-    '''user directory'''
     #profiles = Profile.objects.select_related('User').order_by('user__date_joined')
     users = User.objects.exclude(username='root')
     return render_template('user/list.html', {
@@ -103,11 +99,8 @@ def register_view(request):
     })
 
 
-# settings for public profile
-
 @login_required
 def settings_profile(request):
-    # extra information about the current user
     profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':

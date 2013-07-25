@@ -1,6 +1,7 @@
 {% extends "links/base.html" %}
 {% load mptt_comments_tags %}
 {% load staticfiles %}
+{% load crispy_forms_tags %}
 
 {% block title %}
     lala
@@ -59,6 +60,16 @@
 
 
 {% block last_body %}
+  {% if user.is_authenticated %}
+
+  {% mptt_comments_media_js %}
+  <div id="add-to-list" class="small reveal-modal"></div>
+
+  <div id="create-list" class="small reveal-modal">
+    <span id="create-list-message" class="label" style="display:none"></span>
+    {% crispy newlistform %}
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
   <script>
   function add_to_default_list(list) {
     $("#"+list).css('color', '#bbb');
@@ -76,55 +87,48 @@
       }
     });
   }
-  $("#bookmark").click(function() {
+  $('#bookmark').click(function() {
     add_to_default_list('bookmark');
   });
-  $("#toread").click(function() {
+  $('#toread').click(function() {
     add_to_default_list('toread');
   });
+  $('#createlist').click(function() { //close, success+create another list
+    form = $('#createlistform');
+    message = $('#create-list-message');
+    submit = $('#createlist');
+    titlefield = $('#id_title');
+    submit.prop('disable', true);
+    $.ajax({
+      type:"POST",
+      url: form.attr('action'),
+      data: form.serialize(),
+      error: function(xhr) {
+        result = $.parseJSON(xhr.response).result;
+        if (result == 'success') {
+          titlefield.removeClass('error');
+          message.text('Success !');
+          message.removeClass('alert').addClass('success');
+          submit.prop('disable', false);
+          submit.text('Create another list');
+          $('#createclose').show();
+        } else if(result == 'invalid') {
+          message.text('Please give your list a title.');
+          titlefield.addClass('error');
+          message.removeClass('success').addClass('alert');
+          submit.prop('disable', false);
+        } else {
+          message.text('Error.');
+          message.removeClass('success').addClass('alert');
+          submit.prop('disable', false);
+        }
+        message.show();
+      }
+    });
+  });
+  $("#createclose").click(function() {
+    $(this).foundation('reveal', 'close');
+  });
   </script>
-
-  {% mptt_comments_media_js %}
-  <div id="add-to-list" class="small reveal-modal"></div>
-
-  <div id="create-list" class="small reveal-modal">
-    <form>
-      <fieldset>
-        <legend>Create a list</legend>
-        <div class="row">
-          <div class="large-4 columns">
-            <label for="ordered">
-              <input type="checkbox" id="ordered" name="ordered"> Ordered
-            </label>
-          </div>
-          <div class="large-4 columns">
-            <label for="private">
-              <input type="checkbox" id="private" name="private"> Private
-            </label>
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-12 columns">
-            <label for="private">
-              <label>Title *</label>
-              <input type="text" name="title">
-            </label>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="large-12 columns">
-            <label>Description</label>
-            <textarea name="description" id="description" data-container="description"></textarea>
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-12 columns">
-            <input type="submit" class="button" value="Create" />
-          </div>
-        </div>
-      </fieldset>
-    </form>
-    <a class="close-reveal-modal">&#215;</a>
-  </div>
+  {% endif %}
 {% endblock last_body %}
