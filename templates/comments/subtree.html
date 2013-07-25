@@ -7,8 +7,12 @@
 {% endblock last_body %}
 
 {% block content %}
+  <div class="row">
+    <div class="large-12 columns">
   {% if comments %}<h2>Comments</h2>{% endif %}
-  <div id="mptt-comments-tree" class="block-comments-tree">
+      <div id="mptt-comments-tree" class="block-comments-tree">
     {% include "comments/display_comments_tree.html" %}
+      </div>
+    </div>
   </div>
 {% endblock %}

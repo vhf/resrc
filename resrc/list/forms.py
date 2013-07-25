@@ -1,7 +1,6 @@
 # coding: utf-8
 from django import forms
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
 from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Div, Column, Fieldset, Submit, Field, HTML
 
@@ -13,7 +12,7 @@ class NewListForm(forms.Form):
     ordered = forms.BooleanField(label='ordered', required=False)
     private = forms.BooleanField(label='private', required=False)
 
-    def __init__(self, user, link_pk, *args, **kwargs):
+    def __init__(self, link_pk, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.form_id = 'createlistform'

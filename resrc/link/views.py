@@ -21,7 +21,7 @@ def single(request, link_pk, link_slug=None):
         titles = List.objects.prefetch_related('links') \
             .filter(owner=request.user, links__pk=link_pk) \
             .values_list('title', flat=True)
-        newlistform = NewListForm(request.user, link_pk)
+        newlistform = NewListForm(link_pk)
 
     c = {
         'link': link,

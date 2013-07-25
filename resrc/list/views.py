@@ -113,7 +113,7 @@ def ajax_own_lists(request, link_pk):
 
 def ajax_create_list(request, link_pk):
     if request.method == 'POST' and request.user.is_authenticated():
-        form = NewListForm(request.user, link_pk, request.POST)
+        form = NewListForm(link_pk, request.POST)
         c = {
             'form': form,
         }

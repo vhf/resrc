@@ -7,8 +7,8 @@
 {% endblock %}
 
 {% block subnav %}
-  <dd class="active"><a href="{% url "resrc.userprofile.views.settings_profile" %}">Public profile</a></dd>
-  <dd><a href="{% url "resrc.userprofile.views.settings_account" %}">Change password</a></dd>
+  <dd><a href="{% url "resrc.userprofile.views.settings_profile" %}">Public profile</a></dd>
+  <dd class="active"><a href="{% url "resrc.userprofile.views.settings_account" %}">Change password</a></dd>
 {% endblock %}
 
 {% block settings_form %}

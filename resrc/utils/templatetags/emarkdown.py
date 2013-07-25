@@ -1,40 +1,37 @@
 # -*- coding: utf-8 -*-:
-import cssstyles
 import markdown
 import bleach
-
 from django import template
 from django.utils.safestring import mark_safe
-
-md_cssstyle = cssstyles.StyleExtension()
+import nofollow
 
 register = template.Library()
 
+md_nofollow = nofollow.NofollowExtension()
 
 @register.filter(needs_autoescape=False)
 def emarkdown(value):
-    # Allowed output tags from user raw HTML input and markdown generation
-    allowed_tags = ['div', 'span', 'p', 'pre', 'hr', 'img', 'br',
+    allowed_tags = ['div', 'span', 'p', 'pre', 'hr', 'br',
                     'strong', 'em', 'i', 'b', 'code', 'sub', 'sup',
                     'a', 'abbr', 'blockquote',
-                    'ul', 'ol', 'li',
+                    'ul', 'ol', 'li', 'h4', 'h5', 'h6',
                     'table', 'thead', 'tbody', 'tr', 'td', 'th']
 
-    # Add h1…h6 titles, have a more beautiful way to do it?
-    [allowed_tags.append('h{}'.format(i + 1)) for i in range(6)]
-
     allowed_attrs = {
-        '*': ['class', 'id'],
-        'a': ['href', 'title'],
+        # '*': ['class', 'id'],
+        'a': ['href', 'title', 'rel'],
         'img': ['src', 'alt'],
     }
 
-    return mark_safe('<div class="markdown">{0}</div>'.format(
+    return mark_safe('{0}'.format(
         bleach.clean(
-            markdown.markdown(value, extensions=[
-                              md_cssstyle,
-                              'codehilite(force_linenos=True)',
-                              'extra']),
+            markdown.markdown(
+                value,
+                extensions=[md_nofollow, 'extra'],
+                safe_mode='escape',
+                output_format='html5'
+            ),
             tags=allowed_tags,
-            attributes=allowed_attrs)
+            attributes=allowed_attrs,
+        )
         .encode('utf-8')))

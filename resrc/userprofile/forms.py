@@ -63,7 +63,6 @@ class RegisterForm(forms.Form):
     def clean(self):
         cleaned_data = super(RegisterForm, self).clean()
 
-        # Check that the password and it's confirmation match
         password = cleaned_data.get('password')
         password_confirm = cleaned_data.get('password_confirm')
 
@@ -78,7 +77,6 @@ class RegisterForm(forms.Form):
             if 'password_confirm' in cleaned_data:
                 del cleaned_data['password_confirm']
 
-        # Check that the user doesn't exist yet
         username = cleaned_data.get('username')
         if User.objects.filter(username=username).count() > 0:
             msg = u'Username already taken'
@@ -88,7 +86,6 @@ class RegisterForm(forms.Form):
 
 
 class ProfileForm(forms.Form):
-    # update extra information about user
     about = forms.CharField(label='about yourself', required=False, widget=forms.Textarea())
     email = forms.EmailField(label='email')
     show_email = forms.BooleanField(label='show email', required=False)
@@ -107,7 +104,7 @@ class ProfileForm(forms.Form):
                 Field('show_email'),
             ),
             Div(
-                Submit('submit', 'Edit my profile'),
+                Submit('submit', 'Edit my profile', css_class='small'),
                 css_class='button-group'
             )
         )
@@ -115,7 +112,6 @@ class ProfileForm(forms.Form):
 
 
 class ChangePasswordForm(forms.Form):
-    # password modification
     password_new = forms.CharField(label='New password ', max_length=76, widget=forms.PasswordInput)
     password_old = forms.CharField(label='Current password ', max_length=76, widget=forms.PasswordInput)
     password_confirm = forms.CharField(label='New password, again ', max_length=76, widget=forms.PasswordInput)
@@ -135,7 +131,7 @@ class ChangePasswordForm(forms.Form):
                 Field('password_confirm'),
             ),
             Div(
-                Submit('submit', 'Change password'),
+                Submit('submit', 'Change password', css_class='small'),
                 css_class='button-group'
             )
         )
@@ -148,7 +144,6 @@ class ChangePasswordForm(forms.Form):
         password_new = cleaned_data.get('password_new')
         password_confirm = cleaned_data.get('password_confirm')
 
-        # Check if the actual password is not empty
         if password_old:
             user_exist = authenticate(username=self.user.username, password=password_old)
             if not user_exist and password_old != "":
@@ -156,7 +151,6 @@ class ChangePasswordForm(forms.Form):
                 if 'password_old' in cleaned_data:
                     del cleaned_data['password_old']
 
-        # Check that the password and it's confirmation match
         if not password_confirm == password_new:
             msg = u'Password mismatch'
             self._errors['password_new'] = self.error_class([msg])
