@@ -1,5 +1,4 @@
 {% load comments %}
-{% load i18n %}
 <div class="comment_form">
   <form action="{% comment_form_target %}" method="POST">
     {% csrf_token %}
@@ -22,10 +21,11 @@
           {% endif %}
         {% endfor %}
         {% if allow_post %}
-          <input type="submit" name="submit" class="small button" value="{% trans 'Post' %}">
+          <input type="submit" name="submit" class="small button" value="Post" />
         {% endif %}
-          <input type="submit" name="preview" class="small secondary button" value="{% trans 'Preview' %}">
+          <input type="submit" name="preview" class="small secondary button" value="Preview" />
       </li>
       </ul>
+      <input type="hidden" name="next" value="{% url "resrc.link.views.single" form.target_object.pk %}" />
   </form>
 </div>

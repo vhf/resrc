@@ -1,0 +1,52 @@
+{% extends "comments/base.html" %}
+{% load emarkdown %}
+
+{% block title %}Flag this comment{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <h1>Really flag this comment?</h1>
+
+
+{% with comment_id=comment.pk|default:"preview" %}
+<div class="{% include 'comments/_comment_class.html' %}" id="c{{ comment_id }}">
+
+
+<div class="comment_outer">
+  {% block comment_header %}
+    <p class="comment_title">
+  <a class="comment_expand lsf symbol" href="{% url "comment-detail" comment_id %}">down</a>
+  <a href="{% url "user-url" comment.name %}">{{ comment.name }}</a> |
+  {{ comment.submit_date|timesince }} ago |
+  <a href="{% url "comment-detail" comment_id %}">link</a>
+
+  {% if debug %}{% include "comments/_comment_debug.html" %}{% endif %}
+
+</p>
+
+  {% endblock %}
+
+  <div class="comment_content">
+
+    {% block comment_body %}
+        {{ comment.comment|emarkdown }}
+    {% endblock %}
+
+    {% block comment_footer %}
+    {% endblock %}
+
+  </div>
+</div>
+{% endwith %}
+
+
+    <form method="post">{% csrf_token %}
+      <input type="hidden" name="next" value="{% url "resrc.link.views.single" comment.object_pk %}" id="next" />
+      <p class="submit button-group">
+      <input type="submit" name="submit" value="flag" class="small button" /><a href="javascript:history.go(-1)" class="small secondary button">cancel</a>
+      </p>
+    </form>
+  </div>
+</div>
+{% endblock %}
