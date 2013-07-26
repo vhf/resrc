@@ -32,7 +32,7 @@
     <div class="small-3 columns text-right big-black-ic"><!-- FIXME: this is ugly. Need classes instead of inline styles. -->
         <a class="lsf symbol" id="bookmark" style="color:{% if 'Bookmarks' in titles %}#2ba6cb{%else%}black{%endif%}">addstar</a>
         <a class="lsf symbol" id="toread" style="color:{% if 'Reading list' in titles %}#2ba6cb{%else%}black{%endif%}">save</a>
-        <a class="lsf symbol" href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true">list</a>
+        <a class="lsf symbol"{% if user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %}>list</a>
     </div>
   </div>
 
@@ -58,9 +58,8 @@
 
 
 {% block last_body %}
-  {% if user.is_authenticated %}
-
   {% mptt_comments_media_js %}
+  {% if user.is_authenticated %}
   <div id="add-to-list" class="small reveal-modal"></div>
 
   <div id="create-list" class="small reveal-modal">
