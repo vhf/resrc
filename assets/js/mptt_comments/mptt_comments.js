@@ -183,21 +183,24 @@ $(document).ready(function() {
     });
 
     $('.comment_expand').live("click", function(e) {
+        e.preventDefault();
         var href = $(this).attr('href');
-        var id = 'c' + (new RegExp("(\\d+|preview)/$").exec(href)[1]);
-        var comment_el = $('#' + id);
+        //var id = 'c' + (new RegExp("(\\d+|preview)/$").exec(href)[1]);
+        //var comment_el = $('#' + id);
+        var comment_el = $(this).closest('div.comment');
 
         if (comment_el.hasClass('comment_collapsed')) {
             comment_el.removeClass('comment_collapsed');
             comment_el.addClass('comment_expanded');
             $(this).text('down');
-        }
-        else {
+        } else {
             comment_el.addClass('comment_collapsed');
             comment_el.removeClass('comment_expanded');
             $(this).text('right');
         }
-        e.preventDefault();
+        comment_el.find('.comment').each(function(index){
+            $(this).toggle();
+        })
     });
 
     $('div.comment_collapsed > div > p > a.comment_expand.lsf.symbol').each(function() {
