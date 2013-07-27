@@ -4,14 +4,11 @@
   {{ comment.submit_date|timesince }} ago |
   <a href="{% url "comment-detail" comment_id %}">link</a>
   {% if comment.pk %}| <a class="comment_flag" href="{% url "comments-flag" comment.pk %}">flag</a>{% endif %}
-
-  {% if debug %}{% include "comments/_comment_debug.html" %}{% endif %}
-
+  {% if false and debug %}{% include "comments/_comment_debug.html" %}{% endif %}
   {% if comment.is_removed %}
     <i>Comment removed</i>
   {% endif %}
   {% if preview %}
     <span class="round secondary label">preview mode</span>
   {% endif %}
-
 </p>

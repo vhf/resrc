@@ -29,16 +29,16 @@
           </ul>
         </p>
     </div>
-    <div class="small-3 columns text-right big-black-ic"><!-- FIXME: this is ugly. Need classes instead of inline styles. -->
-        <a class="lsf symbol" id="bookmark" style="color:{% if 'Bookmarks' in titles %}#2ba6cb{%else%}black{%endif%}">addstar</a>
-        <a class="lsf symbol" id="toread" style="color:{% if 'Reading list' in titles %}#2ba6cb{%else%}black{%endif%}">save</a>
+    <div class="small-3 columns text-right list-symbols">
+        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark">addstar</a>
+        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread">save</a>
         <a class="lsf symbol"{% if user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %}>list</a>
     </div>
   </div>
 
   <div class="row">
-    <div class="large-12 columns">
-      <h3><a href="{{ link.url }}">{{ link.title }}</a></h3>
+    <div class="large-12 columns ">
+      <h3 class="link-title"><a class="lsf symbol" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago
@@ -69,7 +69,11 @@
   </div>
   <script>
   function add_to_default_list(list) {
-    $("#"+list).css('color', '#bbb');
+    var icon = $("#"+list);
+    if (icon.hasClass('waiting')) {
+      return null;
+    }
+    icon.addClass('waiting');
     $.ajax({
       type:"POST",
       url:"{% url "ajax_add_to_default_list" %}",
@@ -77,9 +81,11 @@
       error: function(xhr) {
         result = $.parseJSON(xhr.response).result;
         if (result == 'added') {
-          $("#"+list).css('color', '#2ba6cb');
+          icon.removeClass('waiting unchecked');
+          icon.addClass('checked');
         } else {
-          $("#"+list).css('color', 'black');
+          icon.removeClass('waiting checked');
+          icon.addClass('unchecked');
         }
       }
     });

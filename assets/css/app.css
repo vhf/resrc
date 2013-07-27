@@ -7237,56 +7237,59 @@ a.th {
 
 /* line 16, ../sass/_comment_thread.scss */
 .comment {
-  margin-left: 0.5em;
-  margin-top: 0.5em;
-  padding-left: 0.5em;
+  margin-left: 1.5625em;
+  margin-top: 0.625em;
+  padding-left: 0.3125em;
+}
+/* line 20, ../sass/_comment_thread.scss */
+.comment:first-child {
+  margin-left: 0;
 }
 
-/* line 22, ../sass/_comment_thread.scss */
+/* line 27, ../sass/_comment_thread.scss */
+.comment_content p:nth-last-child(2) {
+  margin-bottom: 0.375em;
+}
+
+/* line 32, ../sass/_comment_thread.scss */
 .preview {
   border-color: #f0e6d6;
 }
 
-/* line 26, ../sass/_comment_thread.scss */
+/* line 36, ../sass/_comment_thread.scss */
 .preview.comment_title {
   background: #eee5d7;
 }
 
-/* line 32, ../sass/_comment_thread.scss */
+/* line 42, ../sass/_comment_thread.scss */
 .comment_collapsed > .comment_outer > .comment_content {
   display: none;
 }
 
-/* line 40, ../sass/_comment_thread.scss */
+/* line 50, ../sass/_comment_thread.scss */
 .comment_expanded > .comment_outer > .comment_content {
   display: block;
 }
 
-/* line 46, ../sass/_comment_thread.scss */
+/* line 56, ../sass/_comment_thread.scss */
 .comment_debug {
   font-size: 0.8em;
   border: 1px solid black;
   border-collapse: collapse;
 }
-/* line 50, ../sass/_comment_thread.scss */
+/* line 60, ../sass/_comment_thread.scss */
 .comment_debug td, .comment_debug th {
   border: 1px solid black;
   text-align: center;
   padding: 0.3em;
 }
 
-/* line 2, ../sass/_icons.scss */
-.big-black-ic > .symbol {
-  font-size: 2.1875em;
-  color: black;
-}
-
-/* line 8, ../sass/_icons.scss */
+/* line 1, ../sass/_icons.scss */
 i {
   font-style: normal;
 }
 
-/* line 12, ../sass/_icons.scss */
+/* line 5, ../sass/_icons.scss */
 .symbol {
   display: inline;
   width: auto;
@@ -7302,4 +7305,27 @@ i {
 /* line 1, ../sass/_resrc.scss */
 .byline {
   font-size: 0.8125em;
+}
+
+/* line 55, ../sass/app.scss */
+.list-symbols .symbol {
+  font-size: 2.1875em;
+  color: black;
+}
+/* line 59, ../sass/app.scss */
+.list-symbols a.waiting {
+  color: #bbb;
+}
+/* line 62, ../sass/app.scss */
+.list-symbols a.unchecked {
+  color: black;
+}
+/* line 65, ../sass/app.scss */
+.list-symbols a.checked {
+  color: #2ba6cb;
+}
+
+/* line 71, ../sass/app.scss */
+.link-title a.symbol {
+  color: black;
 }

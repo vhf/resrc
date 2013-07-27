@@ -14,9 +14,19 @@
 }
 
 .comment {
-  margin-left: 0.5em;
-  margin-top: 0.5em;
-  padding-left: 0.5em;
+  margin-left: emCalc(25px);
+  margin-top: emCalc(10px);
+  padding-left: emCalc(5px);
+  &:first-child {
+    margin-left: emCalc(0px);
+  }
+}
+
+
+.comment_content {
+  p:nth-last-child(2) {
+    margin-bottom: emCalc(6px);
+  }
 }
 
 .preview {
