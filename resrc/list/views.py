@@ -5,7 +5,7 @@ from resrc.utils import render_template
 from django.http import Http404, HttpResponse
 import simplejson
 
-from resrc.list.models import List, ListLinks
+from resrc.list.models import List
 from resrc.link.models import Link
 
 from .forms import NewListForm
@@ -60,27 +60,12 @@ def ajax_add_to_default_list(request):
         else:
             alist = get_object_or_404(List, pk=list_pk)
 
-        if alist.is_ordered:
-            position_in_list = alist.links.all().count() + 1
-        else:
-            position_in_list = 0
-
-        listlink = None
-        try:
-            listlink = ListLinks.objects.get(
-                alist=alist,
-                links=link
-            )
-        except ObjectDoesNotExist:
-            ListLinks.objects.create(
-                alist=alist,
-                links=link,
-                position_in_list=position_in_list
-            )
-            data = simplejson.dumps({'result': 'added'})
-        if listlink is not None:
-            listlink.delete()
+        if link in alist.links.all():
+            alist.links.remove(link)
             data = simplejson.dumps({'result': 'removed'})
+        else :
+            alist.links.add(link)
+            data = simplejson.dumps({'result': 'added'})
 
         return HttpResponse(data, mimetype="application/javascript")
 
@@ -95,18 +80,12 @@ def ajax_own_lists(request, link_pk):
     if not request.user.is_authenticated():
         raise Http404
 
-    all_lists = List.objects.prefetch_related('links') \
-        .filter(owner=request.user) \
-        .exclude(title__in=['Bookmarks', 'Reading list'])
-
-    titles = List.objects.prefetch_related('links') \
-        .filter(owner=request.user, links__pk=link_pk) \
-        .exclude(title__in=['Bookmarks', 'Reading list']) \
-        .values_list('title', flat=True)
+    all_lists = List.objects.personal_lists(request.user)
+    titles = List.objects.titles_link_in_default(request.user, link_pk)
 
     return render_template('lists/ajax_own_lists.html', {
         'lists': all_lists,
-        'titles': list(titles),
+        'titles': titles,
         'link_pk': link_pk
     })
 
@@ -114,9 +93,7 @@ def ajax_own_lists(request, link_pk):
 def ajax_create_list(request, link_pk):
     if request.method == 'POST' and request.user.is_authenticated():
         form = NewListForm(link_pk, request.POST)
-        c = {
-            'form': form,
-        }
+
         if form.is_valid():
             is_ordered = False
             is_private = False
@@ -138,12 +115,7 @@ def ajax_create_list(request, link_pk):
 
                 link = get_object_or_404(Link, pk=link_pk)
 
-                listlink = ListLinks.objects.create(
-                    alist=alist,
-                    links=link,
-                    position_in_list=0
-                )
-                listlink.save()
+                alist.links.add(link)
 
                 data = simplejson.dumps({
                     'result': 'success'

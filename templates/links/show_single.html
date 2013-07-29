@@ -79,6 +79,7 @@
       url:"{% url "ajax_add_to_default_list" %}",
       data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list,
       error: function(xhr) {
+        console.log(xhr.response);
         result = $.parseJSON(xhr.response).result;
         if (result == 'added') {
           icon.removeClass('waiting unchecked');
