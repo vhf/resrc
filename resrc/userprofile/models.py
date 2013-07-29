@@ -18,7 +18,7 @@ class Profile(models.Model):
 
     about = models.TextField('about', blank=True)
 
-    karma = models.IntegerField('karma', null=True, blank=True)
+    # karma = models.IntegerField('karma', null=True, blank=True)
 
     show_email = models.BooleanField('show_email', default=False)
 

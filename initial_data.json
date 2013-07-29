@@ -897,8 +897,7 @@
       "show_email": false,
       "favs": [],
       "about": "",
-      "user": 2,
-      "karma": null
+      "user": 2
     }
   },
   {
@@ -908,8 +907,7 @@
       "show_email": false,
       "favs": [],
       "about": "",
-      "user": 3,
-      "karma": null
+      "user": 3
     }
   },
   {
@@ -919,61 +917,11 @@
       "pubdate": "2013-07-20T14:09:08.100Z",
       "author": 2,
       "url": "http://12devs.co.uk/articles/204/",
-      "downvotes": null,
       "title": "Building static websites with Middleman, deploying to Heroku",
-      "upvotes": null,
       "tags": [
         2,
         4
       ]
-    }
-  },
-  {
-    "pk": 1,
-    "model": "list.list",
-    "fields": {
-      "description": "My reading list.",
-      "pubdate": "2013-07-20",
-      "title": "Reading list",
-      "is_ordered": false,
-      "owner": 2,
-      "is_public": true
-    }
-  },
-  {
-    "pk": 2,
-    "model": "list.list",
-    "fields": {
-      "description": "My reading list.",
-      "pubdate": "2013-07-20",
-      "title": "Reading list",
-      "is_ordered": false,
-      "owner": 3,
-      "is_public": true
-    }
-  },
-  {
-    "pk": 3,
-    "model": "list.list",
-    "fields": {
-      "description": "My bookmarks.",
-      "pubdate": "2013-07-20",
-      "title": "Bookmarks",
-      "is_ordered": false,
-      "owner": 2,
-      "is_public": true
-    }
-  },
-  {
-    "pk": 4,
-    "model": "list.list",
-    "fields": {
-      "description": "My bookmarks.",
-      "pubdate": "2013-07-20",
-      "title": "Bookmarks",
-      "is_ordered": false,
-      "owner": 3,
-      "is_public": true
     }
   }
 ]

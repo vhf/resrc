@@ -17,13 +17,11 @@ def single(request, link_pk, link_slug=None):
         return redirect(link)
 
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
-    if link_slug is not None and link.get_slug() != link_slug:
+    if link.get_slug() != link_slug:
         raise Http404
 
     if request.user.is_authenticated():
-        titles = List.objects.prefetch_related('links') \
-            .filter(owner=request.user, links__pk=link_pk) \
-            .values_list('title', flat=True)
+        titles = List.objects.titles_link_in(request.user, link_pk)
         newlistform = NewListForm(link_pk)
 
     c = {

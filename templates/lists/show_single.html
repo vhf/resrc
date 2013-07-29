@@ -3,7 +3,7 @@
 {% load mptt_comments_tags %}
 
 {% block title %}
-    lala
+    {{ list.title }}
 {% endblock %}
 
 {% block headline %}
@@ -16,51 +16,63 @@
 
 {% block content %}
 
-  <div class="row">
-    <div class="small-9 columns">
-        <p>
-          <ul class="inline-list">
-            <li><a href="#" class="radius secondary label">tags</a></li>
-            <li><a href="#" class="radius secondary label">most</a></li>
-            <li><a href="#" class="radius secondary label">common</a></li>
-            <li><a href="#" class="radius secondary label">in</a></li>
-            <li><a href="#" class="radius secondary label">list</a></li>
-          </ul>
-        </p>
-    </div>
-    <div class="small-3 columns text-right big-black-ic">
-        <i class="lsf symbol">addstar</i>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="large-12 columns">
-      <h3><a href="{{ list.url }}">{{ list.title }}</a></h3>
-      <p>{{ list.description }}</p>
-      <p class="byline">
-        {% with author=list.owner %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} (should be DAYSINCE not TIMESINCE, DATE field here...) ago
-        {%endwith%}
-      </p>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="large-12 columns">
+<div class="row">
+  <div class="small-9 columns">
       <p>
-      {% with links=list.links.all %}
-        {% for link in links %}
-        <hr />
-        <h4>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.title }}</a></h4>
-        <p class="byline">
-          <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
-        </p>
-        {% endfor %}
-      {% endwith %}
+        <ul class="inline-list">
+          <li><a href="#" class="radius secondary label">tags</a></li>
+          <li><a href="#" class="radius secondary label">most</a></li>
+          <li><a href="#" class="radius secondary label">common</a></li>
+          <li><a href="#" class="radius secondary label">in</a></li>
+          <li><a href="#" class="radius secondary label">list</a></li>
+        </ul>
       </p>
-    </div>
   </div>
+  <!-- FIXME : Remove or implement list bookmarking -->
+  <div class="small-3 columns text-right list-symbols">
+      <i class="lsf symbol">addstar</i>
+  </div>
+</div>
 
+<div class="row">
+  <div class="large-12 columns">
+    <h3><a href="{{ list.url }}">{{ list.title }}</a></h3>
+    <p>{{ list.description }}</p>
+    <p class="byline">
+      {% with author=list.owner %}
+      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago
+      {%endwith%}
+    </p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns">
+    {% if list.title in default_lists %}
+    <p>
+    {% with links=list.links.all %}
+      {% for link in links %}
+      <hr />
+      <h4>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.title }}</a></h4>
+      <p class="byline">
+        <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
+      </p>
+      {% endfor %}
+    {% endwith %}
+    </p>
+    {% else %}
+    {{ list.html_content }}
+    {% endif %}
+  </div>
+</div>
+
+{% if list.title not in default_lists %}
+<div class="row">
+  <div class="large-12 columns">
+    {% display_comment_toplevel_for list %}
+  </div>
+</div>
+{% endif %}
 {% endblock %}
 
 

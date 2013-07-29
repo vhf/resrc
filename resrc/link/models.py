@@ -23,8 +23,8 @@ class Link(models.Model):
 
     author = models.ForeignKey(User, verbose_name='author')
 
-    upvotes = models.IntegerField('upvotes', null=True, blank=True)
-    downvotes = models.IntegerField('downvotes', null=True, blank=True)
+    # upvotes = models.IntegerField('upvotes', null=True, blank=True)
+    # downvotes = models.IntegerField('downvotes', null=True, blank=True)
 
     tags = models.ManyToManyField(
         Tag, related_name="%(app_label)s_%(class)s_related")
@@ -43,6 +43,3 @@ class Link(models.Model):
             self.pk,
             self.get_slug()
         ))
-
-    # def get_absolute_url(self):
-    #     return '/lk/{0}/{1}'.format(self.pk, self.get_slug())

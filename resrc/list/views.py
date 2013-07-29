@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from resrc.utils import render_template
 from django.http import Http404, HttpResponse
 import simplejson
@@ -14,12 +14,16 @@ from .forms import NewListForm
 def single(request, list_pk, list_slug=None):
     alist = get_object_or_404(List, pk=list_pk)
 
+    if list_slug is None:
+        return redirect(alist)
+
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
-    if list_slug is not None and alist.get_slug() != list_slug:
+    if alist.get_slug() != list_slug:
         raise Http404
 
     return render_template('lists/show_single.html', {
-        'list': alist
+        'list': alist,
+        'default_lists': ['Bookmarks', 'Reading list']
     })
 
 
