@@ -120,22 +120,13 @@
     "pk": 14,
     "model": "contenttypes.contenttype",
     "fields": {
-      "model": "tag",
-      "name": "tag",
-      "app_label": "tag"
-    }
-  },
-  {
-    "pk": 15,
-    "model": "contenttypes.contenttype",
-    "fields": {
       "model": "logentry",
       "name": "log entry",
       "app_label": "admin"
     }
   },
   {
-    "pk": 16,
+    "pk": 15,
     "model": "contenttypes.contenttype",
     "fields": {
       "model": "captchastore",
@@ -144,19 +135,29 @@
     }
   },
   {
-    "pk": "c2qbrg5zbhkyhhz2mczpmzu15b7lcjvw",
-    "model": "sessions.session",
+    "pk": 16,
+    "model": "contenttypes.contenttype",
     "fields": {
-      "expire_date": "2013-08-03T14:12:58.578Z",
-      "session_data": "NmI3ZWRiZmNmNGEwZjM4M2UzMmRjNGFkZmNlOTg1MWU4MzU0Yjg0NDqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLA3Uu"
+      "model": "tag",
+      "name": "Tag",
+      "app_label": "taggit"
     }
   },
   {
-    "pk": "kg7482fzvc1cnnpi0hguwgmjn4i152uz",
+    "pk": 17,
+    "model": "contenttypes.contenttype",
+    "fields": {
+      "model": "taggeditem",
+      "name": "Tagged Item",
+      "app_label": "taggit"
+    }
+  },
+  {
+    "pk": "dtgwohes1ih1yfdp0wptl6fjxjirm7in",
     "model": "sessions.session",
     "fields": {
-      "expire_date": "2013-08-03T14:05:03.455Z",
-      "session_data": "ZGZmOWIxNGMyNjkzODI0MmJhNTFmOGQ3MzVjZmZjNGFjZTcwZWIzYzqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAXUu"
+      "expire_date": "2013-08-15T15:27:27.075Z",
+      "session_data": "YjhhYjBjMzg5MzViZTI3ZTY0YTU2ZDE2ZmQ4ZmIwMmJlMThkYjQzZTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAnUu"
     }
   },
   {
@@ -169,50 +170,78 @@
   },
   {
     "pk": 1,
-    "model": "tag.tag",
+    "model": "taggit.tag",
     "fields": {
-      "rght": 4,
-      "name": "Programming language",
-      "parent": null,
-      "level": 0,
-      "lft": 1,
-      "tree_id": 1
+      "name": "Ruby",
+      "slug": "ruby"
     }
   },
   {
     "pk": 2,
-    "model": "tag.tag",
+    "model": "taggit.tag",
     "fields": {
-      "rght": 3,
-      "name": "Ruby",
-      "parent": 1,
-      "level": 1,
-      "lft": 2,
-      "tree_id": 1
+      "name": "Web Framework",
+      "slug": "web-framework"
     }
   },
   {
     "pk": 3,
-    "model": "tag.tag",
+    "model": "taggit.tag",
     "fields": {
-      "rght": 4,
-      "name": "Tools",
-      "parent": null,
-      "level": 0,
-      "lft": 1,
-      "tree_id": 2
+      "name": "Ruby on Rails",
+      "slug": "ruby-on-rails"
     }
   },
   {
     "pk": 4,
-    "model": "tag.tag",
+    "model": "taggit.tag",
     "fields": {
-      "rght": 3,
-      "name": "Static site generator",
-      "parent": 3,
-      "level": 1,
-      "lft": 2,
-      "tree_id": 2
+      "name": "Static Site Generator",
+      "slug": "static-site-generator"
+    }
+  },
+  {
+    "pk": 5,
+    "model": "taggit.tag",
+    "fields": {
+      "name": "Javascript",
+      "slug": "javascript"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 1,
+      "content_type": 12,
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 2,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 4,
+      "content_type": 12,
+      "object_id": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 5,
+      "content_type": 12,
+      "object_id": 2
+    }
+  },
+  {
+    "pk": 4,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 5,
+      "content_type": 12,
+      "object_id": 3
     }
   },
   {
@@ -576,11 +605,38 @@
     }
   },
   {
+    "pk": 41,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_logentry",
+      "name": "Can add log entry",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 42,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_logentry",
+      "name": "Can change log entry",
+      "content_type": 14
+    }
+  },
+  {
+    "pk": 43,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
+      "content_type": 14
+    }
+  },
+  {
     "pk": 44,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_tag",
-      "name": "Can add tag",
+      "codename": "add_captchastore",
+      "name": "Can add captcha store",
       "content_type": 15
     }
   },
@@ -588,8 +644,8 @@
     "pk": 45,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_tag",
-      "name": "Can change tag",
+      "codename": "change_captchastore",
+      "name": "Can change captcha store",
       "content_type": 15
     }
   },
@@ -597,8 +653,8 @@
     "pk": 46,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_tag",
-      "name": "Can delete tag",
+      "codename": "delete_captchastore",
+      "name": "Can delete captcha store",
       "content_type": 15
     }
   },
@@ -606,8 +662,8 @@
     "pk": 47,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_logentry",
-      "name": "Can add log entry",
+      "codename": "add_tag",
+      "name": "Can add Tag",
       "content_type": 16
     }
   },
@@ -615,8 +671,8 @@
     "pk": 48,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_logentry",
-      "name": "Can change log entry",
+      "codename": "change_tag",
+      "name": "Can change Tag",
       "content_type": 16
     }
   },
@@ -624,8 +680,8 @@
     "pk": 49,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_logentry",
-      "name": "Can delete log entry",
+      "codename": "delete_tag",
+      "name": "Can delete Tag",
       "content_type": 16
     }
   },
@@ -633,8 +689,8 @@
     "pk": 50,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_captchastore",
-      "name": "Can add captcha store",
+      "codename": "add_taggeditem",
+      "name": "Can add Tagged Item",
       "content_type": 17
     }
   },
@@ -642,8 +698,8 @@
     "pk": 51,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_captchastore",
-      "name": "Can change captcha store",
+      "codename": "change_taggeditem",
+      "name": "Can change Tagged Item",
       "content_type": 17
     }
   },
@@ -651,8 +707,8 @@
     "pk": 52,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_captchastore",
-      "name": "Can delete captcha store",
+      "codename": "delete_taggeditem",
+      "name": "Can delete Tagged Item",
       "content_type": 17
     }
   },
@@ -666,12 +722,12 @@
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2013-07-20T14:05:03.185Z",
+      "last_login": "2013-08-01T15:19:23.273Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$j4imb51ZyZ6v$F1SuQRDSFqkD3KCatPj8sIqvtkKLJ9sRmDH+UOn1mvw=",
+      "password": "pbkdf2_sha256$10000$QALM1oNaCAYd$LdQQ0qMqDhU5QHpKe7Ic8NiFD1XSHR20R8kUeldqHaU=",
       "email": "root@example.com",
-      "date_joined": "2013-07-20T14:03:23.747Z"
+      "date_joined": "2013-08-01T15:17:15.179Z"
     }
   },
   {
@@ -682,14 +738,14 @@
       "first_name": "",
       "last_name": "",
       "is_active": true,
-      "is_superuser": false,
-      "is_staff": false,
-      "last_login": "2013-07-20T14:12:06.886Z",
+      "is_superuser": true,
+      "is_staff": true,
+      "last_login": "2013-08-01T15:27:26.916Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$sMIZwrOpzIub$E0Orr7rwVSUfaq7JwkPVMfXYBW0yPrhtgkRsFeKeG8A=",
+      "password": "pbkdf2_sha256$10000$gCsgPJGdYF1s$Hht51GMDXEn2Zbq6+FzOp4BE1N6BNVa73av0NTZ431I=",
       "email": "victor@example.com",
-      "date_joined": "2013-07-20T14:12:06.141Z"
+      "date_joined": "2013-08-01T15:18:43Z"
     }
   },
   {
@@ -702,192 +758,12 @@
       "is_active": true,
       "is_superuser": false,
       "is_staff": false,
-      "last_login": "2013-07-20T14:12:58.109Z",
+      "last_login": "2013-08-01T15:19:11.956Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$qNtxJTjIuhkR$wXivwqZANLJ6Au1MhKNYaOa9hDDR3e7Ian6/rT1w4zA=",
+      "password": "pbkdf2_sha256$10000$ZBjYA29JNmEC$WCX8uSTrinSLuaPDIriwKlsnjCI8cyp7iEPAqZuL+1I=",
       "email": "foobar@example.com",
-      "date_joined": "2013-07-20T14:12:57.226Z"
-    }
-  },
-  {
-    "pk": 1,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "First !",
-      "user_url": "",
-      "submit_date": "2013-07-18T20:56:42.729Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 3,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "foobar",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 2,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "Congrats",
-      "user_url": "",
-      "submit_date": "2013-07-18T20:57:25.358Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 2,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "victor",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 3,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "Thank you, kind sir.",
-      "user_url": "",
-      "submit_date": "2013-07-18T20:57:55.659Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 3,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "foobar",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 4,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "Do you know the joke with the 19 wapitis ?",
-      "user_url": "",
-      "submit_date": "2013-07-18T20:58:47.595Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 2,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "victor",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 5,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "Nope. Anyway, I like giraffes better.",
-      "user_url": "",
-      "submit_date": "2013-07-18T20:59:51.540Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 3,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "foobar",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 6,
-    "model": "comments.comment",
-    "fields": {
-      "comment": "Second !",
-      "user_url": "",
-      "submit_date": "2013-07-18T21:00:25.233Z",
-      "ip_address": "127.0.0.1",
-      "object_pk": "1",
-      "site": 1,
-      "is_removed": false,
-      "user": 2,
-      "content_type": 12,
-      "is_public": true,
-      "user_name": "victor",
-      "user_email": ""
-    }
-  },
-  {
-    "pk": 1,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 10,
-      "parent": null,
-      "level": 0,
-      "title": "",
-      "lft": 1,
-      "tree_id": 1
-    }
-  },
-  {
-    "pk": 2,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 9,
-      "parent": 1,
-      "level": 1,
-      "title": "",
-      "lft": 2,
-      "tree_id": 1
-    }
-  },
-  {
-    "pk": 3,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 8,
-      "parent": 2,
-      "level": 2,
-      "title": "",
-      "lft": 3,
-      "tree_id": 1
-    }
-  },
-  {
-    "pk": 4,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 7,
-      "parent": 3,
-      "level": 3,
-      "title": "",
-      "lft": 4,
-      "tree_id": 1
-    }
-  },
-  {
-    "pk": 5,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 6,
-      "parent": 4,
-      "level": 4,
-      "title": "",
-      "lft": 5,
-      "tree_id": 1
-    }
-  },
-  {
-    "pk": 6,
-    "model": "mptt_comments.mpttcomment",
-    "fields": {
-      "rght": 2,
-      "parent": null,
-      "level": 0,
-      "title": "",
-      "lft": 1,
-      "tree_id": 2
+      "date_joined": "2013-08-01T15:19:11.190Z"
     }
   },
   {
@@ -914,14 +790,160 @@
     "pk": 1,
     "model": "link.link",
     "fields": {
-      "pubdate": "2013-07-20T14:09:08.100Z",
-      "author": 2,
       "url": "http://12devs.co.uk/articles/204/",
-      "title": "Building static websites with Middleman, deploying to Heroku",
-      "tags": [
-        2,
-        4
-      ]
+      "author": 2,
+      "pubdate": "2013-08-01T15:24:18.183Z",
+      "title": "Building static websites with Middleman, deploying to Heroku"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "link.link",
+    "fields": {
+      "url": "http://tobyho.com/2010/11/22/javascript-constructors-and/",
+      "author": 2,
+      "pubdate": "2013-08-01T15:26:30.171Z",
+      "title": "Javascript Constructors and Prototypes"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "link.link",
+    "fields": {
+      "url": "http://betterexplained.com/articles/the-single-page-javascript-overview/",
+      "author": 2,
+      "pubdate": "2013-08-01T15:27:08.904Z",
+      "title": "Single page, Simple, Comprehensive Overview of Javascript"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 2,
+      "action_time": "2013-08-01T15:20:09.738Z",
+      "object_repr": "victor",
+      "object_id": "2",
+      "change_message": "Changed password, is_staff and is_superuser.",
+      "user": 1,
+      "content_type": 3
+    }
+  },
+  {
+    "pk": 2,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:20:51.438Z",
+      "object_repr": "Ruby",
+      "object_id": "1",
+      "change_message": "",
+      "user": 1,
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 3,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:20:59.538Z",
+      "object_repr": "Web Framework",
+      "object_id": "2",
+      "change_message": "",
+      "user": 1,
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 4,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:21:13.400Z",
+      "object_repr": "Ruby on Rails",
+      "object_id": "3",
+      "change_message": "",
+      "user": 1,
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 5,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:22:01.208Z",
+      "object_repr": "Static Site Generator",
+      "object_id": "4",
+      "change_message": "",
+      "user": 1,
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 6,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:22:16.957Z",
+      "object_repr": "Javascript",
+      "object_id": "5",
+      "change_message": "",
+      "user": 1,
+      "content_type": 16
+    }
+  },
+  {
+    "pk": 7,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:24:18.230Z",
+      "object_repr": "Building static websites with Middleman, deploying to Heroku",
+      "object_id": "1",
+      "change_message": "",
+      "user": 1,
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 8,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 2,
+      "action_time": "2013-08-01T15:24:31.650Z",
+      "object_repr": "Building static websites with Middleman, deploying to Heroku",
+      "object_id": "1",
+      "change_message": "Changed tags.",
+      "user": 1,
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 9,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:26:30.203Z",
+      "object_repr": "Javascript Constructors and Prototypes",
+      "object_id": "2",
+      "change_message": "",
+      "user": 1,
+      "content_type": 12
+    }
+  },
+  {
+    "pk": 10,
+    "model": "admin.logentry",
+    "fields": {
+      "action_flag": 1,
+      "action_time": "2013-08-01T15:27:08.935Z",
+      "object_repr": "Single page, Simple, Comprehensive Overview of Javascript",
+      "object_id": "3",
+      "change_message": "",
+      "user": 1,
+      "content_type": 12
     }
   }
 ]

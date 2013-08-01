@@ -7,6 +7,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 from resrc.utils.templatetags.emarkdown import emarkdown
+from taggit.managers import TaggableManager
 from resrc.link.models import Link
 
 
@@ -42,6 +43,7 @@ class List(models.Model):
     objects = ListManager()
 
     title = models.CharField('title', max_length=80)
+    tags = TaggableManager()
     description = models.TextField('description')
     md_content = models.TextField('md_content')
     html_content = models.TextField('html_content')

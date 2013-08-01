@@ -6,7 +6,7 @@ from django.template.defaultfilters import slugify
 from django.contrib.comments import get_model
 from django.contrib.auth.models import User
 
-from resrc.tag.models import Tag
+from taggit.managers import TaggableManager
 
 
 class Link(models.Model):
@@ -26,8 +26,7 @@ class Link(models.Model):
     # upvotes = models.IntegerField('upvotes', null=True, blank=True)
     # downvotes = models.IntegerField('downvotes', null=True, blank=True)
 
-    tags = models.ManyToManyField(
-        Tag, related_name="%(app_label)s_%(class)s_related")
+    tags = TaggableManager()
 
     def __unicode__(self):
         return self.title

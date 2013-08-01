@@ -13,3 +13,4 @@ django-debug-toolbar
 crispy-forms-foundation
 django-mptt
 simplejson
+django-taggit
