@@ -1,0 +1,43 @@
+{% extends "links/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+<script type="text/javascript">var jq = true;</script>
+{% endblock %}
+
+{% block title %}
+    lala
+{% endblock %}
+
+{% block extracss %}
+  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="large-12 columns ">
+        {% crispy form %}
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block last_body %}
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript">
+    $(function(){
+        $("#id_tags").tagit();
+    });
+</script>
+{% endblock last_body %}

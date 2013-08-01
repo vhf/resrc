@@ -21,11 +21,11 @@
     <div class="small-9 columns">
         <p>
           <ul class="inline-list">
-            <li><a href="#" class="radius secondary label">Tag 1</a></li>
-            <li><a href="#" class="radius secondary label">Tag 2</a></li>
-            <li><a href="#" class="radius secondary label">Tag 3</a></li>
-            <li><a href="#" class="radius secondary label">Tag 4</a></li>
-            <li><a href="#" class="radius secondary label">Tag 5</a></li>
+            {% with tags=link.tags.all %}
+            {% for tag in tags %}
+            <li><a href="#" class="radius secondary label">{{ tag.name }}</a></li>
+            {% endfor %}
+            {% endwith %}
           </ul>
         </p>
     </div>
@@ -67,7 +67,7 @@
     {% crispy newlistform %}
     <a class="close-reveal-modal">&#215;</a>
   </div>
-  <script>
+  <script type="text/javascript">
   function add_to_default_list(list) {
     var icon = $("#"+list);
     if (icon.hasClass('waiting')) {

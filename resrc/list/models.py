@@ -52,7 +52,6 @@ class List(models.Model):
 
     owner = models.ForeignKey(User, related_name="list_owner")
     is_public = models.BooleanField(default=True)
-    is_ordered = models.BooleanField(default=False)
     pubdate = models.DateField(auto_now_add=True)
 
     def __unicode__(self):

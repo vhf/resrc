@@ -11,6 +11,7 @@
   {% block meta %}{% endblock %}
   <link rel="stylesheet" href="{% static "css/app.css" %}">
   <link rel="stylesheet" href="{% static "css/ligaturesymbols.css" %}">
+  {% block extracss %}{% endblock %}
   <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 </head>
 <body>
@@ -83,9 +84,12 @@
 
   <!-- Included JS Files (Uncompressed) -->
   <script>
+  if (typeof jq == "undefined") {
+    var jq = false;
+  }
   document.write('<script src=' +
-  ('__proto__' in {} ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
-  '><\/script>')
+  ((!jq && '__proto__' in {}) ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
+  '><\/script>');
   </script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
   <script src="{% static "js/foundation/foundation.alerts.js" %}"></script>
@@ -95,10 +99,8 @@
   <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
   <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
   <script src="{% static "js/foundation/foundation.magellan.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.orbit.js" %}"></script>
   <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
   <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
-  {# <script src="{% static "js/foundation/foundation.section.js" %}"></script> #}
   <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
   <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
   <script src="{% static "js/foundation/foundation.interchange.js" %}"></script>

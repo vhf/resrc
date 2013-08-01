@@ -2,10 +2,13 @@
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.http import Http404
 from django.template import RequestContext
+from django.contrib.auth.decorators import login_required
 
 from resrc.link.models import Link
+from resrc.link.forms import NewLinkForm
 from resrc.list.models import List
 from resrc.list.forms import NewListForm
+from resrc.utils import render_template
 
 
 def single(request, link_pk, link_slug=None):
@@ -32,3 +35,31 @@ def single(request, link_pk, link_slug=None):
         'newlistform': newlistform
     }
     return render_to_response('links/show_single.html', c, RequestContext(request))
+
+
+@login_required
+def new_link(request):
+    '''Create a new link'''
+    if request.method == 'POST':
+        form = NewLinkForm(request.POST)
+        if form.is_valid():
+            data = form.data
+
+            link = Link()
+            link.title = data['title']
+            link.url = data['url']
+            link.author = request.user
+
+            link.save()
+
+            list_tags = data['tags'].split(',')
+            for tag in list_tags:
+                link.tags.add(tag)
+            link.save()
+            return redirect(link.get_absolute_url())
+    else:
+        form = NewLinkForm()
+
+    return render_template('links/new_link.html', {
+        'form': form
+    })
