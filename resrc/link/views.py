@@ -4,6 +4,8 @@ from django.http import Http404
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
+from taggit.models import Tag
+
 from resrc.link.models import Link
 from resrc.link.forms import NewLinkForm
 from resrc.list.models import List
@@ -60,6 +62,13 @@ def new_link(request):
     else:
         form = NewLinkForm()
 
+    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+    tags = '"%s"' % tags
+
     return render_template('links/new_link.html', {
-        'form': form
+        'form': form,
+        'tags': tags
     })
+
+''' TODO: provide a view using Tags.similar_objects() :: https://github.com/alex/django-taggit/blob/develop/docs/api.txt
+and use it for autocomplete :: https://github.com/aehlke/tag-it

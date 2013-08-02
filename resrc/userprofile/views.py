@@ -57,7 +57,10 @@ def login_view(request):
                 request.session['get_token'] = generate_token()
                 if not 'remember' in request.POST:
                     request.session.set_expiry(0)
-                return redirect('/')
+                if 'next' in request.POST:
+                    return redirect(request.POST['next'])
+                else:
+                    return redirect('/')
             else:
                 error = 'Bad user/password'
         else:
@@ -65,7 +68,9 @@ def login_view(request):
     else:
         form = LoginForm()
     csrf_tk['error'] = error
-    csrf_tk['form'] = form
+    csrf_tk['form']  = form
+    if 'next' in request.GET:
+        csrf_tk['next']  = request.GET.get('next')
     return render_template('user/login.html', csrf_tk)
 
 

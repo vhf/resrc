@@ -214,3 +214,10 @@ CRISPY_FAIL_SILENTLY = not DEBUG
 MPTT_COMMENTS_OFFSET = 20
 MPTT_COMMENTS_COLLAPSE_ABOVE = 4
 MPTT_COMMENTS_CUTOFF = 5
+
+AUTH_PROFILE_MODULE = 'userprofile.Profile'
+LOGIN_URL = '/u/login'
+
+ABSOLUTE_URL_OVERRIDES = {
+    'auth.user': lambda u: '/u/user/{0}'.format(u.username)
+}

@@ -3,7 +3,7 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Fieldset, Submit, Field, ButtonHolder, HTML
+from crispy_forms_foundation.layout import Layout, Row, Column, Submit, Field
 
 
 class NewLinkForm(forms.Form):
@@ -22,13 +22,34 @@ class NewLinkForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
+        self.helper.form_class = ''
         self.helper.form_method = 'post'
 
         self.helper.layout = Layout(  # FIXME : css classes here and form_class
-            Field('title', css_class='asdf'),
-            Field('url', css_class='asdf'),
-            Field('tags'),
-            Submit('submit', 'Add'),
+
+            Row(
+                Column(
+                    Field('title'),
+                    css_class='large-12'
+                ),
+            ),
+            Row(
+                Column(
+                    Field('url'),
+                    css_class='large-12'
+                ),
+            ),
+            Row(
+                Column(
+                    Field('tags'),
+                    css_class='large-12'
+                ),
+            ),
+            Row(
+                Column(
+                    Submit('submit', 'Add', css_class='small button'),
+                    css_class='large-12',
+                ),
+            )
         )
         super(NewLinkForm, self).__init__(*args, **kwargs)

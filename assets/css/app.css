@@ -1,4 +1,4 @@
-/* normalize.css v2.1.1 | MIT License | git.io/normalize */
+/*! normalize.css v2.1.1 | MIT License | git.io/normalize */
 /* ==========================================================================
    HTML5 display definitions
    ========================================================================== */
@@ -2037,7 +2037,7 @@ p aside {
 /* Default header styles */
 /* line 181, ../../../.gem/ruby/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_type.scss */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
   font-weight: bold;
   font-style: normal;
   color: #222222;
