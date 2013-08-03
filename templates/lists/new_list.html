@@ -1,0 +1,33 @@
+{% extends "links/base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+<script type="text/javascript">var jq = true;</script>
+{% endblock %}
+
+{% block title %}
+  lala
+{% endblock %}
+
+{% block extracss %}
+{% endblock %}
+
+{% block headline %}
+  lolo
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+  {% crispy form %}
+{% endblock %}
+
+
+{% block last_body %}
+
+<script type="text/javascript">
+</script>
+{% endblock last_body %}

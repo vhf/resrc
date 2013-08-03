@@ -9,7 +9,7 @@ from taggit.models import Tag
 from resrc.link.models import Link
 from resrc.link.forms import NewLinkForm
 from resrc.list.models import List
-from resrc.list.forms import NewListForm
+from resrc.list.forms import NewListAjaxForm
 from resrc.utils import render_template
 
 
@@ -27,7 +27,7 @@ def single(request, link_pk, link_slug=None):
 
     if request.user.is_authenticated():
         titles = List.objects.titles_link_in(request.user, link_pk)
-        newlistform = NewListForm(link_pk)
+        newlistform = NewListAjaxForm(link_pk)
 
     c = {
         'link': link,
@@ -41,7 +41,6 @@ def single(request, link_pk, link_slug=None):
 
 @login_required
 def new_link(request):
-    '''Create a new link'''
     if request.method == 'POST':
         form = NewLinkForm(request.POST)
         if form.is_valid():

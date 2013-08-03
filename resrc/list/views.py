@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-:
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, redirect
-from resrc.utils import render_template
 from django.http import Http404, HttpResponse
+from django.contrib.auth.decorators import login_required
 import simplejson
 
+from resrc.utils import render_template
 from resrc.list.models import List, ListLinks
 from resrc.link.models import Link
 
-from .forms import NewListForm
+from .forms import NewListForm, NewListAjaxForm
 
 
 def single(request, list_pk, list_slug=None):
@@ -105,7 +106,7 @@ def ajax_own_lists(request, link_pk):
 
 def ajax_create_list(request, link_pk):
     if request.method == 'POST' and request.user.is_authenticated():
-        form = NewListForm(link_pk, request.POST)
+        form = NewListAjaxForm(link_pk, request.POST)
 
         if form.is_valid():
             is_private = False
@@ -146,3 +147,30 @@ def ajax_create_list(request, link_pk):
             return HttpResponse(data, mimetype="application/javascript")
     else:
         raise Http404
+
+
+@login_required
+def new_list(request):
+    if request.method == 'POST':
+        form = NewListForm(request.POST)
+        if form.is_valid():
+            data = form.data
+            alist = None
+            # link = Link()
+            # link.title = data['title']
+            # link.url = data['url']
+            # link.author = request.user
+
+            # link.save()
+
+            # list_tags = data['tags'].split(',')
+            # for tag in list_tags:
+            #     link.tags.add(tag)
+            # link.save()
+            return redirect(alist.get_absolute_url())
+    else:
+        form = NewListForm()
+
+    return render_template('lists/new_list.html', {
+        'form': form
+    })
