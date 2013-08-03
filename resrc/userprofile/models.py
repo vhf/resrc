@@ -3,6 +3,7 @@
 from django.db import models
 from django.core import urlresolvers
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from resrc.link.models import Link
 from resrc.list.models import List
@@ -16,20 +17,55 @@ class Profile(models.Model):
 
     user = models.ForeignKey(User, unique=True, verbose_name='user')
 
+    slug = models.SlugField()
+
     about = models.TextField('about', blank=True)
 
     # karma = models.IntegerField('karma', null=True, blank=True)
 
     show_email = models.BooleanField('show_email', default=False)
 
-    favs = models.ManyToManyField(
-        Link, related_name="%(app_label)s_%(class)s_related")
+    favs = models.ManyToManyField(Link)
+
+    def save(self, *args, **kwargs):
+        self.do_unique_slug()
+        super(Profile, self).save(*args, **kwargs)
+
+    def do_unique_slug(self):
+        """
+        Ensures that the slug is always unique for this post
+        """
+        if not self.id:
+            # make sure we have a slug first
+            if not len(self.slug.strip()):
+                self.slug = slugify(self.user.username)
+
+            self.slug = self.get_unique_slug(self.slug)
+            return True
+
+        return False
+
+    def get_unique_slug(self, slug):
+        """
+        Iterates until a unique slug is found
+        """
+        orig_slug = slug
+        counter = 1
+
+        while True:
+            profiles = Profile.objects.filter(slug=slug)
+            if not profiles.exists():
+                return slug
+
+            slug = '%s-%s' % (orig_slug, counter)
+            counter += 1
+
 
     def __unicode__(self):
         return self.user.username
 
     def get_absolute_url(self):
-        return urlresolvers.reverse("user-url", args=(self.user.username, ))
+        return urlresolvers.reverse("user-url", args=(self.slug, ))
 
     # Links
     def get_links(self):

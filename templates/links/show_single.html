@@ -109,6 +109,7 @@
       url: form.attr('action'),
       data: form.serialize(),
       error: function(xhr) {
+        console.log(xhr.response);
         result = $.parseJSON(xhr.response).result;
         if (result == 'success') {
           titlefield.removeClass('error');

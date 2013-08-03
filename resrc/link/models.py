@@ -17,6 +17,8 @@ class Link(models.Model):
 
     title = models.CharField('title', max_length=120)
 
+    slug = models.SlugField()
+
     url = models.URLField('url')
 
     pubdate = models.DateTimeField('date added', auto_now_add=True)
@@ -28,11 +30,41 @@ class Link(models.Model):
 
     tags = TaggableManager()
 
+    def save(self, *args, **kwargs):
+        self.do_unique_slug()
+        super(Link, self).save(*args, **kwargs)
+
+    def do_unique_slug(self):
+        """
+        Ensures that the slug is always unique for this post
+        """
+        if not self.id:
+            # make sure we have a slug first
+            if not len(self.slug.strip()):
+                self.slug = slugify(self.title)
+
+            self.slug = self.get_unique_slug(self.slug)
+            return True
+
+        return False
+
+    def get_unique_slug(self, slug):
+        """
+        Iterates until a unique slug is found
+        """
+        orig_slug = slug
+        counter = 1
+
+        while True:
+            links = Link.objects.filter(slug=slug)
+            if not links.exists():
+                return slug
+
+            slug = '%s-%s' % (orig_slug, counter)
+            counter += 1
+
     def __unicode__(self):
         return self.title
-
-    def get_slug(self):
-        return slugify(self.title)
 
     def get_comment_count(self):
         return get_model().objects.filter(object_pk=self.pk).count()
@@ -40,5 +72,5 @@ class Link(models.Model):
     def get_absolute_url(self):
         return urlresolvers.reverse("link-single-slug", args=(
             self.pk,
-            self.get_slug()
+            self.slug
         ))

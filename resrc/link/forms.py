@@ -25,17 +25,16 @@ class NewLinkForm(forms.Form):
         self.helper.form_class = ''
         self.helper.form_method = 'post'
 
-        self.helper.layout = Layout(  # FIXME : css classes here and form_class
-
+        self.helper.layout = Layout(
             Row(
                 Column(
-                    Field('title'),
+                    Field('url'),
                     css_class='large-12'
                 ),
             ),
             Row(
                 Column(
-                    Field('url'),
+                    Field('title'),
                     css_class='large-12'
                 ),
             ),

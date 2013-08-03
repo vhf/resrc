@@ -10,3 +10,4 @@ local_settings.py
 *.old
 *.bak
 assets/.sass-cache
+Makefile

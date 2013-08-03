@@ -22,7 +22,7 @@ def single(request, link_pk, link_slug=None):
         return redirect(link)
 
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
-    if link.get_slug() != link_slug:
+    if link.slug != link_slug:
         raise Http404
 
     if request.user.is_authenticated():
@@ -71,4 +71,4 @@ def new_link(request):
     })
 
 ''' TODO: provide a view using Tags.similar_objects() :: https://github.com/alex/django-taggit/blob/develop/docs/api.txt
-and use it for autocomplete :: https://github.com/aehlke/tag-it
+and use it for autocomplete :: https://github.com/aehlke/tag-it'''

@@ -5,7 +5,7 @@ from resrc.utils import render_template
 from django.http import Http404, HttpResponse
 import simplejson
 
-from resrc.list.models import List
+from resrc.list.models import List, ListLinks
 from resrc.link.models import Link
 
 from .forms import NewListForm
@@ -18,7 +18,7 @@ def single(request, list_pk, list_slug=None):
         return redirect(alist)
 
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
-    if alist.get_slug() != list_slug:
+    if alist.slug != list_slug:
         raise Http404
 
     return render_template('lists/show_single.html', {
@@ -64,12 +64,21 @@ def ajax_add_to_default_list(request):
         else:
             alist = get_object_or_404(List, pk=list_pk)
 
-        if link in alist.links.all():
-            alist.links.remove(link)
-            data = simplejson.dumps({'result': 'removed'})
-        else :
-            alist.links.add(link)
+        listlink = None
+        try:
+            listlink = ListLinks.objects.get(
+                alist=alist,
+                links=link
+            )
+        except ObjectDoesNotExist:
+            ListLinks.objects.create(
+                alist=alist,
+                links=link
+            )
             data = simplejson.dumps({'result': 'added'})
+        if listlink is not None:
+            listlink.delete()
+            data = simplejson.dumps({'result': 'removed'})
 
         return HttpResponse(data, mimetype="application/javascript")
 
@@ -99,11 +108,8 @@ def ajax_create_list(request, link_pk):
         form = NewListForm(link_pk, request.POST)
 
         if form.is_valid():
-            is_ordered = False
             is_private = False
 
-            if 'ordered' in form.data:
-                is_ordered = form.data['ordered']
             if 'private' in form.data:
                 is_private = form.data['private']
 
@@ -112,14 +118,17 @@ def ajax_create_list(request, link_pk):
                     title=form.data['title'],
                     description=form.data['description'],
                     owner=request.user,
-                    is_public=not is_private,
-                    is_ordered=is_ordered
+                    is_public=not is_private
                 )
                 alist.save()
 
                 link = get_object_or_404(Link, pk=link_pk)
 
-                alist.links.add(link)
+                listlink = ListLinks.objects.create(
+                    alist=alist,
+                    links=link,
+                )
+                listlink.save()
 
                 data = simplejson.dumps({
                     'result': 'success'

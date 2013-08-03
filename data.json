@@ -120,13 +120,22 @@
     "pk": 14,
     "model": "contenttypes.contenttype",
     "fields": {
+      "model": "listlinks",
+      "name": "list links",
+      "app_label": "list"
+    }
+  },
+  {
+    "pk": 15,
+    "model": "contenttypes.contenttype",
+    "fields": {
       "model": "logentry",
       "name": "log entry",
       "app_label": "admin"
     }
   },
   {
-    "pk": 15,
+    "pk": 16,
     "model": "contenttypes.contenttype",
     "fields": {
       "model": "captchastore",
@@ -135,7 +144,7 @@
     }
   },
   {
-    "pk": 16,
+    "pk": 17,
     "model": "contenttypes.contenttype",
     "fields": {
       "model": "tag",
@@ -144,7 +153,7 @@
     }
   },
   {
-    "pk": 17,
+    "pk": 18,
     "model": "contenttypes.contenttype",
     "fields": {
       "model": "taggeditem",
@@ -153,11 +162,11 @@
     }
   },
   {
-    "pk": "dtgwohes1ih1yfdp0wptl6fjxjirm7in",
+    "pk": "tc2tsts3k6bl7avek9p1un28g7tgrrn0",
     "model": "sessions.session",
     "fields": {
-      "expire_date": "2013-08-15T15:27:27.075Z",
-      "session_data": "YjhhYjBjMzg5MzViZTI3ZTY0YTU2ZDE2ZmQ4ZmIwMmJlMThkYjQzZTqAAn1xAShVEl9hdXRoX3VzZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHEDVQ1fYXV0aF91c2VyX2lkcQRLAnUu"
+      "expire_date": "2013-08-17T13:27:20.795Z",
+      "session_data": "NjQ4MzcyYWY3YjFiMDY4ZmIwOWEzZTA2ZGE3MmVjZWQ1ZmEyYzlkNjqAAn1xAShVCWdldF90b2tlbnECVQxlZTU0YWY1YzMyOWJYCgAAAHRlc3Rjb29raWVYBgAAAHdvcmtlZFUSX2F1dGhfdXNlcl9iYWNrZW5kcQNVKWRqYW5nby5jb250cmliLmF1dGguYmFja2VuZHMuTW9kZWxCYWNrZW5kcQRVDV9hdXRoX3VzZXJfaWRxBUsCdS4="
     }
   },
   {
@@ -180,8 +189,8 @@
     "pk": 2,
     "model": "taggit.tag",
     "fields": {
-      "name": "Web Framework",
-      "slug": "web-framework"
+      "name": "Static Site Generator",
+      "slug": "static-site-generator"
     }
   },
   {
@@ -194,14 +203,6 @@
   },
   {
     "pk": 4,
-    "model": "taggit.tag",
-    "fields": {
-      "name": "Static Site Generator",
-      "slug": "static-site-generator"
-    }
-  },
-  {
-    "pk": 5,
     "model": "taggit.tag",
     "fields": {
       "name": "Javascript",
@@ -221,7 +222,7 @@
     "pk": 2,
     "model": "taggit.taggeditem",
     "fields": {
-      "tag": 4,
+      "tag": 2,
       "content_type": 12,
       "object_id": 1
     }
@@ -230,18 +231,63 @@
     "pk": 3,
     "model": "taggit.taggeditem",
     "fields": {
-      "tag": 5,
+      "tag": 3,
       "content_type": 12,
-      "object_id": 2
+      "object_id": 1
     }
   },
   {
     "pk": 4,
     "model": "taggit.taggeditem",
     "fields": {
-      "tag": 5,
+      "tag": 4,
+      "content_type": 12,
+      "object_id": 2
+    }
+  },
+  {
+    "pk": 5,
+    "model": "taggit.taggeditem",
+    "fields": {
+      "tag": 4,
       "content_type": 12,
       "object_id": 3
+    }
+  },
+  {
+    "pk": 2,
+    "model": "list.listlinks",
+    "fields": {
+      "adddate": "2013-08-03",
+      "alist": 2,
+      "links": 1
+    }
+  },
+  {
+    "pk": 3,
+    "model": "list.listlinks",
+    "fields": {
+      "adddate": "2013-08-03",
+      "alist": 3,
+      "links": 3
+    }
+  },
+  {
+    "pk": 6,
+    "model": "list.listlinks",
+    "fields": {
+      "adddate": "2013-08-03",
+      "alist": 1,
+      "links": 2
+    }
+  },
+  {
+    "pk": 7,
+    "model": "list.listlinks",
+    "fields": {
+      "adddate": "2013-08-03",
+      "alist": 1,
+      "links": 3
     }
   },
   {
@@ -608,8 +654,8 @@
     "pk": 41,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_logentry",
-      "name": "Can add log entry",
+      "codename": "add_listlinks",
+      "name": "Can add list links",
       "content_type": 14
     }
   },
@@ -617,8 +663,8 @@
     "pk": 42,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_logentry",
-      "name": "Can change log entry",
+      "codename": "change_listlinks",
+      "name": "Can change list links",
       "content_type": 14
     }
   },
@@ -626,8 +672,8 @@
     "pk": 43,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_logentry",
-      "name": "Can delete log entry",
+      "codename": "delete_listlinks",
+      "name": "Can delete list links",
       "content_type": 14
     }
   },
@@ -635,8 +681,8 @@
     "pk": 44,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_captchastore",
-      "name": "Can add captcha store",
+      "codename": "add_logentry",
+      "name": "Can add log entry",
       "content_type": 15
     }
   },
@@ -644,8 +690,8 @@
     "pk": 45,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_captchastore",
-      "name": "Can change captcha store",
+      "codename": "change_logentry",
+      "name": "Can change log entry",
       "content_type": 15
     }
   },
@@ -653,8 +699,8 @@
     "pk": 46,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_captchastore",
-      "name": "Can delete captcha store",
+      "codename": "delete_logentry",
+      "name": "Can delete log entry",
       "content_type": 15
     }
   },
@@ -662,8 +708,8 @@
     "pk": 47,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_tag",
-      "name": "Can add Tag",
+      "codename": "add_captchastore",
+      "name": "Can add captcha store",
       "content_type": 16
     }
   },
@@ -671,8 +717,8 @@
     "pk": 48,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_tag",
-      "name": "Can change Tag",
+      "codename": "change_captchastore",
+      "name": "Can change captcha store",
       "content_type": 16
     }
   },
@@ -680,8 +726,8 @@
     "pk": 49,
     "model": "auth.permission",
     "fields": {
-      "codename": "delete_tag",
-      "name": "Can delete Tag",
+      "codename": "delete_captchastore",
+      "name": "Can delete captcha store",
       "content_type": 16
     }
   },
@@ -689,8 +735,8 @@
     "pk": 50,
     "model": "auth.permission",
     "fields": {
-      "codename": "add_taggeditem",
-      "name": "Can add Tagged Item",
+      "codename": "add_tag",
+      "name": "Can add Tag",
       "content_type": 17
     }
   },
@@ -698,8 +744,8 @@
     "pk": 51,
     "model": "auth.permission",
     "fields": {
-      "codename": "change_taggeditem",
-      "name": "Can change Tagged Item",
+      "codename": "change_tag",
+      "name": "Can change Tag",
       "content_type": 17
     }
   },
@@ -707,9 +753,36 @@
     "pk": 52,
     "model": "auth.permission",
     "fields": {
+      "codename": "delete_tag",
+      "name": "Can delete Tag",
+      "content_type": 17
+    }
+  },
+  {
+    "pk": 53,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "add_taggeditem",
+      "name": "Can add Tagged Item",
+      "content_type": 18
+    }
+  },
+  {
+    "pk": 54,
+    "model": "auth.permission",
+    "fields": {
+      "codename": "change_taggeditem",
+      "name": "Can change Tagged Item",
+      "content_type": 18
+    }
+  },
+  {
+    "pk": 55,
+    "model": "auth.permission",
+    "fields": {
       "codename": "delete_taggeditem",
       "name": "Can delete Tagged Item",
-      "content_type": 17
+      "content_type": 18
     }
   },
   {
@@ -722,12 +795,12 @@
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2013-08-01T15:19:23.273Z",
+      "last_login": "2013-08-03T13:26:53.024Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$QALM1oNaCAYd$LdQQ0qMqDhU5QHpKe7Ic8NiFD1XSHR20R8kUeldqHaU=",
+      "password": "pbkdf2_sha256$10000$bZGzdCqWubTc$q7Y99Yn9UOD5PERrPsuWY+TJDA7yU/lxUapxJqCBFnc=",
       "email": "root@example.com",
-      "date_joined": "2013-08-01T15:17:15.179Z"
+      "date_joined": "2013-08-03T13:25:50.462Z"
     }
   },
   {
@@ -740,12 +813,12 @@
       "is_active": true,
       "is_superuser": true,
       "is_staff": true,
-      "last_login": "2013-08-01T15:27:26.916Z",
+      "last_login": "2013-08-03T13:27:20.652Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$gCsgPJGdYF1s$Hht51GMDXEn2Zbq6+FzOp4BE1N6BNVa73av0NTZ431I=",
+      "password": "pbkdf2_sha256$10000$1WfhgATxC8Vt$p9qIAGq6pnBlH6XSEXok2xBfB3weg0yvVPusnTDEPTs=",
       "email": "victor@example.com",
-      "date_joined": "2013-08-01T15:18:43Z"
+      "date_joined": "2013-08-03T13:26:28Z"
     }
   },
   {
@@ -758,12 +831,12 @@
       "is_active": true,
       "is_superuser": false,
       "is_staff": false,
-      "last_login": "2013-08-01T15:19:11.956Z",
+      "last_login": "2013-08-03T13:26:43.729Z",
       "groups": [],
       "user_permissions": [],
-      "password": "pbkdf2_sha256$10000$ZBjYA29JNmEC$WCX8uSTrinSLuaPDIriwKlsnjCI8cyp7iEPAqZuL+1I=",
+      "password": "pbkdf2_sha256$10000$zy6iImckpTop$lSdJkmznLakG7W4ufSY2mhsMshdUISlaJK/H7DRmKg4=",
       "email": "foobar@example.com",
-      "date_joined": "2013-08-01T15:19:11.190Z"
+      "date_joined": "2013-08-03T13:26:42.957Z"
     }
   },
   {
@@ -773,7 +846,8 @@
       "show_email": false,
       "favs": [],
       "about": "",
-      "user": 2
+      "user": 2,
+      "slug": "victor"
     }
   },
   {
@@ -783,7 +857,8 @@
       "show_email": false,
       "favs": [],
       "about": "",
-      "user": 3
+      "user": 3,
+      "slug": "foobar"
     }
   },
   {
@@ -792,7 +867,8 @@
     "fields": {
       "url": "http://12devs.co.uk/articles/204/",
       "author": 2,
-      "pubdate": "2013-08-01T15:24:18.183Z",
+      "slug": "building-static-websites-with-middleman-deploying-to-heroku",
+      "pubdate": "2013-08-03T13:27:42.817Z",
       "title": "Building static websites with Middleman, deploying to Heroku"
     }
   },
@@ -802,7 +878,8 @@
     "fields": {
       "url": "http://tobyho.com/2010/11/22/javascript-constructors-and/",
       "author": 2,
-      "pubdate": "2013-08-01T15:26:30.171Z",
+      "slug": "javascript-constructors-and-prototypes",
+      "pubdate": "2013-08-03T13:32:09.645Z",
       "title": "Javascript Constructors and Prototypes"
     }
   },
@@ -812,8 +889,51 @@
     "fields": {
       "url": "http://betterexplained.com/articles/the-single-page-javascript-overview/",
       "author": 2,
-      "pubdate": "2013-08-01T15:27:08.904Z",
+      "slug": "single-page-simple-comprehensive-overview-of-javascript",
+      "pubdate": "2013-08-03T13:32:25.540Z",
       "title": "Single page, Simple, Comprehensive Overview of Javascript"
+    }
+  },
+  {
+    "pk": 1,
+    "model": "list.list",
+    "fields": {
+      "md_content": "",
+      "description": "My bookmarks.",
+      "pubdate": "2013-08-03",
+      "title": "Bookmarks",
+      "html_content": "",
+      "owner": 2,
+      "is_public": false,
+      "slug": "bookmarks"
+    }
+  },
+  {
+    "pk": 2,
+    "model": "list.list",
+    "fields": {
+      "md_content": "",
+      "description": "My reading list.",
+      "pubdate": "2013-08-03",
+      "title": "Reading list",
+      "html_content": "",
+      "owner": 2,
+      "is_public": false,
+      "slug": "reading-list"
+    }
+  },
+  {
+    "pk": 3,
+    "model": "list.list",
+    "fields": {
+      "md_content": "",
+      "description": "My JS links",
+      "pubdate": "2013-08-03",
+      "title": "My JS links",
+      "html_content": "",
+      "owner": 2,
+      "is_public": true,
+      "slug": "my-js-links"
     }
   },
   {
@@ -821,129 +941,12 @@
     "model": "admin.logentry",
     "fields": {
       "action_flag": 2,
-      "action_time": "2013-08-01T15:20:09.738Z",
+      "action_time": "2013-08-03T13:27:01.451Z",
       "object_repr": "victor",
       "object_id": "2",
       "change_message": "Changed password, is_staff and is_superuser.",
       "user": 1,
       "content_type": 3
-    }
-  },
-  {
-    "pk": 2,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:20:51.438Z",
-      "object_repr": "Ruby",
-      "object_id": "1",
-      "change_message": "",
-      "user": 1,
-      "content_type": 16
-    }
-  },
-  {
-    "pk": 3,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:20:59.538Z",
-      "object_repr": "Web Framework",
-      "object_id": "2",
-      "change_message": "",
-      "user": 1,
-      "content_type": 16
-    }
-  },
-  {
-    "pk": 4,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:21:13.400Z",
-      "object_repr": "Ruby on Rails",
-      "object_id": "3",
-      "change_message": "",
-      "user": 1,
-      "content_type": 16
-    }
-  },
-  {
-    "pk": 5,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:22:01.208Z",
-      "object_repr": "Static Site Generator",
-      "object_id": "4",
-      "change_message": "",
-      "user": 1,
-      "content_type": 16
-    }
-  },
-  {
-    "pk": 6,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:22:16.957Z",
-      "object_repr": "Javascript",
-      "object_id": "5",
-      "change_message": "",
-      "user": 1,
-      "content_type": 16
-    }
-  },
-  {
-    "pk": 7,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:24:18.230Z",
-      "object_repr": "Building static websites with Middleman, deploying to Heroku",
-      "object_id": "1",
-      "change_message": "",
-      "user": 1,
-      "content_type": 12
-    }
-  },
-  {
-    "pk": 8,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 2,
-      "action_time": "2013-08-01T15:24:31.650Z",
-      "object_repr": "Building static websites with Middleman, deploying to Heroku",
-      "object_id": "1",
-      "change_message": "Changed tags.",
-      "user": 1,
-      "content_type": 12
-    }
-  },
-  {
-    "pk": 9,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:26:30.203Z",
-      "object_repr": "Javascript Constructors and Prototypes",
-      "object_id": "2",
-      "change_message": "",
-      "user": 1,
-      "content_type": 12
-    }
-  },
-  {
-    "pk": 10,
-    "model": "admin.logentry",
-    "fields": {
-      "action_flag": 1,
-      "action_time": "2013-08-01T15:27:08.935Z",
-      "object_repr": "Single page, Simple, Comprehensive Overview of Javascript",
-      "object_id": "3",
-      "change_message": "",
-      "user": 1,
-      "content_type": 12
     }
   }
 ]

@@ -43,27 +43,60 @@ class List(models.Model):
     objects = ListManager()
 
     title = models.CharField('title', max_length=80)
+    slug = models.SlugField()
     tags = TaggableManager()
     description = models.TextField('description')
     md_content = models.TextField('md_content')
     html_content = models.TextField('html_content')
 
-    links = models.ManyToManyField(Link)
+    links = models.ManyToManyField(Link, through='ListLinks')
 
     owner = models.ForeignKey(User, related_name="list_owner")
     is_public = models.BooleanField(default=True)
     pubdate = models.DateField(auto_now_add=True)
 
+    def save(self, *args, **kwargs):
+        self.do_unique_slug()
+        if not self.description:
+            self.description = self.title
+        super(List, self).save(*args, **kwargs)
+
+    def do_unique_slug(self):
+        """
+        Ensures that the slug is always unique for this post
+        """
+        if not self.id:
+            # make sure we have a slug first
+            if not len(self.slug.strip()):
+                self.slug = slugify(self.title)
+
+            self.slug = self.get_unique_slug(self.slug)
+            return True
+
+        return False
+
+    def get_unique_slug(self, slug):
+        """
+        Iterates until a unique slug is found
+        """
+        orig_slug = slug
+        counter = 1
+
+        while True:
+            lists = List.objects.filter(slug=slug)
+            if not lists.exists():
+                return slug
+
+            slug = '%s-%s' % (orig_slug, counter)
+            counter += 1
+
     def __unicode__(self):
         return self.title
-
-    def get_slug(self):
-        return slugify(self.title)
 
     def get_absolute_url(self):
         return urlresolvers.reverse("list-single-slug", args=(
             self.pk,
-            self.get_slug()
+            self.slug
         ))
 
 
@@ -73,3 +106,10 @@ def list_save_handler(sender, **kwargs):
     alist = kwargs['instance']
     alist.html_content = emarkdown(alist.md_content)
     return True
+
+
+# https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
+class ListLinks(models.Model):
+    alist = models.ForeignKey(List)
+    links = models.ForeignKey(Link)
+    adddate = models.DateField(auto_now_add=True)

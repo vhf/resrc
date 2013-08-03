@@ -5,7 +5,7 @@ resrc
 `grep TODO -R resrc/*` kthxbye
 
 ### run the project
-1. python manage.py syncdb python manage.py migrate
+1. python manage.py syncdb && python manage.py migrate && python manage.py loaddata data.json
 2. Say no to superuser creation. Use credentials root:qwer
 3. sample accounts : victor:qwer (superuser + user), foobar:qwer (user only)
 
