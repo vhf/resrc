@@ -7328,7 +7328,7 @@ i {
 /* line 41, ../sass/_icons.scss */
 .listcontent a.symbol {
   color: black;
-  font-size: 1.25em;
+  font-size: 1.5em;
 }
 
 /* line 1, ../sass/_resrc.scss */
@@ -7336,25 +7336,30 @@ i {
   font-size: 0.8125em;
 }
 
-/* line 55, ../sass/app.scss */
+/* line 2, ../sass/_lists.scss */
 .halloform .editable, .halloform #id_mdcontent {
   line-height: 20px !important;
   font-size: 14px !important;
 }
-/* line 58, ../sass/app.scss */
+/* line 5, ../sass/_lists.scss */
 .halloform .editable ol, .halloform .editable li, .halloform .editable p, .halloform .editable a, .halloform #id_mdcontent ol, .halloform #id_mdcontent li, .halloform #id_mdcontent p, .halloform #id_mdcontent a {
   line-height: 20px !important;
   font-size: 14px !important;
 }
-/* line 63, ../sass/app.scss */
+/* line 10, ../sass/_lists.scss */
 .halloform .editable {
   padding-top: 8px;
 }
-/* line 66, ../sass/app.scss */
+/* line 13, ../sass/_lists.scss */
 .halloform #div_id_mdcontent {
   padding-right: 13px;
 }
-/* line 69, ../sass/app.scss */
+/* line 16, ../sass/_lists.scss */
 .halloform #id_mdcontent {
   min-height: 120px;
+}
+
+/* line 22, ../sass/_lists.scss */
+.listcontent p {
+  font-size: 1em;
 }

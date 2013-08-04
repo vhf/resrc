@@ -49,24 +49,4 @@
 @import "_comment_thread";
 @import "_icons";
 @import "_resrc";
-
-
-.halloform {
-  .editable, #id_mdcontent {
-    line-height: 20px !important;
-    font-size: 14px !important;
-    ol, li, p, a {
-      line-height: 20px !important;
-      font-size: 14px !important;
-    }
-  }
-  .editable {
-    padding-top: 8px;
-  }
-  #div_id_mdcontent {
-    padding-right: 13px;
-  }
-  #id_mdcontent {
-    min-height: 120px;
-  }
-}
+@import "_lists";

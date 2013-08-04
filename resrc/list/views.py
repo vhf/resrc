@@ -15,8 +15,6 @@ from .forms import NewListForm, NewListAjaxForm
 
 def single(request, list_pk, list_slug=None):
     alist = get_object_or_404(List, pk=list_pk)
-    tags = alist.links.all()
-    print list(tags)
 
     if list_slug is None:
         return redirect(alist)
@@ -27,6 +25,7 @@ def single(request, list_pk, list_slug=None):
 
     return render_to_response('lists/show_single.html', {
         'list': alist,
+        'tags': alist.get_tags()[:5],
         'default_lists': ['Bookmarks', 'Reading list'],
         'request': request
     }, RequestContext(request))

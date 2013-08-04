@@ -16,23 +16,17 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="small-9 columns">
-      <p>
-        <ul class="inline-list">
-          <li><a href="#" class="radius secondary label">tags</a></li>
-          <li><a href="#" class="radius secondary label">most</a></li>
-          <li><a href="#" class="radius secondary label">common</a></li>
-          <li><a href="#" class="radius secondary label">in</a></li>
-          <li><a href="#" class="radius secondary label">list</a></li>
-        </ul>
-      </p>
+  <div class="row">
+    <div class="small-12 columns">
+        <p>
+          <ul class="inline-list">
+            {% for tag, count in tags %}
+            <li><a href="#" class="radius secondary label">{{ tag }} ({{ count }})</a></li>
+            {% endfor %}
+          </ul>
+        </p>
+    </div>
   </div>
-  <!-- FIXME : Remove or implement list bookmarking -->
-  <div class="small-3 columns text-right list-symbols">
-      <i class="lsf symbol">addstar</i>
-  </div>
-</div>
 
 <div class="row">
   <div class="large-12 columns">

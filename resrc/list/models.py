@@ -32,6 +32,9 @@ class ListManager(models.Manager):
             .values_list('title', flat=True)
         return list(titles)
 
+    def links_tags(self):
+        return self.get_query_set().links.all().values_list('tags__name')
+
 
 class List(models.Model):
 
@@ -98,6 +101,13 @@ class List(models.Model):
             self.slug
         ))
 
+    def get_tags(self):
+        from taggit.models import Tag
+        from django.db.models import Count
+        return Tag.objects.filter(link__list=self) \
+            .values_list('name') \
+            .annotate(c=Count('name')).order_by('-c')
+
 
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
 class ListLinks(models.Model):
@@ -112,19 +122,24 @@ def list_add_handler(sender, **kwargs):
     listlink = kwargs['instance']
     alist = listlink.alist
     link = listlink.links
-    md_link = "1. [link](%s) [%s](%s)" % (link.get_absolute_url(), link.title, link.url)
+    md_link = "1. [link](%s) [%s](%s)" % (
+        link.get_absolute_url(), link.title, link.url
+    )
     alist.md_content = "\n".join([alist.md_content, md_link])
     from resrc.utils.templatetags.emarkdown import listmarkdown
     alist.html_content = listmarkdown(alist.md_content)
     alist.save()
     return True
 
+
 @receiver(pre_delete, sender=ListLinks)
 def list_delete_handler(sender, **kwargs):
     listlink = kwargs['instance']
     alist = listlink.alist
     link = listlink.links
-    md_link = "[link](%s) [%s](%s)" % (link.get_absolute_url(), link.title, link.url)
+    md_link = "[link](%s) [%s](%s)" % (
+        link.get_absolute_url(), link.title, link.url
+    )
 
     alist.md_content = alist.md_content.replace(md_link, '')
 
