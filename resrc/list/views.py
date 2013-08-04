@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-:
 from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.http import Http404, HttpResponse
+from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 import simplejson
 
@@ -14,6 +15,8 @@ from .forms import NewListForm, NewListAjaxForm
 
 def single(request, list_pk, list_slug=None):
     alist = get_object_or_404(List, pk=list_pk)
+    tags = alist.links.all()
+    print list(tags)
 
     if list_slug is None:
         return redirect(alist)
@@ -22,10 +25,11 @@ def single(request, list_pk, list_slug=None):
     if alist.slug != list_slug:
         raise Http404
 
-    return render_template('lists/show_single.html', {
+    return render_to_response('lists/show_single.html', {
         'list': alist,
-        'default_lists': ['Bookmarks', 'Reading list']
-    })
+        'default_lists': ['Bookmarks', 'Reading list'],
+        'request': request
+    }, RequestContext(request))
 
 
 def ajax_add_to_default_list(request):
@@ -154,19 +158,22 @@ def new_list(request):
     if request.method == 'POST':
         form = NewListForm(request.POST)
         if form.is_valid():
-            data = form.data
-            alist = None
-            # link = Link()
-            # link.title = data['title']
-            # link.url = data['url']
-            # link.author = request.user
+            is_private = False
 
-            # link.save()
+            if 'private' in form.data:
+                is_private = form.data['private']
 
-            # list_tags = data['tags'].split(',')
-            # for tag in list_tags:
-            #     link.tags.add(tag)
-            # link.save()
+            from resrc.utils.templatetags.emarkdown import listmarkdown
+            alist = List.objects.create(
+                title=form.data['title'],
+                description=form.data['description'],
+                md_content=form.data['mdcontent'],
+                html_content=listmarkdown(form.data['mdcontent']),
+                owner=request.user,
+                is_public=not is_private
+            )
+            alist.save()
+
             return redirect(alist.get_absolute_url())
     else:
         form = NewListForm()

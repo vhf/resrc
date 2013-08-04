@@ -28,6 +28,11 @@
 
 {% block last_body %}
 
-<script type="text/javascript">
-</script>
+<script type="text/javascript" src="{% static "js/markdown/jquery-ui-1.10.0.custom.min.js" %}"></script>
+<script type="text/javascript" src="{% static "js/markdown/rangy-core-1.2.3.js" %}"></script>
+<script type="text/javascript" src="{% static "js/markdown/hallo.js" %}"></script>
+<script src="{% static "js/markdown/showdown.js" %}"></script>
+<script src="{% static "js/markdown/to-markdown.js" %}"></script>
+<script src="{% static "js/markdown/editor.js" %}"></script>
+
 {% endblock last_body %}

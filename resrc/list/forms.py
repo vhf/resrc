@@ -2,7 +2,7 @@
 from django import forms
 from django.core.urlresolvers import reverse
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Column, Fieldset, Field, HTML, Submit, Div
+from crispy_forms_foundation.layout import Layout, Row, Column, Fieldset, Field, HTML, Submit
 
 
 class NewListAjaxForm(forms.Form):
@@ -52,7 +52,7 @@ class NewListForm(forms.Form):
     )
     private = forms.BooleanField(label='private', required=False)
     mdcontent = forms.CharField(
-        label='Content', required=False, widget=forms.Textarea()
+        label='list source', required=False, widget=forms.Textarea()
     )
 
     def __init__(self, *args, **kwargs):
@@ -75,14 +75,20 @@ class NewListForm(forms.Form):
                 ),
                 Row(
                     Column(
-                        Field('private'), css_class='large-4'
+                        HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox"> private</label>'),
+                        css_class='large-12'
                     ),
                 ),
                 Row(
                     Column(
-                        Div(css_class='editable'),
-                        Field('mdcontent'), css_class='large-12'
+                        Field('mdcontent', css_class="large-12"),
+                        css_class='large-6'
                     ),
+                    Column(
+                        HTML('<div class="ctrlHolder"><label>preview</label><div class="editable"><h5>lala</h5><ul><li>hey</li><li>ho</li></ul></div></div>'),
+                        css_class='large-6'
+                    ),
+                    css_class='halloform'
                 ),
             ),
             Row(

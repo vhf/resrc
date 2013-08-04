@@ -13,3 +13,33 @@ i {
   font-style: normal;
   text-decoration: inherit;
 }
+
+.list-symbols {
+  .symbol {
+    font-size: emCalc(35px);
+    color: black;
+  }
+  a.waiting {
+    color: #bbb;
+  }
+  a.unchecked {
+    color: black;
+  }
+  a.checked {
+    color:#2ba6cb;
+  }
+}
+
+.link-title {
+  a.symbol {
+    color: black;
+  }
+}
+
+
+.listcontent {
+  a.symbol {
+    color: black;
+    font-size: emCalc(20px);
+  }
+}

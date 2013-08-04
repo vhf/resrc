@@ -61,7 +61,11 @@
     {% endwith %}
     </p>
     {% else %}
+    <div class="listcontent">
+    {% autoescape off %}
     {{ list.html_content }}
+    {% endautoescape %}
+    </div>
     {% endif %}
   </div>
 </div>
@@ -77,4 +81,12 @@
 
 
 {% block last_body %}
+<script type="text/javascript">
+$('.listcontent').find('a').each(function(index, item) {
+  $item = $(item);
+  if($item.text() === 'link') {
+    $item.addClass('lsf symbol');
+  }
+});
+</script>
 {% endblock last_body %}

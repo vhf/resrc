@@ -3,10 +3,9 @@ from django.db import models
 from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import pre_save
+from django.db.models.signals import post_save, pre_delete
 from django.dispatch import receiver
 
-from resrc.utils.templatetags.emarkdown import emarkdown
 from taggit.managers import TaggableManager
 from resrc.link.models import Link
 
@@ -100,16 +99,43 @@ class List(models.Model):
         ))
 
 
-# FIXME: not called when adding/removing a link from the list...
-@receiver(pre_save, sender=List)
-def list_save_handler(sender, **kwargs):
-    alist = kwargs['instance']
-    alist.html_content = emarkdown(alist.md_content)
-    return True
-
-
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
 class ListLinks(models.Model):
     alist = models.ForeignKey(List)
     links = models.ForeignKey(Link)
     adddate = models.DateField(auto_now_add=True)
+
+
+@receiver(post_save, sender=ListLinks)
+def list_add_handler(sender, **kwargs):
+    print "added"
+    listlink = kwargs['instance']
+    alist = listlink.alist
+    link = listlink.links
+    md_link = "1. [link](%s) [%s](%s)" % (link.get_absolute_url(), link.title, link.url)
+    alist.md_content = "\n".join([alist.md_content, md_link])
+    from resrc.utils.templatetags.emarkdown import listmarkdown
+    alist.html_content = listmarkdown(alist.md_content)
+    alist.save()
+    return True
+
+@receiver(pre_delete, sender=ListLinks)
+def list_delete_handler(sender, **kwargs):
+    listlink = kwargs['instance']
+    alist = listlink.alist
+    link = listlink.links
+    md_link = "[link](%s) [%s](%s)" % (link.get_absolute_url(), link.title, link.url)
+
+    alist.md_content = alist.md_content.replace(md_link, '')
+
+    import re
+    SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
+    REPLACE = r' '
+    alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
+
+    from resrc.utils.templatetags.emarkdown import listmarkdown
+    alist.html_content = listmarkdown(alist.md_content)
+    alist.save()
+
+    print "deleted"
+    return True

@@ -7302,30 +7302,59 @@ i {
   text-decoration: inherit;
 }
 
+/* line 18, ../sass/_icons.scss */
+.list-symbols .symbol {
+  font-size: 2.1875em;
+  color: black;
+}
+/* line 22, ../sass/_icons.scss */
+.list-symbols a.waiting {
+  color: #bbb;
+}
+/* line 25, ../sass/_icons.scss */
+.list-symbols a.unchecked {
+  color: black;
+}
+/* line 28, ../sass/_icons.scss */
+.list-symbols a.checked {
+  color: #2ba6cb;
+}
+
+/* line 34, ../sass/_icons.scss */
+.link-title a.symbol {
+  color: black;
+}
+
+/* line 41, ../sass/_icons.scss */
+.listcontent a.symbol {
+  color: black;
+  font-size: 1.25em;
+}
+
 /* line 1, ../sass/_resrc.scss */
 .byline {
   font-size: 0.8125em;
 }
 
 /* line 55, ../sass/app.scss */
-.list-symbols .symbol {
-  font-size: 2.1875em;
-  color: black;
+.halloform .editable, .halloform #id_mdcontent {
+  line-height: 20px !important;
+  font-size: 14px !important;
 }
-/* line 59, ../sass/app.scss */
-.list-symbols a.waiting {
-  color: #bbb;
+/* line 58, ../sass/app.scss */
+.halloform .editable ol, .halloform .editable li, .halloform .editable p, .halloform .editable a, .halloform #id_mdcontent ol, .halloform #id_mdcontent li, .halloform #id_mdcontent p, .halloform #id_mdcontent a {
+  line-height: 20px !important;
+  font-size: 14px !important;
 }
-/* line 62, ../sass/app.scss */
-.list-symbols a.unchecked {
-  color: black;
+/* line 63, ../sass/app.scss */
+.halloform .editable {
+  padding-top: 8px;
 }
-/* line 65, ../sass/app.scss */
-.list-symbols a.checked {
-  color: #2ba6cb;
+/* line 66, ../sass/app.scss */
+.halloform #div_id_mdcontent {
+  padding-right: 13px;
 }
-
-/* line 71, ../sass/app.scss */
-.link-title a.symbol {
-  color: black;
+/* line 69, ../sass/app.scss */
+.halloform #id_mdcontent {
+  min-height: 120px;
 }

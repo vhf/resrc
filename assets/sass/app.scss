@@ -50,25 +50,23 @@
 @import "_icons";
 @import "_resrc";
 
-// link stuff
-.list-symbols {
-  .symbol {
-    font-size: emCalc(35px);
-    color: black;
-  }
-  a.waiting {
-    color: #bbb;
-  }
-  a.unchecked {
-    color: black;
-  }
-  a.checked {
-    color:#2ba6cb;
-  }
-}
 
-.link-title {
-  a.symbol {
-    color: black;
+.halloform {
+  .editable, #id_mdcontent {
+    line-height: 20px !important;
+    font-size: 14px !important;
+    ol, li, p, a {
+      line-height: 20px !important;
+      font-size: 14px !important;
+    }
+  }
+  .editable {
+    padding-top: 8px;
+  }
+  #div_id_mdcontent {
+    padding-right: 13px;
+  }
+  #id_mdcontent {
+    min-height: 120px;
   }
 }
