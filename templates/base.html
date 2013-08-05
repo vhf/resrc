@@ -29,7 +29,7 @@
 
           <ul class="left">
               <li {% block menu_home %}{% endblock %}>
-                  <a href="{% url "resrc.page.views.home" %}">Home</a>
+                  <a href="{% url "page-home" %}">Home</a>
               </li>
           </ul>
 
@@ -42,16 +42,16 @@
                       </a>
                   <ul class="dropdown">
                       <li><a href="{% url "user-url" user.username %}">Profil</a></li>
-                      <li><a href="{% url "resrc.userprofile.views.settings_profile" %}">Settings</a></li>
-                      <li><a href="{% url "resrc.userprofile.views.logout_view" %}">Logout</a></li>
+                      <li><a href="{% url "user-settings" %}">Settings</a></li>
+                      <li><a href="{% url "user-logout" %}">Logout</a></li>
                   </ul>
               </li>
               {% else %}
               <li>
-                  <a href="{% url "resrc.userprofile.views.register_view" %}">Register</a>
+                  <a href="{% url "user-register" %}">Register</a>
               </li>
               <li>
-                  <a href="{% url "resrc.userprofile.views.login_view" %}">Login</a>
+                  <a href="{% url "user-login" %}">Login</a>
               </li>
               {% endif %}
           </ul>
@@ -93,24 +93,29 @@
   '><\/script>');
   </script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
+  {% block foundation_plugins %}
+  <script src="{% static "js/foundation/foundation.abide.js" %}"></script>
   <script src="{% static "js/foundation/foundation.alerts.js" %}"></script>
   <script src="{% static "js/foundation/foundation.clearing.js" %}"></script>
   <script src="{% static "js/foundation/foundation.cookie.js" %}"></script>
   <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
   <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.interchange.js" %}"></script>
   <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
   <script src="{% static "js/foundation/foundation.magellan.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.orbit.js" %}"></script>
   <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
   <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.section.js" %}"></script>
   <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.interchange.js" %}"></script>
+  {% endblock %}
   <script>
     $(document).foundation();
   </script>
 
   {# Google Analytics #}
-  {% if not DEBUG %}
+  {% if false %}
   <script type="text/javascript">
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'asdf']);

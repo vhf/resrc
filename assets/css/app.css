@@ -7241,43 +7241,44 @@ a.th {
   margin-top: 0.625em;
   padding-left: 0.3125em;
 }
-/* line 20, ../sass/_comment_thread.scss */
-.comment:first-child {
+
+/* line 24, ../sass/_comment_thread.scss */
+.comment_level_0 {
   margin-left: 0;
 }
 
-/* line 27, ../sass/_comment_thread.scss */
+/* line 30, ../sass/_comment_thread.scss */
 .comment_content p:nth-last-child(2) {
   margin-bottom: 0.375em;
 }
 
-/* line 32, ../sass/_comment_thread.scss */
+/* line 35, ../sass/_comment_thread.scss */
 .preview {
   border-color: #f0e6d6;
 }
 
-/* line 36, ../sass/_comment_thread.scss */
+/* line 39, ../sass/_comment_thread.scss */
 .preview.comment_title {
   background: #eee5d7;
 }
 
-/* line 42, ../sass/_comment_thread.scss */
+/* line 45, ../sass/_comment_thread.scss */
 .comment_collapsed > .comment_outer > .comment_content {
   display: none;
 }
 
-/* line 50, ../sass/_comment_thread.scss */
+/* line 53, ../sass/_comment_thread.scss */
 .comment_expanded > .comment_outer > .comment_content {
   display: block;
 }
 
-/* line 56, ../sass/_comment_thread.scss */
+/* line 59, ../sass/_comment_thread.scss */
 .comment_debug {
   font-size: 0.8em;
   border: 1px solid black;
   border-collapse: collapse;
 }
-/* line 60, ../sass/_comment_thread.scss */
+/* line 63, ../sass/_comment_thread.scss */
 .comment_debug td, .comment_debug th {
   border: 1px solid black;
   text-align: center;

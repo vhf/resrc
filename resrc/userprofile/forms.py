@@ -6,11 +6,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Div, Column, Fieldset, Submit, Field, HTML
+from crispy_forms_foundation.layout import Layout, Row, Div, Fieldset, Submit, Field, HTML
 
 from captcha.fields import CaptchaField
-
-from resrc.userprofile.models import Profile
 
 
 class LoginForm(forms.Form):
@@ -27,36 +25,57 @@ class RegisterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
-        self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'post'
 
         self.helper.layout = Layout(
-            Row(
-                Column(
-                    Field('username'), css_class='large-6'
-                ),
-                Column(
-                    Field('email'), css_class='large-6'
-                ),
-            ),
-            Row(
-                Column(
-                    Field('password'), css_class='large-6'
-                ),
-                Column(
-                    Field('password_confirm'), css_class='large-6'
-                ),
-            ),
-            Row(
-                Column(
-                    Field('captcha'), css_class='large-2'
-                ),
-                Column(
-                    Submit('submit', 'Register'),
-                    HTML('<a href="/" class="button secondary">Cancel</a>'),
-                    css_class='large-4'
-                )
-            ),
+            HTML('\
+              <div class="row">\
+                <div class="columns large-6">\
+                  <label for="id_username" class="requiredField">\
+                    username\
+                  </label>\
+                  <input id="id_username" maxlength="30" name="username" type="text" required pattern="username"/>\
+                  <small class="error">3-30 characters, a-z A-Z 0-9 _ .</small>\
+                </div>\
+                <div class="columns large-6">\
+                  <label for="id_email" class="requiredField">\
+                    email\
+                  </label>\
+                  <input id="id_email" name="email" type="email" required/>\
+                  <small class="error">A valid email address is required.</small>\
+                </div>\
+              </div>\
+                \
+              <div class="row">\
+                <div class="columns large-6">\
+                  <label for="id_password" class="requiredField">\
+                    password\
+                  </label>\
+                  <input id="id_password" maxlength="76" name="password" type="password" required/>\
+                </div>\
+                <div class="columns large-6">\
+                  <label for="id_password_confirm" class="requiredField">\
+                    again\
+                  </label>\
+                  <input id="id_password_confirm" maxlength="76" name="password_confirm" type="password" required pattern="pass_confirm"/>\
+                  <small class="error">password mismatch</small>\
+                </div>\
+              </div>\
+                \
+              <div class="row">\
+                <div class="columns large-2">\
+            '),
+            Field('captcha'),
+            HTML('\
+                </div>\
+                <div class="columns large-4">\
+                  <input type="submit" name="submit" value="Register" class="submit button" id="register"/>\
+                  <a href="/" class="button secondary">Cancel</a>\
+                </div>\
+              </div>\
+                \
+            </form>\
+            ')
         )
         super(RegisterForm, self).__init__(*args, **kwargs)
 
@@ -90,11 +109,9 @@ class ProfileForm(forms.Form):
     email = forms.EmailField(label='email')
     show_email = forms.BooleanField(label='show email', required=False)
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
-
-        profile = Profile.objects.get(user=user)
 
         self.helper.layout = Layout(
             Fieldset(

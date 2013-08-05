@@ -118,7 +118,6 @@ class ListLinks(models.Model):
 
 @receiver(post_save, sender=ListLinks)
 def list_add_handler(sender, **kwargs):
-    print "added"
     listlink = kwargs['instance']
     alist = listlink.alist
     link = listlink.links
@@ -151,6 +150,4 @@ def list_delete_handler(sender, **kwargs):
     from resrc.utils.templatetags.emarkdown import listmarkdown
     alist.html_content = listmarkdown(alist.md_content)
     alist.save()
-
-    print "deleted"
     return True

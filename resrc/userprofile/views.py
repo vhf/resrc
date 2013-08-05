@@ -41,14 +41,14 @@ def details(request, user_name):
     })
 
 
-def login_view(request):
+def login_register_view(request, register=False):
     csrf_tk = {}
     csrf_tk.update(csrf(request))
 
-    error = False
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
+    login_error = False
+    if request.method == 'POST' and not register:
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
@@ -58,34 +58,18 @@ def login_view(request):
                 if not 'remember' in request.POST:
                     request.session.set_expiry(0)
                 if 'next' in request.POST:
-                    return redirect(request.POST['next'])
+                    return redirect(request.POST['next'] or '/')
                 else:
                     return redirect('/')
             else:
-                error = 'Bad user/password'
+                login_error = 'Bad user/password'
         else:
-            error = 'Form invalid'
-    else:
-        form = LoginForm()
-    csrf_tk['error'] = error
-    csrf_tk['form']  = form
-    if 'next' in request.GET:
-        csrf_tk['next']  = request.GET.get('next')
-    return render_template('user/login.html', csrf_tk)
+            login_error = 'Form invalid'
 
-
-@login_required
-def logout_view(request):
-    logout(request)
-    request.session.clear()
-    return redirect('/')
-
-
-def register_view(request):
-    if request.method == 'POST':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            data = form.data
+    if request.method == 'POST' and register:
+        register_form = RegisterForm(request.POST)
+        if register_form.is_valid():
+            data = register_form.data
             user = User.objects.create_user(
                 data['username'],
                 data['email'],
@@ -95,13 +79,25 @@ def register_view(request):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             return render_template('user/register_success.html')
-        else:
-            return render_template('user/register.html', {'form': form})
 
-    form = RegisterForm()
-    return render_template('user/register.html', {
-        'form': form
-    })
+    if request.method != 'POST':
+        login_form = LoginForm()
+        register_form = RegisterForm()
+
+    csrf_tk['register_form'] = register_form
+    csrf_tk['login_error'] = login_error
+    csrf_tk['login_form']  = login_form
+    csrf_tk['register'] = register
+    if 'next' in request.GET:
+        csrf_tk['next']  = request.GET.get('next')
+    return render_template('user/login_register.html', csrf_tk)
+
+
+@login_required
+def logout_view(request):
+    logout(request)
+    request.session.clear()
+    return redirect('/')
 
 
 @login_required

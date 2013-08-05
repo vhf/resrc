@@ -30,9 +30,9 @@
         </p>
     </div>
     <div class="small-3 columns text-right list-symbols">
-        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark">addstar</a>
-        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread">save</a>
-        <a class="lsf symbol"{% if user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %}>list</a>
+        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%} has-tip" id="bookmark" data-tooltip title="Add to bookmarks list">addstar</a>
+        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%} has-tip" id="toread" data-tooltip title="Add to reading list">save</a>
+        <a class="lsf symbol has-tip"{% if user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
     </div>
   </div>
 
@@ -56,6 +56,10 @@
 
 {% endblock %}
 
+{% block foundation_plugins %}
+<script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
+<script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
+{% endblock %}
 
 {% block last_body %}
   {% mptt_comments_media_js %}
@@ -135,6 +139,7 @@
   $("#createclose").click(function() {
     $(this).foundation('reveal', 'close');
   });
+  $(document).foundation('tooltip', {"disable-for-touch": true});
   </script>
   {% endif %}
 {% endblock last_body %}

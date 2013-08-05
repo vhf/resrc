@@ -30,9 +30,9 @@ if (typeof jQuery === "undefined" &&
   'use strict';
 
   /*
-    matchMedia() polyfill - Test a CSS media
-    type/query in JS. Authors & copyright (c) 2012:
-    Scott Jehl, Paul Irish, Nicholas Zakas.
+    matchMedia() polyfill - Test a CSS media 
+    type/query in JS. Authors & copyright (c) 2012: 
+    Scott Jehl, Paul Irish, Nicholas Zakas. 
     Dual MIT/BSD license
 
     https://github.com/paulirish/matchMedia.js
@@ -75,7 +75,7 @@ if (typeof jQuery === "undefined" &&
   if (!Array.prototype.filter) {
     Array.prototype.filter = function(fun /*, thisp */) {
       "use strict";
-
+   
       if (this == null) {
         throw new TypeError();
       }
@@ -107,9 +107,9 @@ if (typeof jQuery === "undefined" &&
         // closest thing possible to the ECMAScript 5 internal IsCallable function
         throw new TypeError("Function.prototype.bind - what is trying to be bound is not callable");
       }
-
-      var aArgs = Array.prototype.slice.call(arguments, 1),
-          fToBind = this,
+   
+      var aArgs = Array.prototype.slice.call(arguments, 1), 
+          fToBind = this, 
           fNOP = function () {},
           fBound = function () {
             return fToBind.apply(this instanceof fNOP && oThis
@@ -117,10 +117,10 @@ if (typeof jQuery === "undefined" &&
                : oThis,
              aArgs.concat(Array.prototype.slice.call(arguments)));
           };
-
+   
       fNOP.prototype = this.prototype;
       fBound.prototype = new fNOP();
-
+   
       return fBound;
     };
   }
@@ -166,7 +166,7 @@ if (typeof jQuery === "undefined" &&
   window.Foundation = {
     name : 'Foundation',
 
-    version : '4.2.3',
+    version : '4.3.1',
 
     cache : {},
 
@@ -231,8 +231,7 @@ if (typeof jQuery === "undefined" &&
         if (this.libs.hasOwnProperty(lib)) {
           this.patch(this.libs[lib]);
           return this.libs[lib].init.apply(this.libs[lib], args);
-        }
-        else {
+        } else {
           return function () {};
         }
       }.bind(this), lib);
@@ -402,7 +401,7 @@ if (typeof jQuery === "undefined" &&
         return el.outerHeight();
       };
 
-      lib.outerWidth = function (el) {
+      lib.outerWidth = function (el, bool) {
         if (typeof Zepto === 'function') {
           return el.width();
         }
@@ -426,13 +425,7 @@ if (typeof jQuery === "undefined" &&
       return true;
     },
 
-    zj : function () {
-      if (typeof Zepto !== 'undefined') {
-        return Zepto;
-      } else {
-        return jQuery;
-      }
-    }()
+    zj : $
   };
 
   $.fn.foundation = function () {

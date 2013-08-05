@@ -17,9 +17,12 @@
   margin-left: emCalc(25px);
   margin-top: emCalc(10px);
   padding-left: emCalc(5px);
-  &:first-child {
-    margin-left: emCalc(0px);
-  }
+  // &:first-child {
+  //   margin-left: emCalc(0px);
+  // }
+}
+.comment_level_0 {
+  margin-left: emCalc(0px);
 }
 
 

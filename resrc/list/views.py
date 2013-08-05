@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-:
-from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.http import Http404, HttpResponse
 from django.template import RequestContext
@@ -56,33 +55,27 @@ def ajax_add_to_default_list(request):
             if list_type == 'toread':
                 list_title = 'Reading list'
                 description = 'My reading list.'
-            try:
-                alist = List.objects.get(title=list_title, owner=request.user)
-            except ObjectDoesNotExist:
-                alist = List.objects.create(
-                    title=list_title,
-                    description=description,
-                    owner=request.user,
-                    is_public=False,
-                )
+            alist = List.objects.get_or_create(
+                title=list_title,
+                owner=request.user,
+                defaults={'description': description, 'is_public': False}
+            )
         else:
             alist = get_object_or_404(List, pk=list_pk)
 
-        listlink = None
         try:
             listlink = ListLinks.objects.get(
                 alist=alist,
                 links=link
             )
-        except ObjectDoesNotExist:
+            listlink.delete()
+            data = simplejson.dumps({'result': 'removed'})
+        except ListLinks.DoesNotExist:
             ListLinks.objects.create(
                 alist=alist,
                 links=link
             )
             data = simplejson.dumps({'result': 'added'})
-        if listlink is not None:
-            listlink.delete()
-            data = simplejson.dumps({'result': 'removed'})
 
         return HttpResponse(data, mimetype="application/javascript")
 

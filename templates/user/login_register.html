@@ -1,0 +1,128 @@
+{% extends "user/base.html" %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block headline %}
+Log in
+{% endblock %}
+
+{% block breadcrumb %}
+<li class="current">
+  <a href="#">Login</a>
+</li>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="large-12 columns">
+    {% if not user.is_authenticated %}
+    <div class="section-container auto" data-section>
+      <section>
+        <p class="title" data-section-title>
+          <a href="#">Login</a>
+        </p>
+        <div class="content" data-section-content>
+          <div class="row">
+            {% if login_error %}
+            <div class="alert-box alert">
+              {{ login_error }}.
+            </div>
+            {% endif %}
+            <div class="large-7 large-offset-1 columns">
+              <form method="post" action="{% url "user-login" %}">
+                <div class="row">
+                  <div class="small-4 columns">
+                    <label class="right inline" for="id_username">username</label>
+                  </div>
+                  <div class="small-8 columns">
+                    <input type="text" name="username" id="id_username" maxlength="30" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-4 columns">
+                    <label class="right inline" for="id_password">password</label>
+                  </div>
+                  <div class="small-8 columns">
+                    <input type="password" name="password" id="id_password" maxlength="76" />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="small-4 columns">
+                  </div>
+                  <div class="small-8 columns">
+                    <label>
+                      <input type="checkbox" name="remember">
+                      remember
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="small-8 small-offset-4 columns">
+                    <button type="submit" class="button">
+                      Log in
+                    </button>
+                    <a href="/" class="button secondary">
+                      Cancel
+                    </a>
+                  </div>
+                </div>
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% csrf_token %}
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section{%if register %} class="active"{% endif %}>
+      <p class="title" data-section-title>
+        <a href="#">Register</a>
+      </p>
+      <div class="content" data-section-content>
+        <div class="row">
+          <div class="large-12 columns">
+            {% if error %}
+            {{ error }}
+            {% endif %}
+            <form id="registration" method="post" action="{% url "user-register" %}" data-abide>
+              {% crispy register_form %}
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+    {% else %}
+    <p>
+      You're already connected.
+    </p>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block foundation_plugins %}
+<script src="{% static "js/foundation/foundation.section.js" %}"></script>
+<script src="{% static "js/foundation/foundation.abide.js" %}"></script>
+<script>
+$(document).foundation('abide', {
+  patterns: {
+    username: /^[a-zA-Z0-9_\.]{3,30}$/,
+    password : /^.+$/,
+    pass_confirm: $('#id_password_confirm').val(),
+  }
+});
+
+$('#registration').on('invalid', function() {
+  return false;
+});
+</script>
+{# TODO : JS refresh captcha button #}
+{% endblock %}
