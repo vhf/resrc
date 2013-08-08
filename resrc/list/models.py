@@ -32,8 +32,16 @@ class ListManager(models.Manager):
             .values_list('title', flat=True)
         return list(titles)
 
-    def links_tags(self):
-        return self.get_query_set().links.all().values_list('tags__name')
+    def some_lists_from_link(self, link_pk):
+        lists = self.get_query_set().prefetch_related('links') \
+            .filter(links__pk=link_pk) \
+            .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .exclude(is_public=False)[:5]
+        ''' Now excluding all private lists. To keep showing MY private
+            lists : from django.db.models import Q
+            .exclude(is_public=False, ~Q(owner=request.user)))
+            '''
+        return list(lists)
 
 
 class List(models.Model):

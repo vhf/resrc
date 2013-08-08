@@ -16,7 +16,6 @@
 {% endblock %}
 
 {% block content %}
-
   <div class="row">
     <div class="small-9 columns">
         <p>
@@ -51,6 +50,19 @@
 <div class="row">
   <div class="large-12 columns">
     {% display_comment_toplevel_for link %}
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-6 columns">
+    <h4 class="subheader">also in</h4>
+    <ul>
+    {% for list in lists %}
+      <li><a href="{{ list.get_absolute_url }}">{{ list.title }}</a></li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div class="large-6 columns">
   </div>
 </div>
 

@@ -34,7 +34,7 @@
 <script type="text/javascript">
     $(function(){
         $("#id_tags").tagit({
-          availableTags: [{% autoescape off %}{{ tags }}{% endautoescape %}],
+          availableTags: [{{ tags|safe }}],
           autocomplete: {delay: 0, minLength: 2}
       });
     });

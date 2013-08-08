@@ -69,14 +69,29 @@ var toMarkdown = function(string) {
     {
       patterns: 'span',
       replacement: function(str, attrs, innerHTML) {
-        var style = attrs.match(attrRegExp('style'))[1];
-        if (style.indexOf('italic') > 0) {
-          return innerHTML ? '_' + innerHTML + '_' : '';
-        } else if (style.indexOf('bold') > 0) {
-          return innerHTML ? '**' + innerHTML + '**' : '';
-        } else {
-          return innerHTML;
+        var style = attrs.match(attrRegExp('style'));
+        var classes = attrs.match(attrRegExp('class'));
+
+        if (classes) {
+          classes = classes[1];
+          if (classes === 'lt') {
+            var re = /\[[^\]]+\]\([^\)]+\) \[[^\]]+\]\(((http|https):\/\/([^ "\)#]*))[#]*([^ \)]*)\)/;
+            return innerHTML ? '<' + re.exec(str)[1] + '>' : '';
+          } else if (classes === 'at') {
+            var re = /\(\/lk\/(\d+)\/\)/;
+            return innerHTML ? '@' + re.exec(str)[1] : '';
+          }
         }
+
+        if (style) {
+          style = style[0];
+          if (style.indexOf('italic') > 0) {
+            return innerHTML ? '_' + innerHTML + '_' : '';
+          } else if (style.indexOf('bold') > 0) {
+            return innerHTML ? '**' + innerHTML + '**' : '';
+          }
+        }
+        return innerHTML;
       }
     }
   ];

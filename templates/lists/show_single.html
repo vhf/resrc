@@ -56,9 +56,7 @@
     </p>
     {% else %}
     <div class="listcontent">
-    {% autoescape off %}
-    {{ list.html_content }}
-    {% endautoescape %}
+    {{ list.html_content|safe }}
     </div>
     {% endif %}
   </div>

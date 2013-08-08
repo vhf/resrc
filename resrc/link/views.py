@@ -29,12 +29,15 @@ def single(request, link_pk, link_slug=None):
         titles = List.objects.titles_link_in(request.user, link_pk)
         newlistform = NewListAjaxForm(link_pk)
 
+    lists = List.objects.some_lists_from_link(link_pk)
+
     c = {
         'link': link,
         'user': request.user,
         'request': request,
         'titles': list(titles),
-        'newlistform': newlistform
+        'newlistform': newlistform,
+        'lists': lists
     }
     return render_to_response('links/show_single.html', c, RequestContext(request))
 

@@ -19,9 +19,11 @@ class Link(models.Model):
 
     slug = models.SlugField()
 
+    hash2 = models.CharField(max_length=11, editable=False)
+
     url = models.URLField('url')
 
-    pubdate = models.DateTimeField('date added', auto_now_add=True)
+    pubdate = models.DateTimeField('date added', auto_now_add=True, editable=False)
 
     author = models.ForeignKey(User, verbose_name='author')
 
@@ -32,6 +34,9 @@ class Link(models.Model):
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()
+        if not self.id:
+            from resrc.utils.hash2 import hash2
+            self.hash2 = hash2(self.url)
         super(Link, self).save(*args, **kwargs)
 
     def do_unique_slug(self):

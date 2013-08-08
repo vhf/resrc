@@ -10,10 +10,16 @@ jQuery(document).ready(function() {
     var html = content.split("\n").map($.trim).filter(function(line) {
       return line !== "";
     }).join("\n");
+
     return toMarkdown(html);
   };
 
-  var converter = new Showdown.converter();
+  var ext = {};
+  if(typeof Showdown.extensions['resrc'] !== "undefined")
+    ext = {extensions: ['resrc']};
+
+  var converter = new Showdown.converter(ext);
+
   var htmlize = function(content) {
     return converter.makeHtml(content);
   };
@@ -28,11 +34,10 @@ jQuery(document).ready(function() {
   };
 
   var adapt = function() {
-    console.log('adapt');
     var mdcontent = jQuery('#id_mdcontent');
     var lines = mdcontent.get(0).value.split("\n").length;
     mdcontent.height(lines*20+10);
-  }
+  };
 
   var updateHtml = function(content) {
     if (markdownize(jQuery('.editable').html()) == content) {
@@ -40,12 +45,17 @@ jQuery(document).ready(function() {
     }
     var html = htmlize(content);
     jQuery('.editable').html(html);
+    $('.editable').find('a').each(function(index, item) {
+      $item = $(item);
+      if($item.text() === 'link') {
+        $item.addClass('lsf symbol').css('color', 'black');
+      }
+    });
   };
 
   // Update Markdown every time content is modified
   jQuery('.editable').bind('hallomodified', function(event, data) {
     showSource(data.content);
-    console.log('lala');
   });
   jQuery('#id_mdcontent').bind('keyup', function() {
     updateHtml(this.value);

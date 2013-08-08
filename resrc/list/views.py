@@ -101,48 +101,48 @@ def ajax_own_lists(request, link_pk):
 
 
 def ajax_create_list(request, link_pk):
-    if request.method == 'POST' and request.user.is_authenticated():
-        form = NewListAjaxForm(link_pk, request.POST)
+    if request.method != 'POST' or not request.user.is_authenticated():
+        raise Http404
 
-        if form.is_valid():
-            is_private = False
+    form = NewListAjaxForm(link_pk, request.POST)
 
-            if 'private' in form.data:
-                is_private = form.data['private']
+    if form.is_valid():
+        is_private = False
 
-            try:
-                alist = List.objects.create(
-                    title=form.data['title'],
-                    description=form.data['description'],
-                    owner=request.user,
-                    is_public=not is_private
-                )
-                alist.save()
+        if 'private' in form.data:
+            is_private = form.data['private']
 
-                link = get_object_or_404(Link, pk=link_pk)
+        try:
+            alist = List.objects.create(
+                title=form.data['title'],
+                description=form.data['description'],
+                owner=request.user,
+                is_public=not is_private
+            )
+            alist.save()
 
-                listlink = ListLinks.objects.create(
-                    alist=alist,
-                    links=link,
-                )
-                listlink.save()
+            link = get_object_or_404(Link, pk=link_pk)
 
-                data = simplejson.dumps({
-                    'result': 'success'
-                }, indent=4)
-                return HttpResponse(data, mimetype="application/javascript")
-            except:
-                data = simplejson.dumps({
-                    'result': 'fail'
-                }, indent=4)
-                return HttpResponse(data, mimetype="application/javascript")
-        else:
+            listlink = ListLinks.objects.create(
+                alist=alist,
+                links=link,
+            )
+            listlink.save()
+
             data = simplejson.dumps({
-                'result': 'invalid'
+                'result': 'success'
+            }, indent=4)
+            return HttpResponse(data, mimetype="application/javascript")
+        except:
+            data = simplejson.dumps({
+                'result': 'fail'
             }, indent=4)
             return HttpResponse(data, mimetype="application/javascript")
     else:
-        raise Http404
+        data = simplejson.dumps({
+            'result': 'invalid'
+        }, indent=4)
+        return HttpResponse(data, mimetype="application/javascript")
 
 
 @login_required
@@ -170,6 +170,9 @@ def new_list(request):
     else:
         form = NewListForm()
 
+    links = list(Link.objects.all())
+
     return render_template('lists/new_list.html', {
-        'form': form
+        'form': form,
+        'links': links
     })

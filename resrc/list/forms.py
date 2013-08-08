@@ -85,7 +85,7 @@ class NewListForm(forms.Form):
                         css_class='large-6'
                     ),
                     Column(
-                        HTML('<div class="ctrlHolder"><label>preview</label><div class="editable"><h5>lala</h5><ul><li>hey</li><li>ho</li></ul></div></div>'),
+                        HTML('<div class="ctrlHolder"><label>preview</label><div class="editable"><h5>lala</h5><ul><li>@3</li><li>ho</li></ul></div></div>'),
                         css_class='large-6'
                     ),
                     css_class='halloform'
