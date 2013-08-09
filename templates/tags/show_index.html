@@ -1,0 +1,36 @@
+{% extends "links/base.html" %}
+{% load mptt_comments_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    Tags list
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <h1>Tags list</h1>
+    <ul class="no-bullet">
+      {% for tag in tags %}
+      <li><a href="{% url "tag-single-slug" tag.slug %}" class="radius secondary label">{{ tag.name }}</a> ({{ tag.c }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block foundation_plugins %}
+{% endblock %}
+
+{% block last_body %}
+{% endblock last_body %}

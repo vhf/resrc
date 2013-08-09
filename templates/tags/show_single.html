@@ -1,0 +1,43 @@
+{% extends "links/base.html" %}
+{% load mptt_comments_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    lala
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="current"><a href="#">Index</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>Tag: {{ tag.name }}</h1>
+      <ul class="no-bullet">
+        {% for link in links %}
+        <li>
+          <ul class="inline inline-list">
+            <li><a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a></li>
+            {% for tag2 in link.tags.all %}{% if tag2.name != tag.name %}
+            <li><a href="{% url "tag-single-slug" tag2.slug %}" class="radius secondary label">{{ tag2.name }}</a></li>
+            {% endif %}{% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ul>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block foundation_plugins %}
+{% endblock %}
+
+{% block last_body %}
+{% endblock last_body %}
