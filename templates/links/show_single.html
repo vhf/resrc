@@ -22,7 +22,7 @@
           <ul class="inline-list">
             {% with tags=link.tags.all %}
             {% for tag in tags %}
-            <li><a href="#" class="radius secondary label">{{ tag.name }}</a></li>
+            <li><a href="{% url "tag-single-slug" tag.slug %}" class="radius secondary label">{{ tag.name }}</a></li>
             {% endfor %}
             {% endwith %}
           </ul>

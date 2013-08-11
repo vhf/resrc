@@ -23,3 +23,16 @@
     font-size: 1em;
   }
 }
+
+.my-def-list {
+  h4 {
+    .del {
+      display: none;
+    }
+  }
+  h4:hover {
+    .del {
+      display: block;
+    }
+  }
+}

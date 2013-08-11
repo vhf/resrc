@@ -5,27 +5,22 @@ from django.contrib.auth.models import User
 
 from django_dynamic_fixture import G
 
-from models import Profile
+from resrc.userprofile.models import Profile
 
 
 class SimpleTest(TestCase):
 
-    def test_index(self):
-        resp = self.client.get(reverse('resrc.userprofile.views.index'))
+    def test_user_list(self):
+        resp = self.client.get(reverse('user-list'))
         self.assertEqual(resp.status_code, 200)
 
     def test_details(self):
         user = G(User, username='testuser')
         profile = G(Profile, user=user)
 
-        resp = self.client.get(reverse('resrc.userprofile.views.details',
-                               args=[user.username]))
+        resp = self.client.get(reverse('user-url', args=[user.username]))
         self.assertEqual(resp.status_code, 200)
 
     def test_register(self):
-        resp = self.client.get(reverse('resrc.userprofile.views.register_view'))
-        self.assertEqual(resp.status_code, 200)
-
-    def test_login(self):
-        resp = self.client.get(reverse('resrc.userprofile.views.login_view'))
+        resp = self.client.get(reverse('user-register'))
         self.assertEqual(resp.status_code, 200)

@@ -55,7 +55,7 @@ def ajax_add_to_default_list(request):
             if list_type == 'toread':
                 list_title = 'Reading list'
                 description = 'My reading list.'
-            alist = List.objects.get_or_create(
+            alist, created = List.objects.get_or_create(
                 title=list_title,
                 owner=request.user,
                 defaults={'description': description, 'is_public': False}

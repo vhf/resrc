@@ -7364,3 +7364,12 @@ i {
 .listcontent p {
   font-size: 1em;
 }
+
+/* line 29, ../sass/_lists.scss */
+.my-def-list h4 .del {
+  display: none;
+}
+/* line 34, ../sass/_lists.scss */
+.my-def-list h4:hover .del {
+  display: block;
+}

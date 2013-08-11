@@ -41,19 +41,17 @@
 </div>
 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 columns{% if list.owner = request.user %} my-def-list{% endif %}">
     {% if list.title in default_lists %}
-    <p>
     {% with links=list.links.all %}
       {% for link in links %}
       <hr />
-      <h4>{{ forloop.counter }}. <a href="{{ link.url }}">{{ link.title }}</a></h4>
+      <h4><a href="{{ link.get_absolute_url }}"><i class="lsf symbol">link</i> {{ forloop.counter }}.</a> <a href="{{ link.url }}">{{ link.title }}</a>{% if list.owner = request.user %}<span class="del">HAHA</span>{% endif %}</h4>
       <p class="byline">
         <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
       </p>
       {% endfor %}
     {% endwith %}
-    </p>
     {% else %}
     <div class="listcontent">
     {{ list.html_content|safe }}

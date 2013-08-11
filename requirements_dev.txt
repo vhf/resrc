@@ -1,0 +1,11 @@
+django>=1.5,<1.6
+django-extensions
+fabric
+factory_boy
+django-nose
+coverage
+django-coverage
+mock
+watchdog
+selenium
+django-jasmine

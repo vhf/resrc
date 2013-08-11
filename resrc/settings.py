@@ -135,7 +135,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'resrc.utils.context_processors.versions',
 )
 
-INSTALLED_APPS = (
+EXTERNAL_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.comments',
     'django.contrib.markup',
+    'django.contrib.admin',
 
     'south',
     'crispy_forms',
@@ -155,17 +156,17 @@ INSTALLED_APPS = (
     'mptt_comments',
     'floppyforms',
     'taggit',
+]
 
+INTERNAL_APPS = [
     'resrc.userprofile',
     'resrc.link',
     'resrc.list',
     'resrc.page',
     'resrc.utils',
-    # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
-)
+]
+
+INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to

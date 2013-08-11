@@ -8,7 +8,6 @@ urlpatterns = patterns(
 
     url(r'^faq$', views.faq, name="page-faq"),
     url(r'^about$', views.about, name="page-about"),
-    url(r'^test$', views.test, name="page-test"),
 
-    url(r'^$', views.index, name="page-home"),
+    url(r'^$', views.home, name="page-home"),
 )

@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 from resrc.userprofile.models import Profile
 
-from .templatetags.profile import profile
+from resrc.utils.templatetags.profile import profile
 
 
 class TemplateTagsTests(TestCase):

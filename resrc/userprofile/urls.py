@@ -11,5 +11,5 @@ urlpatterns = patterns(
     url(r'^login$', views.login_register_view, name="user-login"),
     url(r'^register$', views.login_register_view, {"register": True}, name="user-register"),
     url(r'^logout$', views.logout_view, name="user-logout"),
-    url(r'^$', views.user_list),
+    url(r'^$', views.user_list, name="user-list"),
 )
