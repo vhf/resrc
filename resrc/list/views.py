@@ -30,7 +30,7 @@ def single(request, list_pk, list_slug=None):
     }, RequestContext(request))
 
 
-def ajax_add_to_default_list(request):
+def ajax_add_to_list_or_create(request):
     if request.user.is_authenticated() and request.method == 'POST':
         link_pk = request.POST['lk']
 
@@ -38,10 +38,10 @@ def ajax_add_to_default_list(request):
             # bookmark or toread
             list_type = request.POST['t']
         else:
-            list_type = 'personnal'
+            list_type = 'personal'
             list_pk = request.POST['ls']
 
-        if list_type not in ['bookmark', 'toread', 'personnal']:
+        if list_type not in ['bookmark', 'toread', 'personal']:
             raise Http404
 
         link = get_object_or_404(Link, pk=link_pk)
@@ -80,9 +80,7 @@ def ajax_add_to_default_list(request):
         return HttpResponse(data, mimetype="application/javascript")
 
     else:
-        data = simplejson.dumps({
-            'result': 'fail'
-        }, indent=4)
+        data = simplejson.dumps({'result': 'fail'})
         return HttpResponse(data, mimetype="application/javascript")
 
 
@@ -129,19 +127,13 @@ def ajax_create_list(request, link_pk):
             )
             listlink.save()
 
-            data = simplejson.dumps({
-                'result': 'success'
-            }, indent=4)
+            data = simplejson.dumps({'result': 'success'})
             return HttpResponse(data, mimetype="application/javascript")
         except:
-            data = simplejson.dumps({
-                'result': 'fail'
-            }, indent=4)
+            data = simplejson.dumps({'result': 'fail'})
             return HttpResponse(data, mimetype="application/javascript")
     else:
-        data = simplejson.dumps({
-            'result': 'invalid'
-        }, indent=4)
+        data = simplejson.dumps({'result': 'invalid'})
         return HttpResponse(data, mimetype="application/javascript")
 
 

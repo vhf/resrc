@@ -11,7 +11,8 @@ from resrc.link.models import Link
 
 
 class ListManager(models.Manager):
-
+    #dafuq did I do. What's the diff between the following and titles_link_in_default ?
+    #titles_link_in_default seems to do the opposite of what its name suggests
     def personal_lists(self, owner):
         return self.get_query_set().prefetch_related('links') \
             .filter(owner=owner) \

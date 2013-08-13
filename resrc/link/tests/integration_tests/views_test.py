@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate
 
 from resrc.link.tests.factories import LinkFactory
 from resrc.tests.factories import UserFactory
+from resrc.tag.tests.factories import TagFactory
 
 
 class LinkViewTestCase(TestCase):
@@ -42,3 +43,9 @@ class LinkViewTestCase(TestCase):
         self.client.login(username=user.username, password='test123')
         resp = self.client.get(reverse('new-link'))
         self.assertEqual(resp.status_code, 200)
+
+        resp = self.client.post(reverse('new-link'), {
+            'title': 'Building static websites with Middleman, deploying to Heroku',
+            'url': 'http://12devs.co.uk/articles/204/',
+            'tags': 'Ruby, "Static Site Generator", "Ruby on Rails"'
+        })

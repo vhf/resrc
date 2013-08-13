@@ -128,16 +128,16 @@
   <h1>
     <span id="module-name">resrc.list.models</span>:
     93 total statements,
-    <span class="normal">81.3% covered</span>
+    <span class="normal">100.0% covered</span>
   </h1>
-  <p>Generated: Sun 2013-08-11 21:30 CEST</p>
+  <p>Generated: Tue 2013-08-13 15:43 CEST</p>
   <p>Source file: /home/victor/resrc/resrc/list/models.py</p>
   <p>
     Stats:
-    <span class="executed">61 executed</span>,
-    <span class="missed">14 missed</span>,
+    <span class="executed">75 executed</span>,
+    <span class="missed">0 missed</span>,
     <span class="excluded">18 excluded</span>,
-    <span class="ignored">68 ignored</span> 
+    <span class="ignored">69 ignored</span> 
   </p> 
 </div>
 
@@ -156,9 +156,10 @@
 <li class="ignored"><code></code></li>
 <li class="ignored"><code></code></li>
 <li class="executed"><code>class ListManager(models.Manager):</code></li>
-<li class="ignored"><code></code></li>
+<li class="ignored"><code>    #dafuq did I do. What's the diff between the following and titles_link_in_default ?</code></li>
+<li class="ignored"><code>    #titles_link_in_default seems to do the opposite of what its name suggests</code></li>
 <li class="executed"><code>    def personal_lists(self, owner):</code></li>
-<li class="missed"><code>        return self.get_query_set().prefetch_related('links') \</code></li>
+<li class="executed"><code>        return self.get_query_set().prefetch_related('links') \</code></li>
 <li class="ignored"><code>            .filter(owner=owner) \</code></li>
 <li class="ignored"><code>            .exclude(title__in=['Bookmarks', 'Reading list'])</code></li>
 <li class="ignored"><code></code></li>
@@ -171,11 +172,11 @@
 <li class="ignored"><code></code></li>
 <li class="executed"><code>    def titles_link_in_default(self, owner, link_pk):</code></li>
 <li class="ignored"><code>        '''returns list containing titles of default Lists containing this Link'''</code></li>
-<li class="missed"><code>        titles = self.get_query_set().prefetch_related('links') \</code></li>
+<li class="executed"><code>        titles = self.get_query_set().prefetch_related('links') \</code></li>
 <li class="ignored"><code>            .filter(owner=owner, links__pk=link_pk) \</code></li>
 <li class="ignored"><code>            .exclude(title__in=['Bookmarks', 'Reading list']) \</code></li>
 <li class="ignored"><code>            .values_list('title', flat=True)</code></li>
-<li class="missed"><code>        return list(titles)</code></li>
+<li class="executed"><code>        return list(titles)</code></li>
 <li class="ignored"><code></code></li>
 <li class="executed"><code>    def some_lists_from_link(self, link_pk):</code></li>
 <li class="executed"><code>        lists = self.get_query_set().prefetch_related('links') \</code></li>
@@ -286,24 +287,24 @@
 <li class="ignored"><code></code></li>
 <li class="executed"><code>@receiver(pre_delete, sender=ListLinks)</code></li>
 <li class="ignored"><code>def list_delete_handler(sender, **kwargs):</code></li>
-<li class="missed"><code>    listlink = kwargs['instance']</code></li>
-<li class="missed"><code>    alist = listlink.alist</code></li>
-<li class="missed"><code>    link = listlink.links</code></li>
-<li class="missed"><code>    md_link = "[link](%s) [%s](%s)" % (</code></li>
+<li class="executed"><code>    listlink = kwargs['instance']</code></li>
+<li class="executed"><code>    alist = listlink.alist</code></li>
+<li class="executed"><code>    link = listlink.links</code></li>
+<li class="executed"><code>    md_link = "[link](%s) [%s](%s)" % (</code></li>
 <li class="ignored"><code>        link.get_absolute_url(), link.title, link.url</code></li>
 <li class="ignored"><code>    )</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>    alist.md_content = alist.md_content.replace(md_link, '')</code></li>
+<li class="executed"><code>    alist.md_content = alist.md_content.replace(md_link, '')</code></li>
 <li class="ignored"><code></code></li>
 <li class="excluded"><code>    import re</code></li>
-<li class="missed"><code>    SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)</code></li>
-<li class="missed"><code>    REPLACE = r' '</code></li>
-<li class="missed"><code>    alist.md_content = SEARCH.sub(REPLACE, alist.md_content)</code></li>
+<li class="executed"><code>    SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)</code></li>
+<li class="executed"><code>    REPLACE = r' '</code></li>
+<li class="executed"><code>    alist.md_content = SEARCH.sub(REPLACE, alist.md_content)</code></li>
 <li class="ignored"><code></code></li>
 <li class="excluded"><code>    from resrc.utils.templatetags.emarkdown import listmarkdown</code></li>
-<li class="missed"><code>    alist.html_content = listmarkdown(alist.md_content)</code></li>
-<li class="missed"><code>    alist.save()</code></li>
-<li class="missed"><code>    return True</code></li>
+<li class="executed"><code>    alist.html_content = listmarkdown(alist.md_content)</code></li>
+<li class="executed"><code>    alist.save()</code></li>
+<li class="executed"><code>    return True</code></li>
   </ol>
 </div>
 

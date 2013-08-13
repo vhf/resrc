@@ -12,6 +12,6 @@ urlpatterns = patterns(
     url(r'^c/(?P<link_pk>\d+)/$', views.ajax_create_list, name="ajax-create-list"),
     url(r'^new/$', views.new_list, name="new-list"),
 
-    url(r'^add_default/$', views.ajax_add_to_default_list,
-        name="ajax_add_to_default_list")
+    url(r'^add_default/$', views.ajax_add_to_list_or_create,
+        name="ajax-add-to-list-or-create")
 )

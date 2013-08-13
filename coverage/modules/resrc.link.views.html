@@ -128,14 +128,14 @@
   <h1>
     <span id="module-name">resrc.link.views</span>:
     44 total statements,
-    <span class="warning">61.8% covered</span>
+    <span class="normal">100.0% covered</span>
   </h1>
-  <p>Generated: Sun 2013-08-11 21:30 CEST</p>
+  <p>Generated: Tue 2013-08-13 15:43 CEST</p>
   <p>Source file: /home/victor/resrc/resrc/link/views.py</p>
   <p>
     Stats:
-    <span class="executed">21 executed</span>,
-    <span class="missed">13 missed</span>,
+    <span class="executed">34 executed</span>,
+    <span class="missed">0 missed</span>,
     <span class="excluded">10 excluded</span>,
     <span class="ignored">32 ignored</span> 
   </p> 
@@ -190,22 +190,22 @@
 <li class="executed"><code>@login_required</code></li>
 <li class="ignored"><code>def new_link(request):</code></li>
 <li class="executed"><code>    if request.method == 'POST':</code></li>
-<li class="missed"><code>        form = NewLinkForm(request.POST)</code></li>
-<li class="missed"><code>        if form.is_valid():</code></li>
-<li class="missed"><code>            data = form.data</code></li>
+<li class="executed"><code>        form = NewLinkForm(request.POST)</code></li>
+<li class="executed"><code>        if form.is_valid():</code></li>
+<li class="executed"><code>            data = form.data</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>            link = Link()</code></li>
-<li class="missed"><code>            link.title = data['title']</code></li>
-<li class="missed"><code>            link.url = data['url']</code></li>
-<li class="missed"><code>            link.author = request.user</code></li>
+<li class="executed"><code>            link = Link()</code></li>
+<li class="executed"><code>            link.title = data['title']</code></li>
+<li class="executed"><code>            link.url = data['url']</code></li>
+<li class="executed"><code>            link.author = request.user</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>            link.save()</code></li>
+<li class="executed"><code>            link.save()</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>            list_tags = data['tags'].split(',')</code></li>
-<li class="missed"><code>            for tag in list_tags:</code></li>
-<li class="missed"><code>                link.tags.add(tag)</code></li>
-<li class="missed"><code>            link.save()</code></li>
-<li class="missed"><code>            return redirect(link.get_absolute_url())</code></li>
+<li class="executed"><code>            list_tags = data['tags'].split(',')</code></li>
+<li class="executed"><code>            for tag in list_tags:</code></li>
+<li class="executed"><code>                link.tags.add(tag)</code></li>
+<li class="executed"><code>            link.save()</code></li>
+<li class="executed"><code>            return redirect(link.get_absolute_url())</code></li>
 <li class="ignored"><code>    else:</code></li>
 <li class="executed"><code>        form = NewLinkForm()</code></li>
 <li class="ignored"><code></code></li>

@@ -92,7 +92,7 @@
     icon.addClass('waiting');
     $.ajax({
       type:"POST",
-      url:"{% url "ajax_add_to_default_list" %}",
+      url:"{% url "ajax-add-to-list-or-create" %}",
       data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list,
       error: function(xhr) {
         console.log(xhr.response);

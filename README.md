@@ -5,9 +5,13 @@ resrc
 `grep TODO -R resrc/*` kthxbye
 
 ### run the project
-1. python manage.py syncdb && python manage.py migrate && python manage.py loaddata data.json
-2. Say no to superuser creation. Use credentials root:qwer
-3. sample accounts : victor:qwer (superuser + user), foobar:qwer (user only)
+1. `python manage.py syncdb && python manage.py migrate && python manage.py loaddata data.json`
+2. Say no to superuser creation. Use existing credentials `root:qwer`
+3. sample accounts : `victor:qwer` (superuser + user), `foobar:qwer` (user only)
+
+### run the tests
+1. `pip install -r requirements_dev.txt --upgrade`
+2. `fab test` to run once, `watchmedo.sh` for continuous testing
 
 ### temporary priority list
 1. links

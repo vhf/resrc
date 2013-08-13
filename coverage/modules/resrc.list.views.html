@@ -128,16 +128,16 @@
   <h1>
     <span id="module-name">resrc.list.views</span>:
     88 total statements,
-    <span class="critical">19.2% covered</span>
+    <span class="warning">64.1% covered</span>
   </h1>
-  <p>Generated: Sun 2013-08-11 21:30 CEST</p>
+  <p>Generated: Tue 2013-08-13 15:43 CEST</p>
   <p>Source file: /home/victor/resrc/resrc/list/views.py</p>
   <p>
     Stats:
-    <span class="executed">15 executed</span>,
-    <span class="missed">63 missed</span>,
+    <span class="executed">50 executed</span>,
+    <span class="missed">28 missed</span>,
     <span class="excluded">10 excluded</span>,
-    <span class="ignored">90 ignored</span> 
+    <span class="ignored">82 ignored</span> 
   </p> 
 </div>
 
@@ -175,70 +175,68 @@
 <li class="ignored"><code>    }, RequestContext(request))</code></li>
 <li class="ignored"><code></code></li>
 <li class="ignored"><code></code></li>
-<li class="executed"><code>def ajax_add_to_default_list(request):</code></li>
-<li class="missed"><code>    if request.user.is_authenticated() and request.method == 'POST':</code></li>
-<li class="missed"><code>        link_pk = request.POST['lk']</code></li>
+<li class="executed"><code>def ajax_add_to_list_or_create(request):</code></li>
+<li class="executed"><code>    if request.user.is_authenticated() and request.method == 'POST':</code></li>
+<li class="executed"><code>        link_pk = request.POST['lk']</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        if 't' in request.POST:</code></li>
+<li class="executed"><code>        if 't' in request.POST:</code></li>
 <li class="ignored"><code>            # bookmark or toread</code></li>
-<li class="missed"><code>            list_type = request.POST['t']</code></li>
+<li class="executed"><code>            list_type = request.POST['t']</code></li>
 <li class="ignored"><code>        else:</code></li>
-<li class="missed"><code>            list_type = 'personnal'</code></li>
-<li class="missed"><code>            list_pk = request.POST['ls']</code></li>
+<li class="executed"><code>            list_type = 'personal'</code></li>
+<li class="executed"><code>            list_pk = request.POST['ls']</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        if list_type not in ['bookmark', 'toread', 'personnal']:</code></li>
-<li class="missed"><code>            raise Http404</code></li>
+<li class="executed"><code>        if list_type not in ['bookmark', 'toread', 'personal']:</code></li>
+<li class="executed"><code>            raise Http404</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        link = get_object_or_404(Link, pk=link_pk)</code></li>
+<li class="executed"><code>        link = get_object_or_404(Link, pk=link_pk)</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        if list_type in ['bookmark', 'toread']:</code></li>
-<li class="missed"><code>            list_title = None</code></li>
-<li class="missed"><code>            description = None</code></li>
-<li class="missed"><code>            if list_type == 'bookmark':</code></li>
-<li class="missed"><code>                list_title = 'Bookmarks'</code></li>
-<li class="missed"><code>                description = 'My bookmarks.'</code></li>
-<li class="missed"><code>            if list_type == 'toread':</code></li>
-<li class="missed"><code>                list_title = 'Reading list'</code></li>
-<li class="missed"><code>                description = 'My reading list.'</code></li>
-<li class="missed"><code>            alist, created = List.objects.get_or_create(</code></li>
+<li class="executed"><code>        if list_type in ['bookmark', 'toread']:</code></li>
+<li class="executed"><code>            list_title = None</code></li>
+<li class="executed"><code>            description = None</code></li>
+<li class="executed"><code>            if list_type == 'bookmark':</code></li>
+<li class="executed"><code>                list_title = 'Bookmarks'</code></li>
+<li class="executed"><code>                description = 'My bookmarks.'</code></li>
+<li class="executed"><code>            if list_type == 'toread':</code></li>
+<li class="executed"><code>                list_title = 'Reading list'</code></li>
+<li class="executed"><code>                description = 'My reading list.'</code></li>
+<li class="executed"><code>            alist, created = List.objects.get_or_create(</code></li>
 <li class="ignored"><code>                title=list_title,</code></li>
 <li class="ignored"><code>                owner=request.user,</code></li>
 <li class="ignored"><code>                defaults={'description': description, 'is_public': False}</code></li>
 <li class="ignored"><code>            )</code></li>
 <li class="ignored"><code>        else:</code></li>
-<li class="missed"><code>            alist = get_object_or_404(List, pk=list_pk)</code></li>
+<li class="executed"><code>            alist = get_object_or_404(List, pk=list_pk)</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        try:</code></li>
-<li class="missed"><code>            listlink = ListLinks.objects.get(</code></li>
+<li class="executed"><code>        try:</code></li>
+<li class="executed"><code>            listlink = ListLinks.objects.get(</code></li>
 <li class="ignored"><code>                alist=alist,</code></li>
 <li class="ignored"><code>                links=link</code></li>
 <li class="ignored"><code>            )</code></li>
-<li class="missed"><code>            listlink.delete()</code></li>
-<li class="missed"><code>            data = simplejson.dumps({'result': 'removed'})</code></li>
-<li class="missed"><code>        except ListLinks.DoesNotExist:</code></li>
-<li class="missed"><code>            ListLinks.objects.create(</code></li>
+<li class="executed"><code>            listlink.delete()</code></li>
+<li class="executed"><code>            data = simplejson.dumps({'result': 'removed'})</code></li>
+<li class="executed"><code>        except ListLinks.DoesNotExist:</code></li>
+<li class="executed"><code>            ListLinks.objects.create(</code></li>
 <li class="ignored"><code>                alist=alist,</code></li>
 <li class="ignored"><code>                links=link</code></li>
 <li class="ignored"><code>            )</code></li>
-<li class="missed"><code>            data = simplejson.dumps({'result': 'added'})</code></li>
+<li class="executed"><code>            data = simplejson.dumps({'result': 'added'})</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>        return HttpResponse(data, mimetype="application/javascript")</code></li>
+<li class="executed"><code>        return HttpResponse(data, mimetype="application/javascript")</code></li>
 <li class="ignored"><code></code></li>
 <li class="ignored"><code>    else:</code></li>
-<li class="missed"><code>        data = simplejson.dumps({</code></li>
-<li class="ignored"><code>            'result': 'fail'</code></li>
-<li class="ignored"><code>        }, indent=4)</code></li>
-<li class="missed"><code>        return HttpResponse(data, mimetype="application/javascript")</code></li>
+<li class="executed"><code>        data = simplejson.dumps({'result': 'fail'})</code></li>
+<li class="executed"><code>        return HttpResponse(data, mimetype="application/javascript")</code></li>
 <li class="ignored"><code></code></li>
 <li class="ignored"><code></code></li>
 <li class="executed"><code>def ajax_own_lists(request, link_pk):</code></li>
-<li class="missed"><code>    if not request.user.is_authenticated():</code></li>
-<li class="missed"><code>        raise Http404</code></li>
+<li class="executed"><code>    if not request.user.is_authenticated():</code></li>
+<li class="executed"><code>        raise Http404</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>    all_lists = List.objects.personal_lists(request.user)</code></li>
-<li class="missed"><code>    titles = List.objects.titles_link_in_default(request.user, link_pk)</code></li>
+<li class="executed"><code>    all_lists = List.objects.personal_lists(request.user)</code></li>
+<li class="executed"><code>    titles = List.objects.titles_link_in_default(request.user, link_pk)</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>    return render_template('lists/ajax_own_lists.html', {</code></li>
+<li class="executed"><code>    return render_template('lists/ajax_own_lists.html', {</code></li>
 <li class="ignored"><code>        'lists': all_lists,</code></li>
 <li class="ignored"><code>        'titles': titles,</code></li>
 <li class="ignored"><code>        'link_pk': link_pk</code></li>
@@ -274,19 +272,13 @@
 <li class="ignored"><code>            )</code></li>
 <li class="missed"><code>            listlink.save()</code></li>
 <li class="ignored"><code></code></li>
-<li class="missed"><code>            data = simplejson.dumps({</code></li>
-<li class="ignored"><code>                'result': 'success'</code></li>
-<li class="ignored"><code>            }, indent=4)</code></li>
+<li class="missed"><code>            data = simplejson.dumps({'result': 'success'})</code></li>
 <li class="missed"><code>            return HttpResponse(data, mimetype="application/javascript")</code></li>
 <li class="missed"><code>        except:</code></li>
-<li class="missed"><code>            data = simplejson.dumps({</code></li>
-<li class="ignored"><code>                'result': 'fail'</code></li>
-<li class="ignored"><code>            }, indent=4)</code></li>
+<li class="missed"><code>            data = simplejson.dumps({'result': 'fail'})</code></li>
 <li class="missed"><code>            return HttpResponse(data, mimetype="application/javascript")</code></li>
 <li class="ignored"><code>    else:</code></li>
-<li class="missed"><code>        data = simplejson.dumps({</code></li>
-<li class="ignored"><code>            'result': 'invalid'</code></li>
-<li class="ignored"><code>        }, indent=4)</code></li>
+<li class="missed"><code>        data = simplejson.dumps({'result': 'invalid'})</code></li>
 <li class="missed"><code>        return HttpResponse(data, mimetype="application/javascript")</code></li>
 <li class="ignored"><code></code></li>
 <li class="ignored"><code></code></li>

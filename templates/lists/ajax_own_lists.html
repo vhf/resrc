@@ -31,7 +31,7 @@ function add_to_own_list(list) {
   list.prop('disabled', true)
   $.ajax({
     type:"POST",
-    url:"{% url "ajax_add_to_default_list" %}",
+    url:"{% url "ajax-add-to-list-or-create" %}",
     data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link_pk }}&ls='+list.val(),
     error: function(xhr) {
       //console.log(xhr.response)

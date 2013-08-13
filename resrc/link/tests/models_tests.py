@@ -17,6 +17,12 @@ class LinkTestCase(TestCase):
         link.save()
         self.assertEqual(link.get_absolute_url(), '/lk/1/single-page-simple-comprehensive-overview-of-javascript/')
 
+    def test_hash(self):
+        """test link hash"""
+        link = LinkFactory()
+        link.save()
+        self.assertEqual(link.hash2, '2i1kc0y52iw')
+
     def test_slug(self):
         """test link slug"""
         link = LinkFactory()

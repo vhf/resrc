@@ -128,14 +128,14 @@
   <h1>
     <span id="module-name">resrc.utils.templatetags.gravatar</span>:
     11 total statements,
-    <span class="normal">87.5% covered</span>
+    <span class="normal">100.0% covered</span>
   </h1>
-  <p>Generated: Sun 2013-08-11 21:30 CEST</p>
+  <p>Generated: Tue 2013-08-13 15:43 CEST</p>
   <p>Source file: /home/victor/resrc/resrc/utils/templatetags/gravatar.py</p>
   <p>
     Stats:
-    <span class="executed">7 executed</span>,
-    <span class="missed">1 missed</span>,
+    <span class="executed">8 executed</span>,
+    <span class="missed">0 missed</span>,
     <span class="excluded">3 excluded</span>,
     <span class="ignored">8 ignored</span> 
   </p> 
@@ -157,7 +157,7 @@
 <li class="ignored"><code>        'gravatar_id': hashlib.md5(email).hexdigest(),</code></li>
 <li class="ignored"><code>        'size': str(size)})</code></li>
 <li class="executed"><code>    if username is not None:</code></li>
-<li class="missed"><code>        return """&lt;img src="%s" alt="gravatar for %s" /&gt;""" % (gravatar_url, username)</code></li>
+<li class="executed"><code>        return """&lt;img src="%s" alt="gravatar for %s" /&gt;""" % (gravatar_url, username)</code></li>
 <li class="ignored"><code>    else:</code></li>
 <li class="executed"><code>        return """&lt;img src="%s" alt="gravatar" /&gt;""" % (gravatar_url)</code></li>
 <li class="ignored"><code></code></li>
