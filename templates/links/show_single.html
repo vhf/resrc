@@ -37,7 +37,7 @@
 
   <div class="row">
     <div class="large-12 columns ">
-      <h3 class="link-title"><a class="lsf symbol" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
+      <h3 class="link-title"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago

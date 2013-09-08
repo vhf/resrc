@@ -61,7 +61,7 @@ lolo
   }
 
   var resrc = function(converter) {
-    var hashtable = { {% for link in links %}'{{ link.hash2 }}':{'title':'{{ link.title }}','id':'{{ link.id }}','url':'{{ link.url }}'}{% if not forloop.last %},{% endif %}{% endfor %}};
+    var hashtable = { {% for link in links %}'{{ link.hash2 }}':{title:'{{ link.title }}',id:'{{ link.id }}',url:'{{ link.url }}'}{% if not forloop.last %},{% endif %}{% endfor %}};
     var larray = [];
     jQuery.map(hashtable, function(link, h) {larray[link['id']] = h;});
 
@@ -69,10 +69,11 @@ lolo
     {
       type: 'lang', filter: function(source){
         return source.replace(/<((http|https):\/\/([^ ">#]*))[#]*([^ >]*)>/g, function(match, url) {
+          //<URL>
           hash = hash2(url);
           if (hashtable.hasOwnProperty(hash)) {
             link = hashtable[hash];
-            return '<span class="lt"><a href="/lk/'+link['id']+'/">link</a> <a href="'+url+'" rel="nofollow">'+link['title']+'</a></span>';
+            return '<span class="lt"><a href="/lk/'+link.id+'/">link</a> <a href="'+url+'" rel="nofollow">'+link.title+'</a></span>';
           } else {
             return url;
           }
@@ -81,17 +82,34 @@ lolo
     },
     {
       type: 'lang', regex: '\\B(\\\\)?@(\\d+)\\b', replace: function(match, leadingSlash, id) {
+        //@linkID
         if (leadingSlash === '\\') {
           return match;
         } else {
           hash = larray[id];
           if (hashtable.hasOwnProperty(hash)) {
             link = hashtable[hash];
-            return '<span class="at"><a href="/lk/'+link['id']+'/">link</a> <a href="'+link['url']+'" rel="nofollow">'+link['title']+'</a></span>';
+            return '<span class="at"><a href="/lk/'+link.id+'/">link</a> <a href="'+link.url+'" rel="nofollow">'+link.title+'</a></span>';
           } else {
             return match;
           }
         }
+      }
+    },
+    {
+      type: 'lang', filter: function(source){
+        return source.replace(/(\[((?:\[[^\]]*\]|[^\[\]])*)\]\([ \t]*()<?(.*?(?:\(.*?\).*?)?)>?[ \t]*((['"])(.*?)\6[ \t]*)?\))/g, function(match, a, title, b, url, atitle) {
+          //[title](url "atitle") atitle is optional in this regex
+          hash = hash2(url);
+          var atitle2 = ((typeof atitle === 'undefined') ? '' : ' title="'+atitle+'"');
+          if (hashtable.hasOwnProperty(hash)) {
+            link = hashtable[hash];
+            return '<span class="lt"><a href="/lk/'+link.id+'/">link</a> <a href="'+url+'" rel="nofollow"'+atitle2+'>'+title+'</a></span>';
+          } else {
+            return '<a href="'+url+'" rel="nofollow"'+atitle2+'>'+title+'</a>';
+            //return '['+title+']('+url+((typeof atitle === 'undefined') ? '' : ' "'+atitle+'"')+')';
+          }
+        });
       }
     },
     {

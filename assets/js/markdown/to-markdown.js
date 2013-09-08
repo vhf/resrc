@@ -8,113 +8,109 @@
 
 var toMarkdown = function(string) {
 
-  var ELEMENTS = [
-    {
-      patterns: 'p',
-      replacement: function(str, attrs, innerHTML) {
-        return innerHTML ? '\n\n' + innerHTML + '\n' : '';
-      }
-    },
-    {
-      patterns: 'br',
-      type: 'void',
-      replacement: '\n'
-    },
-    {
-      patterns: 'h([1-6])',
-      replacement: function(str, hLevel, attrs, innerHTML) {
-        var hPrefix = '';
-        for(var i = 0; i < hLevel; i++) {
-          hPrefix += '#';
-        }
-        return '\n\n' + hPrefix + ' ' + innerHTML + '\n';
-      }
-    },
-    {
-      patterns: 'a',
-      replacement: function(str, attrs, innerHTML) {
-        var href = attrs.match(attrRegExp('href')),
-            title = attrs.match(attrRegExp('title'));
-        return href ? '[' + innerHTML + ']' + '(' + href[1] + (title && title[1] ? ' "' + title[1] + '"' : '') + ')' : str;
-      }
-    },
-    {
-      patterns: ['b', 'strong'],
-      replacement: function(str, attrs, innerHTML) {
-        return innerHTML ? '**' + innerHTML + '**' : '';
-      }
-    },
-    {
-      patterns: ['i', 'em'],
-      replacement: function(str, attrs, innerHTML) {
-        return innerHTML ? '_' + innerHTML + '_' : '';
-      }
-    },
-    {
-      patterns: 'code',
-      replacement: function(str, attrs, innerHTML) {
-        return innerHTML ? '`' + innerHTML + '`' : '';
-      }
-    },
-    {
-      patterns: 'img',
-      type: 'void',
-      replacement: function(str, attrs, innerHTML) {
-        var src = attrs.match(attrRegExp('src')),
-            alt = attrs.match(attrRegExp('alt')),
-            title = attrs.match(attrRegExp('title'));
-        return '![' + (alt && alt[1] ? alt[1] : '') + ']' + '(' + src[1] + (title && title[1] ? ' "' + title[1] + '"' : '') + ')';
-      }
-    },
-    {
-      patterns: 'span',
-      replacement: function(str, attrs, innerHTML) {
-        var style = attrs.match(attrRegExp('style'));
-        var classes = attrs.match(attrRegExp('class'));
-
-        if (classes) {
-          classes = classes[1];
-          if (classes === 'lt') {
-            var re = /\[[^\]]+\]\([^\)]+\) \[[^\]]+\]\(((http|https):\/\/([^ "\)#]*))[#]*([^ \)]*)\)/;
-            return innerHTML ? '<' + re.exec(str)[1] + '>' : '';
-          } else if (classes === 'at') {
-            var re = /\(\/lk\/(\d+)\/\)/;
-            return innerHTML ? '@' + re.exec(str)[1] : '';
-          }
-        }
-
-        if (style) {
-          style = style[0];
-          if (style.indexOf('italic') > 0) {
-            return innerHTML ? '_' + innerHTML + '_' : '';
-          } else if (style.indexOf('bold') > 0) {
-            return innerHTML ? '**' + innerHTML + '**' : '';
-          }
-        }
-        return innerHTML;
-      }
+  var ELEMENTS = [{
+    patterns: 'p',
+    replacement: function(str, attrs, innerHTML) {
+      return innerHTML ? '\n\n' + innerHTML + '\n' : '';
     }
-  ];
-
-  for(var i = 0, len = ELEMENTS.length; i < len; i++) {
-    if(typeof ELEMENTS[i].patterns === 'string') {
-      string = replaceEls(string, { tag: ELEMENTS[i].patterns, replacement: ELEMENTS[i].replacement, type:  ELEMENTS[i].type });
+  }, {
+    patterns: 'br',
+    type: 'void',
+    replacement: '\n'
+  }, {
+    patterns: 'h([1-6])',
+    replacement: function(str, hLevel, attrs, innerHTML) {
+      var hPrefix = '';
+      for (var i = 0; i < hLevel; i++) {
+        hPrefix += '#';
+      }
+      return '\n\n' + hPrefix + ' ' + innerHTML + '\n';
     }
-    else {
-      for(var j = 0, pLen = ELEMENTS[i].patterns.length; j < pLen; j++) {
-        string = replaceEls(string, { tag: ELEMENTS[i].patterns[j], replacement: ELEMENTS[i].replacement, type:  ELEMENTS[i].type });
+  }, {
+    patterns: 'a',
+    replacement: function(str, attrs, innerHTML) {
+      var href = attrs.match(attrRegExp('href')),
+        title = attrs.match(attrRegExp('title'));
+      return href ? '[' + innerHTML + ']' + '(' + href[1] + (title && title[1] ? ' "' + title[1] + '"' : '') + ')' : str;
+    }
+  }, {
+    patterns: ['b', 'strong'],
+    replacement: function(str, attrs, innerHTML) {
+      return innerHTML ? '**' + innerHTML + '**' : '';
+    }
+  }, {
+    patterns: ['i', 'em'],
+    replacement: function(str, attrs, innerHTML) {
+      return innerHTML ? '_' + innerHTML + '_' : '';
+    }
+  }, {
+    patterns: 'code',
+    replacement: function(str, attrs, innerHTML) {
+      return innerHTML ? '`' + innerHTML + '`' : '';
+    }
+  }, {
+    patterns: 'img',
+    type: 'void',
+    replacement: function(str, attrs, innerHTML) {
+      var src = attrs.match(attrRegExp('src')),
+        alt = attrs.match(attrRegExp('alt')),
+        title = attrs.match(attrRegExp('title'));
+      return '![' + (alt && alt[1] ? alt[1] : '') + ']' + '(' + src[1] + (title && title[1] ? ' "' + title[1] + '"' : '') + ')';
+    }
+  }, {
+    patterns: 'span',
+    replacement: function(str, attrs, innerHTML) {
+      var style = attrs.match(attrRegExp('style'));
+      var classes = attrs.match(attrRegExp('class'));
+
+      if (classes) {
+        classes = classes[1];
+        if (classes === 'lt') {
+          var re = /\[[^\]]+\]\([^\)]+\) \[[^\]]+\]\(((http|https):\/\/([^ "\)#]*))[#]*([^ \)]*)\)/;
+          return innerHTML ? '<' + re.exec(str)[1] + '>' : '';
+        } else if (classes === 'at') {
+          var re = /\(\/lk\/(\d+)\/\)/;
+          return innerHTML ? '@' + re.exec(str)[1] : '';
+        }
+      }
+
+      if (style) {
+        style = style[0];
+        if (style.indexOf('italic') > 0) {
+          return innerHTML ? '_' + innerHTML + '_' : '';
+        } else if (style.indexOf('bold') > 0) {
+          return innerHTML ? '**' + innerHTML + '**' : '';
+        }
+      }
+      return innerHTML;
+    }
+  }];
+
+  for (var i = 0, len = ELEMENTS.length; i < len; i++) {
+    if (typeof ELEMENTS[i].patterns === 'string') {
+      string = replaceEls(string, {
+        tag: ELEMENTS[i].patterns,
+        replacement: ELEMENTS[i].replacement,
+        type: ELEMENTS[i].type
+      });
+    } else {
+      for (var j = 0, pLen = ELEMENTS[i].patterns.length; j < pLen; j++) {
+        string = replaceEls(string, {
+          tag: ELEMENTS[i].patterns[j],
+          replacement: ELEMENTS[i].replacement,
+          type: ELEMENTS[i].type
+        });
       }
     }
   }
 
   function replaceEls(html, elProperties) {
     var pattern = elProperties.type === 'void' ? '<' + elProperties.tag + '\\b([^>]*)\\/?>' : '<' + elProperties.tag + '\\b([^>]*)>([\\s\\S]*?)<\\/' + elProperties.tag + '>',
-        regex = new RegExp(pattern, 'gi'),
-        markdown = '';
-    if(typeof elProperties.replacement === 'string') {
+      regex = new RegExp(pattern, 'gi'),
+      markdown = '';
+    if (typeof elProperties.replacement === 'string') {
       markdown = html.replace(regex, elProperties.replacement);
-    }
-    else {
+    } else {
       markdown = html.replace(regex, function(str, p1, p2, p3) {
         return elProperties.replacement.call(this, str, p1, p2, p3);
       });
@@ -141,7 +137,7 @@ var toMarkdown = function(string) {
 
   // Converts lists that have no child lists (of same type) first, then works it's way up
   var noChildrenRegex = /<(ul|ol)\b[^>]*>(?:(?!<ul|<ol)[\s\S])*?<\/\1>/gi;
-  while(string.match(noChildrenRegex)) {
+  while (string.match(noChildrenRegex)) {
     string = string.replace(noChildrenRegex, function(str) {
       return replaceLists(str);
     });
@@ -153,8 +149,8 @@ var toMarkdown = function(string) {
       var lis = innerHTML.split('</li>');
       lis.splice(lis.length - 1, 1);
 
-      for(i = 0, len = lis.length; i < len; i++) {
-        if(lis[i]) {
+      for (i = 0, len = lis.length; i < len; i++) {
+        if (lis[i]) {
           var prefix = (listType === 'ol') ? (i + 1) + ".  " : "*   ";
           lis[i] = lis[i].replace(/\s*<li[^>]*>([\s\S]*)/i, function(str, innerHTML) {
 
@@ -173,7 +169,7 @@ var toMarkdown = function(string) {
 
   // Blockquotes
   var deepest = /<blockquote\b[^>]*>((?:(?!<blockquote)[\s\S])*?)<\/blockquote>/gi;
-  while(string.match(deepest)) {
+  while (string.match(deepest)) {
     string = string.replace(deepest, function(str) {
       return replaceBlockquotes(str);
     });

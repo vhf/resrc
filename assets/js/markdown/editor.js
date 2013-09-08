@@ -1,8 +1,7 @@
 jQuery(document).ready(function() {
   // Enable Hallo editor
   jQuery('.editable').hallo({
-    plugins: {
-    },
+    plugins: {},
     toolbar: 'halloToolbarFixed'
   });
 
@@ -15,8 +14,10 @@ jQuery(document).ready(function() {
   };
 
   var ext = {};
-  if(typeof Showdown.extensions['resrc'] !== "undefined")
-    ext = {extensions: ['resrc']};
+  if (typeof Showdown.extensions['resrc'] !== "undefined")
+    ext = {
+      extensions: ['resrc']
+    };
 
   var converter = new Showdown.converter(ext);
 
@@ -36,7 +37,7 @@ jQuery(document).ready(function() {
   var adapt = function() {
     var mdcontent = jQuery('#id_mdcontent');
     var lines = mdcontent.get(0).value.split("\n").length;
-    mdcontent.height(lines*20+10);
+    mdcontent.height(lines * 20 + 10);
   };
 
   var updateHtml = function(content) {
@@ -47,7 +48,7 @@ jQuery(document).ready(function() {
     jQuery('.editable').html(html);
     $('.editable').find('a').each(function(index, item) {
       $item = $(item);
-      if($item.text() === 'link') {
+      if ($item.text() === 'link') {
         $item.addClass('lsf symbol').css('color', 'black');
       }
     });
@@ -62,5 +63,5 @@ jQuery(document).ready(function() {
     adapt();
   });
   showSource(jQuery('.editable').html());
-    adapt();
+  adapt();
 });

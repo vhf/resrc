@@ -29,9 +29,16 @@
     .del {
       display: none;
     }
+    .link {
+      display: none;
+    }
   }
   h4:hover {
     .del {
+      display: inline-block;
+      float: right;
+    }
+    .link {
       display: block;
     }
   }
