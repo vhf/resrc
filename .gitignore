@@ -11,3 +11,4 @@ local_settings.py
 *.bak
 assets/.sass-cache
 Makefile
+coverage/
