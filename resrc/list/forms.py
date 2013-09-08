@@ -107,3 +107,102 @@ class NewListForm(forms.Form):
             )
         )
         super(NewListForm, self).__init__(*args, **kwargs)
+
+
+class EditListForm(forms.Form):
+    title = forms.CharField(label='Title', max_length=80)
+    description = forms.CharField(
+        label='Description', required=False, widget=forms.Textarea()
+    )
+    url = forms.URLField(
+        label='URL', required=False
+    )
+    private = forms.BooleanField(label='private', required=False)
+    mdcontent = forms.CharField(
+        label='list source', required=False, widget=forms.Textarea()
+    )
+
+    def __init__(self, private_checkbox, md_content, from_url, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_id = 'createlistform'
+
+        if not from_url:
+            self.helper.layout = Layout(
+                Fieldset(
+                    u'Create a list',
+                    Row(
+                        Column(
+                            Field('title'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            Field('description'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            Field('url'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox" %s> private</label>' % private_checkbox),
+                            css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            Field('mdcontent', css_class="large-12"),
+                            css_class='large-6'
+                        ),
+                        Column(
+                            HTML('<div class="ctrlHolder"><label>preview</label><div class="editable">%s</div></div>' % md_content),
+                            css_class='large-6'
+                        ),
+                        css_class='halloform'
+                    ),
+                ),
+                Row(
+                    Column(
+                        Submit('submit', 'Save', css_class='small button'),
+                        css_class='large-12',
+                    ),
+                )
+            )
+        else:
+            self.helper.layout = Layout(
+                Fieldset(
+                    u'Create a list',
+                    Row(
+                        Column(
+                            Field('title'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            Field('description'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            Field('url'), css_class='large-12'
+                        ),
+                    ),
+                    Row(
+                        Column(
+                            HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox" %s> private</label>' % private_checkbox),
+                            css_class='large-12'
+                        ),
+                    ),
+                ),
+                Row(
+                    Column(
+                        Submit('submit', 'Fetch and save', css_class='small button'),
+                        css_class='large-12',
+                    ),
+                )
+            )
+
+        super(EditListForm, self).__init__(*args, **kwargs)

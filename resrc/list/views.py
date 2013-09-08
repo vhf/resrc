@@ -10,7 +10,7 @@ from resrc.utils import render_template
 from resrc.list.models import List, ListLinks
 from resrc.link.models import Link
 
-from .forms import NewListForm, NewListAjaxForm
+from .forms import NewListAjaxForm, NewListForm, EditListForm
 
 
 def single(request, list_pk, list_slug=None):
@@ -157,6 +157,7 @@ def new_list(request):
             alist = List.objects.create(
                 title=form.data['title'],
                 description=form.data['description'],
+                url=form.data['url'],
                 md_content=mdcontent,
                 html_content=listmarkdown(mdcontent),
                 owner=request.user,
@@ -174,3 +175,63 @@ def new_list(request):
         'form': form,
         'links': links
     })
+
+
+@login_required
+def edit(request, list_pk, list_slug):
+    if not request.user.is_authenticated():
+        raise Http404
+    alist = get_object_or_404(List, pk=list_pk)
+
+    if request.user.pk is not alist.owner.pk:
+        raise Http404
+
+    if alist.is_public:
+        private_checkbox = ''
+    else:
+        private_checkbox = 'checked="checked"'
+    if len(alist.url) > 0:
+        from_url = True
+    else:
+        from_url = False
+
+    if request.method == 'POST':
+        form = EditListForm(private_checkbox, alist.md_content, from_url, request.POST)
+        if form.is_valid():
+            is_private = False
+
+            if 'private' in form.data:
+                is_private = form.data['private']
+
+            if len(form.data['url']) > 0:
+                mdcontent = urlopen(form.data['url']).read()
+            else:
+                mdcontent = form.data['mdcontent']
+
+            from resrc.utils.templatetags.emarkdown import listmarkdown
+
+            alist.title=form.data['title'],
+            alist.description=form.data['description'],
+            alist.url=form.data['url'],
+            alist.md_content=mdcontent,
+            alist.html_content=listmarkdown(mdcontent),
+            alist.is_public=not is_private
+
+            alist.save()
+
+            return redirect(alist.get_absolute_url())
+
+    else:
+
+        form = EditListForm(private_checkbox, alist.md_content, from_url, initial={
+            'title': alist.title,
+            'description': alist.description,
+            'url': alist.url,
+        })
+
+        links = list(Link.objects.all())
+
+        return render_template('lists/new_list.html', {
+            'form': form,
+            'links': links
+        })

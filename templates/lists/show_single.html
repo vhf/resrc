@@ -34,7 +34,7 @@
     <p>{{ list.description }}</p>
     <p class="byline">
       {% with author=list.owner %}
-      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago
+      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk list_slug=list.slug %}">edit</a>{% endif %}
       {%endwith%}
     </p>
   </div>

@@ -3,11 +3,11 @@ import markdown
 import bleach
 from django import template
 from django.utils.safestring import mark_safe
-import nofollow
+import extensions
 
 register = template.Library()
 
-md_nofollow = nofollow.NofollowExtension()
+md_nofollow = extensions.NofollowExtension()
 
 @register.filter(needs_autoescape=False)
 def emarkdown(value):
@@ -45,7 +45,6 @@ def listmarkdown(value):
                     'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 
     allowed_attrs = {
-        # '*': ['class', 'id'],
         'a': ['href', 'title', 'rel'],
         'img': ['src', 'alt'],
     }
