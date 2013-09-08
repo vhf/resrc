@@ -164,6 +164,7 @@ INTERNAL_APPS = [
     'resrc.list',
     'resrc.page',
     'resrc.utils',
+    'resrc.feedback',
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS
@@ -211,6 +212,7 @@ DEBUG_TOOLBAR_CONFIG = {
 }
 
 CRISPY_FAIL_SILENTLY = not DEBUG
+CRISPY_TEMPLATE_PACK = 'foundation'
 
 MPTT_COMMENTS_OFFSET = 20
 MPTT_COMMENTS_COLLAPSE_ABOVE = 4

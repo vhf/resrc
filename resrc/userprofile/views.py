@@ -105,7 +105,7 @@ def settings_profile(request):
     profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
-        form = ProfileForm(request.user, request.POST)
+        form = ProfileForm(request.POST, request.user)
         c = {
             'form': form,
         }
@@ -133,7 +133,7 @@ def settings_profile(request):
         else:
             return render_to_response('user/settings_profile.html', c, RequestContext(request))
     else:
-        form = ProfileForm(request.user, initial={
+        form = ProfileForm(request.POST, request.user, initial={
             'about': profile.about,
             'email': request.user.email,
             'show_email': profile.show_email
@@ -148,7 +148,7 @@ def settings_profile(request):
 @login_required
 def settings_account(request):
     if request.method == 'POST':
-        form = ChangePasswordForm(request.user, request.POST)
+        form = ChangePasswordForm(request.POST, request.user)
         c = {
             'form': form,
         }

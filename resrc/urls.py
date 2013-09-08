@@ -14,6 +14,7 @@ urlpatterns = patterns(
     url(r'^ls/', include('resrc.list.urls')),
     url(r'^p/',  include('resrc.page.urls')),
     url(r'^t/',  include('resrc.tag.urls')),
+    url(r'^f/', include('resrc.feedback.urls')),
     url(r'^a/',  include(admin.site.urls)),
 
     # third party includes

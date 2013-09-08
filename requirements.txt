@@ -7,10 +7,12 @@ pytz
 pil
 django-dynamic-fixture
 django-crispy-forms
+crispy-forms-foundation
 django-simple-captcha
 django-email-obfuscator
 django-debug-toolbar
-crispy-forms-foundation
 django-mptt
 simplejson
 django-taggit
+django-libs
+-e git+git://github.com/pinax/django-mailer.git@919805e25fc18b06487b25414d4e5d5e05a92108#egg=mailer

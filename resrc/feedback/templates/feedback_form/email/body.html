@@ -1,0 +1,8 @@
+{% load i18n %}
+{% trans "A new feedback has been posted:" %}
+
+<p>{% trans "URL" %}: {{ url }}</p>
+<p>{% trans "Email" %}: {{ email }}</p>
+<p>{% trans "Date" %}: {{ date|date }}</p>
+<hr />
+<p>{{ message }}</p>

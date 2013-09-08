@@ -1,5 +1,6 @@
 ﻿{% load staticfiles %}
 {% load gravatar %}
+{% load feedback_tags %}
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -30,6 +31,9 @@
           <ul class="left">
               <li {% block menu_home %}{% endblock %}>
                   <a href="{% url "page-home" %}">Home</a>
+              </li>
+              <li>
+                <a id="feedbackSnippet" href="{% url "feedback_form" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
               </li>
           </ul>
 
@@ -81,6 +85,9 @@
       </div>
     </div>
   </footer>
+
+  {% feedback_form request.path request.user %}
+  <script type="text/javascript" src="{{ STATIC_URL }}feedback_form/js/feedback_form.js"></script>
 
   <!-- Included JS Files (Uncompressed) -->
   <script>

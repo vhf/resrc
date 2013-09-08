@@ -1,0 +1,17 @@
+{% load feedback_tags %}
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title></title>
+{% block extracss %}
+<link href="{{ STATIC_URL }}feedback_form/css/feedback_form.css" type="text/css" media="all" rel="stylesheet" />
+{% endblock %}
+</head>
+<body style="background-color: #aaaaaa;">
+{% block main %}{% feedback_form %}{% endblock %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{% block extrajs %}
+<script type="text/javascript" src="{{ STATIC_URL }}feedback_form/js/feedback_form.js"></script>
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,7 @@
+{% load i18n %}
+{% csrf_token %}
+<div style="color: {{ text_color }};" id="feedbackText">
+    {{ text|safe }}
+</div>
+{{ form.as_p }}
+<input type="submit" class="button small" value="{% trans "Send Feedback" %}" />
