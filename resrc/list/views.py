@@ -4,6 +4,7 @@ from django.http import Http404, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 import simplejson
+from urllib import urlopen
 
 from resrc.utils import render_template
 from resrc.list.models import List, ListLinks
@@ -147,12 +148,17 @@ def new_list(request):
             if 'private' in form.data:
                 is_private = form.data['private']
 
+            if len(form.data['url']) > 0:
+                mdcontent = urlopen(form.data['url']).read()
+            else:
+                mdcontent = form.data['mdcontent']
+
             from resrc.utils.templatetags.emarkdown import listmarkdown
             alist = List.objects.create(
                 title=form.data['title'],
                 description=form.data['description'],
-                md_content=form.data['mdcontent'],
-                html_content=listmarkdown(form.data['mdcontent']),
+                md_content=mdcontent,
+                html_content=listmarkdown(mdcontent),
                 owner=request.user,
                 is_public=not is_private
             )

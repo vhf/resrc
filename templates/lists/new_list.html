@@ -58,7 +58,7 @@ lolo
 
     r = s + t0 * norm;
     return parseInt(r.toString().substr(2)).toString(36);
-  }
+  };
 
   var resrc = function(converter) {
     var hashtable = { {% for link in links %}'{{ link.hash2 }}':{title:'{{ link.title }}',id:'{{ link.id }}',url:'{{ link.url }}'}{% if not forloop.last %},{% endif %}{% endfor %}};
@@ -118,6 +118,23 @@ lolo
     ];
   };
 
+  var delay = (function() {
+    var timer = 0;
+    return function(callback, ms) {
+      clearTimeout (timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
+  $('#id_url').keyup(function() {
+    delay(function() {
+      if($('#id_url').val().length > 0) {
+        $('.halloform').hide();
+      } else {
+        $('.halloform').show();
+      }
+    }, 200);
+  });
 
     // Client-side export
     if (typeof window !== 'undefined' && window.Showdown && window.Showdown.extensions) { window.Showdown.extensions.resrc = resrc; }

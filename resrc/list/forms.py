@@ -50,6 +50,9 @@ class NewListForm(forms.Form):
     description = forms.CharField(
         label='Description', required=False, widget=forms.Textarea()
     )
+    url = forms.URLField(
+        label='URL', required=False
+    )
     private = forms.BooleanField(label='private', required=False)
     mdcontent = forms.CharField(
         label='list source', required=False, widget=forms.Textarea()
@@ -71,6 +74,11 @@ class NewListForm(forms.Form):
                 Row(
                     Column(
                         Field('description'), css_class='large-12'
+                    ),
+                ),
+                Row(
+                    Column(
+                        Field('url'), css_class='large-12'
                     ),
                 ),
                 Row(

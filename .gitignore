@@ -12,3 +12,4 @@ local_settings.py
 assets/.sass-cache
 Makefile
 coverage/
+assets/css/app.css

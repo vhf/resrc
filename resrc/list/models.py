@@ -59,6 +59,7 @@ class List(models.Model):
     description = models.TextField('description')
     md_content = models.TextField('md_content')
     html_content = models.TextField('html_content')
+    url = models.URLField('url')
 
     links = models.ManyToManyField(Link, through='ListLinks')
 
