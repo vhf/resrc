@@ -7,7 +7,7 @@ import extensions
 
 register = template.Library()
 
-md_nofollow = extensions.NofollowExtension()
+md_fixup = extensions.FixupExtension()
 
 @register.filter(needs_autoescape=False)
 def emarkdown(value):
@@ -27,7 +27,7 @@ def emarkdown(value):
         bleach.clean(
             markdown.markdown(
                 value,
-                extensions=[md_nofollow, 'extra'],
+                extensions=[md_fixup, 'extra'],
                 safe_mode='escape',
                 output_format='html5'
             ),
@@ -53,7 +53,7 @@ def listmarkdown(value):
         bleach.clean(
             markdown.markdown(
                 value,
-                extensions=[md_nofollow, 'extra'],
+                extensions=[md_fixup, 'extra'],
                 safe_mode='escape',
                 output_format='html5'
             ),

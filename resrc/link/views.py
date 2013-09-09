@@ -43,7 +43,7 @@ def single(request, link_pk, link_slug=None):
 
 
 @login_required
-def new_link(request):
+def new_link(request, url_to_add=None):
     if request.method == 'POST':
         form = NewLinkForm(request.POST)
         if form.is_valid():
@@ -62,7 +62,10 @@ def new_link(request):
             link.save()
             return redirect(link.get_absolute_url())
     else:
-        form = NewLinkForm()
+        if url_to_add is not None:
+            form = NewLinkForm({'url': url_to_add})
+        else:
+            form = NewLinkForm()
 
     tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
     tags = '"%s"' % tags
