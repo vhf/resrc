@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, render_to_response, redirect
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, redirect
 
 from taggit.models import Tag
 
+from resrc.utils import render_template
 from resrc.link.models import Link
 
 
@@ -12,12 +12,11 @@ def single(request, tag_slug):
 
     links = Link.objects.filter(tags=tag)
 
-    c = {
+    return render_template('tags/show_single.html', {
         'tag': tag,
         'links': links,
         'request': request,
-    }
-    return render_to_response('tags/show_single.html', c, RequestContext(request))
+    })
 
 
 def index(request):
@@ -26,8 +25,7 @@ def index(request):
         .annotate(c=Count('link')).order_by('-c') \
         .all()
 
-    c = {
+    return render_template('tags/show_index.html', {
         'tags': tags,
         'request': request,
-    }
-    return render_to_response('tags/show_index.html', c, RequestContext(request))
+    })

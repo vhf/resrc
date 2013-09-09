@@ -30,8 +30,8 @@ $default-float: left;
 
 // $body-bg: #fff;
 // $body-font-color: #222;
-// $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$body-font-family: Verdana;
+$body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+// $body-font-family: Verdana;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -52,7 +52,7 @@ $body-font-family: Verdana;
 
 // Make sure border radius matches unless we want it different.
 
-// $global-radius: 3px;
+$global-radius: 0px;
 // $global-rounded: 1000px;
 
 // Inset shadow shiny edges and depressions.
@@ -138,15 +138,15 @@ $body-font-family: Verdana;
 
 // Heading font styles
 
-$header-font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
-//$header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+// $header-font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+$header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $header-font-weight: bold;
 // $header-font-style: normal;
-// $header-font-color: #222;
+$header-font-color: #999;
 // $header-line-height: 1.4;
 // $header-top-margin: .2em;
 // $header-bottom-margin: .5em;
-// $header-text-rendering: optimizeLegibility;
+$header-text-rendering: optimizeLegibility;
 
 // Heading font sizes
 

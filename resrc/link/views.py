@@ -31,15 +31,14 @@ def single(request, link_pk, link_slug=None):
 
     lists = List.objects.some_lists_from_link(link_pk)
 
-    c = {
+    return render_template('links/show_single.html', {
         'link': link,
         'user': request.user,
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
         'lists': lists
-    }
-    return render_to_response('links/show_single.html', c, RequestContext(request))
+    })
 
 
 @login_required

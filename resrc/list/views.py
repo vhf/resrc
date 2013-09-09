@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404, HttpResponse
-from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 import simplejson
 from urllib import urlopen
@@ -23,12 +22,12 @@ def single(request, list_pk, list_slug=None):
     if alist.slug != list_slug:
         raise Http404
 
-    return render_to_response('lists/show_single.html', {
+    return render_template('lists/show_single.html', {
         'list': alist,
         'tags': alist.get_tags()[:5],
         'default_lists': ['Bookmarks', 'Reading list'],
         'request': request
-    }, RequestContext(request))
+    })
 
 
 def ajax_add_to_list_or_create(request):

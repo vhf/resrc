@@ -29,95 +29,8 @@ lolo
 </div>
 {% endblock %}
 
-
 {% block last_body %}
-<script src="{% static "js/markdown/showdown.js" %}"></script>
-<script type="text/javascript">
-(function(){
-
-
-  var hash2 = function(data) {
-    // https://groups.google.com/forum/#!topic/comp.lang.javascript/gm0ZtrLpVmI
-    var norm = Math.pow(2, -32);
-    var a = 2095533;
-    var s = 0, c = 1;
-    var t, t0 = 0;
-    var r;
-
-    data = data.toString();
-    for (var i = 0; i < data.length; i++) {
-      s -= data.charCodeAt(i) * 65537 * norm;
-      if (s < 0) {
-        s += 1;
-      }
-      t = a * s + c * norm;
-      t0 = s = t - (c = t | 0);
-      t = a * s + c * norm;
-      s = t - (c = t | 0);
-    }
-
-    r = s + t0 * norm;
-    return parseInt(r.toString().substr(2)).toString(36);
-  };
-
-  var resrc = function(converter) {
-    var hashtable = { {% for link in links %}'{{ link.hash2 }}':{title:'{{ link.title }}',id:'{{ link.id }}',url:'{{ link.url }}'}{% if not forloop.last %},{% endif %}{% endfor %}};
-    var larray = [];
-    jQuery.map(hashtable, function(link, h) {larray[link['id']] = h;});
-
-    return [
-    {
-      type: 'lang', filter: function(source){
-        return source.replace(/<((http|https):\/\/([^ ">#]*))[#]*([^ >]*)>/g, function(match, url) {
-          //<URL>
-          hash = hash2(url);
-          if (hashtable.hasOwnProperty(hash)) {
-            link = hashtable[hash];
-            return '<span class="lt"><a href="/lk/'+link.id+'/">link</a> <a href="'+url+'" rel="nofollow">'+link.title+'</a></span>';
-          } else {
-            return url;
-          }
-        });
-      }
-    },/*
-    {
-      type: 'lang', regex: '\\B(\\\\)?@(\\d+)\\b', replace: function(match, leadingSlash, id) {
-        //@linkID
-        if (leadingSlash === '\\') {
-          return match;
-        } else {
-          hash = larray[id];
-          if (hashtable.hasOwnProperty(hash)) {
-            link = hashtable[hash];
-            return '<span class="at"><a href="/lk/'+link.id+'/">link</a> <a href="'+link.url+'" rel="nofollow">'+link.title+'</a></span>';
-          } else {
-            return match;
-          }
-        }
-      }
-    },*/
-    {
-      type: 'lang', filter: function(source){
-        return source.replace(/(\[((?:\[[^\]]*\]|[^\[\]])*)\]\([ \t]*()<?(.*?(?:\(.*?\).*?)?)>?[ \t]*((['"])(.*?)\6[ \t]*)?\))/g, function(match, a, title, b, url, atitle) {
-          //[title](url "atitle") atitle is optional in this regex
-          hash = hash2(url);
-          var atitle2 = ((typeof atitle === 'undefined') ? '' : ' title="'+atitle+'"');
-          if (hashtable.hasOwnProperty(hash)) {
-            link = hashtable[hash];
-            return '<span class="lt"><a href="/lk/'+link.id+'/">link</a> <a href="'+url+'" rel="nofollow"'+atitle2+'>'+title+'</a></span>';
-          } else {
-            return '<a href="'+url+'" rel="nofollow"'+atitle2+'>'+title+'</a>';
-            //return '['+title+']('+url+((typeof atitle === 'undefined') ? '' : ' "'+atitle+'"')+')';
-          }
-        });
-      }
-    }/*,
-    {
-      type: 'lang', regex: '\\\\@', replace: '@'
-    }*/
-    ];
-  };
-
+<script>
   var delay = (function() {
     var timer = 0;
     return function(callback, ms) {
@@ -135,25 +48,5 @@ lolo
       }
     }, 100);
   });
-
-    // Client-side export
-    if (typeof window !== 'undefined' && window.Showdown && window.Showdown.extensions) { window.Showdown.extensions.resrc = resrc; }
-
-  }());
 </script>
-<script type="text/javascript" src="{% static "js/markdown/jquery-ui-1.10.0.custom.min.js" %}"></script>
-<script type="text/javascript" src="{% static "js/markdown/rangy-core-1.2.3.js" %}"></script>
-<script type="text/javascript" src="{% static "js/markdown/hallo.js" %}"></script>
-<script src="{% static "js/markdown/to-markdown.js" %}"></script>
-<script src="{% static "js/markdown/editor.js" %}"></script>
-
-{% endblock last_body %}
-{#
-
-<http://tobyho.com/2010/11/22/javascript-constructors-and/>
-
-<http://google.com>
-
-<http://12devs.co.uk/articles/204/>
-
-#}
+{% endblock %}

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-from django.shortcuts import redirect, get_object_or_404, render_to_response
+from django.shortcuts import redirect, get_object_or_404
 from django.http import Http404
 
 from django.contrib.auth.models import User, SiteProfileNotAvailable
@@ -9,7 +9,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 from django.core.context_processors import csrf
-from django.template import RequestContext
 
 from resrc.utils.tokens import generate_token
 from resrc.utils import render_template
@@ -106,9 +105,6 @@ def settings_profile(request):
 
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.user)
-        c = {
-            'form': form,
-        }
         if form.is_valid():
             profile.about = form.data['about']
             request.user.email = form.data['email']
@@ -131,7 +127,9 @@ def settings_profile(request):
                 request, 'Update successful.')
             return redirect('/u/edit')
         else:
-            return render_to_response('user/settings_profile.html', c, RequestContext(request))
+            return render_tempalte('user/settings_profile.html', {
+                'form': form,
+            })
     else:
         form = ProfileForm(request.POST, request.user, initial={
             'about': profile.about,
@@ -139,19 +137,15 @@ def settings_profile(request):
             'show_email': profile.show_email
             }
         )
-        c = {
+        return render_template('user/settings_profile.html', {
             'form': form
-        }
-        return render_to_response('user/settings_profile.html', c, RequestContext(request))
+        })
 
 
 @login_required
 def settings_account(request):
     if request.method == 'POST':
         form = ChangePasswordForm(request.POST, request.user)
-        c = {
-            'form': form,
-        }
         if form.is_valid():
             try:
                 request.user.set_password(form.data['password_new'])
@@ -163,10 +157,11 @@ def settings_account(request):
                 messages.error(request, 'Error while updating your password.')
                 return redirect('/u/edit')
         else:
-            return render_to_response('user/settings_account.html', c, RequestContext(request))
+            return render_template('user/settings_account.html', {
+                'form': form,
+            })
     else:
         form = ChangePasswordForm(request.user)
-        c = {
+        return render_template('user/settings_account.html', {
             'form': form,
-        }
-        return render_to_response('user/settings_account.html', c, RequestContext(request))
+        })

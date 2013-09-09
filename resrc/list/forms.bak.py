@@ -89,8 +89,12 @@ class NewListForm(forms.Form):
                 ),
                 Row(
                     Column(
-                        Field('mdcontent'),
-                        css_class='large-12'
+                        Field('mdcontent', css_class="large-12"),
+                        css_class='large-6'
+                    ),
+                    Column(
+                        HTML('<div class="ctrlHolder"><label>preview</label><div class="editable"><h5>lala</h5><ul><li>@3</li><li>ho</li></ul></div></div>'),
+                        css_class='large-6'
                     ),
                     css_class='halloform'
                 ),
@@ -150,8 +154,12 @@ class EditListForm(forms.Form):
                     ),
                     Row(
                         Column(
-                            Field('mdcontent'),
-                            css_class='large-12'
+                            Field('mdcontent', css_class="large-12"),
+                            css_class='large-6'
+                        ),
+                        Column(
+                            HTML('<div class="ctrlHolder"><label>preview</label><div class="editable">%s</div></div>' % md_content),
+                            css_class='large-6'
                         ),
                         css_class='halloform'
                     ),

@@ -2,12 +2,35 @@
   font-size: emCalc(13px);
 }
 
-#feedbackSnippet {
-  left: auto;
-  right: 0px;
-  top: auto;
-  bottom: -4px;
-  margin-top: 0px;
-  height: 36px;
-  width: 180px;
+
+$cadetblue: #75a2aa; //nav bg
+$nav-text : white;
+$nav-hovered: #ff0084;
+$lavender: #eff; //subnav bg
+$other-blue: #9dbcc1;
+$dark-grey: #999; //title
+$dark-border: #f4f4f4; //bg for title
+$visited-grey: #666;
+
+nav.top-bar {
+    background-color: $cadetblue;
+}
+
+.top-bar-section {
+    & ul {
+        & li {
+            font-family: Helvetica;
+            & a {
+                background-color: $cadetblue;
+                color: white;
+                font-size: 0.8em;
+                &:hover {
+                    color: $nav-hovered;
+                }
+                &:not(.button) {
+                    background-color: $cadetblue;
+                }
+            }
+        }
+    }
 }
