@@ -23,12 +23,26 @@ class Link(models.Model):
 
     url = models.URLField('url')
 
-    pubdate = models.DateTimeField('date added', auto_now_add=True, editable=False)
+    pubdate = models.DateTimeField(
+        'date added', auto_now_add=True, editable=False)
 
     author = models.ForeignKey(User, verbose_name='author')
 
-    # upvotes = models.IntegerField('upvotes', null=True, blank=True)
-    # downvotes = models.IntegerField('downvotes', null=True, blank=True)
+    upvotes = models.IntegerField('upvotes')
+    votes_h00 = models.IntegerField()
+    votes_h02 = models.IntegerField()
+    votes_h04 = models.IntegerField()
+    votes_h06 = models.IntegerField()
+    votes_h08 = models.IntegerField()
+    votes_h10 = models.IntegerField()
+    votes_h12 = models.IntegerField()
+    votes_h14 = models.IntegerField()
+    votes_h16 = models.IntegerField()
+    votes_h18 = models.IntegerField()
+    votes_h20 = models.IntegerField()
+    votes_h22 = models.IntegerField()
+
+    score_h24 = models.IntegerField()
 
     tags = TaggableManager()
 
@@ -79,3 +93,24 @@ class Link(models.Model):
             self.pk,
             self.slug
         ))
+
+    def vote(self):
+        from datetime import datetime
+        h = datetime.now().hour
+        hours = {
+            0: 'votes_h00', 1: 'votes_h00', 2: 'votes_h02', 3: 'votes_h02', 4: 'votes_h04',
+            5: 'votes_h04', 6: 'votes_h06', 7: 'votes_h06', 8: 'votes_h08', 9: 'votes_h08',
+            10: 'votes_h10', 11: 'votes_h10', 12: 'votes_h12', 13: 'votes_h12', 14: 'votes_h14',
+            15: 'votes_h14', 16: 'votes_h16', 17: 'votes_h16', 18: 'votes_h18', 19: 'votes_h18',
+            20: 'votes_h20', 21: 'votes_h20', 22: 'votes_h22', 23: 'votes_h22'}
+        link = self
+        link.upvotes = link.upvotes + 1
+        attr = getattr(link, hours[h])
+        setattr(link, hours[h], attr+1)
+        setattr(link, hours[(h+2)%24], 0)
+
+        gravity = 1.8
+        item_hour_age = 2
+        votes = sum([getattr(link, hours[h]) for h in xrange(0, 24, 2)])
+        link.score_h24 = (votes - 1) / pow((item_hour_age+2), gravity)
+        link.save()
