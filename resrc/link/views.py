@@ -54,6 +54,9 @@ def new_link(request, url_to_add=None):
             link.url = data['url']
             link.author = request.user
 
+            if Link.objects.filter(url=data['url']).exists():
+                return redirect(Link.objects.get(url=data['url']).get_absolute_url())
+
             link.save()
 
             list_tags = data['tags'].split(',')
@@ -64,6 +67,8 @@ def new_link(request, url_to_add=None):
     else:
         if url_to_add is not None:
             form = NewLinkForm({'url': url_to_add})
+            if Link.objects.filter(url=url_to_add).exists():
+                return redirect(Link.objects.get(url=data['url']).get_absolute_url())
         else:
             form = NewLinkForm()
 

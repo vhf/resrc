@@ -39,11 +39,6 @@ def fixup(elem):
             if url[:8] == '/lk/new/':
                 internal_link = True
 
-        if internal_link:
-            print 'ok', url
-        else:
-            print 'pas ok', url
-
         if not internal_link and not Link.objects.filter(url=url).exists():
             elem.set("rel", "nofollow external")
             a = etree.Element('a')

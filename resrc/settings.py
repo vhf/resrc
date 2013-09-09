@@ -11,6 +11,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+FROM_EMAIL = "victor@resrc.io"
+
 SITE_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
 DATABASES = {

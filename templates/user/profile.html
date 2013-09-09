@@ -18,7 +18,7 @@
 
 {% block headline-actions %}
   {% ifequal profile.user user %}
-    <a href="{% url "resrc.userprofile.views.settings_profile" %}" class="button">
+    <a href="{% url "user-settings" %}" class="button">
       Settings
     </a>
   {% endifequal %}

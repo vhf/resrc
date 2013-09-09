@@ -11,7 +11,5 @@ register = template.Library()
 def feedback_form(path, user):
     return {
         'form': FeedbackForm(url=path, user=user),
-        'background_color': FEEDBACK_FORM_COLOR,
-        'text_color': FEEDBACK_FORM_TEXTCOLOR,
         'text': FEEDBACK_FORM_TEXT,
     }
