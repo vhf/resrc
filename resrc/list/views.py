@@ -195,7 +195,8 @@ def edit(request, list_pk, list_slug):
         from_url = False
 
     if request.method == 'POST':
-        form = EditListForm(private_checkbox, alist.md_content, from_url, request.POST)
+        form = EditListForm(
+            private_checkbox, alist.md_content, from_url, request.POST)
         if form.is_valid():
             is_private = False
 
@@ -209,12 +210,12 @@ def edit(request, list_pk, list_slug):
 
             from resrc.utils.templatetags.emarkdown import listmarkdown
 
-            alist.title=form.data['title'],
-            alist.description=form.data['description'],
-            alist.url=form.data['url'],
-            alist.md_content=mdcontent,
-            alist.html_content=listmarkdown(mdcontent),
-            alist.is_public=not is_private
+            alist.title = form.data['title'],
+            alist.description = form.data['description'],
+            alist.url = form.data['url'],
+            alist.md_content = mdcontent,
+            alist.html_content = listmarkdown(mdcontent),
+            alist.is_public = not is_private
 
             alist.save()
 

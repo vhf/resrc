@@ -33,7 +33,6 @@ def single(request, link_pk, link_slug=None):
 
     return render_template('links/show_single.html', {
         'link': link,
-        'user': request.user,
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,

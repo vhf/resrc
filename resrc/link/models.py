@@ -9,11 +9,22 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 
+class LinkManager(models.Manager):
+
+    def latest(self,limit=10):
+        return self.get_query_set().order_by('pubdate')[:limit]
+
+    def hottest(self,limit=10):
+        return self.get_query_set().order_by('score_h24')[:limit]
+
+
 class Link(models.Model):
 
     class Meta:
         verbose_name = 'Link'
         verbose_name_plural = 'Links'
+
+    objects = LinkManager()
 
     title = models.CharField('title', max_length=120)
 
@@ -96,7 +107,7 @@ class Link(models.Model):
 
     def vote(self):
         from datetime import datetime
-        h = datetime.now().hour
+        hour = datetime.now().hour
         hours = {
             0: 'votes_h00', 1: 'votes_h00', 2: 'votes_h02', 3: 'votes_h02', 4: 'votes_h04',
             5: 'votes_h04', 6: 'votes_h06', 7: 'votes_h06', 8: 'votes_h08', 9: 'votes_h08',
@@ -105,12 +116,12 @@ class Link(models.Model):
             20: 'votes_h20', 21: 'votes_h20', 22: 'votes_h22', 23: 'votes_h22'}
         link = self
         link.upvotes = link.upvotes + 1
-        attr = getattr(link, hours[h])
-        setattr(link, hours[h], attr+1)
-        setattr(link, hours[(h+2)%24], 0)
+        attr = getattr(link, hours[hour])
+        setattr(link, hours[hour], attr + 1)
+        setattr(link, hours[(hour + 2) % 24], 0)
 
         gravity = 1.8
         item_hour_age = 2
         votes = sum([getattr(link, hours[h]) for h in xrange(0, 24, 2)])
-        link.score_h24 = (votes - 1) / pow((item_hour_age+2), gravity)
+        link.score_h24 = (votes - 1) / pow((item_hour_age + 2), gravity)
         link.save()

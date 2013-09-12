@@ -9,25 +9,64 @@ class="active"
 {# Titles #}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
 
 {% block meta %}
-    <meta name="description" content="re-src, the root of actual learning" />
+<meta name="description" content="re-src, the root of actual learning" />
 {% endblock %}
 
 {# Content #}
 
 {% block content %}
 
-  <div class="row">
-    <div class="small-12 columns">
-      <h3><a href="{% url "link-single" 1 %}">test link</a></h3>
-      <h3><a href="{% url "new-link" %}">Create new link</a></h3>
-      <h3><a href="{% url "list-single" 1 %}">test list</a></h3>
-      <h3><a href="{% url "new-list" %}">Create new list</a></h3>
-    </div>
+<div class="row">
+  <h3><a href="{% url "link-single" 1 %}">test link</a></h3>
+  <h3><a href="{% url "new-link" %}">new link</a></h3>
+  <h3><a href="{% url "list-single" 1 %}">test list</a></h3>
+  <h3><a href="{% url "new-list" %}">new list</a></h3>
+</div>
+
+<div class="row">
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "new-link" %}">Best lists</a></h3>
+    <ul class="no-bullet">
+      {% for list in hottest_lists %}
+      <li><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
   </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "link-single" 1 %}">Latest links</a></h3>
+    <ul class="no-bullet">
+      {% for link in latest_links %}
+      <li><a href="{% url "link-single-slug" link.pk link.slug %}">{{ link.title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "tag-index" %}">Most used tags</a></h3>
+    <ul class="no-bullet">
+      {% for tag in tags %}
+      <li><a href="{% url "tag-single-slug" tag.slug %}" class="radius secondary label">{{ tag.name }}</a> ({{ tag.c }})</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "new-list" %}">Hottest links</a></h3>
+    <ul class="no-bullet">
+      {% for link in hottest_links %}
+      <li><a href="{% url "link-single-slug" link.pk link.slug %}">{{ link.title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
 
 {% endblock %}
 

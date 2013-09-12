@@ -31,7 +31,7 @@
     <div class="small-3 columns text-right list-symbols">
         <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%} has-tip" id="bookmark" data-tooltip title="Add to bookmarks list">addstar</a>
         <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%} has-tip" id="toread" data-tooltip title="Add to reading list">save</a>
-        <a class="lsf symbol has-tip"{% if user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
+        <a class="lsf symbol has-tip"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
     </div>
   </div>
 
@@ -75,7 +75,7 @@
 
 {% block last_body %}
   {% mptt_comments_media_js %}
-  {% if user.is_authenticated %}
+  {% if request.user.is_authenticated %}
   <div id="add-to-list" class="small reveal-modal"></div>
 
   <div id="create-list" class="small reveal-modal">
