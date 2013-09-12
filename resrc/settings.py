@@ -226,3 +226,9 @@ LOGIN_URL = '/u/login'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/u/user/{0}'.format(u.username)
 }
+
+# Load the production settings, overwrite the existing ones if needed
+try:
+    from settings_prod import *
+except ImportError:
+    pass

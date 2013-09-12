@@ -3,7 +3,7 @@
 *.pyc
 venv
 64venv
-local_settings.py
+settings_prod.py
 *.db
 *~
 *.swp
