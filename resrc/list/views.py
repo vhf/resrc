@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 import simplejson
-from urllib import urlopen
+import urllib2
 
 from resrc.utils import render_template
 from resrc.list.models import List, ListLinks
@@ -58,7 +58,8 @@ def ajax_add_to_list_or_create(request):
             alist, created = List.objects.get_or_create(
                 title=list_title,
                 owner=request.user,
-                defaults={'description': description, 'is_public': False}
+                defaults={'description': description, 'is_public': False,'upvotes':0,'votes_h00':0,'votes_h02':0,'votes_h04':0,'votes_h06':0,'votes_h08':0,'votes_h10':0,
+                'votes_h12':0,'votes_h14':0,'votes_h16':0,'votes_h18':0,'votes_h20':0,'votes_h22':0,'score_h24':0}
             )
         else:
             alist = get_object_or_404(List, pk=list_pk)
@@ -115,7 +116,9 @@ def ajax_create_list(request, link_pk):
                 title=form.data['title'],
                 description=form.data['description'],
                 owner=request.user,
-                is_public=not is_private
+                is_public=not is_private,
+                upvotes=0,votes_h00=0,votes_h02=0,votes_h04=0,votes_h06=0,votes_h08=0,votes_h10=0,
+                votes_h12=0,votes_h14=0,votes_h16=0,votes_h18=0,votes_h20=0,votes_h22=0,score_h24=0
             )
             alist.save()
 
@@ -148,7 +151,10 @@ def new_list(request):
                 is_private = form.data['private']
 
             if len(form.data['url']) > 0:
-                mdcontent = urlopen(form.data['url']).read()
+                opener = urllib2.build_opener()
+                opener.addheaders = [('Accept-Charset', 'utf-8')]
+                url_response = opener.open(form.data['url'])
+                mdcontent = url_response.read().decode('utf-8')
             else:
                 mdcontent = form.data['mdcontent']
 
@@ -160,7 +166,9 @@ def new_list(request):
                 md_content=mdcontent,
                 html_content=listmarkdown(mdcontent),
                 owner=request.user,
-                is_public=not is_private
+                is_public=not is_private,
+                upvotes=0,votes_h00=0,votes_h02=0,votes_h04=0,votes_h06=0,votes_h08=0,votes_h10=0,
+                votes_h12=0,votes_h14=0,votes_h16=0,votes_h18=0,votes_h20=0,votes_h22=0,score_h24=0
             )
             alist.save()
 
@@ -204,7 +212,10 @@ def edit(request, list_pk, list_slug):
                 is_private = form.data['private']
 
             if len(form.data['url']) > 0:
-                mdcontent = urlopen(form.data['url']).read()
+                opener = urllib2.build_opener()
+                opener.addheaders = [('Accept-Charset', 'utf-8')]
+                url_response = opener.open(form.data['url'])
+                mdcontent = url_response.read().decode('utf-8')
             else:
                 mdcontent = form.data['mdcontent']
 
