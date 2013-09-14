@@ -210,11 +210,11 @@ def edit(request, list_pk, list_slug):
 
             from resrc.utils.templatetags.emarkdown import listmarkdown
 
-            alist.title = form.data['title'],
-            alist.description = form.data['description'],
-            alist.url = form.data['url'],
-            alist.md_content = mdcontent,
-            alist.html_content = listmarkdown(mdcontent),
+            alist.title = form.data['title']
+            alist.description = form.data['description']
+            alist.url = form.data['url']
+            alist.md_content = mdcontent
+            alist.html_content = listmarkdown(mdcontent)
             alist.is_public = not is_private
 
             alist.save()
@@ -226,12 +226,14 @@ def edit(request, list_pk, list_slug):
         form = EditListForm(private_checkbox, alist.md_content, from_url, initial={
             'title': alist.title,
             'description': alist.description,
+            'private': not alist.is_public,
             'url': alist.url,
+            'mdcontent': alist.md_content
         })
 
         links = list(Link.objects.all())
 
-        return render_template('lists/new_list.html', {
+        return render_template('lists/edit_list.html', {
             'form': form,
             'links': links
         })
