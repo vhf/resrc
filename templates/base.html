@@ -32,6 +32,15 @@
         <li {% block menu_home %}{% endblock %}>
           <a href="{% url "page-home" %}">Home</a>
         </li>
+        <li class="has-dropdown">
+          <a href="#">
+            Lists
+          </a>
+          <ul class="dropdown">
+            <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
+            <li><a href="{% url "new-list" %}">New list</a></li>
+          </ul>
+        </li>
         <li>
           <a id="feedbackSnippet" href="{% url "feedback_form" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
         </li>

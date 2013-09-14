@@ -1,0 +1,35 @@
+{% extends "lists/base.html" %}
+{% load profile %}
+{% load mptt_comments_tags %}
+
+{% block title %}
+    {{ list.title }}
+{% endblock %}
+
+{% block headline %}
+    lolo
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{% url "page-home" %}">Home</a></li>
+<li class="current">{{ username }}'s lists</li>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1>{{ username }}'s lists</h1>
+    <ul class="no-bullet">
+    {% for list in lists %}
+      <li><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}[<a href="{% url "list-edit" list.pk list.slug %}">edit</a>]{% endif %}</li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block last_body %}
+{% endblock last_body %}

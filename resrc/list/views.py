@@ -2,6 +2,7 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 import simplejson
 import urllib2
 
@@ -248,3 +249,19 @@ def edit(request, list_pk, list_slug):
             'form': form,
             'links': links
         })
+
+
+@login_required
+def my_lists(request, user_name):
+    if request.user.username == user_name:
+        lists = List.objects.personal_lists(request.user)
+        owner = True
+    else:
+        lists = List.objects.user_lists(get_object_or_404(User, username=user_name))
+        owner = False
+
+    return render_template('lists/lists_list.html', {
+        'lists': lists,
+        'owner': owner,
+        'username': user_name
+    })
