@@ -127,7 +127,7 @@ def settings_profile(request):
                 request, 'Update successful.')
             return redirect('/u/edit')
         else:
-            return render_tempalte('user/settings_profile.html', {
+            return render_template('user/settings_profile.html', {
                 'form': form,
             })
     else:

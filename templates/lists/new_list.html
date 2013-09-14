@@ -7,23 +7,22 @@
 {% endblock %}
 
 {% block title %}
-lala
+Create a list
 {% endblock %}
 
-{% block extracss %}
+{% block extrahead %}
 {% endblock %}
 
-{% block headline %}
-lolo
-{% endblock %}
 
 {% block breadcrumb %}
-<li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "page-home" %}">Home</a></li>
+<li class="current">Create a list</li>
 {% endblock %}
 
 {% block content %}
 <div class="row">
   <div class="large-12 columns">
+    <h1>Create a list</h1>
     {% crispy form %}
   </div>
 </div>
@@ -42,9 +41,9 @@ lolo
   $('#id_url').keyup(function() {
     delay(function() {
       if($('#id_url').val().length > 0) {
-        $('.halloform').hide();
+        $('#div_id_mdcontent').hide();
       } else {
-        $('.halloform').show();
+        $('#div_id_mdcontent').show();
       }
     }, 100);
   });

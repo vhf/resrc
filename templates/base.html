@@ -12,59 +12,67 @@
   {% block meta %}{% endblock %}
   <link rel="stylesheet" href="{% static "css/app.css" %}">
   <link rel="stylesheet" href="{% static "css/ligaturesymbols.css" %}">
-  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Merriweather:400,700|Open+Sans:300,400,600,700" />
-  {% block extracss %}{% endblock %}
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
+  {% block extrahead %}{% endblock %}
   <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
 </head>
 <body>
   <!-- Header and Nav -->
   <nav class="top-bar">
-      <ul class="title-area">
-          <li class="name">
-              <h1><a href="/">resrc</a></h1>
-          </li>
-          <li class="toggle-topbar menu-icon"><a href="#"><span>nav</span></a></li>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href="/">resrc</a></h1>
+      </li>
+      <li class="toggle-topbar menu-icon"><a href="#"><span>nav</span></a></li>
+    </ul>
+
+    <section class="top-bar-section">
+
+      <ul class="left">
+        <li {% block menu_home %}{% endblock %}>
+          <a href="{% url "page-home" %}">Home</a>
+        </li>
+        <li>
+          <a id="feedbackSnippet" href="{% url "feedback_form" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
+        </li>
       </ul>
 
-      <section class="top-bar-section">
-
-          <ul class="left">
-              <li {% block menu_home %}{% endblock %}>
-                  <a href="{% url "page-home" %}">Home</a>
-              </li>
-              <li>
-                <a id="feedbackSnippet" href="{% url "feedback_form" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
-              </li>
+      <ul class="right">
+        {% if user.is_authenticated %}
+        <li class="has-dropdown">
+          <a href="#">
+            {% gravatar user.email 24 %}
+            {{ user.username }}
+          </a>
+          <ul class="dropdown">
+            <li><a href="{% url "user-url" user.username %}">Profil</a></li>
+            <li><a href="{% url "user-settings" %}">Settings</a></li>
+            <li><a href="{% url "user-logout" %}">Logout</a></li>
           </ul>
-
-          <ul class="right">
-              {% if user.is_authenticated %}
-              <li class="has-dropdown">
-                      <a href="#">
-                          {% gravatar user.email 24 %}
-                          {{ user.username }}
-                      </a>
-                  <ul class="dropdown">
-                      <li><a href="{% url "user-url" user.username %}">Profil</a></li>
-                      <li><a href="{% url "user-settings" %}">Settings</a></li>
-                      <li><a href="{% url "user-logout" %}">Logout</a></li>
-                  </ul>
-              </li>
-              {% else %}
-              <li>
-                  <a href="{% url "user-register" %}">Register</a>
-              </li>
-              <li>
-                  <a href="{% url "user-login" %}">Login</a>
-              </li>
-              {% endif %}
-          </ul>
-      </section>
+        </li>
+        {% else %}
+        <li>
+          <a href="{% url "user-register" %}">Register</a>
+        </li>
+        <li>
+          <a href="{% url "user-login" %}">Login</a>
+        </li>
+        {% endif %}
+      </ul>
+    </section>
   </nav>
   <!-- End Header and Nav -->
 
-    <!-- content -->
-    {% block content %}{% endblock %}
+<div class="row">
+  <div class="large-12 columns">
+    <ul class="breadcrumbs">
+      {% block breadcrumb %}<li class="current"><a href="{% url "page-home" %}">Home</a></li>{% endblock %}
+    </ul>
+  </div>
+</div>
+
+  <!-- content -->
+  {% block content %}{% endblock %}
 
   <!-- Footer -->
 
@@ -95,8 +103,8 @@
     var jq = false;
   }
   document.write('<script src=' +
-  ((!jq && '__proto__' in {}) ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
-  '><\/script>');
+    ((!jq && '__proto__' in {}) ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
+    '><\/script>');
   </script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
   <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
@@ -117,20 +125,20 @@
   <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
   {% endblock %}
   <script>
-    $(document).foundation();
+  $(document).foundation();
   </script>
 
   {# Google Analytics #}
   {% if false %}
   <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'asdf']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'asdf']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
   </script>
   {% endif %}
   {% block last_body %}{% endblock %}
