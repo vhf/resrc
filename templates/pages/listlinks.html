@@ -1,0 +1,27 @@
+{% extends "pages/base.html" %}
+
+{% block title %}
+  About
+{% endblock %}
+
+{% block headline %}
+  About
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="current"><a href="#">About</a></li>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+  <div class="large-12 columns">
+    <ul>
+      {% for l in ll %}
+        <li>{{ l.alist.title }} -- {{ l.links.title }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

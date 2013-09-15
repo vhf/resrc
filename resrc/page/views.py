@@ -29,3 +29,9 @@ def faq(request):
 
 def about(request):
     return render_template('pages/about.html', {})
+
+
+def listlinks(request):
+    from resrc.list.models import ListLinks
+    ll = ListLinks.objects.all()
+    return render_template('pages/listlinks.html', {'ll': ll})
