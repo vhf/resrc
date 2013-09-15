@@ -59,9 +59,24 @@ def new_link(request, url_to_add=None):
             for tag in list_tags:
                 link.tags.add(tag)
             link.save()
-            if not 'ajax' in form.data:
+            if not 'ajax' in data:
                 return redirect(link.get_absolute_url())
             else:
+                alist = get_object_or_404(List, pk=data['id'])
+                if alist.owner == request.user:
+                    try:
+                        listlink = ListLinks.objects.get(
+                            alist=alist,
+                            links=link
+                        )
+                    except ListLinks.DoesNotExist:
+                        ListLinks.objects.create(
+                            alist=alist,
+                            links=link
+                        )
+                    from resrc.utils.templatetags.emarkdown import listmarkdown
+                    alist.html_content=listmarkdown(alist.md_content, alist)
+                    alist.save()
                 import simplejson
                 data = simplejson.dumps({'result': 'added'})
                 return HttpResponse(data, mimetype="application/javascript")

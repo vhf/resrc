@@ -128,7 +128,7 @@ $(function(){
     $.ajax({
       type:"POST",
       url: form.attr('action'),
-      data: 'ajax=1&'+form.serialize(),
+      data: 'id={{ list.pk }}&ajax=1&'+form.serialize(),
       error: function(xhr) {
         result = $.parseJSON(xhr.responseText).result;
         if (result == 'added') {
