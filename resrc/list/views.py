@@ -36,7 +36,7 @@ def single(request, list_pk, list_slug=None):
     return render_template('lists/show_single.html', {
         'form': form,
         'list': alist,
-        'tags': alist.get_tags()[:5],
+        'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'default_lists': ['Bookmarks', 'Reading list'],
         'request': request

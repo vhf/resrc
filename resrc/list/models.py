@@ -141,7 +141,7 @@ class List(models.Model):
         from taggit.models import Tag
         from django.db.models import Count
         return Tag.objects.filter(link__list=self) \
-            .values_list('name') \
+            .values_list('name', 'slug') \
             .annotate(c=Count('name')).order_by('-c')
 
     def vote(self):

@@ -42,6 +42,7 @@ def single(request, link_pk, link_slug=None):
 @login_required
 def new_link(request, url_to_add=None):
     if request.method == 'POST':
+        print "post"
         form = NewLinkForm(request.POST)
         if form.is_valid():
             data = form.data
@@ -63,17 +64,18 @@ def new_link(request, url_to_add=None):
                 return redirect(link.get_absolute_url())
             else:
                 alist = get_object_or_404(List, pk=data['id'])
+                print "ajax"
+                print alist
                 if alist.owner == request.user:
-                    try:
-                        listlink = ListLinks.objects.get(
-                            alist=alist,
-                            links=link
-                        )
-                    except ListLinks.DoesNotExist:
+                    from resrc.list.models import ListLinks
+                    if not ListLinks.objects.filter(alist=alist, links=link).exists():
+                        print "add it"
                         ListLinks.objects.create(
                             alist=alist,
                             links=link
                         )
+                    else:
+                        print "already in"
                     from resrc.utils.templatetags.emarkdown import listmarkdown
                     alist.html_content=listmarkdown(alist.md_content, alist)
                     alist.save()

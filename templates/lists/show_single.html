@@ -31,20 +31,18 @@ lolo
 {% block content %}
 
 <div class="row">
-  <div class="small-12 columns">
+  <div class="large-12 columns">
     <p>
-      <ul class="inline-list">
-        {% for tag, count in tags %}
-        <li><a href="#" class="radius secondary label">{{ tag }} ({{ count }})</a></li>
-        {% endfor %}
-      </ul>
+      {% for name, slug, count in tags %}
+      <a href="{% url "tag-single-slug" slug %}" class="radius secondary label">{{ name }}</a> ({{ count }})
+      {% endfor %}
     </p>
   </div>
 </div>
 
 <div class="row">
   <div class="large-12 columns">
-    <h3><a href="{{ list.url }}">{{ list.title }}</a></h3>
+    <h1>{{ list.title }}</h1>
     <p>{{ list.description }}</p>
     <p class="byline">
       {% with author=list.owner %}

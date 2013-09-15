@@ -21,11 +21,6 @@ def fixup(elem, alist):
         a.set("class", "anchor")
         elem.text = None
 
-        icon = etree.Element("i")
-        icon.text = "link"
-        icon.set("class", "lsf symbol")
-
-        elem.append(icon)
         elem.append(a)
 
     if elem.tag == "a":
@@ -39,27 +34,48 @@ def fixup(elem, alist):
             internal_link = False
             if url == reverse("new-link-add", args=(url,)):
                 internal_link = True
-            if url[:8] == '/lk/new/':
+            if url[:4] == '/lk/':
                 internal_link = True
             if url[0] == '#':
                 internal_link = True
             if elem.get('class') == 'addthis':
                 internal_link = True
 
-        exists = Link.objects.filter(url=url).exists()
+        try:
+            link = Link.objects.get(url=url)
+            link_exists = True
+        except Link.DoesNotExist:
+            link_exists = False
 
-        if not internal_link and not exists:
-            elem.set("rel", "nofollow external")
-            a = etree.Element('a')
-            a.set("class", "addthis")
-            a.text = u'  [add]'
-            elem.append(a)
+        if not internal_link:
+            if not link_exists:
+                elem.set("rel", "nofollow external")
+                a = etree.Element('a')
+                a.set("class", "addthis")
+                a.text = u'  [add]'
+                elem.append(a)
+            else:
+                newlink = etree.Element('a')
 
-        if exists and alist is not None:
-            ListLinks.objects.create(
-                alist=alist,
-                links=Link.objects.get(url=url)
-            )
+                icon = etree.Element("i")
+                icon.text = "link "
+                icon.set("class", "lsf symbol")
+
+                newlink.text = elem.text
+                newlink.set("href", reverse("link-single-slug", args=(link.pk, link.slug)))
+
+                elem.text = ''
+                elem.append(icon)
+                elem.append(newlink)
+
+        if link_exists and alist is not None:
+            listlink_exists = ListLinks.objects.filter(
+                alist=alist, links=link).exists()
+            if not listlink_exists:
+                ListLinks.objects.create(
+                    alist=alist,
+                    links=link
+                )
 
 
 class FixupProcessor(Treeprocessor):
