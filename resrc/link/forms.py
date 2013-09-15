@@ -21,9 +21,12 @@ class NewLinkForm(forms.Form):
     )
 
     def __init__(self, *args, **kwargs):
+        from django.core.urlresolvers import reverse
         self.helper = FormHelper()
+        self.helper.form_action = reverse("new-link")
         self.helper.form_class = ''
         self.helper.form_method = 'post'
+        self.helper.form_id = 'create-link-form'
 
         self.helper.layout = Layout(
             Row(

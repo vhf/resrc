@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, render_to_response, redirect
-from django.http import Http404
-from django.template import RequestContext
+from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from taggit.models import Tag
@@ -56,12 +55,30 @@ def new_link(request, url_to_add=None):
                 return redirect(Link.objects.get(url=data['url']).get_absolute_url())
 
             link.save()
-
             list_tags = data['tags'].split(',')
             for tag in list_tags:
                 link.tags.add(tag)
             link.save()
-            return redirect(link.get_absolute_url())
+            if not 'ajax' in form.data:
+                return redirect(link.get_absolute_url())
+            else:
+                import simplejson
+                data = simplejson.dumps({'result': 'added'})
+                return HttpResponse(data, mimetype="application/javascript")
+        else:
+            if not 'ajax' in form.data:
+                form = NewLinkForm()
+                tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+                tags = '"%s"' % tags
+                return render_template('links/new_link.html', {
+                    'form': form,
+                    'tags': tags
+                })
+            else:
+                import simplejson
+                data = simplejson.dumps({'result': 'fail'})
+                return HttpResponse(data, mimetype="application/javascript")
+
     else:
         if url_to_add is not None:
             form = NewLinkForm({'url': url_to_add})

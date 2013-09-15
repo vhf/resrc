@@ -9,38 +9,38 @@
 {% endblock %}
 
 {% block title %}
-    {{ list.title }}
+{{ list.title }}
 {% endblock %}
 
 
 {% block extrahead %}
 {% if request.user.is_authenticated %}
-  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endif %}
 {% endblock %}
 
 {% block headline %}
-    lolo
+lolo
 {% endblock %}
 
 {% block breadcrumb %}
-    <li class="current"><a href="#">Index</a></li>
+<li class="current"><a href="#">Index</a></li>
 {% endblock %}
 
 {% block content %}
 
-  <div class="row">
-    <div class="small-12 columns">
-        <p>
-          <ul class="inline-list">
-            {% for tag, count in tags %}
-            <li><a href="#" class="radius secondary label">{{ tag }} ({{ count }})</a></li>
-            {% endfor %}
-          </ul>
-        </p>
-    </div>
+<div class="row">
+  <div class="small-12 columns">
+    <p>
+      <ul class="inline-list">
+        {% for tag, count in tags %}
+        <li><a href="#" class="radius secondary label">{{ tag }} ({{ count }})</a></li>
+        {% endfor %}
+      </ul>
+    </p>
   </div>
+</div>
 
 <div class="row">
   <div class="large-12 columns">
@@ -58,17 +58,17 @@
   <div class="large-12 columns{% if list.owner = request.user %} my-def-list{% endif %}">
     {% if list.title in default_lists %}
     {% with links=list.links.all %}
-      {% for link in links %}
-      <hr />
-      <h4><a href="{{ link.get_absolute_url }}"><i class="lsf symbol i-b">link</i> {{ forloop.counter }}.</a> <a href="{{ link.url }}">{{ link.title }}</a>{% if list.owner = request.user %}<span class="del has-tip tip-top" data-tooltip title="Remove link from list"> x </span>{% endif %}</h4>
-      <p class="byline">
-        <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
-      </p>
-      {% endfor %}
+    {% for link in links %}
+    <hr />
+    <h4><a href="{{ link.get_absolute_url }}"><i class="lsf symbol i-b">link</i> {{ forloop.counter }}.</a> <a href="{{ link.url }}">{{ link.title }}</a>{% if list.owner = request.user %}<span class="del has-tip tip-top" data-tooltip title="Remove link from list"> x </span>{% endif %}</h4>
+    <p class="byline">
+      <a href="{{ link.get_absolute_url }}">{{ link.get_comment_count }} comments</a> | {{ link.pubdate|timesince }} ago
+    </p>
+    {% endfor %}
     {% endwith %}
     {% else %}
     <div class="listcontent">
-    {{ list.html_content|safe }}
+      {{ list.html_content|safe }}
     </div>
     {% endif %}
   </div>
@@ -92,37 +92,63 @@
 
 </script>
 <script type="text/javascript">
-  $(function(){
-      $("#id_tags").tagit({
-        availableTags: [{{ tags_addlink|safe }}],
-        autocomplete: {delay: 0, minLength: 2}
-    });
-
-    $('.listcontent').find('a').each(function(index, item) {
-      $item = $(item);
-      if($item.text() === 'link') {
-        $item.addClass('lsf symbol');
-      }
-    });
-
-    $('.listcontent').find('a').each(function(){
-      if($(this).hasClass('addthis')) {
-        $(this).on('click', function() {
-          var link = $(this).prev('a');
-          var url = link.attr('href')
-          var title = link.html();
-          $('#id_url').val(url);
-          $('#id_title').val(title);
-          $('#addmodal').foundation('reveal', 'open');
-        });
-      }
-    });
-
+$(function(){
+  $("#id_tags").tagit({
+    availableTags: [{{ tags_addlink|safe }}],
+    autocomplete: {delay: 0, minLength: 2}
   });
+
+  $('.listcontent').find('a').each(function(index, item) {
+    $item = $(item);
+    if($item.text() === 'link') {
+      $item.addClass('lsf symbol');
+    }
+  });
+
+  $('.listcontent').find('a').each(function(idx){
+    if($(this).hasClass('addthis')) {
+      $(this).attr('id', idx)
+      $(this).on('click', function() {
+        var link = $(this).prev('a');
+        var url = link.attr('href')
+        var title = link.html();
+        $('#id_url').val(url);
+        $('#id_title').val(title);
+        $('#addmodal').attr('data-link', idx);
+        $('#addmodal').foundation('reveal', 'open');
+      });
+    }
+  });
+
+
+  $('#submit-id-submit').click(function(e) {
+    e.preventDefault();
+    var form = $('#create-link-form');
+    var message = $('#form-message');
+    $.ajax({
+      type:"POST",
+      url: form.attr('action'),
+      data: 'ajax=1&'+form.serialize(),
+      error: function(xhr) {
+        result = $.parseJSON(xhr.responseText).result;
+        if (result == 'added') {
+          $('#'+$('#addmodal').attr('data-link')).remove();
+          $('#addmodal').foundation('reveal', 'close');
+        } else {
+          message.text('Error.');
+          message.removeClass('success').addClass('alert');
+      }
+      message.show();
+    },
+  });
+  });
+
+});
 </script>
 
 <div id="addmodal" class="reveal-modal">
   <h2>Add this link</h2>
+  <span id="form-message" class="label" style="display:none"></span>
   {% crispy form %}
   <a class="close-reveal-modal">&#215;</a>
 </div>
