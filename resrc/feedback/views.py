@@ -1,4 +1,4 @@
-"""Views for the ``feedback_form`` app."""
+"""Views for the ``feedback`` app."""
 from django.core.urlresolvers import reverse
 from django.views.generic import CreateView
 
@@ -11,7 +11,7 @@ class FeedbackCreateView(CreateView):
     """View to display and handle a feedback create form."""
     model = Feedback
     form_class = FeedbackForm
-    ajax_template = 'feedback_form/partials/form_content.html'
+    ajax_template = 'feedback/partials/form_content.html'
 
     def get_form_kwargs(self):
         kwargs = super(FeedbackCreateView, self).get_form_kwargs()
@@ -29,11 +29,9 @@ class FeedbackCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(FeedbackCreateView, self).get_context_data(**kwargs)
         context.update({
-            'background_color': FEEDBACK_FORM_COLOR,
-            'text_color': FEEDBACK_FORM_TEXTCOLOR,
             'text': FEEDBACK_FORM_TEXT,
         })
         return context
 
     def get_success_url(self):
-        return reverse('feedback_form')
+        return reverse('feedback')

@@ -1,7 +1,7 @@
-"""Settings of the ``feedback_form``` application."""
+"""Settings of the ``feedback``` application."""
 from django.conf import settings
 
-
-FEEDBACK_FORM_COLOR = getattr(settings, 'FEEDBACK_FORM_COLOR', '#6caec9')
-FEEDBACK_FORM_TEXTCOLOR = getattr(settings, 'FEEDBACK_FORM_TEXTCOLOR', '#fff')
-FEEDBACK_FORM_TEXT = getattr(settings, 'FEEDBACK_FORM_TEXT', '')
+FEEDBACK_FORM_TEXT = """
+<h3>Hi! Do you have feedback or questions?</h3>
+<p>We'll answer as fast as possible.</p>
+"""

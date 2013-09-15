@@ -1,4 +1,4 @@
-"""Tests for the models of the ``feedback_form`` app."""
+"""Tests for the models of the ``feedback`` app."""
 from django.test import TestCase
 
 from ..models import Feedback

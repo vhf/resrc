@@ -1,7 +1,7 @@
-"""Tests for the views of the ``feedback_form`` app."""
+"""Tests for the views of the ``feedback`` app."""
 from django.test import TestCase
 
-from django_libs.tests.factories import UserFactory
+from resrc.tests.factories import UserFactory
 from django_libs.tests.mixins import ViewTestMixin
 
 from ...models import Feedback
@@ -15,7 +15,7 @@ class FeedbackCreateViewTestCase(ViewTestMixin, TestCase):
         self.user = UserFactory()
 
     def get_view_name(self):
-        return 'feedback_form'
+        return 'feedback'
 
     def test_view(self):
         self.should_be_callable_when_anonymous()
@@ -23,7 +23,7 @@ class FeedbackCreateViewTestCase(ViewTestMixin, TestCase):
         self.is_callable(method='post', data={'feedback-message': 'Foo'})
         self.assertEqual(Feedback.objects.all().count(), 1)
         self.assertEqual(Feedback.objects.all()[0].message, 'Foo')
-        self.assertEqual(Feedback.objects.all()[0].current_url, '/feedback/')
+        self.assertEqual(Feedback.objects.all()[0].current_url, '/f/')
 
         # Test AJAX
         self.is_callable(method='post', data={'feedback-message': 'Foo'},

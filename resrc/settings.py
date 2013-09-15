@@ -158,6 +158,7 @@ EXTERNAL_APPS = [
     'mptt_comments',
     'floppyforms',
     'taggit',
+    'mailer',
 ]
 
 INTERNAL_APPS = [
@@ -226,6 +227,14 @@ LOGIN_URL = '/u/login'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/u/user/{0}'.format(u.username)
 }
+
+
+try:
+    import mailer
+    INSTALLED_APPS += ('mailer',)
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+except ImportError:
+    pass
 
 # Load the production settings, overwrite the existing ones if needed
 try:

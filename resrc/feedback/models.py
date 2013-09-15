@@ -1,4 +1,4 @@
-"""Models for the ``feedback_form`` app."""
+"""Models for the ``feedback`` app."""
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -17,7 +17,7 @@ class Feedback(models.Model):
     user = models.ForeignKey(
         'auth.User',
         verbose_name=_('User'),
-        related_name='feedback_form_submissions',
+        related_name='feedback_submissions',
         blank=True, null=True,
     )
 

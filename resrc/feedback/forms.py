@@ -1,4 +1,4 @@
-"""Forms for the ``feedback_form`` app."""
+"""Forms for the ``feedback`` app."""
 from django import forms
 from django.conf import settings
 from django.core.urlresolvers import reverse
@@ -33,23 +33,23 @@ class FeedbackForm(forms.ModelForm):
             send_email(
                 '',
                 {
-                    'url': reverse('admin:feedback_form_feedback_change',
+                    'url': reverse('admin:feedback_feedback_change',
                                    args=(obj.id, )),
                     'email': obj.user or obj.email,
                     'date': obj.creation_date,
                     'message': obj.message,
                 },
-                'feedback_form/email/subject.html',
-                'feedback_form/email/body.html',
-                'feedback_form/email/body_plain.html',
+                'feedback/email/subject.html',
+                'feedback/email/body.html',
+                'feedback/email/body_plain.html',
                 from_email=settings.FROM_EMAIL,
                 recipients=[manager[1] for manager in settings.MANAGERS],
             )
             return obj
 
     class Media:
-        css = {'all': ('feedback_form/css/feedback_form.css'), }
-        js = ('feedback_form/js/feedback_form.js', )
+        css = {'all': ('feedback/css/feedback.css'), }
+        js = ('feedback/js/feedback.js', )
 
     class Meta:
         model = Feedback

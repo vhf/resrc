@@ -55,6 +55,21 @@ def new_link(request, url_to_add=None):
             if Link.objects.filter(url=data['url']).exists():
                 return redirect(Link.objects.get(url=data['url']).get_absolute_url())
 
+            link.upvotes = 0
+            link.votes_h00 = 0
+            link.votes_h02 = 0
+            link.votes_h04 = 0
+            link.votes_h06 = 0
+            link.votes_h08 = 0
+            link.votes_h10 = 0
+            link.votes_h12 = 0
+            link.votes_h14 = 0
+            link.votes_h16 = 0
+            link.votes_h18 = 0
+            link.votes_h20 = 0
+            link.votes_h22 = 0
+            link.score_h24 = 0
+
             link.save()
 
             list_tags = data['tags'].split(',')

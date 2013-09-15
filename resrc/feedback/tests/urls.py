@@ -15,7 +15,7 @@ admin.autodiscover()
 urlpatterns = patterns(
     '',
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^feedback/', include('feedback_form.urls')),
+    url(r'^feedback/', include('feedback.urls')),
     url(r'^test/$', TemplateView.as_view(template_name='base.html')),
 )
 

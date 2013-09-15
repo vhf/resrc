@@ -13,3 +13,4 @@ assets/.sass-cache
 Makefile
 coverage/
 assets/css/app.css
+resrc/feedback/tests/local_settings.py

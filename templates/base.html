@@ -27,11 +27,11 @@
     </ul>
 
     <section class="top-bar-section">
-
       <ul class="left">
         <li {% block menu_home %}{% endblock %}>
           <a href="{% url "page-home" %}">Home</a>
         </li>
+        {% if user.is_authenticated %}
         <li class="has-dropdown">
           <a href="#">
             Lists
@@ -41,8 +41,9 @@
             <li><a href="{% url "new-list" %}">New list</a></li>
           </ul>
         </li>
+        {% endif %}
         <li>
-          <a id="feedbackSnippet" href="{% url "feedback_form" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
+          <a id="feedbackSnippet" href="{% url "feedback" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
         </li>
       </ul>
 
@@ -103,8 +104,12 @@
     </div>
   </footer>
 
-  {% feedback_form request.path request.user %}
-  <script type="text/javascript" src="{{ STATIC_URL }}feedback_form/js/feedback_form.js"></script>
+  {% if user.is_authenticated %}
+  {% feedback request.path request.user %}
+  {% else %}
+  {% feedback request.path None %}
+  {% endif %}
+  <script type="text/javascript" src="{{ STATIC_URL }}feedback/js/feedback.js"></script>
 
   <!-- Included JS Files (Uncompressed) -->
   <script>

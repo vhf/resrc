@@ -1,4 +1,4 @@
-"""Tests for the forms of the ``feedback_form`` app."""
+"""Tests for the forms of the ``feedback`` app."""
 from django.test import TestCase
 
 from django_libs.tests.factories import UserFactory

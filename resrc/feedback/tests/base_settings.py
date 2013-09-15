@@ -13,7 +13,7 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'feedback_form.tests.urls'
+ROOT_URLCONF = 'feedback.tests.urls'
 
 STATIC_URL = '/static/'
 
@@ -75,8 +75,8 @@ EXTERNAL_APPS = [
 ]
 
 INTERNAL_APPS = [
-    'feedback_form.tests.test_app',
-    'feedback_form',
+    'feedback.tests.test_app',
+    'feedback',
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS

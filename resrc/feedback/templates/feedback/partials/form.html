@@ -2,7 +2,7 @@
 {% load i18n %}
 <div id="feedback-modal" class="reveal-modal">
   <a class="close-reveal-modal">&#215;</a>
-  <form id="feedbackForm" method="post" action="{% url "feedback_form" %}">
-      {% include "feedback_form/partials/form_content.html" %}
+  <form id="feedbackForm" method="post" action="{% url "feedback" %}">
+      {% include "feedback/partials/form_content.html" %}
   </form>
 </div>

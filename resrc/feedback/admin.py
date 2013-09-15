@@ -1,4 +1,4 @@
-"""Admin objects for the ``feedback_form`` app."""
+"""Admin objects for the ``feedback`` app."""
 from django.contrib import admin
 from django.template.defaultfilters import truncatewords
 from django.utils.translation import ugettext_lazy as _

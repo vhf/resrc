@@ -1,4 +1,4 @@
-"""Factories of the ``feedback_form`` app."""
+"""Factories of the ``feedback`` app."""
 import factory
 
 from ..models import Feedback
