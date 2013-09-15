@@ -5,10 +5,11 @@ from markdown.extensions import Extension
 from markdown.util import etree
 
 from resrc.link.models import Link
+from resrc.list.models import ListLinks
 from django.core.urlresolvers import reverse
 
 
-def fixup(elem):
+def fixup(elem, alist):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         classes = elem.get('class')
         if classes is not None and 'linkable' in classes:
@@ -39,7 +40,9 @@ def fixup(elem):
             if url[:8] == '/lk/new/':
                 internal_link = True
 
-        if not internal_link and not Link.objects.filter(url=url).exists():
+        exists = Link.objects.filter(url=url).exists()
+
+        if not internal_link and not exists:
             elem.set("rel", "nofollow external")
             a = etree.Element('a')
             a.set('href', reverse("new-link-add", args=(url,)))
@@ -47,12 +50,21 @@ def fixup(elem):
             a.text = u'[add]'
             elem.append(a)
 
+        if exists and alist is not None:
+            ListLinks.objects.create(
+                alist=alist,
+                links=Link.objects.get(url=url)
+            )
+
 
 class FixupProcessor(Treeprocessor):
 
+    def __init__(self, alist, *args, **kwargs):
+        self.alist = alist
+
     def run(self, root):
         for child in root:
-            fixup(child)
+            fixup(child, self.alist)
             self.run(child)
 
         return root
@@ -60,5 +72,8 @@ class FixupProcessor(Treeprocessor):
 
 class FixupExtension(Extension):
 
+    def __init__(self, alist):
+        self.alist = alist
+
     def extendMarkdown(self, md, md_globals):
-        md.treeprocessors.add('fixup', FixupProcessor(), '_end')
+        md.treeprocessors.add('fixup', FixupProcessor(self.alist), '_end')

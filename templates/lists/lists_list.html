@@ -6,9 +6,6 @@
     {{ list.title }}
 {% endblock %}
 
-{% block headline %}
-    lolo
-{% endblock %}
 
 {% block breadcrumb %}
 <li><a href="{% url "page-home" %}">Home</a></li>
@@ -23,7 +20,7 @@
     <h1>{{ username }}'s lists</h1>
     <ul class="no-bullet">
     {% for list in lists %}
-      <li><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}[<a href="{% url "list-edit" list.pk list.slug %}">edit</a>]{% endif %}</li>
+      <li><span class="label round">{{ list.c }}</span> <a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}[<a href="{% url "list-edit" list.pk list.slug %}">edit</a>]{% endif %}<br /> {{ list.description }}</li>
     {% endfor %}
     </ul>
   </div>

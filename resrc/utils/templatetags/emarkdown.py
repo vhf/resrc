@@ -7,7 +7,6 @@ import extensions
 
 register = template.Library()
 
-md_fixup = extensions.FixupExtension()
 
 @register.filter(needs_autoescape=False)
 def emarkdown(value):
@@ -22,6 +21,8 @@ def emarkdown(value):
         'a': ['href', 'title', 'rel'],
         'img': ['src', 'alt'],
     }
+
+    md_fixup = extensions.FixupExtension(None)
 
     return mark_safe('{0}'.format(
         bleach.clean(
@@ -38,7 +39,7 @@ def emarkdown(value):
 
 
 @register.filter(needs_autoescape=False)
-def listmarkdown(value):
+def listmarkdown(value, alist):
     allowed_tags = ['div', 'span', 'p', 'pre', 'hr', 'br',
                     'strong', 'em', 'i', 'b', 'code', 'sub', 'sup',
                     'a', 'abbr', 'blockquote',
@@ -48,6 +49,8 @@ def listmarkdown(value):
         'a': ['href', 'title', 'rel'],
         'img': ['src', 'alt'],
     }
+
+    md_fixup = extensions.FixupExtension(alist)
 
     return mark_safe('{0}'.format(
         bleach.clean(

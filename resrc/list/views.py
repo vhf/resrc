@@ -59,8 +59,7 @@ def ajax_add_to_list_or_create(request):
             alist, created = List.objects.get_or_create(
                 title=list_title,
                 owner=request.user,
-                defaults={'description': description, 'is_public': False,'upvotes':0,'votes_h00':0,'votes_h02':0,'votes_h04':0,'votes_h06':0,'votes_h08':0,'votes_h10':0,
-                'votes_h12':0,'votes_h14':0,'votes_h16':0,'votes_h18':0,'votes_h20':0,'votes_h22':0,'score_h24':0}
+                defaults={'description': description, 'is_public': False}
             )
         else:
             alist = get_object_or_404(List, pk=list_pk)
@@ -118,8 +117,6 @@ def ajax_create_list(request, link_pk):
                 description=form.data['description'],
                 owner=request.user,
                 is_public=not is_private,
-                upvotes=0,votes_h00=0,votes_h02=0,votes_h04=0,votes_h06=0,votes_h08=0,votes_h10=0,
-                votes_h12=0,votes_h14=0,votes_h16=0,votes_h18=0,votes_h20=0,votes_h22=0,score_h24=0
             )
             alist.save()
 
@@ -165,12 +162,12 @@ def new_list(request):
                 description=form.data['description'],
                 url=form.data['url'],
                 md_content=mdcontent,
-                html_content=listmarkdown(mdcontent),
+                html_content='',
                 owner=request.user,
-                is_public=not is_private,
-                upvotes=0,votes_h00=0,votes_h02=0,votes_h04=0,votes_h06=0,votes_h08=0,votes_h10=0,
-                votes_h12=0,votes_h14=0,votes_h16=0,votes_h18=0,votes_h20=0,votes_h22=0,score_h24=0
+                is_public=not is_private
             )
+            alist.save()
+            alist.html_content=listmarkdown(mdcontent, alist)
             alist.save()
 
             return redirect(alist.get_absolute_url())
@@ -198,7 +195,7 @@ def edit(request, list_pk, list_slug):
         private_checkbox = ''
     else:
         private_checkbox = 'checked="checked"'
-    if len(alist.url) > 0:
+    if alist.url is not None and len(alist.url) > 0:
         from_url = True
     else:
         from_url = False
@@ -226,9 +223,11 @@ def edit(request, list_pk, list_slug):
             alist.description = form.data['description']
             alist.url = form.data['url']
             alist.md_content = mdcontent
-            alist.html_content = listmarkdown(mdcontent)
+            alist.html_content = ''
             alist.is_public = not is_private
-
+            alist.save()
+            # once saved, we parse the markdown to add links found to list
+            alist.html_content = listmarkdown(mdcontent, alist)
             alist.save()
 
             return redirect(alist.get_absolute_url())
@@ -253,11 +252,12 @@ def edit(request, list_pk, list_slug):
 
 @login_required
 def my_lists(request, user_name):
+    from django.db.models import Count
     if request.user.username == user_name:
-        lists = List.objects.personal_lists(request.user)
+        lists = List.objects.personal_lists(request.user).annotate(c=Count('links'))
         owner = True
     else:
-        lists = List.objects.user_lists(get_object_or_404(User, username=user_name))
+        lists = List.objects.user_lists(get_object_or_404(User, username=user_name)).annotate(c=Count('links'))
         owner = False
 
     return render_template('lists/lists_list.html', {

@@ -78,21 +78,21 @@ class List(models.Model):
     is_public = models.BooleanField(default=True)
     pubdate = models.DateField(auto_now_add=True)
 
-    upvotes = models.IntegerField('upvotes')
-    votes_h00 = models.IntegerField()
-    votes_h02 = models.IntegerField()
-    votes_h04 = models.IntegerField()
-    votes_h06 = models.IntegerField()
-    votes_h08 = models.IntegerField()
-    votes_h10 = models.IntegerField()
-    votes_h12 = models.IntegerField()
-    votes_h14 = models.IntegerField()
-    votes_h16 = models.IntegerField()
-    votes_h18 = models.IntegerField()
-    votes_h20 = models.IntegerField()
-    votes_h22 = models.IntegerField()
+    upvotes = models.IntegerField('upvotes', default=0)
+    votes_h00 = models.IntegerField(default=0)
+    votes_h02 = models.IntegerField(default=0)
+    votes_h04 = models.IntegerField(default=0)
+    votes_h06 = models.IntegerField(default=0)
+    votes_h08 = models.IntegerField(default=0)
+    votes_h10 = models.IntegerField(default=0)
+    votes_h12 = models.IntegerField(default=0)
+    votes_h14 = models.IntegerField(default=0)
+    votes_h16 = models.IntegerField(default=0)
+    votes_h18 = models.IntegerField(default=0)
+    votes_h20 = models.IntegerField(default=0)
+    votes_h22 = models.IntegerField(default=0)
 
-    score_h24 = models.IntegerField()
+    score_h24 = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()
@@ -183,8 +183,8 @@ def list_add_handler(sender, **kwargs):
         link.get_absolute_url(), link.title, link.url
     )
     alist.md_content = "\n".join([alist.md_content, md_link])
-    from resrc.utils.templatetags.emarkdown import listmarkdown
-    alist.html_content = listmarkdown(alist.md_content)
+    # from resrc.utils.templatetags.emarkdown import listmarkdown
+    # alist.html_content = listmarkdown(alist.md_content, alist)
     alist.save()
     return True
 
@@ -205,7 +205,7 @@ def list_delete_handler(sender, **kwargs):
     REPLACE = r' '
     alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
 
-    from resrc.utils.templatetags.emarkdown import listmarkdown
-    alist.html_content = listmarkdown(alist.md_content)
+    # from resrc.utils.templatetags.emarkdown import listmarkdown
+    # alist.html_content = listmarkdown(alist.md_content)
     alist.save()
     return True
