@@ -19,11 +19,10 @@ class ListManager(models.Manager):
             .filter(owner=owner) \
             .exclude(title__in=['Bookmarks', 'Reading list'])
 
-    def user_lists(self, owner):
+    def user_lists(self, owner, only_public=True):
         return self.get_query_set().prefetch_related('links') \
             .filter(owner=owner) \
-            .exclude(title__in=['Bookmarks', 'Reading list']) \
-            .exclude(is_public=False)
+            .exclude(is_public=only_public)
 
     def titles_link_in(self, owner, link_pk):
         '''returns list containing titles of Lists containing this Link'''

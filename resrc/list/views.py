@@ -23,9 +23,21 @@ def single(request, list_pk, list_slug=None):
     if alist.slug != list_slug:
         raise Http404
 
+    form = None
+    tags_addlink = ''
+
+    if request.user.is_authenticated():
+        from resrc.link.forms import NewLinkForm
+        form = NewLinkForm(request.POST)
+        from taggit.models import Tag
+        tags_addlink = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags_addlink = '"%s"' % tags_addlink
+
     return render_template('lists/show_single.html', {
+        'form': form,
         'list': alist,
         'tags': alist.get_tags()[:5],
+        'tags_addlink': tags_addlink,
         'default_lists': ['Bookmarks', 'Reading list'],
         'request': request
     })
@@ -254,7 +266,7 @@ def edit(request, list_pk, list_slug):
 def my_lists(request, user_name):
     from django.db.models import Count
     if request.user.username == user_name:
-        lists = List.objects.personal_lists(request.user).annotate(c=Count('links'))
+        lists = List.objects.user_lists(request.user, only_public=False).annotate(c=Count('links'))
         owner = True
     else:
         lists = List.objects.user_lists(get_object_or_404(User, username=user_name)).annotate(c=Count('links'))

@@ -15,9 +15,6 @@
   <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
-{% block headline %}
-  lolo
-{% endblock %}
 
 {% block breadcrumb %}
   <li class="current"><a href="#">Index</a></li>
@@ -32,11 +29,11 @@
 <script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 <script type="text/javascript">
-    $(function(){
-        $("#id_tags").tagit({
-          availableTags: [{{ tags|safe }}],
-          autocomplete: {delay: 0, minLength: 2}
-      });
+  $(function(){
+      $("#id_tags").tagit({
+        availableTags: [{{ tags|safe }}],
+        autocomplete: {delay: 0, minLength: 2}
     });
+  });
 </script>
 {% endblock last_body %}

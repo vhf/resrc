@@ -18,8 +18,9 @@ def emarkdown(value):
 
     allowed_attrs = {
         # '*': ['class', 'id'],
-        'a': ['href', 'title', 'rel'],
+        'a': ['href', 'title', 'rel', 'name', 'class'],
         'img': ['src', 'alt'],
+        'i': ['class'],
     }
 
     md_fixup = extensions.FixupExtension(None)
@@ -46,8 +47,9 @@ def listmarkdown(value, alist):
                     'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 
     allowed_attrs = {
-        'a': ['href', 'title', 'rel'],
+        'a': ['href', 'title', 'rel', 'name', 'class'],
         'img': ['src', 'alt'],
+        'i': ['class'],
     }
 
     md_fixup = extensions.FixupExtension(alist)

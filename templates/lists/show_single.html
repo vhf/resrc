@@ -1,9 +1,23 @@
 {% extends "lists/base.html" %}
 {% load profile %}
+{% load staticfiles %}
 {% load mptt_comments_tags %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+<script type="text/javascript">var jq = true;</script>
+{% endblock %}
 
 {% block title %}
     {{ list.title }}
+{% endblock %}
+
+
+{% block extrahead %}
+{% if request.user.is_authenticated %}
+  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endif %}
 {% endblock %}
 
 {% block headline %}
@@ -71,12 +85,54 @@
 
 
 {% block last_body %}
+{% if request.user.is_authenticated %}
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 <script type="text/javascript">
-$('.listcontent').find('a').each(function(index, item) {
-  $item = $(item);
-  if($item.text() === 'link') {
-    $item.addClass('lsf symbol');
+
+</script>
+<script type="text/javascript">
+  $(function(){
+      $("#id_tags").tagit({
+        availableTags: [{{ tags_addlink|safe }}],
+        autocomplete: {delay: 0, minLength: 2}
+    });
+
+    $('.listcontent').find('a').each(function(index, item) {
+      $item = $(item);
+      if($item.text() === 'link') {
+        $item.addClass('lsf symbol');
+      }
+    });
+
+    $('.listcontent').find('a').each(function(){
+      if($(this).hasClass('addthis')) {
+        $(this).on('click', function() {
+          var link = $(this).prev('a');
+          var url = link.attr('href')
+          var title = link.html();
+          $('#id_url').val(url);
+          $('#id_title').val(title);
+          $('#addmodal').foundation('reveal', 'open');
+        });
+      }
+    });
+
+  });
+</script>
+
+<div id="addmodal" class="reveal-modal">
+  <h2>Add this link</h2>
+  {% crispy form %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% else %}
+<script>
+$('.listcontent').find('a').each(function(){
+  if($(this).hasClass('addthis')) {
+    $(this).remove();
   }
 });
 </script>
+{% endif %}
 {% endblock last_body %}
