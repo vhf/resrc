@@ -11,7 +11,7 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-FROM_EMAIL = "victor@resrc.io"
+FROM_EMAIL = "victorfelder@gmail.com"
 
 SITE_ROOT = os.path.realpath(os.path.dirname(os.path.dirname(__file__)))
 
@@ -87,7 +87,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
-    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -161,7 +160,6 @@ EXTERNAL_APPS = [
     'floppyforms',
     'taggit',
     'mailer',
-    'compressor',
 ]
 
 INTERNAL_APPS = [
@@ -231,6 +229,7 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/u/user/{0}'.format(u.username)
 }
 
+GOOGLE_ANALYTICS_KEY = ''
 
 try:
     import mailer

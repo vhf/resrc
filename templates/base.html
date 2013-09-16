@@ -109,7 +109,7 @@
   {% else %}
   {% feedback request.path None %}
   {% endif %}
-  <script type="text/javascript" src="{{ STATIC_URL }}feedback/js/feedback.js"></script>
+  <script type="text/javascript" src="{% static "feedback/js/feedback.js" %}"></script>
 
   <!-- Included JS Files (Uncompressed) -->
   <script>
@@ -129,11 +129,7 @@
   <script src="{% static "js/foundation/foundation.cookie.js" %}"></script>
   <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
   <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.interchange.js" %}"></script>
   <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.magellan.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.orbit.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.placeholder.js" %}"></script>
   <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
   <script src="{% static "js/foundation/foundation.section.js" %}"></script>
   <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
@@ -143,10 +139,10 @@
   </script>
 
   {# Google Analytics #}
-  {% if false %}
+  {% if GOOGLE_ANALYTICS_KEY %}
   <script type="text/javascript">
   var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'asdf']);
+  _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_KEY }}']);
   _gaq.push(['_trackPageview']);
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
