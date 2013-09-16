@@ -61,14 +61,6 @@ MEDIA_ROOT = os.path.join(SITE_ROOT, 'media')
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 MEDIA_URL = '/media/'
-AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = "resrc"
-AWS_HEADERS = {
-    'Expires': 'Thu, 15 Apr 2010 20:00:00 GMT',
-    'Cache-Control': 'max-age=86400',
-}
-STATICFILES_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 
 
 # Absolute path to the directory static files should be collected to.
@@ -95,6 +87,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -168,6 +161,7 @@ EXTERNAL_APPS = [
     'floppyforms',
     'taggit',
     'mailer',
+    'compressor',
 ]
 
 INTERNAL_APPS = [
