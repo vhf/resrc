@@ -64,7 +64,7 @@ class List(models.Model):
     objects = ListManager()
 
     title = models.CharField('title', max_length=80)
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=255)
     tags = TaggableManager()
     description = models.TextField('description')
     md_content = models.TextField('md_content')

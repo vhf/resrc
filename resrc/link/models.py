@@ -28,7 +28,7 @@ class Link(models.Model):
 
     title = models.CharField('title', max_length=120)
 
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=255)
 
     hash2 = models.CharField(max_length=11, editable=False)
 

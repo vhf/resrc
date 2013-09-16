@@ -17,7 +17,7 @@ class Profile(models.Model):
 
     user = models.ForeignKey(User, unique=True, verbose_name='user')
 
-    slug = models.SlugField()
+    slug = models.SlugField(max_length=255)
 
     about = models.TextField('about', blank=True)
 
