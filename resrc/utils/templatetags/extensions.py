@@ -32,8 +32,6 @@ def fixup(elem, alist):
             reverse(url)
         except:
             internal_link = False
-            if url == reverse("new-link-add", args=(url,)):
-                internal_link = True
             if url[:4] == '/lk/':
                 internal_link = True
             if url[0] == '#':

@@ -40,9 +40,8 @@ def single(request, link_pk, link_slug=None):
 
 
 @login_required
-def new_link(request, url_to_add=None):
+def new_link(request):
     if request.method == 'POST':
-        print "post"
         form = NewLinkForm(request.POST)
         if form.is_valid():
             data = form.data
@@ -60,28 +59,26 @@ def new_link(request, url_to_add=None):
             for tag in list_tags:
                 link.tags.add(tag)
             link.save()
+
             if not 'ajax' in data:
                 return redirect(link.get_absolute_url())
-            else:
-                alist = get_object_or_404(List, pk=data['id'])
-                print "ajax"
-                print alist
-                if alist.owner == request.user:
-                    from resrc.list.models import ListLinks
-                    if not ListLinks.objects.filter(alist=alist, links=link).exists():
-                        print "add it"
-                        ListLinks.objects.create(
-                            alist=alist,
-                            links=link
-                        )
-                    else:
-                        print "already in"
-                    from resrc.utils.templatetags.emarkdown import listmarkdown
-                    alist.html_content=listmarkdown(alist.md_content, alist)
-                    alist.save()
-                import simplejson
-                data = simplejson.dumps({'result': 'added'})
-                return HttpResponse(data, mimetype="application/javascript")
+
+            alist = get_object_or_404(List, pk=data['id'])
+            if alist.owner != request.user:
+                raise Http404
+            from resrc.list.models import ListLinks
+            if not ListLinks.objects.filter(alist=alist, links=link).exists():
+                ListLinks.objects.create(
+                    alist=alist,
+                    links=link
+                )
+            from resrc.utils.templatetags.emarkdown import listmarkdown
+            alist.html_content=listmarkdown(alist.md_content, alist)
+            alist.save()
+
+            import simplejson
+            data = simplejson.dumps({'result': 'added'})
+            return HttpResponse(data, mimetype="application/javascript")
         else:
             if not 'ajax' in form.data:
                 form = NewLinkForm()
@@ -97,12 +94,7 @@ def new_link(request, url_to_add=None):
                 return HttpResponse(data, mimetype="application/javascript")
 
     else:
-        if url_to_add is not None:
-            form = NewLinkForm({'url': url_to_add})
-            if Link.objects.filter(url=url_to_add).exists():
-                return redirect(Link.objects.get(url=data['url']).get_absolute_url())
-        else:
-            form = NewLinkForm()
+        form = NewLinkForm()
 
     tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
     tags = '"%s"' % tags
