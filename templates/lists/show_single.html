@@ -34,7 +34,7 @@ lolo
   <div class="large-12 columns">
     <p>
       {% for name, slug, count in tags %}
-      <a href="{% url "tag-single-slug" slug %}" class="radius secondary label">{{ name }}</a> ({{ count }})
+      <p class="tag left"><a href="{% url "tag-single-slug" slug %}"><span class="c">{{ count }}</span><span class="t">{{ name }}</span></a></p>
       {% endfor %}
     </p>
   </div>

@@ -50,11 +50,11 @@ Home
 
   <div class="medium-6 large-3 columns">
     <h3><a href="{% url "tag-index" %}">Most used tags</a></h3>
-    <ul class="no-bullet">
+    <div>
       {% for tag in tags %}
-      <li><a href="{% url "tag-single-slug" tag.slug %}" class="radius secondary label">{{ tag.name }}</a> ({{ tag.c }})</li>
+      <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
       {% endfor %}
-    </ul>
+    </div>
   </div>
 
   <div class="medium-6 large-3 columns">

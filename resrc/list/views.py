@@ -81,6 +81,7 @@ def ajax_add_to_list_or_create(request):
                 alist=alist,
                 links=link
             )
+            listlink.remove()
             listlink.delete()
             data = simplejson.dumps({'result': 'removed'})
         except ListLinks.DoesNotExist:
@@ -88,6 +89,7 @@ def ajax_add_to_list_or_create(request):
                 alist=alist,
                 links=link
             )
+            listlink.add()
             data = simplejson.dumps({'result': 'added'})
 
         return HttpResponse(data, mimetype="application/javascript")
@@ -138,6 +140,7 @@ def ajax_create_list(request, link_pk):
                 alist=alist,
                 links=link,
             )
+            listlink.add()
             listlink.save()
 
             data = simplejson.dumps({'result': 'success'})

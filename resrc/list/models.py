@@ -3,8 +3,6 @@ from django.db import models
 from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_delete
-from django.dispatch import receiver
 
 from taggit.managers import TaggableManager
 from resrc.link.models import Link
@@ -51,7 +49,8 @@ class ListManager(models.Manager):
         return list(lists)
 
     def hottest(self,limit=10):
-        return self.get_query_set().order_by('score_h24')[:limit]
+        return self.get_query_set().exclude(title__in=['Bookmarks', 'Reading list']) \
+            .order_by('score_h24')[:limit]
 
 
 
@@ -172,39 +171,33 @@ class ListLinks(models.Model):
     links = models.ForeignKey(Link)
     adddate = models.DateField(auto_now_add=True)
 
+    def add(self):
+        listlink = self
+        alist = listlink.alist
+        link = listlink.links
+        md_link = "1. [link](%s) [%s](%s)" % (
+            link.get_absolute_url(), link.title, link.url
+        )
+        alist.md_content = "\n".join([alist.md_content, md_link])
+        # from resrc.utils.templatetags.emarkdown import listmarkdown
+        # alist.html_content = listmarkdown(alist.md_content, alist)
+        alist.save()
 
-@receiver(post_save, sender=ListLinks)
-def list_add_handler(sender, **kwargs):
-    listlink = kwargs['instance']
-    alist = listlink.alist
-    link = listlink.links
-    md_link = "1. [link](%s) [%s](%s)" % (
-        link.get_absolute_url(), link.title, link.url
-    )
-    alist.md_content = "\n".join([alist.md_content, md_link])
-    # from resrc.utils.templatetags.emarkdown import listmarkdown
-    # alist.html_content = listmarkdown(alist.md_content, alist)
-    alist.save()
-    return True
+    def remove(self):
+        listlink = self
+        alist = listlink.alist
+        link = listlink.links
+        md_link = "[link](%s) [%s](%s)" % (
+            link.get_absolute_url(), link.title, link.url
+        )
 
+        alist.md_content = alist.md_content.replace(md_link, '')
 
-@receiver(pre_delete, sender=ListLinks)
-def list_delete_handler(sender, **kwargs):
-    listlink = kwargs['instance']
-    alist = listlink.alist
-    link = listlink.links
-    md_link = "[link](%s) [%s](%s)" % (
-        link.get_absolute_url(), link.title, link.url
-    )
+        import re
+        SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
+        REPLACE = r' '
+        alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
 
-    alist.md_content = alist.md_content.replace(md_link, '')
-
-    import re
-    SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
-    REPLACE = r' '
-    alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
-
-    # from resrc.utils.templatetags.emarkdown import listmarkdown
-    # alist.html_content = listmarkdown(alist.md_content)
-    alist.save()
-    return True
+        # from resrc.utils.templatetags.emarkdown import listmarkdown
+        # alist.html_content = listmarkdown(alist.md_content)
+        alist.save()

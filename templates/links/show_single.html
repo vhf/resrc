@@ -18,15 +18,13 @@
 {% block content %}
   <div class="row">
     <div class="small-9 columns">
-        <p>
-          <ul class="inline-list">
-            {% with tags=link.tags.all %}
-            {% for tag in tags %}
-            <li><a href="{% url "tag-single-slug" tag.slug %}" class="radius secondary label">{{ tag.name }}</a></li>
-            {% endfor %}
-            {% endwith %}
-          </ul>
-        </p>
+      {% with tags=link.tags.all %}
+      <div>
+        {% for tag in tags %}
+        <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
+        {% endfor %}
+      </div>
+      {% endwith %}
     </div>
     <div class="small-3 columns text-right list-symbols">
         <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%} has-tip" id="bookmark" data-tooltip title="Add to bookmarks list">addstar</a>
