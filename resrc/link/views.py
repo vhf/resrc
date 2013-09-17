@@ -64,8 +64,8 @@ def new_link(request):
                 return redirect(link.get_absolute_url())
 
             alist = get_object_or_404(List, pk=data['id'])
-            if alist.owner != request.user:
-                raise Http404
+            #if alist.owner != request.user:
+            #    raise Http404
             from resrc.list.models import ListLinks
             if not ListLinks.objects.filter(alist=alist, links=link).exists():
                 ListLinks.objects.create(
