@@ -16,4 +16,7 @@ django-taggit>=0.10
 django-libs==1.16
 -e git://github.com/pinax/django-mailer.git@919805e25fc18b06487b25414d4e5d5e05a92108#egg=django_mailer-dev
 django-storages
+# DEPENDANCIES TO INSTALL MANUALLY
 # pip install git+https://github.com/jhgaylor/tldrio-python-client.git
+# pip install git+https://github.com/vhf/django-taggit.git
+# pip install git+https://github.com/vhf/django-mptt-comments.git

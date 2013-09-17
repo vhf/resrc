@@ -59,7 +59,7 @@ def fixup(elem, alist):
                 icon.text = "link "
                 icon.set("class", "lsf symbol")
 
-                newlink.text = elem.text
+                newlink.text = link.title
                 newlink.set("href", reverse("link-single-slug", args=(link.pk, link.slug)))
 
                 elem.text = ''

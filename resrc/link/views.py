@@ -30,11 +30,14 @@ def single(request, link_pk, link_slug=None):
 
     lists = List.objects.some_lists_from_link(link_pk)
 
+    similars = link.tags.similar_objects(10)
+
     return render_template('links/show_single.html', {
         'link': link,
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
+        'similars': similars,
         'lists': lists
     })
 

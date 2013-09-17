@@ -54,7 +54,7 @@
 {% if lists %}
 <div class="row">
   <div class="large-6 columns">
-    <h4 class="subheader">also in</h4>
+    <h4 class="subheader">as seen in</h4>
     <ul>
     {% for list in lists %}
       <li><a href="{{ list.get_absolute_url }}">{{ list.title }}</a></li>
@@ -62,6 +62,10 @@
     </ul>
   </div>
   <div class="large-6 columns">
+    <h4 class="subheader">similar links</h4>
+    {% for similar in similars %}
+      <li><a href="{{ similar.get_absolute_url }}">{{ similar.title }}</a></li>
+    {% endfor %}
   </div>
 </div>
 {% endif %}
