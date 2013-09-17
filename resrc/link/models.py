@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 
+LEVELS = ['beginner', 'intermediate', 'advanced']
+
 class LinkManager(models.Manager):
 
     def latest(self,limit=10):
@@ -54,6 +56,8 @@ class Link(models.Model):
     votes_h22 = models.IntegerField(default=0)
 
     score_h24 = models.IntegerField(default=0)
+
+    level = models.CharField('Level', max_length=30, choices=zip(LEVELS, LEVELS), null=True, blank=True)
 
     tags = TaggableManager()
 
