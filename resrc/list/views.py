@@ -195,12 +195,12 @@ def new_list(request):
 
 
 @login_required
-def edit(request, list_pk, list_slug):
+def edit(request, list_pk):
     if not request.user.is_authenticated():
         raise Http404
     alist = get_object_or_404(List, pk=list_pk)
 
-    if request.user.pk is not alist.owner.pk:
+    if request.user.pk != alist.owner.pk:
         raise Http404
 
     if alist.is_public:
