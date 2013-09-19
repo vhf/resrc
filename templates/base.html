@@ -42,6 +42,9 @@
             <li><a href="{% url "new-list" %}">New list</a></li>
           </ul>
         </li>
+        <li>
+          <a href="{% url "new-link" %}">Add link</a>
+        </li>
         {% endif %}
         <li>
           <a id="feedbackSnippet" href="{% url "feedback" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
