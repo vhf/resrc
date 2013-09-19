@@ -20,12 +20,11 @@
 {% endif %}
 {% endblock %}
 
-{% block headline %}
-lolo
-{% endblock %}
 
 {% block breadcrumb %}
-<li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="">Lists</a></li>
+<li>{{ list.title }}</li>
 {% endblock %}
 
 {% block content %}

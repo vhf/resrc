@@ -85,7 +85,7 @@ def ajax_add_to_list_or_create(request):
             listlink.delete()
             data = simplejson.dumps({'result': 'removed'})
         except ListLinks.DoesNotExist:
-            ListLinks.objects.create(
+            listlink = ListLinks.objects.create(
                 alist=alist,
                 links=link
             )

@@ -175,19 +175,21 @@ class ListLinks(models.Model):
         listlink = self
         alist = listlink.alist
         link = listlink.links
-        md_link = "1. [link](%s) [%s](%s)" % (
+        md_link = "1. [%s](%s)" % (
             link.get_absolute_url(), link.title, link.url
         )
         alist.md_content = "\n".join([alist.md_content, md_link])
-        # from resrc.utils.templatetags.emarkdown import listmarkdown
-        # alist.html_content = listmarkdown(alist.md_content, alist)
+        from resrc.utils.templatetags.emarkdown import listmarkdown
+        alist.html_content = listmarkdown(alist.md_content, alist)
         alist.save()
 
     def remove(self):
+        # TODO : fix this thing
+        # Probably the best way is to create a listmarkdown() like to properly remove links
         listlink = self
         alist = listlink.alist
         link = listlink.links
-        md_link = "[link](%s) [%s](%s)" % (
+        md_link = "[%s](%s)" % (
             link.get_absolute_url(), link.title, link.url
         )
 
@@ -198,6 +200,6 @@ class ListLinks(models.Model):
         REPLACE = r' '
         alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
 
-        # from resrc.utils.templatetags.emarkdown import listmarkdown
-        # alist.html_content = listmarkdown(alist.md_content)
+        from resrc.utils.templatetags.emarkdown import listmarkdown
+        alist.html_content = listmarkdown(alist.md_content, alist)
         alist.save()
