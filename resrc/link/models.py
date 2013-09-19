@@ -16,10 +16,10 @@ LEVELS = ['beginner', 'intermediate', 'advanced']
 class LinkManager(models.Manager):
 
     def latest(self,limit=10):
-        return self.get_query_set().order_by('pubdate')[:limit]
+        return self.get_query_set().order_by('-pubdate')[:limit]
 
     def hottest(self,limit=10):
-        return self.get_query_set().order_by('score_h24')[:limit]
+        return self.get_query_set().order_by('-score_h24')[:limit]
 
 
 class Link(models.Model):
