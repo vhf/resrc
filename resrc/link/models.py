@@ -8,6 +8,8 @@ from django.contrib.auth.models import User
 
 from taggit.managers import TaggableManager
 
+from resrc.tag.models import Language
+
 
 LEVELS = ['beginner', 'intermediate', 'advanced']
 
@@ -58,6 +60,8 @@ class Link(models.Model):
     score_h24 = models.IntegerField(default=0)
 
     level = models.CharField('Level', max_length=30, choices=zip(LEVELS, LEVELS), null=True, blank=True)
+
+    language = models.ForeignKey(Language, default=1)
 
     tags = TaggableManager()
 

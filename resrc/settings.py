@@ -169,6 +169,7 @@ INTERNAL_APPS = [
     'resrc.page',
     'resrc.utils',
     'resrc.feedback',
+    'resrc.tag',
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS

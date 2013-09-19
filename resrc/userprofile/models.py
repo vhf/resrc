@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-:
-
 from django.db import models
-from django.core import urlresolvers
 from django.contrib.auth.models import User
+from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 
 from resrc.link.models import Link
 from resrc.list.models import List
+from resrc.tag.models import Language
 
 
 class Profile(models.Model):
@@ -20,6 +20,8 @@ class Profile(models.Model):
     slug = models.SlugField(max_length=255)
 
     about = models.TextField('about', blank=True)
+
+    languages = models.ManyToManyField(Language)
 
     # karma = models.IntegerField('karma', null=True, blank=True)
 
@@ -59,7 +61,6 @@ class Profile(models.Model):
 
             slug = '%s-%s' % (orig_slug, counter)
             counter += 1
-
 
     def __unicode__(self):
         return self.user.username
