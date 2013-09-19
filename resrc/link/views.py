@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from taggit.models import Tag
 
 from resrc.link.models import Link
-from resrc.link.forms import NewLinkForm
+from resrc.link.forms import NewLinkForm, EditLinkForm
 from resrc.list.models import List
 from resrc.list.forms import NewListAjaxForm
 from resrc.utils import render_template
@@ -52,6 +52,8 @@ def new_link(request):
             link = Link()
             link.title = data['title']
             link.url = data['url']
+            link.language = data['language']
+            link.level = data['level']
             link.author = request.user
 
             if Link.objects.filter(url=data['url']).exists():
@@ -109,3 +111,61 @@ def new_link(request):
 
 ''' TODO: provide a view using Tags.similar_objects() :: https://github.com/alex/django-taggit/blob/develop/docs/api.txt
 and use it for autocomplete :: https://github.com/aehlke/tag-it'''
+
+@login_required
+def edit_link(request, link_pk):
+    link = get_object_or_404(Link, pk=link_pk)
+    if request.user != link.author:
+        raise Http404
+    if request.method == 'POST':
+        form = EditLinkForm(link_pk, request.POST)
+        if form.is_valid():
+            from resrc.tag.models import Language
+            link.title = form.data['title']
+            link.language = Language.objects.get(language=form.data['language'])
+            link.level = form.data['level']
+            link.author = request.user
+
+            has_tags = link.tags.all().values_list('name', flat=True)
+
+            link.save()
+            list_tags = form.data['tags'].split(',')
+            for tag in list_tags:
+                if tag not in has_tags:
+                    link.tags.add(tag)
+            for tag in has_tags:
+                if tag not in list_tags:
+                    link.tags.remove(tag)
+            link.save()
+            return redirect(link.get_absolute_url())
+        else:
+            form = EditLinkForm(link_pk=link_pk, initial={
+                'url': link.url,
+                'title': link.title,
+                'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
+                'language': link.language,
+                'level': link.level
+            })
+            tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+            tags = '"%s"' % tags
+            return render_template('links/new_link.html', {
+                'form': form,
+                'tags': tags
+            })
+
+    else:
+        form = EditLinkForm(link_pk=link_pk, initial={
+            'url': link.url,
+            'title': link.title,
+            'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
+            'language': link.language,
+            'level': link.level
+        })
+
+    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+    tags = '"%s"' % tags
+
+    return render_template('links/new_link.html', {
+        'form': form,
+        'tags': tags
+    })
