@@ -30,7 +30,10 @@ def single(request, link_pk, link_slug=None):
 
     lists = List.objects.some_lists_from_link(link_pk)
 
-    similars = link.tags.similar_objects(10)
+    try:
+        similars = link.tags.similar_objects(10)
+    except KeyError:
+        similars = ''
 
     return render_template('links/show_single.html', {
         'link': link,
@@ -52,7 +55,8 @@ def new_link(request):
             link = Link()
             link.title = data['title']
             link.url = data['url']
-            link.language = data['language']
+            from resrc.tag.models import Language
+            link.language = Language.objects.get(language=form.data['language'])
             link.level = data['level']
             link.author = request.user
 
@@ -120,8 +124,8 @@ def edit_link(request, link_pk):
     if request.method == 'POST':
         form = EditLinkForm(link_pk, request.POST)
         if form.is_valid():
-            from resrc.tag.models import Language
             link.title = form.data['title']
+            from resrc.tag.models import Language
             link.language = Language.objects.get(language=form.data['language'])
             link.level = form.data['level']
             link.author = request.user
