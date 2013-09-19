@@ -32,7 +32,7 @@ def single(request, link_pk, link_slug=None):
 
     try:
         similars = link.tags.similar_objects(10)
-    except KeyError:
+    except:
         similars = ''
 
     return render_template('links/show_single.html', {
