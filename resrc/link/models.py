@@ -133,3 +133,7 @@ class Link(models.Model):
         votes = sum([getattr(link, hours[h]) for h in xrange(0, 24, 2)])
         link.score_h24 = (votes - 1) / pow((item_hour_age + 2), gravity)
         link.save()
+
+    def get_lang(self):
+        from django.conf import settings
+        return [x[1] for x in settings.LANGUAGES if x[0] == self.language.language][0]
