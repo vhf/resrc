@@ -1,4 +1,4 @@
-{% extends "links/base.html" %}
+{% extends "lists/base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
@@ -15,7 +15,7 @@ Create a list
 
 
 {% block breadcrumb %}
-<li><a href="{% url "page-home" %}">Home</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
 <li class="current">Create a list</li>
 {% endblock %}
 

@@ -7,12 +7,10 @@
     Tags list
 {% endblock %}
 
-{% block headline %}
-    lolo
-{% endblock %}
 
 {% block breadcrumb %}
-    <li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li class="current">Tags</li>
 {% endblock %}
 
 {% block content %}

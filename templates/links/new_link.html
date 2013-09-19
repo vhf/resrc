@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block title %}
-  lala
+New link
 {% endblock %}
 
 {% block extrahead %}
@@ -17,7 +17,9 @@
 
 
 {% block breadcrumb %}
-  <li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="#">Links</a></li>{# TODO : Add real URLs here #}
+<li class="current">New link</li>
 {% endblock %}
 
 {% block content %}

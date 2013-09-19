@@ -9,6 +9,4 @@ urlpatterns = patterns(
     url(r'^faq$', views.faq, name="page-faq"),
     url(r'^about$', views.about, name="page-about"),
     url(r'^ll$', views.listlinks, name="page-listlinks"),
-
-    url(r'^$', views.home, name="page-home"),
 )

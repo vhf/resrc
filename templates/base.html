@@ -8,7 +8,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% block title %}{% endblock %}{% block title_base %}{% endblock %} &#183; resrc</title>
+  <title>{% block title %}{% endblock %}{% block title_base %}{% endblock %} &#183; reSRC</title>
   {% block meta %}{% endblock %}
   <link rel="stylesheet" href="{% static "css/app.css" %}">
   <link rel="stylesheet" href="{% static "css/ligaturesymbols.css" %}">
@@ -22,7 +22,7 @@
   <nav class="top-bar">
     <ul class="title-area">
       <li class="name">
-        <h1><a href="/">resrc</a></h1>
+        <h1><a href="/">reSRC</a></h1>
       </li>
       <li class="toggle-topbar menu-icon"><a href="#"><span>nav</span></a></li>
     </ul>
@@ -30,7 +30,7 @@
     <section class="top-bar-section">
       <ul class="left">
         <li {% block menu_home %}{% endblock %}>
-          <a href="{% url "page-home" %}">Home</a>
+          <a href="{% url "home" %}">Home</a>
         </li>
         {% if user.is_authenticated %}
         <li class="has-dropdown">
@@ -80,7 +80,7 @@
 <div class="row">
   <div class="large-12 columns">
     <ul class="breadcrumbs">
-      {% block breadcrumb %}<li class="current"><a href="{% url "page-home" %}">Home</a></li>{% endblock %}
+      {% block breadcrumb %}<li class="current"><a href="{% url "home" %}">Home</a></li>{% endblock %}
     </ul>
   </div>
 </div>
@@ -99,7 +99,7 @@
         </div>
         <div class="large-7 columns">
           <ul class="inline-list right">
-            <li><a href="{% url "page-home" %}">home</a></li>
+            <li><a href="{% url "home" %}">home</a></li>
             <li><a href="{% url "page-about" %}">about</a></li>
             <li><a href="{% url "page-faq" %}">faq</a></li>
           </ul>

@@ -4,15 +4,13 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    lala
-{% endblock %}
-
-{% block headline %}
-    lolo
+{{ tag.name }}
 {% endblock %}
 
 {% block breadcrumb %}
-    <li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "tag-index" %}">Tags</a></li>
+<li class="current">{{ tag.name }}</li>
 {% endblock %}
 
 {% block content %}

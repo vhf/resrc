@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 class PageTests(TestCase):
 
     def test_url_home(self):
-        resp = self.client.get(reverse('page-home'))
+        resp = self.client.get(reverse('home'))
         self.assertEqual(resp.status_code, 200)
 
     def test_url_about(self):
@@ -34,7 +34,7 @@ class HomeViewTestCase(TestCase):
         And trust me: You _will_ change your view name after a while ;)
 
         """
-        return 'page-home'
+        return 'home'
 
     def test_view(self):
         resp = self.client.get(reverse(self.get_view_name()))
