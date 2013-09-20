@@ -37,9 +37,9 @@ Home
   <div class="medium-6 large-3 columns">
     <h3><a href="{% url "tag-index" %}">Most used tags</a></h3>
     <div>
-      {% for tag in tags %}
+      {% for tag in tags %}{% if tag.slug %}
       <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
-      {% endfor %}
+      {% endif %}{% endfor %}
     </div>
   </div>
 

@@ -32,9 +32,9 @@
 <div class="row">
   <div class="large-12 columns">
     <p>
-      {% for name, slug, count in tags %}
+      {% for name, slug, count in tags %}{% if slug %}
       <p class="tag left"><a href="{% url "tag-single-slug" slug %}"><span class="c">{{ count }}</span><span class="t">{{ name }}</span></a></p>
-      {% endfor %}
+      {% endif %}{% endfor %}
     </p>
   </div>
 </div>

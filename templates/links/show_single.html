@@ -19,9 +19,9 @@
         <p class="tag">{% if link.level %}{{ link.level }}{% endif %} {{ link.get_lang }}</p>
       </div>
       <div>
-        {% for tag in tags %}
+        {% for tag in tags %}{% if tag.slug %}
         <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
-        {% endfor %}
+        {% endif %}{% endfor %}
       </div>
       {% endwith %}
     </div>
