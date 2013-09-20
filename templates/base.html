@@ -74,6 +74,7 @@
   </nav>
   <!-- End Header and Nav -->
 
+{% block breadcrumb_container %}
 <div class="row">
   <div class="large-12 columns">
     <ul class="breadcrumbs">
@@ -81,12 +82,13 @@
     </ul>
   </div>
 </div>
+{% endblock %}
 
   <!-- content -->
   {% block content %}{% endblock %}
 
+  {% block footer_container %}
   <!-- Footer -->
-
   <footer class="row">
     <div class="large-12 columns">
       <hr />
@@ -104,6 +106,7 @@
       </div>
     </div>
   </footer>
+  {% endblock %}
 
   {% if user.is_authenticated %}
   {% feedback request.path request.user %}

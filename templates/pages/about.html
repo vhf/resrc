@@ -15,8 +15,11 @@
 {% block content %}
 
 <div class="row">
-    <div class="large-4 columns">
-        about
+    <div class="large-12 columns">
+        <h1>about reSRC</h1>
+        <h1>browser button</h1>
+        <p>For Chrome, Chromium, Firefox, Opera, drag and drop this button to your bookmarks. For Internet Explorer, right-click the button and add to your bookmarks.</p>
+        <p><a class="button" href="javascript:(function(){bf='http://b.resrc.io{% url "new-link-button" %}'+encodeURIComponent(document.title)+'/u/'+encodeURIComponent(window.location.href);ba=function(){if(!window.open(bf,'reSRC·new','location=0,links=0,scrollbars=0,toolbar=0,width=430,height=460'))location.href=bf+'/fallback'};if(/Firefox/.test(navigator.userAgent)){setTimeout(ba,0)}else{ba()}})()">Add reSRC</a></p>
     </div>
 </div>
 

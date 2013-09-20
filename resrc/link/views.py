@@ -56,7 +56,8 @@ def new_link(request):
             link.title = data['title']
             link.url = data['url']
             from resrc.tag.models import Language
-            link.language = Language.objects.get(language=form.data['language'])
+            link.language = Language.objects.get(
+                language=form.data['language'])
             link.level = data['level']
             link.author = request.user
 
@@ -73,7 +74,7 @@ def new_link(request):
                 return redirect(link.get_absolute_url())
 
             alist = get_object_or_404(List, pk=data['id'])
-            #if alist.owner != request.user:
+            # if alist.owner != request.user:
             #    raise Http404
             from resrc.list.models import ListLinks
             if not ListLinks.objects.filter(alist=alist, links=link).exists():
@@ -82,7 +83,7 @@ def new_link(request):
                     links=link
                 )
             from resrc.utils.templatetags.emarkdown import listmarkdown
-            alist.html_content=listmarkdown(alist.md_content, alist)
+            alist.html_content = listmarkdown(alist.md_content, alist)
             alist.save()
 
             import simplejson
@@ -91,7 +92,8 @@ def new_link(request):
         else:
             if not 'ajax' in form.data:
                 form = NewLinkForm()
-                tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+                tags = '","'.join(
+                    Tag.objects.all().values_list('name', flat=True))
                 tags = '"%s"' % tags
                 return render_template('links/new_link.html', {
                     'form': form,
@@ -116,6 +118,63 @@ def new_link(request):
 ''' TODO: provide a view using Tags.similar_objects() :: https://github.com/alex/django-taggit/blob/develop/docs/api.txt
 and use it for autocomplete :: https://github.com/aehlke/tag-it'''
 
+
+@login_required
+def new_link_button(request, title='', url=''):
+    if request.method == 'POST':
+        form = NewLinkForm(request.POST)
+        if form.is_valid():
+            data = form.data
+
+            link = Link()
+            link.title = data['title']
+            link.url = data['url']
+            from resrc.tag.models import Language
+            link.language = Language.objects.get(
+                language=form.data['language'])
+            link.level = data['level']
+            link.author = request.user
+
+            if Link.objects.filter(url=data['url']).exists():
+                return redirect(Link.objects.get(url=data['url']).get_absolute_url())
+
+            link.save()
+            list_tags = data['tags'].split(',')
+            for tag in list_tags:
+                link.tags.add(tag)
+            link.save()
+
+            return redirect(link.get_absolute_url())
+
+        else:
+            form = NewLinkForm(initial={
+                'title': title,
+                'url': url,
+            })
+            tags = '","'.join(
+                Tag.objects.all().values_list('name', flat=True))
+            tags = '"%s"' % tags
+            return render_template('links/new_link_button.html', {
+                'form': form,
+                'tags': tags
+            })
+
+
+    else:
+        form = NewLinkForm(initial={
+            'title': title,
+            'url': url,
+        })
+
+    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+    tags = '"%s"' % tags
+
+    return render_template('links/new_link_button.html', {
+        'form': form,
+        'tags': tags
+    })
+
+
 @login_required
 def edit_link(request, link_pk):
     link = get_object_or_404(Link, pk=link_pk)
@@ -126,7 +185,8 @@ def edit_link(request, link_pk):
         if form.is_valid():
             link.title = form.data['title']
             from resrc.tag.models import Language
-            link.language = Language.objects.get(language=form.data['language'])
+            link.language = Language.objects.get(
+                language=form.data['language'])
             link.level = form.data['level']
             link.author = request.user
 
