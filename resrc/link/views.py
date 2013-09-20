@@ -32,6 +32,19 @@ def single(request, link_pk, link_slug=None):
 
     try:
         similars = link.tags.similar_objects(10)
+        '''
+
+        SELECT `taggit_taggeditem`.`content_type_id`, `taggit_taggeditem`.`object_id`, COUNT(`taggit_taggeditem`.`id`) AS `n`
+        FROM `taggit_taggeditem`
+        WHERE (
+            NOT (`taggit_taggeditem`.`object_id` = 12 AND `taggit_taggeditem`.`content_type_id` = 16 )
+            AND `taggit_taggeditem`.`tag_id` IN (SELECT DISTINCT U0.`id` FROM `taggit_tag` U0
+        INNER JOIN `taggit_taggeditem` U1
+            ON (U0.`id` = U1.`tag_id`)
+            WHERE (U1.`object_id` = 12 AND U1.`content_type_id` = 16 ))
+        ) GROUP BY `taggit_taggeditem`.`content_type_id`, `taggit_taggeditem`.`object_id`
+        ORDER BY `n` DESC LIMIT 10
+        '''
     except:
         similars = ''
 
@@ -115,9 +128,6 @@ def new_link(request):
         'tags': tags
     })
 
-''' TODO: provide a view using Tags.similar_objects() :: https://github.com/alex/django-taggit/blob/develop/docs/api.txt
-and use it for autocomplete :: https://github.com/aehlke/tag-it'''
-
 
 @login_required
 def new_link_button(request, title='', url=''):
@@ -158,7 +168,6 @@ def new_link_button(request, title='', url=''):
                 'form': form,
                 'tags': tags
             })
-
 
     else:
         form = NewLinkForm(initial={

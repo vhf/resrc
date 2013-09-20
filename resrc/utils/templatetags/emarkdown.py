@@ -3,7 +3,7 @@ import markdown
 import bleach
 from django import template
 from django.utils.safestring import mark_safe
-import extensions
+import fixup
 
 register = template.Library()
 
@@ -23,7 +23,7 @@ def emarkdown(value):
         'i': ['class'],
     }
 
-    md_fixup = extensions.FixupExtension(None)
+    md_fixup = fixup.FixupExtension(None)
 
     return mark_safe('{0}'.format(
         bleach.clean(
@@ -52,7 +52,7 @@ def listmarkdown(value, alist):
         'i': ['class'],
     }
 
-    md_fixup = extensions.FixupExtension(alist)
+    md_fixup = fixup.FixupExtension(alist)
 
     return mark_safe('{0}'.format(
         bleach.clean(
