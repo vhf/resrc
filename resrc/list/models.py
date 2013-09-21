@@ -9,8 +9,6 @@ from resrc.link.models import Link
 
 
 class ListManager(models.Manager):
-    # TODO dafuq did I do. What's the diff between the following and titles_link_in_default ?
-    # titles_link_in_default seems to do the opposite of what its name suggests
 
     def personal_lists(self, owner):
         return self.get_query_set().prefetch_related('links') \
@@ -22,20 +20,17 @@ class ListManager(models.Manager):
             .filter(owner=owner) \
             .exclude(is_public=only_public)
 
-    def titles_link_in(self, owner, link_pk):
-        '''returns list containing titles of Lists containing this Link'''
+    def all_my_list_titles(self, owner, link_pk):
+        '''returns list of titles of Lists containing this Link'''
         titles = self.get_query_set().prefetch_related('links') \
-            .filter(owner=owner, links__pk=link_pk) \
-            .values_list('title', flat=True)
-        return list(titles)
+            .filter(owner=owner, links__pk=link_pk)
+        return titles
 
-    def titles_link_in_default(self, owner, link_pk):
-        '''returns list containing titles of default Lists containing this Link'''
-        titles = self.get_query_set().prefetch_related('links') \
-            .filter(owner=owner, links__pk=link_pk) \
-            .exclude(title__in=['Bookmarks', 'Reading list']) \
-            .values_list('title', flat=True)
-        return list(titles)
+    def my_list_titles(self, owner, link_pk):
+        '''returns  titles of my own Lists containing this Link'''
+        titles = self.all_my_list_titles(owner, link_pk) \
+            .exclude(title__in=['Bookmarks', 'Reading list'])
+        return titles
 
     def some_lists_from_link(self, link_pk):
         lists = self.get_query_set().prefetch_related('links') \

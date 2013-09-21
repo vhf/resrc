@@ -73,7 +73,7 @@ class ListTestCase(TestCase):
         with self.assertRaises(ListLinks.DoesNotExist):
             ListLinks.objects.get(alist=alist, links=link)
 
-    def test_titles_link_in_default(self):
+    def test_my_list_titles(self):
         a_personal_list = ListFactory()
         a_personal_list.save()
         a_default_list = ListFactory()
@@ -96,7 +96,7 @@ class ListTestCase(TestCase):
         listlink.save()
 
         self.assertEqual(
-            list(List.objects.titles_link_in_default(a_personal_list.owner, link.pk)), [a_personal_list.title])
+            list(List.objects.my_list_titles(a_personal_list.owner, link.pk).values_list('title', flat=True)), [a_personal_list.title])
 
     def test_personal_lists(self):
         a_personal_list = ListFactory()

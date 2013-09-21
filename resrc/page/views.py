@@ -14,7 +14,7 @@ def home(request):
     from django.db.models import Count
     tags = Tag.objects.select_related('links') \
         .annotate(c=Count('link')).order_by('-c') \
-        .all()[:50]
+        .all()[:55]
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,

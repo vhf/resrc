@@ -25,7 +25,8 @@ def single(request, link_pk, link_slug=None):
         raise Http404
 
     if request.user.is_authenticated():
-        titles = List.objects.titles_link_in(request.user, link_pk)
+        titles = list(List.objects.all_my_list_titles(request.user, link_pk) \
+            .values_list('title', flat=True))
         newlistform = NewListAjaxForm(link_pk)
 
     lists = List.objects.some_lists_from_link(link_pk)

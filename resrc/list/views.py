@@ -30,7 +30,8 @@ def single(request, list_pk, list_slug=None):
         from resrc.link.forms import NewLinkForm
         form = NewLinkForm(request.POST)
         from taggit.models import Tag
-        tags_addlink = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags_addlink = '","'.join(
+            Tag.objects.all().values_list('name', flat=True))
         tags_addlink = '"%s"' % tags_addlink
 
     return render_template('lists/show_single.html', {
@@ -104,7 +105,8 @@ def ajax_own_lists(request, link_pk):
         raise Http404
 
     all_lists = List.objects.personal_lists(request.user)
-    titles = List.objects.titles_link_in_default(request.user, link_pk)
+    titles = list(List.objects.my_list_titles(request.user, link_pk)
+                  .values_list('title', flat=True))
 
     return render_template('lists/ajax_own_lists.html', {
         'lists': all_lists,
@@ -182,7 +184,7 @@ def new_list(request):
                 is_public=not is_private
             )
             alist.save()
-            alist.html_content=listmarkdown(mdcontent, alist)
+            alist.html_content = listmarkdown(mdcontent, alist)
             alist.save()
 
             return redirect(alist.get_absolute_url())
@@ -269,11 +271,16 @@ def edit(request, list_pk):
 def my_lists(request, user_name):
     from django.db.models import Count
     if request.user.username == user_name:
-        lists = List.objects.user_lists(request.user, only_public=False).annotate(c=Count('links'))
+        user = request.user
+        only_public = False
         owner = True
     else:
-        lists = List.objects.user_lists(get_object_or_404(User, username=user_name)).annotate(c=Count('links'))
+        user = get_object_or_404(User, username=user_name)
+        only_public = True
         owner = False
+
+    lists = List.objects.user_lists(user, only_public=only_public) \
+        .annotate(c=Count('links'))
 
     return render_template('lists/lists_list.html', {
         'lists': lists,
