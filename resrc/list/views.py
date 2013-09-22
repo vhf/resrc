@@ -15,6 +15,8 @@ from .forms import NewListAjaxForm, NewListForm, EditListForm
 
 def single(request, list_pk, list_slug=None):
     alist = get_object_or_404(List, pk=list_pk)
+    alist.views = alist.views + 1
+    alist.save()
 
     if list_slug is None:
         return redirect(alist)
@@ -303,3 +305,18 @@ def ajax_upvote_list(request, list_pk):
             data = simplejson.dumps({'result': 'fail'})
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404
+
+
+def lists_page(request):
+    from resrc.tag.models import Vote
+    latest = List.objects.latest(25)
+    most_viewed = List.objects.most_viewed(25)
+    hottest = Vote.objects.hottest_lists(25)
+    most_voted = Vote.objects.hottest_lists(1000)
+
+    return render_template('lists/lists.html', {
+        'latest': latest,
+        'most_viewed': most_viewed,
+        'hottest': hottest,
+        'most_voted': most_voted,
+    })

@@ -15,17 +15,17 @@ Home
 
 <div class="row">
   <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "new-link" %}">Best lists</a></h3>
+    <h3><a href="{% url "lists" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li>{{ list.count }} <a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
   </div>
 
   <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "link-single" 1 %}">Latest links</a></h3>
+    <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
       <li><a href="{% url "link-single-slug" link.pk link.slug %}">{{ link.title }}</a></li>
@@ -44,10 +44,10 @@ Home
   </div>
 
   <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "new-list" %}">Hottest links</a></h3>
+    <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li>{{ link.count }} <a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><span class="votes">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>

@@ -1,0 +1,64 @@
+{% extends "lists/base.html" %}
+{% load profile %}
+{% load mptt_comments_tags %}
+
+{% block title %}
+    {{ list.title }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "lists" %}">Lists</a></li>{# TODO : Add real URLs here #}
+<li class="current">My lists</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <h1>Lists</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="medium-6 large-3 columns">
+    <h3>latest</h3>
+    <ul class="no-bullet">
+      {% for list in latest %}
+      <li><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="medium-6 large-3 columns">
+    <h3>most viewed</h3>
+    <ul class="no-bullet">
+      {% for list in most_viewed %}
+      <li><span class="votes">{{ list.views }}</span><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="medium-6 large-3 columns">
+    <h3>hottest</h3>
+    <ul class="no-bullet">
+      {% for list in hottest %}
+      <li><span class="votes">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="medium-6 large-3 columns">
+    <h3>most appreciated</h3>
+    <ul class="no-bullet">
+      {% for list in most_voted %}
+      <li><span class="votes">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block last_body %}
+{% endblock last_body %}

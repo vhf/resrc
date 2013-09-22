@@ -33,6 +33,7 @@ class ListManager(models.Manager):
         return titles
 
     def some_lists_from_link(self, link_pk):
+        '''To display : "as seen in..."'''
         lists = self.get_query_set().prefetch_related('links') \
             .filter(links__pk=link_pk) \
             .exclude(title__in=['Bookmarks', 'Reading list']) \
@@ -42,6 +43,16 @@ class ListManager(models.Manager):
             .exclude(is_public=False, ~Q(owner=request.user)))
             '''
         return list(lists)
+
+    def latest(self,limit=10):
+        return self.get_query_set() \
+            .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .order_by('-pubdate')[:limit]
+
+    def most_viewed(self,limit=10):
+        return self.get_query_set() \
+            .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .order_by('-views')[:limit]
 
 
 class List(models.Model):
@@ -65,6 +76,8 @@ class List(models.Model):
     owner = models.ForeignKey(User, related_name="list_owner")
     is_public = models.BooleanField(default=True)
     pubdate = models.DateField(auto_now_add=True)
+
+    views = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()

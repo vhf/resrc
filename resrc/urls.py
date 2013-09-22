@@ -9,17 +9,17 @@ import settings
 
 urlpatterns = patterns(
     '',
-    url(r'^u/',  include('resrc.userprofile.urls')),
-    url(r'^lk/', include('resrc.link.urls')),
-    url(r'^ls/', include('resrc.list.urls')),
-    url(r'^p/',  include('resrc.page.urls')),
-    url(r'^t/',  include('resrc.tag.urls')),
+    url(r'^user/',  include('resrc.userprofile.urls')),
+    url(r'^link/', include('resrc.link.urls')),
+    url(r'^list/', include('resrc.list.urls')),
+    url(r'^page/',  include('resrc.page.urls')),
+    url(r'^tag/',  include('resrc.tag.urls')),
     url(r'^f/', include('resrc.feedback.urls')),
     url(r'^a/',  include(admin.site.urls)),
 
     # third party includes
     url(r'^ca/', include('captcha.urls')),
-    url(r'^co/', include('mptt_comments.urls')),
+    url(r'^comment/', include('mptt_comments.urls')),
 
     url(r'^$', page.views.home, name="home"),
 

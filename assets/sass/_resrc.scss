@@ -77,3 +77,9 @@ p.tag {
   }
 
 }
+
+.votes {
+  @include label();
+  background-color: #FFFFCC;
+  color: #555555;
+}

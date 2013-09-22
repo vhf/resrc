@@ -5,6 +5,7 @@ import views
 
 urlpatterns = patterns(
     '',
+    url(r'^$', views.lists_page, name="lists"),
     url(r'^(?P<list_pk>\d+)/$', views.single, name="list-single"),
     url(r'^(?P<list_pk>\d+)/upvote$', views.ajax_upvote_list, name="list-upvote"),
     url(r'^edit/(?P<list_pk>\d+)$', views.edit, name="list-edit"),

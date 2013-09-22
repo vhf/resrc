@@ -7,21 +7,9 @@ def home(request):
     latest_links = Link.objects.latest()
 
     from resrc.tag.models import Vote
-    from django.db.models import Count
-    from datetime import timedelta, datetime
-    hottest_links = Vote.objects \
-        .filter(time__gt=datetime.now()-timedelta(days=1)) \
-        .exclude(link=None) \
-        .values('link__pk', 'link__slug', 'link__title') \
-        .annotate(count=Count('id')) \
-        .order_by('-count')[:10]
+    hottest_links = Vote.objects.hottest_links()
 
-    hottest_lists = Vote.objects \
-        .filter(time__gt=datetime.now()-timedelta(days=1)) \
-        .exclude(alist=None) \
-        .values('alist__pk', 'alist__slug', 'alist__title') \
-        .annotate(count=Count('id')) \
-        .order_by('-count')[:10]
+    hottest_lists = Vote.objects.hottest_lists()
 
     from taggit.models import Tag
     from django.db.models import Count
