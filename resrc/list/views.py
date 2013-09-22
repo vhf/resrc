@@ -287,3 +287,19 @@ def my_lists(request, user_name):
         'owner': owner,
         'username': user_name
     })
+
+
+def ajax_upvote_list(request, list_pk):
+    if request.user.is_authenticated() and request.method == 'POST':
+        alist = get_object_or_404(List, pk=list_pk)
+        from resrc.tag.models import Vote
+        already_voted = Vote.objects.filter(
+            user=request.user, alist=alist).exists()
+        if not already_voted:
+            alist.vote(request.user)
+            data = simplejson.dumps({'result': 'success'})
+            return HttpResponse(data, mimetype="application/javascript")
+        else:
+            data = simplejson.dumps({'result': 'fail'})
+            return HttpResponse(data, mimetype="application/javascript")
+    raise Http404

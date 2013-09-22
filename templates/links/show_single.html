@@ -24,9 +24,10 @@
       {% endwith %}
     </div>
     <div class="small-3 columns text-right list-symbols">
-        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%} has-tip" id="bookmark" data-tooltip title="Add to bookmarks list">addstar</a>
-        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%} has-tip" id="toread" data-tooltip title="Add to reading list">save</a>
-        <a class="lsf symbol has-tip"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
+        <a class="lsf symbol" id="vote" data-tooltip title="Vote for this link">check</a>
+        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark" data-tooltip title="Add to bookmarks list">bookmark</a>
+        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
+        <a class="lsf symbol"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
     </div>
   </div>
 
@@ -115,6 +116,17 @@
   });
   $('#toread').click(function() {
     add_to_default_list('toread');
+  });
+  $('#vote').click(function() {
+    var button = $(this);
+    $.ajax({
+      type:"POST",
+      url:"{% url "link-upvote" link.pk %}",
+      data: 'csrfmiddlewaretoken={{csrf_token}}',
+      error: function(xhr) {
+        $(button).html('checkbox');
+      }
+    });
   });
 
   $('#createlist').click(function() {

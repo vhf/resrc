@@ -5,10 +5,10 @@ from resrc.utils import render_template
 def home(request):
     from resrc.link.models import Link
     latest_links = Link.objects.latest()
-    hottest_links = Link.objects.hottest()
+    hottest_links = [] # Link.objects.hottest()
 
     from resrc.list.models import List
-    hottest_lists = List.objects.hottest()
+    hottest_lists = [] # List.objects.hottest()
 
     from taggit.models import Tag
     from django.db.models import Count

@@ -41,7 +41,7 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <h1>{{ list.title }}</h1>
+    <h1>{{ list.title }}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Vote for this list">check</a></h1>
     <p>{{ list.description }}</p>
     <p class="byline">
       {% with author=list.owner %}
@@ -134,10 +134,22 @@ $(function(){
         } else {
           message.text('Error.');
           message.removeClass('success').addClass('alert');
-      }
-      message.show();
-    },
+        }
+        message.show();
+      },
+    });
   });
+
+  $('#vote').click(function() {
+    var button = $(this);
+    $.ajax({
+      type:"POST",
+      url:"{% url "list-upvote" list.pk %}",
+      data: 'csrfmiddlewaretoken={{csrf_token}}',
+      error: function(xhr) {
+        $(button).html('checkbox');
+      }
+    });
   });
 
 });

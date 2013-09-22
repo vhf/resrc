@@ -43,11 +43,6 @@ class ListManager(models.Manager):
             '''
         return list(lists)
 
-    def hottest(self,limit=10):
-        return self.get_query_set().exclude(title__in=['Bookmarks', 'Reading list']) \
-            .order_by('score_h24')[:limit]
-
-
 
 class List(models.Model):
 
@@ -70,22 +65,6 @@ class List(models.Model):
     owner = models.ForeignKey(User, related_name="list_owner")
     is_public = models.BooleanField(default=True)
     pubdate = models.DateField(auto_now_add=True)
-
-    upvotes = models.IntegerField('upvotes', default=0)
-    votes_h00 = models.IntegerField(default=0)
-    votes_h02 = models.IntegerField(default=0)
-    votes_h04 = models.IntegerField(default=0)
-    votes_h06 = models.IntegerField(default=0)
-    votes_h08 = models.IntegerField(default=0)
-    votes_h10 = models.IntegerField(default=0)
-    votes_h12 = models.IntegerField(default=0)
-    votes_h14 = models.IntegerField(default=0)
-    votes_h16 = models.IntegerField(default=0)
-    votes_h18 = models.IntegerField(default=0)
-    votes_h20 = models.IntegerField(default=0)
-    votes_h22 = models.IntegerField(default=0)
-
-    score_h24 = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()
@@ -138,26 +117,14 @@ class List(models.Model):
             .values_list('name', 'slug') \
             .annotate(c=Count('name')).order_by('-c')
 
-    def vote(self):
-        from datetime import datetime
-        hour = datetime.now().hour
-        hours = {
-            0: 'votes_h00', 1: 'votes_h00', 2: 'votes_h02', 3: 'votes_h02', 4: 'votes_h04',
-            5: 'votes_h04', 6: 'votes_h06', 7: 'votes_h06', 8: 'votes_h08', 9: 'votes_h08',
-            10: 'votes_h10', 11: 'votes_h10', 12: 'votes_h12', 13: 'votes_h12', 14: 'votes_h14',
-            15: 'votes_h14', 16: 'votes_h16', 17: 'votes_h16', 18: 'votes_h18', 19: 'votes_h18',
-            20: 'votes_h20', 21: 'votes_h20', 22: 'votes_h22', 23: 'votes_h22'}
-        link = self
-        link.upvotes = link.upvotes + 1
-        attr = getattr(link, hours[hour])
-        setattr(link, hours[hour], attr + 1)
-        setattr(link, hours[(hour + 2) % 24], 0)
-
-        gravity = 1.8
-        item_hour_age = 2
-        votes = sum([getattr(link, hours[h]) for h in xrange(0, 24, 2)])
-        link.score_h24 = (votes - 1) / pow((item_hour_age + 2), gravity)
-        link.save()
+    def vote(self, user):
+        from resrc.tag.models import Vote
+        vote = Vote.objects.create(
+            user=user,
+            link=None,
+            alist=self
+        )
+        vote.save()
 
 
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
@@ -179,22 +146,22 @@ class ListLinks(models.Model):
         alist.save()
 
     def remove(self):
-        # TODO : fix this thing
+        pass
         # Probably the best way is to create a listmarkdown() like to properly remove links
-        listlink = self
-        alist = listlink.alist
-        link = listlink.links
-        md_link = "[%s](%s)" % (
-            link.get_absolute_url(), link.title, link.url
-        )
+        # listlink = self
+        # alist = listlink.alist
+        # link = listlink.links
+        # md_link = "[%s](%s)" % (
+        #     link.get_absolute_url(), link.title, link.url
+        # )
 
-        alist.md_content = alist.md_content.replace(md_link, '')
+        # alist.md_content = alist.md_content.replace(md_link, '')
 
-        import re
-        SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
-        REPLACE = r' '
-        alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
+        # import re
+        # SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
+        # REPLACE = r' '
+        # alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
 
-        from resrc.utils.templatetags.emarkdown import listmarkdown
-        alist.html_content = listmarkdown(alist.md_content, alist)
-        alist.save()
+        # from resrc.utils.templatetags.emarkdown import listmarkdown
+        # alist.html_content = listmarkdown(alist.md_content, alist)
+        # alist.save()

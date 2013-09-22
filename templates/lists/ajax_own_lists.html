@@ -6,8 +6,8 @@
         {% if lists %}
           {% for list in lists %}
           <label for="list-{{ list.pk }}">
-              <input class="list" type="checkbox" value="{{ list.pk }}" id="list-{{ list.pk }}" {% if list.title in titles %}checked="checked"{% endif %}/>
-              {{ list.title }} <span>({{ list.links.count }} link{{ list.links.count|pluralize }})</span>
+              <input class="list" type="checkbox" value="{{ list.pk }}" id="list-{{ list.pk }}" {% if list.title in titles %}checked="checked" disabled="disabled"{% endif %}/><a href="{% url "list-single-slug" list.pk list.slug%}">
+              {{ list.title }} <span>({{ list.links.count }} link{{ list.links.count|pluralize }})</span></a> [<a href="{% url "list-edit" list_pk=list.pk %}">edit</a>]
           </label>
           {% endfor %}
           <p>

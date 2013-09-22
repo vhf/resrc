@@ -2,6 +2,8 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+import simplejson
 
 from taggit.models import Tag
 
@@ -25,8 +27,8 @@ def single(request, link_pk, link_slug=None):
         raise Http404
 
     if request.user.is_authenticated():
-        titles = list(List.objects.all_my_list_titles(request.user, link_pk) \
-            .values_list('title', flat=True))
+        titles = list(List.objects.all_my_list_titles(request.user, link_pk)
+                      .values_list('title', flat=True))
         newlistform = NewListAjaxForm(link_pk)
 
     lists = List.objects.some_lists_from_link(link_pk)
@@ -60,6 +62,7 @@ def single(request, link_pk, link_slug=None):
 
 
 @login_required
+@csrf_exempt
 def new_link(request):
     if request.method == 'POST':
         form = NewLinkForm(request.POST)
@@ -132,49 +135,10 @@ def new_link(request):
 
 @login_required
 def new_link_button(request, title='', url=''):
-    if request.method == 'POST':
-        form = NewLinkForm(request.POST)
-        if form.is_valid():
-            data = form.data
-
-            link = Link()
-            link.title = data['title']
-            link.url = data['url']
-            from resrc.tag.models import Language
-            link.language = Language.objects.get(
-                language=form.data['language'])
-            link.level = data['level']
-            link.author = request.user
-
-            if Link.objects.filter(url=data['url']).exists():
-                return redirect(Link.objects.get(url=data['url']).get_absolute_url())
-
-            link.save()
-            list_tags = data['tags'].split(',')
-            for tag in list_tags:
-                link.tags.add(tag)
-            link.save()
-
-            return redirect(link.get_absolute_url())
-
-        else:
-            form = NewLinkForm(initial={
-                'title': title,
-                'url': url,
-            })
-            tags = '","'.join(
-                Tag.objects.all().values_list('name', flat=True))
-            tags = '"%s"' % tags
-            return render_template('links/new_link_button.html', {
-                'form': form,
-                'tags': tags
-            })
-
-    else:
-        form = NewLinkForm(initial={
-            'title': title,
-            'url': url,
-        })
+    form = NewLinkForm(initial={
+        'title': title,
+        'url': url,
+    })
 
     tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
     tags = '"%s"' % tags
@@ -243,3 +207,19 @@ def edit_link(request, link_pk):
         'form': form,
         'tags': tags
     })
+
+
+def ajax_upvote_link(request, link_pk, list_pk=None):
+    if request.user.is_authenticated() and request.method == 'POST':
+        link = get_object_or_404(Link, pk=link_pk)
+        from resrc.tag.models import Vote
+        already_voted = Vote.objects.filter(
+            user=request.user, link=link).exists()
+        if not already_voted:
+            link.vote(request.user, list_pk)
+            data = simplejson.dumps({'result': 'success'})
+            return HttpResponse(data, mimetype="application/javascript")
+        else:
+            data = simplejson.dumps({'result': 'fail'})
+            return HttpResponse(data, mimetype="application/javascript")
+    raise Http404
