@@ -18,7 +18,7 @@ Home
     <h3><a href="{% url "new-link" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li><a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a></li>
+      <li>{{ list.count }} <a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -47,7 +47,7 @@ Home
     <h3><a href="{% url "new-list" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><a href="{% url "link-single-slug" link.pk link.slug %}">{{ link.title }}</a></li>
+      <li>{{ link.count }} <a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>

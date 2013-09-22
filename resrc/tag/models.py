@@ -14,4 +14,4 @@ class Vote(models.Model):
     user = models.ForeignKey(User, verbose_name='user')
     alist = models.ForeignKey(List, null=True, blank=True)
     link = models.ForeignKey(Link, null=True, blank=True)
-    time = models.DateField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
