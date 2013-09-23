@@ -229,8 +229,8 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
 
 def links_page(request):
     from resrc.tag.models import Vote
-    latest = List.objects.latest(limit=25)
-    hottest = Vote.objects.hottest_links(limit=25)
+    latest = Vote.objects.latest_links(limit=25, days=7)
+    hottest = Vote.objects.hottest_links(limit=25, days=7)
     most_voted = Vote.objects.hottest_links(limit=25, days=30)
 
     return render_template('links/links.html', {

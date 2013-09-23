@@ -17,6 +17,9 @@
   <div class="large-12">
     <div class="panel">
       <h1><span>Find Y resources about X in <span class="show-for-large">Zero</span><span class="hide-for-large">0</span> minutes</span></h1>
+      <p>Sometimes, search engine fail at recommanding the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
+      <p>Find articles, tutorials, documentation, screencasts just about anything programming related. Browse by <strong>tags</strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
+      <p>Create and publish your lists or import them directly (e.g. from GitHub) in Markdown, add links to your Bookmark List or your Reading List.</p>
     </div>
   </div>
 </div>
@@ -26,7 +29,7 @@
     <h3><a href="{% url "lists" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li><span class="votes">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}"><span class="votes lsf">{{ list.count }}</span>{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -36,7 +39,7 @@
     <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><a href="{% url "link-single-slug" link.pk link.slug %}">{{ link.title }}</a></li>
+      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i><span class="votes lsf">{{ link.count }}</span>{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -55,13 +58,23 @@
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><span class="votes">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i><span class="votes lsf">{{ link.count }}</span>{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
   </div>
 </div>
 
+<div class="row">
+  <div class="large-12 columns">
+    <h5>legend</h5>
+    <ul class="no-bullet inline-list">
+      <li><a href="#"><span class="votes lsf">74</span>I'm a list with 74 votes</a></li>
+      <li class="tag" style="margin-top: 5px"><a href="#"><span class="c">8</span><span class="t">I'm a tag with 8 links</span></a></li>
+      <li><a href="#"><i class="lsf i-b">link</i><span class="votes lsf">17</span>I'm a link with 17 votes</a></li>
+    </ul>
+  </div>
+</div>
 {% endblock %}
 
 {% block last_body %}

@@ -3,13 +3,11 @@ from resrc.utils import render_template
 
 
 def home(request):
-    from resrc.link.models import Link
-    latest_links = Link.objects.latest()
-
     from resrc.tag.models import Vote
-    hottest_links = Vote.objects.hottest_links()
+    hottest_links = Vote.objects.hottest_links(limit=10, days=7)
+    latest_links = Vote.objects.latest_links(limit=10, days=7)
 
-    hottest_lists = Vote.objects.hottest_lists()
+    hottest_lists = Vote.objects.hottest_lists(limit=10, days=7)
 
     from taggit.models import Tag
     from django.db.models import Count

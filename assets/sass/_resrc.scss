@@ -60,26 +60,3 @@ h3::selection {
   background-color: #F1C1C2;
   color: #222222;
 }
-
-p.tag {
-  display: block;
-  margin-right: 5px;
-  line-height: 1;
-  margin-bottom: 0.5em;
-
-  & .t {
-    @include label();
-  }
-  & .c {
-    @include label();
-    background-color: #e9e9e9;
-    color: #333333;
-  }
-
-}
-
-.votes {
-  @include label();
-  background-color: #FFFFCC;
-  color: #555555;
-}

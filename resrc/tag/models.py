@@ -18,6 +18,32 @@ class VoteManager(models.Manager):
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]
 
+    def latest_links(self, limit=10, days=1):
+        from resrc.link.models import Link
+        latest = list(Link.objects.latest(limit=limit))
+        voted = list(self.get_query_set() \
+            .filter(time__gt=datetime.now() - timedelta(days=days)) \
+            .exclude(link=None) \
+            .values('link__pk', 'link__slug', 'link__title') \
+            .annotate(count=Count('id')) \
+            .order_by('-link__pubdate')[:limit])
+        voted_id = [link['link__pk'] for link in voted]
+
+        links = []
+        for link in latest:
+            if link['pk'] in voted_id:
+                new_link = [l for l in voted if l['link__pk'] == link['pk']]
+                links += new_link
+            else:
+                new_link = {}
+                new_link['count'] = 0
+                new_link['link__pk'] = link['pk']
+                new_link['link__slug'] = link['slug']
+                new_link['link__title'] = link['title']
+                links += [new_link]
+        return links[:limit]
+
+
     def hottest_lists(self, limit=10, days=1):
         return self.get_query_set() \
             .filter(time__gt=datetime.now() - timedelta(days=days)) \
