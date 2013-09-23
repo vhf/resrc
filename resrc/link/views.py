@@ -223,3 +223,16 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
             data = simplejson.dumps({'result': 'fail'})
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404
+
+
+def links_page(request):
+    from resrc.tag.models import Vote
+    latest = List.objects.latest(limit=25)
+    hottest = Vote.objects.hottest_links(limit=25)
+    most_voted = Vote.objects.hottest_links(limit=25, days=30)
+
+    return render_template('links/links.html', {
+        'latest': latest,
+        'hottest': hottest,
+        'most_voted': most_voted,
+    })

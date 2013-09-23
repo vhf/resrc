@@ -310,9 +310,9 @@ def ajax_upvote_list(request, list_pk):
 def lists_page(request):
     from resrc.tag.models import Vote
     latest = List.objects.latest(25)
-    most_viewed = List.objects.most_viewed(25)
-    hottest = Vote.objects.hottest_lists(25)
-    most_voted = Vote.objects.hottest_lists(1000)
+    most_viewed = List.objects.most_viewed(limit=25)
+    hottest = Vote.objects.hottest_lists(limit=25)
+    most_voted = Vote.objects.hottest_lists(limit=25, days=30)
 
     return render_template('lists/lists.html', {
         'latest': latest,

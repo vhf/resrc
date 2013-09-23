@@ -5,7 +5,7 @@ import views
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.new_link, name="links"),
+    url(r'^$', views.links_page, name="links"),
     url(r'^(?P<link_pk>\d+)/$', views.single, name="link-single"),
     url(r'^(?P<link_pk>\d+)/(?P<link_slug>.+)/$', views.single, name="link-single-slug"),
     url(r'^(?P<link_pk>\d+)/edit$', views.edit_link, name="link-edit"),
