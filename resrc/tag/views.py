@@ -22,19 +22,11 @@ def single(request, tag_slug):
 def index(request):
     from django.db.models import Count
     tags = Tag.objects.select_related('links') \
-        .annotate(c=Count('link')).order_by('-c') \
+        .annotate(c=Count('link')).order_by('-c', 'name') \
+        .exclude(name=None) \
         .all()
     tags = list(tags)
-    total = len(tags)
-    third = float(len(tags))/float(3)
-    from math import ceil, floor
-    tags_col_1 = tags[0:int(ceil(third))]
-    tags_col_2 = tags[int(ceil(third))+1:int(ceil(third))*2]
-    tags_col_3 = tags[int(ceil(third))*2+1:]
 
     return render_template('tags/show_index.html', {
-        'tags_col_1' : tags_col_1,
-        'tags_col_2' : tags_col_2,
-        'tags_col_3' : tags_col_3,
-        'request': request,
+        'tags' : tags
     })

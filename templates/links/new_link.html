@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block title %}
-New link
+{% if edit %}Edit link{% else %}New link{% endif %}
 {% endblock %}
 
 {% block extrahead %}
@@ -19,7 +19,7 @@ New link
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
 <li><a href="#">Links</a></li>{# TODO : Add real URLs here #}
-<li class="current">New link</li>
+<li class="current">{% if edit %}Edit link{% else %}New link{% endif %}</li>
 {% endblock %}
 
 {% block content %}

@@ -168,7 +168,6 @@ INTERNAL_APPS = [
     'resrc.list',
     'resrc.page',
     'resrc.utils',
-    'resrc.feedback',
     'resrc.tag',
 ]
 
@@ -224,10 +223,10 @@ MPTT_COMMENTS_COLLAPSE_ABOVE = 4
 MPTT_COMMENTS_CUTOFF = 5
 
 AUTH_PROFILE_MODULE = 'userprofile.Profile'
-LOGIN_URL = '/u/login'
+LOGIN_URL = '/user/login'
 
 ABSOLUTE_URL_OVERRIDES = {
-    'auth.user': lambda u: '/u/user/{0}'.format(u.username)
+    'auth.user': lambda u: '/user/user/{0}'.format(u.username)
 }
 
 GOOGLE_ANALYTICS_KEY = ''

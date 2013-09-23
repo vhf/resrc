@@ -102,7 +102,6 @@ def logout_view(request):
 @login_required
 def settings_profile(request):
     profile = Profile.objects.get(user=request.user)
-
     if request.method == 'POST':
         form = ProfileForm(request.POST, request.user)
         if form.is_valid():

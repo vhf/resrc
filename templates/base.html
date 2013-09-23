@@ -1,6 +1,5 @@
 ﻿{% load staticfiles %}
 {% load gravatar %}
-{% load feedback_tags %}
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -29,28 +28,36 @@
 
     <section class="top-bar-section">
       <ul class="left">
-        {% if user.is_authenticated %}
         <li class="has-dropdown">
           <a href="{% url "lists" %}">
             Lists
           </a>
           <ul class="dropdown">
+            <li><a href="{% url "lists" %}">Summary</a></li>
+            {% if user.is_authenticated %}
             <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
             <li><a href="{% url "new-list" %}">New list</a></li>
+            {% endif %}
           </ul>
         </li>
-        <li>
-          <a href="{% url "lists" %}">
+        <li class="has-dropdown">
+          <a href="{% url "links" %}">
             Links
           </a>
           <ul class="dropdown">
+            <li><a href="{% url "links" %}">Summary</a></li>
+            {% if user.is_authenticated %}
             <li><a href="{% url "new-link" %}">New link</a></li>
-
+            {% endif %}
           </ul>
         </li>
-        {% endif %}
-        <li>
-          <a id="feedbackSnippet" href="{% url "feedback" %}" data-reveal-id="feedback-modal">Bugs / Feedback</a>
+        <li class="has-dropdown">
+          <a href="{% url "tag-index" %}">
+            Tags
+          </a>
+          <ul class="dropdown">
+            <li><a href="{% url "tag-index" %}">Summary</a></li>
+          </ul>
         </li>
       </ul>
 
@@ -109,13 +116,6 @@
     </div>
   </footer>
   {% endblock %}
-
-  {% if user.is_authenticated %}
-  {% feedback request.path request.user %}
-  {% else %}
-  {% feedback request.path None %}
-  {% endif %}
-  <script type="text/javascript" src="{% static "feedback/js/feedback.js" %}"></script>
 
   <!-- Included JS Files (Uncompressed) -->
   <script>

@@ -187,6 +187,7 @@ def edit_link(request, link_pk):
             tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
             tags = '"%s"' % tags
             return render_template('links/new_link.html', {
+                'edit': True,
                 'form': form,
                 'tags': tags
             })
@@ -204,6 +205,7 @@ def edit_link(request, link_pk):
     tags = '"%s"' % tags
 
     return render_template('links/new_link.html', {
+        'edit': True,
         'form': form,
         'tags': tags
     })
