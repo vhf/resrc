@@ -16,7 +16,7 @@ i {
 
 .list-symbols {
   .symbol {
-    font-size: emCalc(35px);
+    font-size: emCalc(22px);
     color: black;
   }
   a.waiting {
@@ -27,6 +27,21 @@ i {
   }
   a.checked {
     color:#2ba6cb;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .list-symbols {
+    .symbol {
+      font-size: emCalc(30px);
+    }
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  .list-symbols {
+    .symbol {
+      font-size: emCalc(35px);
+    }
   }
 }
 

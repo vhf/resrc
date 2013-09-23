@@ -13,7 +13,7 @@
 
 {% block content %}
   <div class="row">
-    <div class="small-9 columns">
+    <div class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
         <p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
@@ -22,23 +22,30 @@
         {% endif %}{% endfor %}
       </div>
       {% endwith %}
-    </div>
-    <div class="small-3 columns text-right list-symbols">
-        <a class="lsf symbol" id="vote" data-tooltip title="Vote for this link">check</a>
-        <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark" data-tooltip title="Add to bookmarks list">bookmark</a>
-        <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
-        <a class="lsf symbol"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="large-12 columns ">
-      <h3 class="link-title"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
+
+      <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago{% if author = request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
+    </div>
+    <div class="large-2 small-2 columns text-right list-symbols">
+      <div class="row">
+        <div class="large-3 columns">
+          <a class="lsf symbol" id="vote" data-tooltip title="Vote for this link">check</a>
+        </div>
+        <div class="large-3 columns">
+          <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark" data-tooltip title="Add to bookmarks list">bookmark</a>
+        </div>
+        <div class="large-3 columns">
+          <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
+        </div>
+        <div class="large-3 columns">
+          <a class="lsf symbol"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
+        </div>
+      </div>
     </div>
   </div>
 

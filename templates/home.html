@@ -1,17 +1,25 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block title %}
-Home
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block meta %}
 <meta name="description" content="reSRC, the root of actual learning" />
 {% endblock %}
 
+{% block breadcrumb_container %} {% endblock %}
+
 {# Content #}
 
 {% block content %}
+
+<div class="row">
+  <div class="large-12">
+    <div class="panel">
+      <h1><span>Find Y resources about X in <span class="show-for-large">Zero</span><span class="hide-for-large">0</span> minutes</span></h1>
+    </div>
+  </div>
+</div>
 
 <div class="row">
   <div class="medium-6 large-3 columns">
