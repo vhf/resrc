@@ -38,7 +38,10 @@ def single(request, list_pk, list_slug=None):
 
         # from tldr.tldr import TLDRClient
         # client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
-        # tldrs = client.searchBatch(alist.links.values_list('url', flat=True).all()[:100])
+        # tldrs = client.searchBatch(list(alist.links.values_list('url', flat=True).all()[:100]))
+        # for tl in tldrs['tldrs']:
+        #     tl['id'] = tl['_id']
+        # tldr_urls = [tl['originalUrl'] for tl in tldrs['tldrs']]
 
     return render_template('lists/show_single.html', {
         'form': form,
@@ -46,6 +49,8 @@ def single(request, list_pk, list_slug=None):
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'default_lists': ['Bookmarks', 'Reading list'],
+        # 'tldrs': tldrs,
+        # 'tldr_urls': tldr_urls,
         'request': request
     })
 
