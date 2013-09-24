@@ -24,7 +24,7 @@ Links summary
     <h3>latest</h3>
     <ul class="no-bullet">
       {% for link in latest %}
-      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i> {{ link.link__title }}</a></li>
+      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -33,7 +33,7 @@ Links summary
     <h3>hottest</h3>
     <ul class="no-bullet">
       {% for link in hottest %}
-      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i><span class="votes lsf">{{ link.count }}</span>{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -42,7 +42,7 @@ Links summary
     <h3>most appreciated</h3>
     <ul class="no-bullet">
       {% for link in most_voted %}
-      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i><span class="votes lsf">{{ link.count }}</span>{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -63,4 +63,21 @@ Links summary
 
 
 {% block last_body %}
+<script>
+  $('.votes').click(function() {
+    var button = $(this);
+    var url = '/link/'+$(button).attr('data-id')+'/upvote';
+    $.ajax({
+      type:"POST",
+      url: url,
+      data: 'csrfmiddlewaretoken={{csrf_token}}',
+      error: function(xhr) {
+        result = $.parseJSON(xhr.response).result;
+        if (result == 'success') {
+          $(button).html(parseInt($(button).html(), 10)+1);
+        }
+      }
+    });
+  });
+</script>
 {% endblock last_body %}

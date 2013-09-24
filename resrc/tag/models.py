@@ -54,6 +54,15 @@ class VoteManager(models.Manager):
             .order_by('-count')[:limit]
 
 
+    def votes_for_link(self, link_pk):
+        return len(list(self.get_query_set() \
+            .filter(link__pk=link_pk)))
+
+
+    def votes_for_list(self, list_pk):
+        return len(list(self.get_query_set() \
+            .filter(alist__pk=list_pk)))
+
 class Vote(models.Model):
 
     objects = VoteManager()

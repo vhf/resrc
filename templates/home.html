@@ -29,7 +29,7 @@
     <h3><a href="{% url "lists" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}"><span class="votes lsf">{{ list.count }}</span>{{ list.alist__title }}</a></li>
+      <li><span class="votes lsf" data-id="{{list.alist__pk}}" data-type="list">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -39,7 +39,7 @@
     <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><a href="{% url "link-single-slug" link.link__pk link.link__slug %}"><i class="lsf i-b">link</i><span class="votes lsf">{{ link.count }}</span>{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}" data-type="link">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -78,4 +78,22 @@
 {% endblock %}
 
 {% block last_body %}
+<script>
+  $('.votes').click(function() {
+    var button = $(this);
+    var url = '/'+($(button).attr('data-type'))+'/'+$(button).attr('data-id')+'/upvote';
+
+    $.ajax({
+      type:"POST",
+      url: url,
+      data: 'csrfmiddlewaretoken={{csrf_token}}',
+      error: function(xhr) {
+        result = $.parseJSON(xhr.response).result;
+        if (result == 'success') {
+          $(button).html(parseInt($(button).html(), 10)+1);
+        }
+      }
+    });
+  });
+</script>
 {% endblock %}

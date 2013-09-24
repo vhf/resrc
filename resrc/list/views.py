@@ -44,10 +44,11 @@ def single(request, list_pk, list_slug=None):
         # for tl in tldrs['tldrs']:
         #     tl['id'] = tl['_id']
         # tldr_urls = [tl['originalUrl'] for tl in tldrs['tldrs']]
-
+    from resrc.tag.models import Vote
     return render_template('lists/show_single.html', {
         'form': form,
         'list': alist,
+        'count': Vote.objects.votes_for_list(alist.pk),
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'default_lists': ['Bookmarks', 'Reading list'],

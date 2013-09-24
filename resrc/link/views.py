@@ -54,9 +54,10 @@ def single(request, link_pk, link_slug=None):
     from tldr.tldr import TLDRClient
     client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
     tldr = client.searchByUrl(link.url)
-
+    from resrc.tag.models import Vote
     return render_template('links/show_single.html', {
         'link': link,
+        'count': Vote.objects.votes_for_link(link.pk),
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
