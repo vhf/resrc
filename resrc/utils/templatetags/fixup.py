@@ -32,7 +32,7 @@ def fixup(elem, alist):
             reverse(url)
         except:
             internal_link = False
-            if url[:4] == '/lk/':
+            if url[:6] == '/link/' or url[:6] == '/list/':
                 internal_link = True
             if url[0] == '#':
                 internal_link = True
