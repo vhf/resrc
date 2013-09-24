@@ -51,6 +51,19 @@
     </div>
   </div>
 
+{% if tldr %}
+<div class="row">
+  <div class="large-12 columns">
+    <h5>TL;DR</h5>
+    <ul>{% for bul in tldr.summaryBullets %}
+      <li>{{bul}}</li>
+    {% endfor %}</ul>
+    <p class="byline">
+      by <a href="http://tldr.io/{{ tldr.creator.username }}">{{ tldr.creator.username }}</a>, courtesy of <a href="http://tldr.io/">tldr.io/</a>
+    </p>
+  </div>
+</div>
+{% endif %}
 
 <div class="row">
   <div class="large-12 columns">
@@ -84,10 +97,10 @@
 {% block foundation_plugins %}
 <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
 <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
+<script src="{% static "js/mptt_comments/mptt_comments.js" %}"></script>
 {% endblock %}
 
 {% block last_body %}
-  {% mptt_comments_media_js %}
   {% if request.user.is_authenticated %}
   <div id="add-to-list" class="small reveal-modal"></div>
 

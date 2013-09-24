@@ -36,6 +36,10 @@ def single(request, list_pk, list_slug=None):
             Tag.objects.all().values_list('name', flat=True))
         tags_addlink = '"%s"' % tags_addlink
 
+        # from tldr.tldr import TLDRClient
+        # client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
+        # tldrs = client.searchBatch(alist.links.values_list('url', flat=True).all()[:100])
+
     return render_template('lists/show_single.html', {
         'form': form,
         'list': alist,

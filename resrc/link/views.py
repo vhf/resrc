@@ -51,12 +51,17 @@ def single(request, link_pk, link_slug=None):
     except:
         similars = ''
 
+    from tldr.tldr import TLDRClient
+    client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
+    tldr = client.searchByUrl(link.url)
+
     return render_template('links/show_single.html', {
         'link': link,
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
         'similars': similars,
+        'tldr': tldr,
         'lists': lists
     })
 
