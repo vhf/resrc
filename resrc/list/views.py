@@ -24,6 +24,8 @@ def single(request, list_pk, list_slug=None):
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
     if alist.slug != list_slug:
         raise Http404
+    if not alist.is_public and request.user != alist.owner:
+        raise Http404
 
     form = None
     tags_addlink = ''
@@ -278,7 +280,6 @@ def edit(request, list_pk):
         })
 
 
-@login_required
 def my_lists(request, user_name):
     from django.db.models import Count
     if request.user.username == user_name:

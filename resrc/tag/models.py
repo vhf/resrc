@@ -48,6 +48,7 @@ class VoteManager(models.Manager):
         return self.get_query_set() \
             .filter(time__gt=datetime.now() - timedelta(days=days)) \
             .exclude(alist=None) \
+            .exclude(alist__is_public=False) \
             .values('alist__pk', 'alist__slug', 'alist__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]

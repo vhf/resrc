@@ -42,7 +42,7 @@ Lists summary
     <h3>hottest</h3>
     <ul class="no-bullet">
       {% for list in hottest %}
-      <li><span class="votes">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes lsf">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>

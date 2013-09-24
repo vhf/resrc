@@ -16,9 +16,11 @@ class ListManager(models.Manager):
             .exclude(title__in=['Bookmarks', 'Reading list'])
 
     def user_lists(self, owner, only_public=True):
-        return self.get_query_set().prefetch_related('links') \
-            .filter(owner=owner) \
-            .exclude(is_public=only_public)
+        qs = self.get_query_set().prefetch_related('links') \
+            .filter(owner=owner)
+        if only_public:
+            qs = qs.exclude(is_public=False)
+        return qs
 
     def all_my_list_titles(self, owner, link_pk):
         '''returns list of titles of Lists containing this Link'''
@@ -47,11 +49,13 @@ class ListManager(models.Manager):
     def latest(self,limit=10):
         return self.get_query_set() \
             .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .exclude(is_public=False) \
             .order_by('-pubdate')[:limit]
 
     def most_viewed(self,limit=10):
         return self.get_query_set() \
             .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .exclude(is_public=False) \
             .order_by('-views')[:limit]
 
 
