@@ -125,6 +125,7 @@
   document.write('<script src=' +
     ((!jq && '__proto__' in {}) ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
     '><\/script>');
+  console.log((!jq && '__proto__' in {}) ? "loading zepto" : "loading jquery");
   </script>
   <script src="{% static "js/foundation/foundation.js" %}"></script>
   <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>

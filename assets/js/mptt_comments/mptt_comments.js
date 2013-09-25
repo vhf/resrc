@@ -140,7 +140,7 @@ $(document).ready(function() {
         });
     }
 
-    $('a.comment_reply').live("click", function(e) {
+    $('a.comment_reply').on("click", function(e) {
         var parent = $(this).parents('.comment_outer');
         var nxt = parent.next('.comment_form_wrapper');
 
@@ -160,7 +160,7 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    $('a.comment_cutoff').live("click", function(e) {
+    $('a.comment_cutoff').on("click", function(e) {
         var href = $(this).attr('href');
         var id = 'c' + (new RegExp("(\\d+)/$").exec(href)[1]);
         var link = $(this);
@@ -182,7 +182,7 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    $('.comment_expand').live("click", function(e) {
+    $('.comment_expand').on("click", function(e) {
         e.preventDefault();
         var href = $(this).attr('href');
         //var id = 'c' + (new RegExp("(\\d+|preview)/$").exec(href)[1]);
@@ -207,7 +207,7 @@ $(document).ready(function() {
         var nxt = $(this).text('right');
     });
 
-    $('.comments_more').live("click", function(e) {
+    $('.comments_more').on("click", function(e) {
         $.get($(this).attr('href') + '?is_ajax=1', { }, function(data, textStatus) {
             var comments_for_update = data.comments_for_update;
             var tid = data.tid;
@@ -281,7 +281,7 @@ $(document).ready(function() {
         bind_submit(frm, nxt);
     });
 
-    $('a.comment_post_new').live("click", function(e) {
+    $('a.comment_post_new').on("click", function(e) {
         var toplevel_comment_form = $('.new_comment_form_wrapper form');
         // If the new_comment_form_wrapper element does not have a form,
         // create a new one.

@@ -3,6 +3,15 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
+{% block meta %}{% if request.user.is_authenticated %}
+<script type="text/javascript">var jq = true;</script>
+{% endif %}{% endblock %}
+
+{% block extrahead %}{% if request.user.is_authenticated %}
+  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endif %}{% endblock %}
+
 {% block title %}
 {{ link.title }}
 {% endblock %}
@@ -18,7 +27,7 @@
     <div class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
-        <p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
+        {% if request.user %}<i class="lsf" data-reveal-id="tag-edit" data-tooltip-title="Suggest tag modification">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
         {% for tag in tags %}{% if tag.slug %}
         <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
         {% endif %}{% endfor %}
@@ -97,16 +106,23 @@
 {% block foundation_plugins %}
 <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
 <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
-<script src="{% static "js/mptt_comments/mptt_comments.js" %}"></script>
 {% endblock %}
 
 {% block last_body %}
   {% if request.user.is_authenticated %}
+  <script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+  <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+  <script src="{% static "js/mptt_comments/mptt_comments.js" %}"></script>
   <div id="add-to-list" class="small reveal-modal"></div>
 
   <div id="create-list" class="small reveal-modal">
     <span id="create-list-message" class="label" style="display:none"></span>
     {% crispy newlistform %}
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+
+  <div id="tag-edit" class="small reveal-modal">
+    {% crispy edittagsform %}
     <a class="close-reveal-modal">&#215;</a>
   </div>
   <script type="text/javascript">
@@ -185,10 +201,34 @@
       }
     });
   });
+
   $("#createclose").click(function() {
     $(this).foundation('reveal', 'close');
   });
+
   $(document).foundation('tooltip', {"disable-for-touch": true});
+
+
+  $('#edit-tag-form').submit(function(e) {
+    e.preventDefault();
+    $.ajax({
+      type:"POST",
+      url: "{% url 'suggest-tag' link.pk %}",
+      data: $(this).serialize(),
+      error: function(xhr) {
+        result = $.parseJSON(xhr.responseText).result;
+        if (result == 'success') {
+          $('#tag-edit').foundation('reveal', 'close');
+        }
+      },
+    });
+  });
+  $(function(){
+    $("#id_tags").tagit({
+      availableTags: [{{ tags|safe }}],
+      autocomplete: {delay: 0, minLength: 2}
+    });
+  });
   </script>
   {% endif %}
 {% endblock last_body %}

@@ -8,7 +8,7 @@ import simplejson
 from taggit.models import Tag
 
 from resrc.link.models import Link
-from resrc.link.forms import NewLinkForm, EditLinkForm
+from resrc.link.forms import NewLinkForm, EditLinkForm, EditTagForm
 from resrc.list.models import List
 from resrc.list.forms import NewListAjaxForm
 from resrc.utils import render_template
@@ -25,11 +25,21 @@ def single(request, link_pk, link_slug=None):
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
     if link.slug != link_slug:
         raise Http404
-
+    tags = ''
     if request.user.is_authenticated():
         titles = list(List.objects.all_my_list_titles(request.user, link_pk)
                       .values_list('title', flat=True))
         newlistform = NewListAjaxForm(link_pk)
+        edittagsform = EditTagForm(link_pk, initial={
+            'url': link.url,
+            'title': link.title,
+            'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
+            'language': link.language,
+            'level': link.level
+        });
+        # for tag suggestionautocomplete
+        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags = '"%s"' % tags
 
     lists = List.objects.some_lists_from_link(link_pk)
 
@@ -51,6 +61,7 @@ def single(request, link_pk, link_slug=None):
     except:
         similars = ''
 
+
     from tldr.tldr import TLDRClient
     client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
     tldr = client.searchByUrl(link.url)
@@ -63,7 +74,9 @@ def single(request, link_pk, link_slug=None):
         'newlistform': newlistform,
         'similars': similars,
         'tldr': tldr,
-        'lists': lists
+        'lists': lists,
+        'edittagsform': edittagsform,
+        'tags': tags
     })
 
 
@@ -232,6 +245,21 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404
 
+
+def ajax_suggest_tag(request, link_pk):
+    link = get_object_or_404(Link, pk=link_pk)
+    if request.user.is_authenticated() and request.method == 'POST':
+        form = EditTagForm(link_pk, request.POST)
+        from resrc.tag.models import RevisedTag
+        rev = RevisedTag.objects.create(
+            link=link,
+            tags=form.data['tags']
+        )
+        rev.save()
+        data = simplejson.dumps({'result': 'success'})
+        return HttpResponse(data, mimetype="application/javascript")
+    else:
+        raise Http404
 
 def links_page(request):
     from resrc.tag.models import Vote

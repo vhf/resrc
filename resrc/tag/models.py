@@ -63,6 +63,7 @@ class VoteManager(models.Manager):
         return len(list(self.get_query_set() \
             .filter(alist__pk=list_pk)))
 
+
 class Vote(models.Model):
 
     objects = VoteManager()
@@ -74,3 +75,9 @@ class Vote(models.Model):
     alist = models.ForeignKey(List, null=True, blank=True)
     link = models.ForeignKey(Link, null=True, blank=True)
     time = models.DateTimeField(auto_now_add=True)
+
+
+class RevisedTag(models.Model):
+    from resrc.link.models import Link
+    link = models.ForeignKey(Link)
+    tags = models.CharField(max_length=255)
