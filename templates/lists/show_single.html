@@ -41,7 +41,7 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <h1>{{ list.title }}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Vote for this list">check</a></h1>
+    <h1>{{ list.title }}{% if request.user.is_authenticated %}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Vote for this list">check</a>{% endif %}</h1>
     <p>{{ list.description }}</p>
     <p class="byline">
       {% with author=list.owner %}
@@ -140,14 +140,19 @@ $(function(){
     });
   });
 
-  $('#vote').click(function() {
-    var button = $(this);
+  $('#vote,.votes').click(function() {
+    var symbol = $('#vote');
     $.ajax({
       type:"POST",
       url:"{% url "list-upvote" list.pk %}",
       data: 'csrfmiddlewaretoken={{csrf_token}}',
       error: function(xhr) {
-        $(button).html('checkbox');
+        result = $.parseJSON(xhr.responseText).result;
+        console.log(result);
+        if (result == 'success') {
+          $(symbol).html('checkbox');
+          $('.votes').html(parseInt($('.votes').html(), 10)+1);
+        }
       }
     });
   });

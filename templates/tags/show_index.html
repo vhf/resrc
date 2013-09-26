@@ -10,7 +10,8 @@
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li class="current">Tags</li>
+<li><a href="{% url "tag-index" %}">Tags</a></li>
+<li class="current">Summary</li>
 {% endblock %}
 
 {% block content %}

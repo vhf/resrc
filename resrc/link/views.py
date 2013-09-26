@@ -26,11 +26,12 @@ def single(request, link_pk, link_slug=None):
     if link.slug != link_slug:
         raise Http404
     tags = ''
+    reviselinkform = ''
     if request.user.is_authenticated():
         titles = list(List.objects.all_my_list_titles(request.user, link_pk)
                       .values_list('title', flat=True))
         newlistform = NewListAjaxForm(link_pk)
-        edittagsform = SuggestEditForm(link_pk, initial={
+        reviselinkform = SuggestEditForm(link_pk, initial={
             'url': link.url,
             'title': link.title,
             'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
@@ -77,7 +78,7 @@ def single(request, link_pk, link_slug=None):
         'similars': similars,
         'tldr': tldr,
         'lists': lists,
-        'edittagsform': edittagsform,
+        'reviselinkform': reviselinkform,
         'tags': tags
     })
 
