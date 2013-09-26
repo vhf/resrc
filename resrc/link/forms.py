@@ -141,11 +141,12 @@ class EditLinkForm(forms.Form):
 
         super(EditLinkForm, self).__init__(*args, **kwargs)
 
-class EditTagForm(forms.Form):
+class SuggestEditForm(forms.Form):
 
-    title = forms.CharField(label='Title', max_length=120, widget=forms.TextInput(attrs={'disabled':'disabled',}))
+    title = forms.CharField(label='Title', max_length=120)
+    # , widget=forms.TextInput(attrs={'disabled':'disabled',})
 
-    url = forms.URLField(label='URL', widget=forms.TextInput(attrs={'disabled':'disabled',}))
+    url = forms.URLField(label='URL')
 
     tags = forms.CharField(label='Tags', max_length=120, required=False)
 
@@ -169,7 +170,7 @@ class EditTagForm(forms.Form):
         from django.core.urlresolvers import reverse
         self.helper = FormHelper()
 
-        self.helper.form_action = reverse("suggest-tag", args=(int(link_pk),))
+        self.helper.form_action = reverse("revise-link", args=(int(link_pk),))
 
         self.helper.form_class = ''
         self.helper.form_method = 'post'
@@ -214,4 +215,4 @@ class EditTagForm(forms.Form):
 
         #self.helper['url'].update_attributes(disabled=True)
 
-        super(EditTagForm, self).__init__(*args, **kwargs)
+        super(SuggestEditForm, self).__init__(*args, **kwargs)

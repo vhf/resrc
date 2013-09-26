@@ -115,3 +115,15 @@ class Link(models.Model):
             alist=alist
         )
         vote.save()
+
+
+class RevisedLink(models.Model):
+    link = models.ForeignKey(Link)
+    title = models.CharField('title', max_length=120, null=True, blank=True)
+    url = models.URLField('url', null=True, blank=True)
+    level = models.CharField('Level', max_length=30, choices=zip(LEVELS, LEVELS), null=True, blank=True)
+    language = models.ForeignKey(Language, null=True, blank=True)
+    tags = models.CharField(max_length=255, null=True, blank=True)
+
+    def __unicode__(self):
+        return "link %d - %s" % (self.link.pk, self.link.title)

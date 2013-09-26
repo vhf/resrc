@@ -7,6 +7,10 @@ from datetime import timedelta, datetime
 class Language(models.Model):
     language = models.CharField(max_length=7, choices=settings.LANGUAGES)
 
+    def __unicode__(self):
+        from django.conf import settings
+        return [x[1] for x in settings.LANGUAGES if x[0] == self.language][0]
+
 
 class VoteManager(models.Manager):
 
@@ -75,9 +79,3 @@ class Vote(models.Model):
     alist = models.ForeignKey(List, null=True, blank=True)
     link = models.ForeignKey(Link, null=True, blank=True)
     time = models.DateTimeField(auto_now_add=True)
-
-
-class RevisedTag(models.Model):
-    from resrc.link.models import Link
-    link = models.ForeignKey(Link)
-    tags = models.CharField(max_length=255)

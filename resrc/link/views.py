@@ -8,7 +8,7 @@ import simplejson
 from taggit.models import Tag
 
 from resrc.link.models import Link
-from resrc.link.forms import NewLinkForm, EditLinkForm, EditTagForm
+from resrc.link.forms import NewLinkForm, EditLinkForm, SuggestEditForm
 from resrc.list.models import List
 from resrc.list.forms import NewListAjaxForm
 from resrc.utils import render_template
@@ -30,13 +30,13 @@ def single(request, link_pk, link_slug=None):
         titles = list(List.objects.all_my_list_titles(request.user, link_pk)
                       .values_list('title', flat=True))
         newlistform = NewListAjaxForm(link_pk)
-        edittagsform = EditTagForm(link_pk, initial={
+        edittagsform = SuggestEditForm(link_pk, initial={
             'url': link.url,
             'title': link.title,
             'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
             'language': link.language,
             'level': link.level
-        });
+        })
         # for tag suggestionautocomplete
         tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
         tags = '"%s"' % tags
@@ -61,10 +61,12 @@ def single(request, link_pk, link_slug=None):
     except:
         similars = ''
 
-
-    from tldr.tldr import TLDRClient
-    client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
-    tldr = client.searchByUrl(link.url)
+    try:
+        from tldr.tldr import TLDRClient
+        client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
+        tldr = client.searchByUrl(link.url)
+    except:
+        tldr = False
     from resrc.tag.models import Vote
     return render_template('links/show_single.html', {
         'link': link,
@@ -92,8 +94,7 @@ def new_link(request):
             link.title = data['title']
             link.url = data['url']
             from resrc.tag.models import Language
-            link.language = Language.objects.get(
-                language=form.data['language'])
+            link.language = Language.objects.get(language=data['language'])
             link.level = data['level']
             link.author = request.user
 
@@ -246,13 +247,32 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
     raise Http404
 
 
-def ajax_suggest_tag(request, link_pk):
+def ajax_revise_link(request, link_pk):
     link = get_object_or_404(Link, pk=link_pk)
     if request.user.is_authenticated() and request.method == 'POST':
-        form = EditTagForm(link_pk, request.POST)
-        from resrc.tag.models import RevisedTag
-        rev = RevisedTag.objects.create(
+        form = SuggestEditForm(link_pk, request.POST)
+        data = form.data
+        # we only store the differences
+        title = data['title']
+        if link.title == title:
+            title = ''
+        url = data['url']
+        if link.url == url:
+            url = ''
+        from resrc.tag.models import Language
+        language = Language.objects.get(language=data['language'])
+        if link.language == language:
+            language = None
+        level = data['level']
+        if link.level == level:
+            level = ''
+        from resrc.link.models import RevisedLink
+        rev = RevisedLink.objects.create(
             link=link,
+            title=title,
+            url=url,
+            language=language,
+            level=level,
             tags=form.data['tags']
         )
         rev.save()
@@ -260,6 +280,7 @@ def ajax_suggest_tag(request, link_pk):
         return HttpResponse(data, mimetype="application/javascript")
     else:
         raise Http404
+
 
 def links_page(request):
     from resrc.tag.models import Vote

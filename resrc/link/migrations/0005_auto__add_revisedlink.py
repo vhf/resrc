@@ -8,18 +8,22 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'RevisedTag'
-        db.create_table(u'tag_revisedtag', (
+        # Adding model 'RevisedLink'
+        db.create_table(u'link_revisedlink', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('link', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['link.Link'])),
-            ('tags', self.gf('django.db.models.fields.CharField')(max_length=255)),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=120, null=True, blank=True)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('level', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['tag.Language'], null=True, blank=True)),
+            ('tags', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
         ))
-        db.send_create_signal(u'tag', ['RevisedTag'])
+        db.send_create_signal(u'link', ['RevisedLink'])
 
 
     def backwards(self, orm):
-        # Deleting model 'RevisedTag'
-        db.delete_table(u'tag_revisedtag')
+        # Deleting model 'RevisedLink'
+        db.delete_table(u'link_revisedlink')
 
 
     models = {
@@ -71,46 +75,20 @@ class Migration(SchemaMigration):
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
-        u'list.list': {
-            'Meta': {'object_name': 'List'},
-            'description': ('django.db.models.fields.TextField', [], {}),
-            'html_content': ('django.db.models.fields.TextField', [], {}),
+        u'link.revisedlink': {
+            'Meta': {'object_name': 'RevisedLink'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'links': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['link.Link']", 'through': u"orm['list.ListLinks']", 'symmetrical': 'False'}),
-            'md_content': ('django.db.models.fields.TextField', [], {}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'list_owner'", 'to': u"orm['auth.User']"}),
-            'pubdate': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
-            'views': ('django.db.models.fields.IntegerField', [], {'default': '0'})
-        },
-        u'list.listlinks': {
-            'Meta': {'object_name': 'ListLinks'},
-            'adddate': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'alist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['list.List']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'links': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']"})
+            'language': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['tag.Language']", 'null': 'True', 'blank': 'True'}),
+            'level': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']"}),
+            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '120', 'null': 'True', 'blank': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'tag.language': {
             'Meta': {'object_name': 'Language'},
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'language': ('django.db.models.fields.CharField', [], {'max_length': '7'})
-        },
-        u'tag.revisedtag': {
-            'Meta': {'object_name': 'RevisedTag'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']"}),
-            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255'})
-        },
-        u'tag.vote': {
-            'Meta': {'object_name': 'Vote'},
-            'alist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['list.List']", 'null': 'True', 'blank': 'True'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']", 'null': 'True', 'blank': 'True'}),
-            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         },
         u'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
@@ -127,4 +105,4 @@ class Migration(SchemaMigration):
         }
     }
 
-    complete_apps = ['tag']
+    complete_apps = ['link']

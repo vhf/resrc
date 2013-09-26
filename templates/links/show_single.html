@@ -60,12 +60,12 @@
     </div>
   </div>
 
-{% if tldr.code != 404 %}
+{% if tldr.code != 404 and tldr != False %}
 <div class="row">
   <div class="large-12 columns">
     <h5>TL;DR</h5>
     <ul>{% for bul in tldr.summaryBullets %}
-      <li>{{bul}}</li>
+      <li>{{ bul }}</li>
     {% endfor %}</ul>
     <p class="byline">
       by <a href="http://tldr.io/{{ tldr.creator.username }}">{{ tldr.creator.username }}</a>, courtesy of <a href="http://tldr.io/">tldr.io/</a>
@@ -213,7 +213,7 @@
     e.preventDefault();
     $.ajax({
       type:"POST",
-      url: "{% url 'suggest-tag' link.pk %}",
+      url: "{% url 'revise-link' link.pk %}",
       data: $(this).serialize(),
       error: function(xhr) {
         result = $.parseJSON(xhr.responseText).result;
