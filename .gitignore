@@ -9,6 +9,7 @@ settings_prod.py
 *.swp
 *.old
 *.bak
+static/
 assets/.sass-cache
 Makefile
 coverage/
