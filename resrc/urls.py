@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-:
 from django.conf.urls import patterns, include, url
-from django.contrib import admin
+# from django.contrib import admin
 
-admin.autodiscover()
+# admin.autodiscover()
 
-import page.views
+from page.views import home
 import settings
 
 urlpatterns = patterns(
@@ -14,13 +14,13 @@ urlpatterns = patterns(
     url(r'^list/', include('resrc.list.urls')),
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
-    url(r'^a/',  include(admin.site.urls)),
+#    url(r'^a/',  include(admin.site.urls)),
 
     # third party includes
     url(r'^ca/', include('captcha.urls')),
     url(r'^comment/', include('mptt_comments.urls')),
 
-    url(r'^$', page.views.home, name="home"),
+    url(r'^$', home, name="home"),
 
     url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
 )

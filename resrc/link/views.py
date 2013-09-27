@@ -68,7 +68,7 @@ def single(request, link_pk, link_slug=None):
         tldr = client.searchByUrl(link.url)
     except:
         tldr = False
-    from resrc.tag.models import Vote
+    from resrc.vote.models import Vote
     return render_template('links/show_single.html', {
         'link': link,
         'count': Vote.objects.votes_for_link(link.pk),
@@ -94,7 +94,7 @@ def new_link(request):
             link = Link()
             link.title = data['title']
             link.url = data['url']
-            from resrc.tag.models import Language
+            from resrc.language.models import Language
             link.language = Language.objects.get(language=data['language'])
             link.level = data['level']
             link.author = request.user
@@ -179,7 +179,7 @@ def edit_link(request, link_pk):
         form = EditLinkForm(link_pk, request.POST)
         if form.is_valid():
             link.title = form.data['title']
-            from resrc.tag.models import Language
+            from resrc.language.models import Language
             link.language = Language.objects.get(
                 language=form.data['language'])
             link.level = form.data['level']
@@ -235,7 +235,7 @@ def edit_link(request, link_pk):
 def ajax_upvote_link(request, link_pk, list_pk=None):
     if request.user.is_authenticated() and request.method == 'POST':
         link = get_object_or_404(Link, pk=link_pk)
-        from resrc.tag.models import Vote
+        from resrc.vote.models import Vote
         already_voted = Vote.objects.filter(
             user=request.user, link=link).exists()
         if not already_voted:
@@ -260,7 +260,7 @@ def ajax_revise_link(request, link_pk):
         url = data['url']
         if link.url == url:
             url = ''
-        from resrc.tag.models import Language
+        from resrc.language.models import Language
         language = Language.objects.get(language=data['language'])
         if link.language == language:
             language = None
@@ -284,7 +284,7 @@ def ajax_revise_link(request, link_pk):
 
 
 def links_page(request):
-    from resrc.tag.models import Vote
+    from resrc.vote.models import Vote
     latest = Vote.objects.latest_links(limit=25, days=7)
     hottest = Vote.objects.hottest_links(limit=15, days=7)
     most_voted = Vote.objects.hottest_links(limit=10, days=30)

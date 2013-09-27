@@ -18,22 +18,10 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'userprofile', ['Profile'])
 
-        # Adding M2M table for field favs on 'Profile'
-        m2m_table_name = db.shorten_name(u'userprofile_profile_favs')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('profile', models.ForeignKey(orm[u'userprofile.profile'], null=False)),
-            ('link', models.ForeignKey(orm[u'link.link'], null=False))
-        ))
-        db.create_unique(m2m_table_name, ['profile_id', 'link_id'])
-
 
     def backwards(self, orm):
         # Deleting model 'Profile'
         db.delete_table(u'userprofile_profile')
-
-        # Removing M2M table for field favs on 'Profile'
-        db.delete_table(db.shorten_name(u'userprofile_profile_favs'))
 
 
     models = {
@@ -73,47 +61,9 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
-        u'link.link': {
-            'Meta': {'object_name': 'Link'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
-            'hash2': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'pubdate': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'score_h24': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
-            'title': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'upvotes': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'votes_h00': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h02': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h04': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h06': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h08': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h10': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h12': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h14': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h16': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h18': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h20': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h22': ('django.db.models.fields.IntegerField', [], {'default': '0'})
-        },
-        u'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
-        },
-        u'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'taggit_taggeditem_tagged_items'", 'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'taggit_taggeditem_items'", 'to': u"orm['taggit.Tag']"})
-        },
         u'userprofile.profile': {
             'Meta': {'object_name': 'Profile'},
             'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'favs': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['link.Link']", 'symmetrical': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'show_email': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),

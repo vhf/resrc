@@ -9,8 +9,6 @@ from django.shortcuts import get_object_or_404
 
 from taggit.managers import TaggableManager
 
-from resrc.tag.models import Language, Vote
-from resrc.list.models import List
 
 LEVELS = ['beginner', 'intermediate', 'advanced']
 
@@ -45,7 +43,7 @@ class Link(models.Model):
 
     level = models.CharField('Level', max_length=30, choices=zip(LEVELS, LEVELS), null=True, blank=True)
 
-    language = models.ForeignKey(Language, default=1)
+    language = models.ForeignKey('language.Language', default=1)
 
     tags = TaggableManager()
 
@@ -102,6 +100,7 @@ class Link(models.Model):
         return [x[1] for x in settings.LANGUAGES if x[0] == self.language.language][0]
 
     def vote(self, user, list_pk=None):
+        from resrc.vote.models import Vote
         # we keep track of list because if link is voted from a list, we also vote for the list
         if list_pk is not None:
             alist = get_object_or_404(List, pk=list_pk)
@@ -116,11 +115,11 @@ class Link(models.Model):
 
 
 class RevisedLink(models.Model):
-    link = models.ForeignKey(Link)
+    link = models.ForeignKey('link.Link')
     title = models.CharField('title', max_length=120, null=True, blank=True)
     url = models.URLField('url', null=True, blank=True)
     level = models.CharField('Level', max_length=30, choices=zip(LEVELS, LEVELS), null=True, blank=True)
-    language = models.ForeignKey(Language, null=True, blank=True)
+    language = models.ForeignKey('language.Language', null=True, blank=True)
     tags = models.CharField(max_length=255, null=True, blank=True)
 
     def __unicode__(self):

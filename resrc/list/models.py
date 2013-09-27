@@ -8,9 +8,6 @@ from django.db.models import Count
 from taggit.managers import TaggableManager
 
 from resrc.utils.templatetags.emarkdown import listmarkdown
-from resrc.link.models import Link
-from taggit.models import Tag
-from resrc.tag.models import Vote
 
 class ListManager(models.Manager):
 
@@ -79,7 +76,7 @@ class List(models.Model):
     html_content = models.TextField('html_content')
     url = models.URLField('url', null=True, blank=True)
 
-    links = models.ManyToManyField(Link, through='ListLinks')
+    links = models.ManyToManyField("link.Link", through='ListLinks')
 
     owner = models.ForeignKey(User, related_name="list_owner")
     is_public = models.BooleanField(default=True)
@@ -137,6 +134,7 @@ class List(models.Model):
             .annotate(c=Count('name')).order_by('-c')
 
     def vote(self, user):
+        from resrc.vote.models import Vote
         vote = Vote.objects.create(
             user=user,
             link=None,
@@ -147,8 +145,8 @@ class List(models.Model):
 
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
 class ListLinks(models.Model):
-    alist = models.ForeignKey(List)
-    links = models.ForeignKey(Link)
+    alist = models.ForeignKey('list.List')
+    links = models.ForeignKey('link.Link')
     adddate = models.DateField(auto_now_add=True)
 
     def add(self):
