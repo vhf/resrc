@@ -6,7 +6,6 @@ from django.template.defaultfilters import slugify
 
 from resrc.link.models import Link
 from resrc.list.models import List
-from resrc.tag.models import Language
 
 
 class Profile(models.Model):
@@ -21,13 +20,14 @@ class Profile(models.Model):
 
     about = models.TextField('about', blank=True)
 
-    languages = models.ManyToManyField(Language)
+    # from resrc.language.models import Language
+    # languages = models.ManyToManyField(Language)
 
     # karma = models.IntegerField('karma', null=True, blank=True)
 
     show_email = models.BooleanField('show_email', default=False)
 
-    favs = models.ManyToManyField(Link)
+    # favs = models.ManyToManyField(Link)
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()

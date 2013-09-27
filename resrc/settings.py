@@ -163,12 +163,14 @@ EXTERNAL_APPS = [
 ]
 
 INTERNAL_APPS = [
-    'resrc.userprofile',
+    'resrc.language',
     'resrc.link',
     'resrc.list',
     'resrc.page',
-    'resrc.utils',
     'resrc.tag',
+    'resrc.userprofile',
+    'resrc.utils',
+    'resrc.vote',
 ]
 
 INSTALLED_APPS = EXTERNAL_APPS + INTERNAL_APPS

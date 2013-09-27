@@ -21,7 +21,7 @@ class NewLinkForm(forms.Form):
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
     # display a select with languages ordered by most used first
-    from resrc.tag.models import Language
+    from resrc.language.models import Language
     from django.db.models import Count
     used_langs = Language.objects.all().annotate(
         c=Count('link')).order_by('-c').values_list()
@@ -78,7 +78,7 @@ class EditLinkForm(forms.Form):
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
     # display a select with languages ordered by most used first
-    from resrc.tag.models import Language
+    from resrc.language.models import Language
     from django.db.models import Count
     used_langs = Language.objects.all().annotate(
         c=Count('link')).order_by('-c').values_list()
@@ -154,7 +154,7 @@ class SuggestEditForm(forms.Form):
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
     # display a select with languages ordered by most used first
-    from resrc.tag.models import Language
+    from resrc.language.models import Language
     from django.db.models import Count
     used_langs = Language.objects.all().annotate(
         c=Count('link')).order_by('-c').values_list()

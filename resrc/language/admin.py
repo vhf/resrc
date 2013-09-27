@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.contrib import admin
 
-from resrc.tag.models import Language, Vote
-
+from models import Language
 
 admin.site.register(Language)
-admin.site.register(Vote)

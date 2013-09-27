@@ -17,27 +17,30 @@ class Migration(SchemaMigration):
             ('url', self.gf('django.db.models.fields.URLField')(max_length=200)),
             ('pubdate', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('author', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
-            ('upvotes', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h00', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h02', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h04', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h06', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h08', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h10', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h12', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h14', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h16', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h18', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h20', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('votes_h22', self.gf('django.db.models.fields.IntegerField')(default=0)),
-            ('score_h24', self.gf('django.db.models.fields.IntegerField')(default=0)),
+            ('level', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('language', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['language.Language'])),
         ))
         db.send_create_signal(u'link', ['Link'])
+
+        # Adding model 'RevisedLink'
+        db.create_table(u'link_revisedlink', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('link', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['link.Link'])),
+            ('title', self.gf('django.db.models.fields.CharField')(max_length=120, null=True, blank=True)),
+            ('url', self.gf('django.db.models.fields.URLField')(max_length=200, null=True, blank=True)),
+            ('level', self.gf('django.db.models.fields.CharField')(max_length=30, null=True, blank=True)),
+            ('language', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['language.Language'], null=True, blank=True)),
+            ('tags', self.gf('django.db.models.fields.CharField')(max_length=255, null=True, blank=True)),
+        ))
+        db.send_create_signal(u'link', ['RevisedLink'])
 
 
     def backwards(self, orm):
         # Deleting model 'Link'
         db.delete_table(u'link_link')
+
+        # Deleting model 'RevisedLink'
+        db.delete_table(u'link_revisedlink')
 
 
     models = {
@@ -77,29 +80,32 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        u'language.language': {
+            'Meta': {'object_name': 'Language'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.CharField', [], {'max_length': '7'})
+        },
         u'link.link': {
             'Meta': {'object_name': 'Link'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'hash2': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['language.Language']"}),
+            'level': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'pubdate': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'score_h24': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'upvotes': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'votes_h00': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h02': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h04': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h06': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h08': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h10': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h12': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h14': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h16': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h18': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h20': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h22': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
+        },
+        u'link.revisedlink': {
+            'Meta': {'object_name': 'RevisedLink'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['language.Language']", 'null': 'True', 'blank': 'True'}),
+            'level': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
+            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']"}),
+            'tags': ('django.db.models.fields.CharField', [], {'max_length': '255', 'null': 'True', 'blank': 'True'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '120', 'null': 'True', 'blank': 'True'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'})
         },
         u'taggit.tag': {
             'Meta': {'object_name': 'Tag'},

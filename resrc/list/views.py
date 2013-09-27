@@ -44,7 +44,7 @@ def single(request, list_pk, list_slug=None):
         # for tl in tldrs['tldrs']:
         #     tl['id'] = tl['_id']
         # tldr_urls = [tl['originalUrl'] for tl in tldrs['tldrs']]
-    from resrc.tag.models import Vote
+    from resrc.vote.models import Vote
     return render_template('lists/show_single.html', {
         'form': form,
         'list': alist,
@@ -305,7 +305,7 @@ def my_lists(request, user_name):
 def ajax_upvote_list(request, list_pk):
     if request.user.is_authenticated() and request.method == 'POST':
         alist = get_object_or_404(List, pk=list_pk)
-        from resrc.tag.models import Vote
+        from resrc.vote.models import Vote
         already_voted = Vote.objects.filter(
             user=request.user, alist=alist).exists()
         if not already_voted:
@@ -319,7 +319,7 @@ def ajax_upvote_list(request, list_pk):
 
 
 def lists_page(request):
-    from resrc.tag.models import Vote
+    from resrc.vote.models import Vote
     latest = List.objects.latest(limit=25)
     most_viewed = List.objects.most_viewed(limit=25)
     hottest = Vote.objects.hottest_lists(limit=25, days=7)

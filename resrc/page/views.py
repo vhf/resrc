@@ -3,7 +3,7 @@ from resrc.utils import render_template
 
 
 def home(request):
-    from resrc.tag.models import Vote
+    from resrc.vote.models import Vote
     hottest_links = Vote.objects.hottest_links(limit=10, days=7)
     latest_links = Vote.objects.latest_links(limit=10, days=7)
 

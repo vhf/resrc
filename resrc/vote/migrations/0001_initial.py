@@ -8,19 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding M2M table for field languages on 'Profile'
-        m2m_table_name = db.shorten_name(u'userprofile_profile_languages')
-        db.create_table(m2m_table_name, (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('profile', models.ForeignKey(orm[u'userprofile.profile'], null=False)),
-            ('language', models.ForeignKey(orm[u'tag.language'], null=False))
+        # Adding model 'Vote'
+        db.create_table(u'vote_vote', (
+            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['auth.User'])),
+            ('alist', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['list.List'], null=True, blank=True)),
+            ('link', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['link.Link'], null=True, blank=True)),
+            ('time', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
         ))
-        db.create_unique(m2m_table_name, ['profile_id', 'language_id'])
+        db.send_create_signal(u'vote', ['Vote'])
 
 
     def backwards(self, orm):
-        # Removing M2M table for field languages on 'Profile'
-        db.delete_table(db.shorten_name(u'userprofile_profile_languages'))
+        # Deleting model 'Vote'
+        db.delete_table(u'vote_vote')
 
 
     models = {
@@ -60,35 +61,44 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        u'language.language': {
+            'Meta': {'object_name': 'Language'},
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.CharField', [], {'max_length': '7'})
+        },
         u'link.link': {
             'Meta': {'object_name': 'Link'},
             'author': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"}),
             'hash2': ('django.db.models.fields.CharField', [], {'max_length': '11'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'language': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['language.Language']"}),
             'level': ('django.db.models.fields.CharField', [], {'max_length': '30', 'null': 'True', 'blank': 'True'}),
             'pubdate': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
-            'score_h24': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '120'}),
-            'upvotes': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
-            'votes_h00': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h02': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h04': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h06': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h08': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h10': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h12': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h14': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h16': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h18': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h20': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
-            'votes_h22': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
-        u'tag.language': {
-            'Meta': {'object_name': 'Language'},
+        u'list.list': {
+            'Meta': {'object_name': 'List'},
+            'description': ('django.db.models.fields.TextField', [], {}),
+            'html_content': ('django.db.models.fields.TextField', [], {}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'language': ('django.db.models.fields.CharField', [], {'max_length': '7'})
+            'is_public': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'links': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['link.Link']", 'through': u"orm['list.ListLinks']", 'symmetrical': 'False'}),
+            'md_content': ('django.db.models.fields.TextField', [], {}),
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'list_owner'", 'to': u"orm['auth.User']"}),
+            'pubdate': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
+            'title': ('django.db.models.fields.CharField', [], {'max_length': '80'}),
+            'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
+            'views': ('django.db.models.fields.IntegerField', [], {'default': '0'})
+        },
+        u'list.listlinks': {
+            'Meta': {'object_name': 'ListLinks'},
+            'adddate': ('django.db.models.fields.DateField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'alist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['list.List']"}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'links': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']"})
         },
         u'taggit.tag': {
             'Meta': {'object_name': 'Tag'},
@@ -103,16 +113,14 @@ class Migration(SchemaMigration):
             'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
             'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'taggit_taggeditem_items'", 'to': u"orm['taggit.Tag']"})
         },
-        u'userprofile.profile': {
-            'Meta': {'object_name': 'Profile'},
-            'about': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
-            'favs': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['link.Link']", 'symmetrical': 'False'}),
+        u'vote.vote': {
+            'Meta': {'object_name': 'Vote'},
+            'alist': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['list.List']", 'null': 'True', 'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'languages': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['tag.Language']", 'symmetrical': 'False'}),
-            'show_email': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'max_length': '255'}),
-            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']", 'unique': 'True'})
+            'link': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['link.Link']", 'null': 'True', 'blank': 'True'}),
+            'time': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['auth.User']"})
         }
     }
 
-    complete_apps = ['userprofile']
+    complete_apps = ['vote']
