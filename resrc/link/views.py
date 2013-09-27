@@ -286,8 +286,8 @@ def ajax_revise_link(request, link_pk):
 def links_page(request):
     from resrc.tag.models import Vote
     latest = Vote.objects.latest_links(limit=25, days=7)
-    hottest = Vote.objects.hottest_links(limit=25, days=7)
-    most_voted = Vote.objects.hottest_links(limit=25, days=30)
+    hottest = Vote.objects.hottest_links(limit=15, days=7)
+    most_voted = Vote.objects.hottest_links(limit=10, days=30)
 
     return render_template('links/links.html', {
         'latest': latest,

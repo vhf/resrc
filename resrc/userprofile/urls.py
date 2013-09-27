@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-:
 from django.conf.urls import patterns, url
 
-import views
-from ..list import views as v
+from resrc.userprofile import views
+from resrc.list import views as v
 
 urlpatterns = patterns(
     '',

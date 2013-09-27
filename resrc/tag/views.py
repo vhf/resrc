@@ -30,3 +30,10 @@ def index(request):
     return render_template('tags/show_index.html', {
         'tags' : tags
     })
+
+
+def search(request, tags):
+    t2 = tags.split('-')
+    t2 = [t.split('&') for t in t2]
+    #t2 = [t.split('|') for t in t2]
+    print t2

@@ -13,8 +13,8 @@ from django.core.context_processors import csrf
 from resrc.utils.tokens import generate_token
 from resrc.utils import render_template
 
-from .models import Profile
-from .forms import LoginForm, ProfileForm, RegisterForm, ChangePasswordForm
+from resrc.userprofile.models import Profile
+from resrc.userprofile.forms import LoginForm, ProfileForm, RegisterForm, ChangePasswordForm
 
 
 def user_list(request):

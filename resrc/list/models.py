@@ -3,10 +3,14 @@ from django.db import models
 from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.db.models import Count
 
 from taggit.managers import TaggableManager
-from resrc.link.models import Link
 
+from resrc.utils.templatetags.emarkdown import listmarkdown
+from resrc.link.models import Link
+from taggit.models import Tag
+from resrc.tag.models import Vote
 
 class ListManager(models.Manager):
 
@@ -128,14 +132,11 @@ class List(models.Model):
         ))
 
     def get_tags(self):
-        from taggit.models import Tag
-        from django.db.models import Count
         return Tag.objects.filter(link__list=self) \
             .values_list('name', 'slug') \
             .annotate(c=Count('name')).order_by('-c')
 
     def vote(self, user):
-        from resrc.tag.models import Vote
         vote = Vote.objects.create(
             user=user,
             link=None,
@@ -158,7 +159,6 @@ class ListLinks(models.Model):
             link.get_absolute_url(), link.title, link.url
         )
         alist.md_content = "\n".join([alist.md_content, md_link])
-        from resrc.utils.templatetags.emarkdown import listmarkdown
         alist.html_content = listmarkdown(alist.md_content, alist)
         alist.save()
 

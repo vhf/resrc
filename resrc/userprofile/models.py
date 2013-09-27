@@ -4,8 +4,6 @@ from django.contrib.auth.models import User
 from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 
-from resrc.link.models import Link
-from resrc.list.models import List
 from resrc.tag.models import Language
 
 
@@ -27,6 +25,7 @@ class Profile(models.Model):
 
     show_email = models.BooleanField('show_email', default=False)
 
+    from resrc.link.models import Link
     favs = models.ManyToManyField(Link)
 
     def save(self, *args, **kwargs):
@@ -70,6 +69,7 @@ class Profile(models.Model):
 
     # Links
     def get_links(self):
+        from resrc.link.models import Link
         return Link.objects.all().filter(owner__pk=self.user.pk)
 
     def get_link_count(self):
@@ -77,6 +77,7 @@ class Profile(models.Model):
 
     # Lists
     def get_lists(self):
+        from resrc.list.models import List
         return List.objects.filter(owner__pk=self.user.pk)
 
     def get_list_count(self):

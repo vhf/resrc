@@ -5,11 +5,12 @@ from django.core import urlresolvers
 from django.template.defaultfilters import slugify
 from django.contrib.comments import get_model
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 from taggit.managers import TaggableManager
 
-from resrc.tag.models import Language
-
+from resrc.tag.models import Language, Vote
+from resrc.list.models import List
 
 LEVELS = ['beginner', 'intermediate', 'advanced']
 
@@ -101,11 +102,8 @@ class Link(models.Model):
         return [x[1] for x in settings.LANGUAGES if x[0] == self.language.language][0]
 
     def vote(self, user, list_pk=None):
-        from resrc.tag.models import Vote
         # we keep track of list because if link is voted from a list, we also vote for the list
         if list_pk is not None:
-            from django.shortcuts import get_object_or_404
-            from resrc.list.models import List
             alist = get_object_or_404(List, pk=list_pk)
         else:
             alist = None
