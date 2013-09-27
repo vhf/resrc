@@ -30,6 +30,15 @@ def about(request):
     return render_template('pages/about.html', {})
 
 
+def search(request):
+    from taggit.models import Tag
+    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+    tags = '"%s"' % tags
+    return render_template('pages/search.html', {
+        'tags': tags,
+    })
+
+
 def listlinks(request):
     from resrc.list.models import ListLinks
     ll = ListLinks.objects.all()

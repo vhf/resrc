@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load mptt_comments_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+<script type="text/javascript">var jq = true;</script>
+{% endblock %}
+
+{% block title %}
+Search by tags
+{% endblock %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "tag-index" %}">Tags</a></li>
+<li class="current">Summary</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <h1 id="query">Search by tags</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-2 small-2 columns">
+    <p>
+      <input type="radio" name="op" value="or" checked="checked"> <strong>or</strong><br />
+      <input type="radio" name="op" value="and"> <strong>and</strong>
+    </p>
+  </div>
+  <div class="large-10 columns">
+    <input type="text" id="tags" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-2 small-2 columns">
+    <p><strong>exclude tags :</strong></p>
+  </div>
+  <div class="large-10 small-10 columns">
+    <input type="text" id="tags2" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-12 columns" id="results">
+  </div>
+</div>
+{% endblock %}
+
+{% block last_body %}
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript">
+  $(function(){
+
+    var search = function() {
+      var tags = $('#tags').val();
+      var excludes = $('#tags2').val();
+      var op = $('input[name="op"]:checked').val();
+      $('#results').html('');
+
+      var query = tags.split(',').join(' '+(op == 'and' ? '&' : '|')+' ');
+      if (excludes.length > 0) {
+        query += ' ~(';
+        query += excludes.split(',').join(' | ');
+        query += ')';
+      }
+      $('#query').html(query);
+
+      $.ajax({
+        type:"GET",
+        url: '/search/'+tags+'/'+op+'/'+excludes+'/',
+        success: function(result) {
+          result = $.parseJSON(result);
+          for (var i = 0; i < result.length; i++) {
+            link = result[i];
+            $('#results').append('<div class="panel">'
+              + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
+              + '</div>');
+          }
+        }
+      });
+    };
+
+    $('#tags').tagit({
+      availableTags: [{{ tags|safe }}],
+      autocomplete: {delay: 0, minLength: 2},
+      afterTagAdded: search,
+      afterTagRemoved: search
+    });
+
+    $('#tags2').tagit({
+      availableTags: [{{ tags|safe }}],
+      autocomplete: {delay: 0, minLength: 2},
+      afterTagAdded: search,
+      afterTagRemoved: search
+    });
+
+    $('input[name="op"]').on('change', search);
+
+  });
+</script>
+{% endblock last_body %}

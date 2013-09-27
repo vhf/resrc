@@ -5,6 +5,7 @@ from django.conf.urls import patterns, include, url
 # admin.autodiscover()
 
 from page.views import home
+from tag.views import search
 import settings
 
 urlpatterns = patterns(
@@ -14,6 +15,7 @@ urlpatterns = patterns(
     url(r'^list/', include('resrc.list.urls')),
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
+    url(r'^search/(?P<tags>[^/]*)/(?P<operand>[^/]*)/(?P<excludes>[^/]*)/$', search, name="search"),
 #    url(r'^a/',  include(admin.site.urls)),
 
     # third party includes

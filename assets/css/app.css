@@ -5950,7 +5950,7 @@ label.error {
 .breadcrumbs > * {
   margin: 0;
   float: left;
-  font-size: 0.6875em;
+  font-size: 1em;
   text-transform: uppercase;
 }
 /* line 60, ../../../.gem/ruby/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_breadcrumbs.scss */

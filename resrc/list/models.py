@@ -129,6 +129,7 @@ class List(models.Model):
         ))
 
     def get_tags(self):
+        from taggit.models import Tag
         return Tag.objects.filter(link__list=self) \
             .values_list('name', 'slug') \
             .annotate(c=Count('name')).order_by('-c')

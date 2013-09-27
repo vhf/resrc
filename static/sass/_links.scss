@@ -1,0 +1,18 @@
+.lang {
+  @include label();
+  background-color: #333;
+  color: white;
+}
+
+.level {
+  @include label();
+  &.beginner {
+    background-color: $success-color;
+  }
+  &.intermediate {
+    background-color: $alert-color;
+  }
+  &.advanced {
+    background-color: red;
+  }
+}

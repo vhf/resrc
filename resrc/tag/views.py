@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.shortcuts import get_object_or_404, redirect
+from django.http import Http404, HttpResponse
 
 from taggit.models import Tag
 
@@ -32,8 +33,30 @@ def index(request):
     })
 
 
-def search(request, tags):
-    t2 = tags.split('-')
-    t2 = [t.split('&') for t in t2]
-    #t2 = [t.split('|') for t in t2]
-    print t2
+def search(request, tags, operand, excludes):
+    from django.db.models import Q
+    import operator
+    tags = tags.split(',')
+    excludes = excludes.split(',')
+
+    if operand == 'or':
+        op = operator.or_
+    else:
+        op = operator.and_
+    tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
+
+    links = Link.objects.filter(tag_qs)
+    for exclude in excludes:
+        links = links.exclude(tags__name=exclude)
+
+    result = []
+    for link in links:
+        result.append({
+            'pk': link.pk,
+            'title': link.title,
+            'url': link.get_absolute_url()
+        })
+
+    import simplejson
+    result = simplejson.dumps(result)
+    return HttpResponse(result, mimetype="application/javascript")

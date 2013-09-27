@@ -10,7 +10,9 @@
 {% block extrahead %}{% if request.user.is_authenticated %}
   <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
   <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
-{% endif %}{% endblock %}
+{% endif %}
+  <link rel="canonical" href="{{ link.get_absolute_url }}" />
+{% endblock %}
 
 {% block title %}
 {{ link.title }}
