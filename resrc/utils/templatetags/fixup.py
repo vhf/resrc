@@ -7,10 +7,6 @@ from markdown.util import etree
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
-from resrc.link.models import Link
-from resrc.list.models import ListLinks
-
-
 def fixup(elem, alist):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         a = etree.Element('a')
@@ -39,6 +35,7 @@ def fixup(elem, alist):
             if elem.get('class') == 'addthis':
                 internal_link = True
 
+        from resrc.link.models import Link
         try:
             link = Link.objects.get(url=url)
             link_exists = True
@@ -68,6 +65,7 @@ def fixup(elem, alist):
                 elem.append(icon)
                 elem.append(newlink)
 
+        from resrc.list.models import ListLinks
         if link_exists and alist is not None:
             listlink_exists = ListLinks.objects.filter(
                 alist=alist, links=link).exists()

@@ -65,6 +65,9 @@ def login_register_view(request, register=False):
         else:
             login_error = 'Form invalid'
 
+    login_form = LoginForm()
+    register_form = RegisterForm()
+
     if request.method == 'POST' and register:
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
@@ -78,10 +81,6 @@ def login_register_view(request, register=False):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             return render_template('user/register_success.html')
-
-    if request.method != 'POST':
-        login_form = LoginForm()
-        register_form = RegisterForm()
 
     csrf_tk['register_form'] = register_form
     csrf_tk['login_error'] = login_error
