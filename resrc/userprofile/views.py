@@ -1,5 +1,4 @@
-# coding: utf-8
-
+# -*- coding: utf-8 -*-:
 from django.shortcuts import redirect, get_object_or_404
 from django.http import Http404
 
@@ -7,6 +6,7 @@ from django.contrib.auth.models import User, SiteProfileNotAvailable
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 
 from django.core.context_processors import csrf
 
@@ -102,7 +102,7 @@ def logout_view(request):
 def settings_profile(request):
     profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.user)
+        form = ProfileForm(request.POST)
         if form.is_valid():
             profile.about = form.data['about']
             request.user.email = form.data['email']
@@ -119,17 +119,18 @@ def settings_profile(request):
                 request.user.save()
             except:
                 messages.error(request, 'Error')
-                return redirect('/u/edit')
+                return redirect(reverse('user-settings'))
 
             messages.success(
                 request, 'Update successful.')
-            return redirect('/u/edit')
+            return redirect(reverse('user-settings'))
         else:
             return render_template('user/settings_profile.html', {
                 'form': form,
             })
     else:
-        form = ProfileForm(request.POST, request.user, initial={
+        print "here"
+        form = ProfileForm(initial={
             'about': profile.about,
             'email': request.user.email,
             'show_email': profile.show_email
@@ -150,10 +151,10 @@ def settings_account(request):
                 request.user.save()
                 messages.success(
                     request, 'Password updated.')
-                return redirect('/u/edit')
+                return redirect(reverse('user-settings'))
             except:
                 messages.error(request, 'Error while updating your password.')
-                return redirect('/u/edit')
+                return redirect(reverse('user-settings'))
         else:
             return render_template('user/settings_account.html', {
                 'form': form,
