@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-:
 from django.conf.urls import patterns, include, url
-# from django.contrib import admin
+from django.contrib import admin
 
-# admin.autodiscover()
+admin.autodiscover()
 
 from page.views import home
 from tag.views import search
@@ -16,7 +16,7 @@ urlpatterns = patterns(
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
     url(r'^search/(?P<tags>[^/]*)%(?P<operand>[^/]*)%(?P<excludes>[^/]*)$', search, name="search"),
-#    url(r'^a/',  include(admin.site.urls)),
+    url(r'^a/',  include(admin.site.urls)),
 
     # third party includes
     url(r'^ca/', include('captcha.urls')),
