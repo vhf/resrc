@@ -74,7 +74,12 @@ Search by tags
         query += excludes.split(',').join(' | ');
         query += ')';
       }
-      $('#query').html(query);
+      if (query.length === 0) {
+        $('#query').html('Search by tags');
+        return;
+      } else {
+        $('#query').html(query);
+      }
 
       $.ajax({
         type:"GET",
