@@ -15,7 +15,7 @@ urlpatterns = patterns(
     url(r'^list/', include('resrc.list.urls')),
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
-    url(r'^search/(?P<tags>[^/]*)/(?P<operand>[^/]*)/(?P<excludes>[^/]*)/$', search, name="search"),
+    url(r'^search/(?P<tags>[^/]*)%(?P<operand>[^/]*)%(?P<excludes>[^/]*)$', search, name="search"),
 #    url(r'^a/',  include(admin.site.urls)),
 
     # third party includes

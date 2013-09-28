@@ -78,14 +78,18 @@ Search by tags
 
       $.ajax({
         type:"GET",
-        url: '/search/'+tags+'/'+op+'/'+excludes+'/',
+        url: '/search/'+tags+'%25'+op+'%25'+excludes,
         success: function(result) {
           result = $.parseJSON(result);
-          for (var i = 0; i < result.length; i++) {
-            link = result[i];
-            $('#results').append('<div class="panel">'
-              + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
-              + '</div>');
+          if (result.length > 0) {
+            for (var i = 0; i < result.length; i++) {
+              link = result[i];
+              $('#results').append('<div class="panel">'
+                + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
+                + '</div>');
+            }
+          } else {
+            $('#results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
           }
         }
       });
