@@ -12,6 +12,5 @@ urlpatterns = patterns(
     url(r'^(?P<link_pk>\d+)/upvote$', views.ajax_upvote_link, name="link-upvote"),
     url(r'^(?P<link_pk>\d+)/suggest$', views.ajax_revise_link, name="revise-link"),
     url(r'^new/$', views.new_link, name="new-link"),
-    url(r'^button/$', views.new_link_button, name="new-link-button"),
-    url(r'^button/(?P<title>.+)/u/(?P<url>.+)$', views.new_link_button, name="new-link-popup"),
+    url(r'^popup/(?P<title>.+)/u/(?P<url>.+)$', views.new_link, name="new-link-popup"),
 )

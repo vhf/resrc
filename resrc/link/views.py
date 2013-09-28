@@ -84,7 +84,21 @@ def single(request, link_pk, link_slug=None):
 
 
 @login_required
-def new_link(request):
+def new_link(request, title=None, url=None):
+    if title is not None and url is not None:
+        form = NewLinkForm(initial={
+            'title': title,
+            'url': url,
+        })
+
+        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags = '"%s"' % tags
+
+        return render_template('links/new_link_button.html', {
+            'form': form,
+            'tags': tags
+        })
+
     if request.method == 'POST':
         form = NewLinkForm(request.POST)
         if form.is_valid():
@@ -148,22 +162,6 @@ def new_link(request):
     tags = '"%s"' % tags
 
     return render_template('links/new_link.html', {
-        'form': form,
-        'tags': tags
-    })
-
-
-@login_required
-def new_link_button(request, title='', url=''):
-    form = NewLinkForm(initial={
-        'title': title,
-        'url': url,
-    })
-
-    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-    tags = '"%s"' % tags
-
-    return render_template('links/new_link_button.html', {
         'form': form,
         'tags': tags
     })
