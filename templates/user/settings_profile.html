@@ -2,8 +2,10 @@
 {% load crispy_forms_tags %}
 
 {% block breadcrumb %}
-  <li><a href="{% url "user-settings" %}">Settings</a></li>
-  <li class="current"><a href="#">Profile</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "user-list" %}">Users</a></li>
+<li><a href="{% url "user-url" usr.username %}">{{usr.username}}</a></li>
+<li class="current">Profile</li>
 {% endblock %}
 
 {% block subnav %}

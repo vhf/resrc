@@ -3,6 +3,7 @@
 {% load staticfiles %}
 {% load mptt_comments_tags %}
 {% load crispy_forms_tags %}
+{% load emarkdown %}
 
 {% block meta %}
 <script type="text/javascript">var jq = true;</script>
@@ -43,7 +44,7 @@
 <div class="row">
   <div class="large-12 columns">
     <h1>{{ list.title }}{% if request.user.is_authenticated %}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Vote for this list">check</a>{% endif %}</h1>
-    <p>{{ list.description }}</p>
+    <p>{{ list.description|emarkdown }}</p>
     <p class="byline">
       {% with author=list.owner %}
       by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span><span class="views lsf">{{ list.views }}</span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}

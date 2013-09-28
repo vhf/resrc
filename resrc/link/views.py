@@ -84,7 +84,6 @@ def single(request, link_pk, link_slug=None):
 
 
 @login_required
-@csrf_exempt
 def new_link(request):
     if request.method == 'POST':
         form = NewLinkForm(request.POST)
@@ -124,10 +123,11 @@ def new_link(request):
             alist.html_content = listmarkdown(alist.md_content, alist)
             alist.save()
 
-            import simplejson
             data = simplejson.dumps({'result': 'added'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
+            from pprint import pprint
+            pprint(request.POST)
             if not 'ajax' in form.data:
                 form = NewLinkForm()
                 tags = '","'.join(
@@ -138,7 +138,6 @@ def new_link(request):
                     'tags': tags
                 })
             else:
-                import simplejson
                 data = simplejson.dumps({'result': 'fail'})
                 return HttpResponse(data, mimetype="application/javascript")
 

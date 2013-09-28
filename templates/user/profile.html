@@ -13,7 +13,9 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  <li class="current"><a href="#">{{ usr.username }}</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "user-list" %}">Users</a></li>
+<li class="current">{{ usr.username }}</li>
 {% endblock %}
 
 {% block headline-actions %}
@@ -46,16 +48,12 @@
     </p>
     <p>
       {% if profile.show_email and user.is_authenticated %}
-        email : {{ usr.email|obfuscate_mailto }}<br />
+        email : {{ usr.email|obfuscate_mailto }}
       {% endif %}
     </p>
     <p>
       {% if profile.about %}
-        {% if usr.is_authenticated %}
-          <h5>about me :</h5>
-          {% else %}
-          <h5>about {{ usr.username }} :</h5>
-          {% endif %}
+        <h5>about {{ usr.username }} :</h5>
         {{ profile.about|emarkdown }}
       {% endif %}
     </p>

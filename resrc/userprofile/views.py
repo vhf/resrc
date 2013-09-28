@@ -126,6 +126,7 @@ def settings_profile(request):
             return redirect(reverse('user-settings'))
         else:
             return render_template('user/settings_profile.html', {
+                'usr': request.user,
                 'form': form,
             })
     else:
@@ -137,6 +138,7 @@ def settings_profile(request):
             }
         )
         return render_template('user/settings_profile.html', {
+            'usr': request.user,
             'form': form
         })
 
@@ -157,10 +159,12 @@ def settings_account(request):
                 return redirect(reverse('user-settings'))
         else:
             return render_template('user/settings_account.html', {
+                'usr': request.user,
                 'form': form,
             })
     else:
         form = ChangePasswordForm(request.user)
         return render_template('user/settings_account.html', {
+            'usr': request.user,
             'form': form,
         })
