@@ -15,6 +15,9 @@ $visited-grey: #666;
 nav.top-bar {
   background-color: $cadetblue;
 }
+.contain-to-grid {
+  background: none;
+}
 
 .top-bar-section {
   & ul {

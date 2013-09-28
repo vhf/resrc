@@ -17,78 +17,80 @@
   <link rel="shortcut icon" type="image/png" href="{% static "img/favicon.png" %}">
 </head>
 <body>
-  <!-- Header and Nav -->
-  <nav class="top-bar">
-    <ul class="title-area">
-      <li class="name">
-        <h1><a href="{% url "home" %}">reSRC</a></h1>
-      </li>
-      <li class="toggle-topbar menu-icon"><a href="#"><span>nav</span></a></li>
-    </ul>
-
-    <section class="top-bar-section">
-      <ul class="left">
-        <li class="has-dropdown">
-          <a href="{% url "lists" %}">
-            Lists
-          </a>
-          <ul class="dropdown">
-            <li><a href="{% url "lists" %}">Summary</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
-            <li><a href="{% url "new-list" %}">New list</a></li>
-            {% endif %}
-          </ul>
+  <div class="contain-to-grid">
+    <!-- Header and Nav -->
+    <nav class="top-bar">
+      <ul class="title-area">
+        <li class="name">
+          <h1><a href="{% url "home" %}">reSRC</a></h1>
         </li>
-        <li class="has-dropdown">
-          <a href="{% url "links" %}">
-            Links
-          </a>
-          <ul class="dropdown">
-            <li><a href="{% url "links" %}">Summary</a></li>
-            {% if user.is_authenticated %}
-            <li><a href="{% url "new-link" %}">New link</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        <li class="has-dropdown">
-          <a href="{% url "tag-index" %}">
-            Tags
-          </a>
-          <ul class="dropdown">
-            <li><a href="{% url "tag-index" %}">Summary</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="{% url "page-search" %}">Search</a>
-        </li>
+        <li class="toggle-topbar menu-icon"><a href="#"><span>nav</span></a></li>
       </ul>
 
-      <ul class="right">
-        {% if user.is_authenticated %}
-        <li class="has-dropdown">
-          <a href="#">
-            {% gravatar user.email 24 %}
-            {{ user.username }}
-          </a>
-          <ul class="dropdown">
-            <li><a href="{% url "user-url" user.username %}">Profil</a></li>
-            <li><a href="{% url "user-settings" %}">Settings</a></li>
-            <li><a href="{% url "user-logout" %}">Logout</a></li>
-          </ul>
-        </li>
-        {% else %}
-        <li>
-          <a href="{% url "user-register" %}">Register</a>
-        </li>
-        <li>
-          <a href="{% url "user-login" %}">Login</a>
-        </li>
-        {% endif %}
-      </ul>
-    </section>
-  </nav>
-  <!-- End Header and Nav -->
+      <section class="top-bar-section">
+        <ul class="left">
+          <li class="has-dropdown">
+            <a href="{% url "lists" %}">
+              Lists
+            </a>
+            <ul class="dropdown">
+              <li><a href="{% url "lists" %}">Summary</a></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
+              <li><a href="{% url "new-list" %}">New list</a></li>
+              {% endif %}
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="{% url "links" %}">
+              Links
+            </a>
+            <ul class="dropdown">
+              <li><a href="{% url "links" %}">Summary</a></li>
+              {% if user.is_authenticated %}
+              <li><a href="{% url "new-link" %}">New link</a></li>
+              {% endif %}
+            </ul>
+          </li>
+          <li class="has-dropdown">
+            <a href="{% url "tag-index" %}">
+              Tags
+            </a>
+            <ul class="dropdown">
+              <li><a href="{% url "tag-index" %}">Summary</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="{% url "page-search" %}">Search</a>
+          </li>
+        </ul>
+
+        <ul class="right">
+          {% if user.is_authenticated %}
+          <li class="has-dropdown">
+            <a href="#">
+              {% gravatar user.email 24 %}
+              {{ user.username }}
+            </a>
+            <ul class="dropdown">
+              <li><a href="{% url "user-url" user.username %}">Profil</a></li>
+              <li><a href="{% url "user-settings" %}">Settings</a></li>
+              <li><a href="{% url "user-logout" %}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li>
+            <a href="{% url "user-register" %}">Register</a>
+          </li>
+          <li>
+            <a href="{% url "user-login" %}">Login</a>
+          </li>
+          {% endif %}
+        </ul>
+      </section>
+    </nav>
+    <!-- End Header and Nav -->
+  </div>
 
 {% block breadcrumb_container %}
 <div class="row">
