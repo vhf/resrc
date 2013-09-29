@@ -1,6 +1,7 @@
 {% extends "lists/base.html" %}
 {% load profile %}
 {% load mptt_comments_tags %}
+{% load emarkdown %}
 
 {% block title %}
 {{ list.title }}
@@ -27,7 +28,7 @@
             </span>{% endif %}
           </h5>
           <p>
-            {{ list.description }}
+            {{ list.description|emarkdown }}
           </p>
     </div>
     {% endfor %}
