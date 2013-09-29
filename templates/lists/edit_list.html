@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block title %}
-lala
+Edit {{ list.title }}
 {% endblock %}
 
-{% block extrahead %}
-{% endblock %}
 
 {% block breadcrumb %}
-<li class="current"><a href="#">Index</a></li>
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "lists" %}">Lists</a></li>
+<li class="current">Edit {{ list.title }}</li>
 {% endblock %}
 
 {% block content %}
@@ -47,12 +47,3 @@ lala
   });
 </script>
 {% endblock last_body %}
-{#
-
-<http://tobyho.com/2010/11/22/javascript-constructors-and/>
-
-<http://google.com>
-
-<http://12devs.co.uk/articles/204/>
-
-#}
