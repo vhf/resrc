@@ -42,22 +42,40 @@ def search(request, tags, operand, excludes):
     if tags[0] != u'':
         if operand == 'or':
             op = operator.or_
+            tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
+            links = Link.objects.filter(tag_qs)
         else:
-            op = operator.and_
-        tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
-        links = Link.objects.filter(tag_qs)
+            links = Link.objects.filter(tags__name=tags[0])
+            for tag in tags:
+                links = links.filter(tags__name=tag)
     else:
         links = Link.objects.all()
     for exclude in excludes:
         links = links.exclude(tags__name=exclude)
 
-    result = []
+    link_result = []
+    links_pk = []
     for link in links:
-        result.append({
+        link_result.append({
             'pk': link.pk,
             'title': link.title,
             'url': link.get_absolute_url()
         })
+        links_pk.append(link.pk)
+
+    from resrc.list.models import List
+    lists = List.objects.filter(links__in=links_pk).distinct()
+    list_result = []
+    for alist in lists:
+        list_result.append({
+            'pk': alist.pk,
+            'title': alist.title,
+            'url': alist.get_absolute_url()
+        })
+
+    result = []
+    result.append(link_result)
+    result.append(list_result)
 
     import simplejson
     result = simplejson.dumps(result)

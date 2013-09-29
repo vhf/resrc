@@ -51,7 +51,13 @@ Search by tags
 </div>
 
 <div class="row">
-  <div class="large-12 columns" id="results">
+  <div class="large-6 columns">
+    <h4>Links</h4>
+    <div id="link_results"></div>
+  </div>
+  <div class="large-6 columns">
+    <h4>Lists</h4>
+    <div id="list_results"></div>
   </div>
 </div>
 {% endblock %}
@@ -66,7 +72,7 @@ Search by tags
       var tags = $('#tags').val();
       var excludes = $('#tags2').val();
       var op = $('input[name="op"]:checked').val();
-      $('#results').html('');
+      $('#link_results,#list_results').html('');
 
       var query = tags.split(',').join(' '+(op == 'and' ? '&' : '|')+' ');
       if (excludes.length > 0) {
@@ -86,15 +92,25 @@ Search by tags
         url: '/search/'+tags+'%25'+op+'%25'+excludes,
         success: function(result) {
           result = $.parseJSON(result);
-          if (result.length > 0) {
-            for (var i = 0; i < result.length; i++) {
-              link = result[i];
-              $('#results').append('<div class="panel">'
+          if (result[0].length > 0) {
+            for (var i = 0; i < result[0].length; i++) {
+              link = result[0][i];
+              $('#link_results').append('<div class="panel">'
                 + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
                 + '</div>');
             }
           } else {
-            $('#results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+            $('#link_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+          }
+          if (result[1].length > 0) {
+            for (var i = 0; i < result[1].length; i++) {
+              list = result[1][i];
+              $('#list_results').append('<div class="panel">'
+                + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
+                + '</div>');
+            }
+          } else {
+            $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
           }
         }
       });
