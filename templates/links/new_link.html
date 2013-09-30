@@ -32,9 +32,33 @@
 <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 <script type="text/javascript">
   $(function(){
-      $("#id_tags").tagit({
-        availableTags: [{{ tags|safe }}],
-        autocomplete: {delay: 0, minLength: 2}
+    $('#id_tags').tagit({
+      availableTags: [{{ tags|safe }}],
+      autocomplete: {
+        delay: 0,
+        minLength: 2
+      }
+    });
+
+    $('#id_tags').on('change', function() {
+      $('#suggest').html('');
+      $.ajax({
+        type:"GET",
+        url: '/tag/related/'+$(this).val(),
+        success: function(result) {
+          result = $.parseJSON(result);
+          for(var i = 0; i < result.length; i++) {
+            tag = result[i]
+            $('#suggest').append('<li><a id="ui-id-'+tag.pk+'"class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'">'+tag.tag+' ('+tag.count+')'+'</a></li>')
+
+            $('.suggest_add').on('click', function() {
+              var $tag = $(this).attr('data-tag');
+              console.log($tag);
+              $('#id_tags').tagit("createTag", $tag);
+            });
+          }
+        }
+      });
     });
   });
 </script>

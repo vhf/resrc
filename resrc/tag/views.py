@@ -83,7 +83,7 @@ def search(request, tags, operand, excludes):
 
 def related(request, tags):
     tags = tags.split(',')
-    related = get_related_tags(tags)
+    related = get_related_tags(tags)[:10]
     result = simplejson.dumps(related)
     return HttpResponse(result, mimetype="application/javascript")
 
@@ -105,4 +105,4 @@ def get_related_tags(tags):
     qs = qs.order_by('-count', 'name').distinct()
 
     # Return tag names
-    return [t.name for t in qs]
+    return [{'tag': t.name, 'count': t.count, 'pk': t.pk} for t in list(qs)]

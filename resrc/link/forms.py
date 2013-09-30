@@ -2,7 +2,7 @@
 from django import forms
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Column, Submit, Field
+from crispy_forms_foundation.layout import Layout, Row, Column, Submit, Field, HTML
 from django.conf import settings
 
 
@@ -50,6 +50,11 @@ class NewLinkForm(forms.Form):
                 ),),
             Row(Column(
                 Field('tags'), css_class='large-12'
+                ),),
+            Row(Column(
+                HTML('<label>Suggested tags:</label>'),
+                HTML('<ul id="suggest" class="inline-list"><li></li></ul>'),
+                css_class='large-12'
                 ),),
             Row(
                 Column(
@@ -137,9 +142,10 @@ class EditLinkForm(forms.Form):
             )
         )
 
-        #self.helper['url'].update_attributes(disabled=True)
+        # self.helper['url'].update_attributes(disabled=True)
 
         super(EditLinkForm, self).__init__(*args, **kwargs)
+
 
 class SuggestEditForm(forms.Form):
 
@@ -213,6 +219,6 @@ class SuggestEditForm(forms.Form):
             )
         )
 
-        #self.helper['url'].update_attributes(disabled=True)
+        # self.helper['url'].update_attributes(disabled=True)
 
         super(SuggestEditForm, self).__init__(*args, **kwargs)
