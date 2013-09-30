@@ -86,8 +86,6 @@ class List(models.Model):
 
     def save(self, *args, **kwargs):
         self.do_unique_slug()
-        if not self.description:
-            self.description = self.title
         super(List, self).save(*args, **kwargs)
 
     def do_unique_slug(self):

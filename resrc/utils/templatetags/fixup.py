@@ -58,7 +58,7 @@ def fixup(elem, alist):
                 icon.text = "link "
                 icon.set("class", "lsf symbol")
 
-                newlink.text = link.title
+                newlink.text = elem.text # ne pas forcer l'intitulé des liens
                 newlink.set("href", reverse("link-single-slug", args=(link.pk, link.slug)))
 
                 elem.text = ''

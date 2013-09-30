@@ -55,7 +55,7 @@ class NewListForm(forms.Form):
     )
     private = forms.BooleanField(label='private', required=False)
     mdcontent = forms.CharField(
-        label='list source', required=False, widget=forms.Textarea()
+        label='content', required=False, widget=forms.Textarea()
     )
 
     def __init__(self, *args, **kwargs):

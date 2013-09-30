@@ -17,7 +17,7 @@
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "links" %}">Links</a></li>{# TODO : Add real URLs here #}
+<li><a href="{% url "links" %}">Links</a></li>
 <li class="current">{{ link.title }}</li>
 {% endblock %}
 
@@ -26,7 +26,7 @@
     <div class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
-        {% if request.user.is_authenticated %}<i class="lsf" data-reveal-id="revise-link" data-tooltip-title="Suggest tag modification">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
+        {% if request.user.is_authenticated and link.author != request.user %}<i class="lsf pointer" data-tooltip-title="Suggest tag modification" data-reveal-id="revise-link">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
         {% for tag in tags %}{% if tag.slug %}
         <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
         {% endif %}{% endfor %}
@@ -37,7 +37,7 @@
       <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span>{% if author = request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
@@ -81,7 +81,6 @@
   </div>
 </div>
 
-{% if lists %}
 <div class="row">
   <div class="large-6 columns">
     <h4 class="subheader">as seen in</h4>
@@ -100,7 +99,6 @@
     </ul>
   </div>
 </div>
-{% endif %}
 
 {% endblock %}
 

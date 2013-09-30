@@ -50,7 +50,8 @@ def single(request, link_pk, link_slug=None):
     link_tags = list(link.tags.all())
     for i in xrange(0, len(link_tags)-1):
         add_similars = Link.objects.filter(tags__name=link_tags[i].name) \
-                                   .filter(tags__name=link_tags[i+1].name)
+                                   .filter(tags__name=link_tags[i+1].name) \
+                                   .exclude(pk=link.pk)
         similars += add_similars
     similars = list(set(similars))[:10]
 

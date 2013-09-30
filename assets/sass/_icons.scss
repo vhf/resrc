@@ -76,6 +76,7 @@ i {
 
 .votes {
   @include label();
+  cursor: pointer;
   background-color: #FFFFCC;
   color: #555555;
   margin-right: 3px;
@@ -94,4 +95,8 @@ i {
   &.lsf:after {
     content: ' view';
   }
+}
+
+.pointer {
+  cursor: pointer;
 }
