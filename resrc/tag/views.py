@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-:
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404, HttpResponse
-
+import simplejson
 from taggit.models import Tag
 
 from resrc.utils import render_template
@@ -77,6 +77,32 @@ def search(request, tags, operand, excludes):
     result.append(link_result)
     result.append(list_result)
 
-    import simplejson
     result = simplejson.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
+
+
+def related(request, tags):
+    tags = tags.split(',')
+    related = get_related_tags(tags)
+    result = simplejson.dumps(related)
+    return HttpResponse(result, mimetype="application/javascript")
+
+
+def get_related_tags(tags):
+    # Get a QuerySet of related items : http://stackoverflow.com/questions/7021442/how-to-show-tags-related-to-a-particular-tag-in-django-taggit
+    related_items = Link.objects.filter(tags__name__in=tags)
+
+    # Get tags for those related items
+    qs = Tag.objects.filter(taggit_taggeditem_items__link__in=related_items)
+
+    # Exclude the tags we already have
+    qs = qs.exclude(name__in=tags)
+
+    from django.db.models import Count
+    qs = qs.annotate(count=Count('name'))
+
+    # Order by name and remove duplicates
+    qs = qs.order_by('-count', 'name').distinct()
+
+    # Return tag names
+    return [t.name for t in qs]
