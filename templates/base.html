@@ -122,30 +122,8 @@
   </footer>
   {% endblock %}
 
-  <!-- Included JS Files (Uncompressed) -->
-  <script>
-  if (typeof jq == "undefined") {
-    var jq = false;
-  }
-  document.write('<script src=' +
-    ((!jq && '__proto__' in {}) ? '{% static "js/vendor/zepto.js" %}' : '{% static "js/vendor/jquery.js" %}') +
-    '><\/script>');
-  console.log((!jq && '__proto__' in {}) ? "loading zepto" : "loading jquery");
-  </script>
-  <script src="{% static "js/foundation/foundation.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.topbar.js" %}"></script>
-  {% block foundation_plugins %}
-  <script src="{% static "js/foundation/foundation.abide.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.alerts.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.clearing.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.cookie.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.dropdown.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.forms.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.joyride.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.section.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
-  {% endblock %}
+  <script src="{% static "js/vendor/jquery-1.10.2.min.js" %}"></script>
+  <script src="{% static "js/foundation/foundation.min.js" %}"></script>
   <script>
   $(document).foundation();
   </script>

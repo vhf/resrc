@@ -4,10 +4,6 @@
 {% load crispy_forms_tags %}
 {% load cache %}
 
-{% block meta %}{% if request.user.is_authenticated %}
-<script type="text/javascript">var jq = true;</script>
-{% endif %}{% endblock %}
-
 {% block extrahead %}{% if request.user.is_authenticated %}
   <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
   <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
