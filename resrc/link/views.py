@@ -38,29 +38,21 @@ def single(request, link_pk, link_slug=None):
             'language': link.language,
             'level': link.level
         })
-        # for tag suggestionautocomplete
+        # for tag autocomplete
         tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
         tags = '"%s"' % tags
 
     lists = List.objects.some_lists_from_link(link_pk)
 
-    try:
-        similars = link.tags.similar_objects(10)
-        '''
-
-        SELECT `taggit_taggeditem`.`content_type_id`, `taggit_taggeditem`.`object_id`, COUNT(`taggit_taggeditem`.`id`) AS `n`
-        FROM `taggit_taggeditem`
-        WHERE (
-            NOT (`taggit_taggeditem`.`object_id` = 12 AND `taggit_taggeditem`.`content_type_id` = 16 )
-            AND `taggit_taggeditem`.`tag_id` IN (SELECT DISTINCT U0.`id` FROM `taggit_tag` U0
-        INNER JOIN `taggit_taggeditem` U1
-            ON (U0.`id` = U1.`tag_id`)
-            WHERE (U1.`object_id` = 12 AND U1.`content_type_id` = 16 ))
-        ) GROUP BY `taggit_taggeditem`.`content_type_id`, `taggit_taggeditem`.`object_id`
-        ORDER BY `n` DESC LIMIT 10
-        '''
-    except:
-        similars = ''
+    # rather naive : take them two by two. In case tags are Python, Flask, TDD,
+    # look for Python-Flask, Flask-TDD, unfortunately ignores Python-TDD :(
+    similars = list()
+    link_tags = list(link.tags.all())
+    for i in xrange(0, len(link_tags)-1):
+        add_similars = Link.objects.filter(tags__name=link_tags[i].name) \
+                                   .filter(tags__name=link_tags[i+1].name)
+        similars += add_similars
+    similars = list(set(similars))[:10]
 
     try:
         from tldr.tldr import TLDRClient

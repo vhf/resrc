@@ -2,6 +2,7 @@
 {% load mptt_comments_tags %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load cache %}
 
 {% block meta %}{% if request.user.is_authenticated %}
 <script type="text/javascript">var jq = true;</script>
@@ -97,9 +98,9 @@
   <div class="large-6 columns">
     <h4 class="subheader">similar links</h4>
     <ul>
-    {% for similar in similars %}
+    {% cache 3600 similar_links link.pk %}{% for similar in similars %}
       <li><a href="{{ similar.get_absolute_url }}">{{ similar.title }}</a></li>
-    {% endfor %}
+    {% endfor %}{% endcache %}
     </ul>
   </div>
 </div>
