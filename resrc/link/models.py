@@ -103,6 +103,7 @@ class Link(models.Model):
         from resrc.vote.models import Vote
         # we keep track of list because if link is voted from a list, we also vote for the list
         if list_pk is not None:
+            from resrc.list.models import List
             alist = get_object_or_404(List, pk=list_pk)
         else:
             alist = None
