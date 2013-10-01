@@ -29,7 +29,7 @@
     <h3><a href="{% url "lists" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li><span class="votes lsf" data-id="{{list.alist__pk}}" data-type="list">{{ list.count }}</span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list">{{ list.count }} <i class="lsf"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -39,7 +39,7 @@
     <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -58,7 +58,7 @@
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{link.link__pk}}"> {{ link.count }} <i class="lsf"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -69,9 +69,9 @@
   <div class="large-12 columns panel">
     <h6>legend</h6>
     <ul class="no-bullet inline-list">
-      <li><a href="#"><span class="votes lsf" data-tooltip title="Click to upvote">74</span>I'm a list with 74 votes</a></li>
+      <li><a href="#"><span class="votes y-bg" data-tooltip title="Click to upvote">74 <i class="lsf"></i></span>I'm a list with 74 votes</a></li>
       <li class="tag" style="margin-top: 5px"><a href="#"><span class="c">8</span><span class="t">I'm a tag with 8 links</span></a></li>
-      <li><a href="#"><i class="lsf i-b">link</i><span class="votes lsf" data-tooltip title="Click to upvote">17</span>I'm a link with 17 votes</a></li>
+      <li><a href="#"><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-tooltip title="Click to upvote">17 <i class="lsf"></i></span>I'm a link with 17 votes</a></li>
     </ul>
   </div>
 </div>
@@ -94,9 +94,9 @@
       url: url,
       data: 'csrfmiddlewaretoken={{csrf_token}}',
       error: function(xhr) {
-        result = $.parseJSON(xhr.response).result;
+        result = $.parseJSON(xhr.responseText).result;
         if (result == 'success') {
-          $(button).html(parseInt($(button).html(), 10)+1);
+          $(button).html(""+(parseInt($(button).html(), 10)+1)+' <i class="lsf lsf2"></i>');
         }
       }
     });

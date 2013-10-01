@@ -44,16 +44,13 @@
     <div class="large-2 small-2 columns text-right list-symbols">
       <div class="row">
         {% if request.user.is_authenticated %}
-        <div class="large-3 columns">
-          <a class="lsf symbol" id="vote" data-tooltip title="Vote for this link">check</a>
+        <div class="large-4 columns">
+          <a class="lsf symbol" id="vote" data-tooltip title="Upvote this link">check</a>
         </div>
-        <div class="large-3 columns">
-          <a class="lsf symbol{% if 'Bookmarks' in titles %} checked{%endif%}" id="bookmark" data-tooltip title="Add to bookmarks list">bookmark</a>
-        </div>
-        <div class="large-3 columns">
+        <div class="large-4 columns">
           <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
         </div>
-        <div class="large-3 columns">
+        <div class="large-4 columns">
           <a class="lsf symbol"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
         </div>
         {% endif %}
@@ -120,9 +117,10 @@
     {% crispy reviselinkform %}
     <a class="close-reveal-modal">&#215;</a>
   </div>
+
   <script type="text/javascript">
-  function add_to_default_list(list) {
-    var icon = $("#"+list);
+  $('#toread').click(function() {
+    var icon = $("#toread");
     if (icon.hasClass('waiting')) {
       return null;
     }
@@ -130,7 +128,7 @@
     $.ajax({
       type:"POST",
       url:"{% url "ajax-add-to-list-or-create" %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list
+      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t=toread'
     }).always(function(xhr) {
       console.log(xhr.responseText);
       result = $.parseJSON(xhr.responseText).result;
@@ -142,12 +140,6 @@
         icon.addClass('unchecked');
       }
     });
-  }
-  $('#bookmark').click(function() {
-    add_to_default_list('bookmark');
-  });
-  $('#toread').click(function() {
-    add_to_default_list('toread');
   });
 
   $('#vote,.votes').click(function() {

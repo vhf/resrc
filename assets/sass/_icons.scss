@@ -45,10 +45,15 @@ i {
   }
 }
 
+//icons black
 .symbol.i-b, .lsf.i-b {
   color:black;
 }
 
+//tiny-icons
+.t-i {
+  font-size:15px;
+}
 
 .listcontent {
   a.symbol {
@@ -75,26 +80,33 @@ i {
 
 }
 
+.y-bg {
+  background-color: #FFFFCC !important;
+  color: #555555 !important;
+}
+
 .votes {
   @include label();
   cursor: pointer;
-  background-color: #FFFFCC;
-  color: #555555;
   margin-right: 3px;
   padding-top: 2px;
-  &.lsf:after {
-    content: ' check';
+  i.lsf:after {
+    content: 'check';
+    font-size: 14px;
+  }
+  i.lsf.lsf2:after {
+    content: 'checkbox';
+    font-size: 14px;
   }
 }
 
 .views {
   @include label();
-  background-color: #FFFFCC;
-  color: #555555;
   margin-right: 3px;
   padding-top: 2px;
-  &.lsf:after {
-    content: ' view';
+  i.lsf:after {
+    font-size: 14px;
+    content: 'view';
   }
 }
 

@@ -8077,18 +8077,23 @@ i {
     font-size: 2.1875em;
   }
 }
-/* line 48, ../sass/_icons.scss */
+/* line 49, ../sass/_icons.scss */
 .symbol.i-b, .lsf.i-b {
   color: black;
 }
 
 /* line 54, ../sass/_icons.scss */
+.t-i {
+  font-size: 15px;
+}
+
+/* line 59, ../sass/_icons.scss */
 .listcontent a.symbol {
   color: black;
   font-size: 1.5em;
 }
 
-/* line 60, ../sass/_icons.scss */
+/* line 65, ../sass/_icons.scss */
 .tag {
   display: block;
   margin-right: 5px;
@@ -8096,7 +8101,7 @@ i {
   margin-bottom: 0.5em;
   font-size: 14px;
 }
-/* line 67, ../sass/_icons.scss */
+/* line 72, ../sass/_icons.scss */
 .tag .t {
   font-weight: bold;
   text-align: center;
@@ -8110,7 +8115,7 @@ i {
   background-color: #2ba6cb;
   color: white;
 }
-/* line 70, ../sass/_icons.scss */
+/* line 75, ../sass/_icons.scss */
 .tag .c {
   font-weight: bold;
   text-align: center;
@@ -8127,7 +8132,13 @@ i {
   color: #333333;
 }
 
-/* line 78, ../sass/_icons.scss */
+/* line 83, ../sass/_icons.scss */
+.y-bg {
+  background-color: #FFFFCC !important;
+  color: #555555 !important;
+}
+
+/* line 88, ../sass/_icons.scss */
 .votes {
   font-weight: bold;
   text-align: center;
@@ -8141,17 +8152,21 @@ i {
   background-color: #2ba6cb;
   color: white;
   cursor: pointer;
-  background-color: #FFFFCC;
-  color: #555555;
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 85, ../sass/_icons.scss */
-.votes.lsf:after {
-  content: ' check';
+/* line 93, ../sass/_icons.scss */
+.votes i.lsf:after {
+  content: 'check';
+  font-size: 14px;
+}
+/* line 97, ../sass/_icons.scss */
+.votes i.lsf.lsf2:after {
+  content: 'checkbox';
+  font-size: 14px;
 }
 
-/* line 90, ../sass/_icons.scss */
+/* line 103, ../sass/_icons.scss */
 .views {
   font-weight: bold;
   text-align: center;
@@ -8164,17 +8179,16 @@ i {
   font-size: 0.875em;
   background-color: #2ba6cb;
   color: white;
-  background-color: #FFFFCC;
-  color: #555555;
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 96, ../sass/_icons.scss */
-.views.lsf:after {
-  content: ' view';
+/* line 107, ../sass/_icons.scss */
+.views i.lsf:after {
+  font-size: 14px;
+  content: 'view';
 }
 
-/* line 101, ../sass/_icons.scss */
+/* line 113, ../sass/_icons.scss */
 .pointer {
   cursor: pointer;
 }
@@ -8211,40 +8225,6 @@ nav.top-bar {
 /* line 33, ../sass/_resrc.scss */
 .top-bar-section ul li a:not(.button) {
   background-color: #75a2aa;
-}
-
-/* line 41, ../sass/_resrc.scss */
-::-webkit-selection {
-  background-color: #FFFFCC;
-  color: #555555;
-}
-
-/* line 45, ../sass/_resrc.scss */
-::-moz-selection {
-  background-color: #FFFFCC;
-  color: #555555;
-}
-
-/* line 49, ../sass/_resrc.scss */
-::selection {
-  background-color: #FFFFCC;
-  color: #555555;
-}
-
-/* line 56, ../sass/_resrc.scss */
-h1::-moz-selection,
-h2::-moz-selection,
-h3::-moz-selection {
-  background-color: #F1C1C2;
-  color: #222222;
-}
-
-/* line 62, ../sass/_resrc.scss */
-h1::selection,
-h2::selection,
-h3::selection {
-  background-color: #F1C1C2;
-  color: #222222;
 }
 
 /* line 2, ../sass/_lists.scss */

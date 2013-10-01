@@ -35,7 +35,9 @@ def index(request):
 
 
 def search(request, tags, operand, excludes):
-    result = cache.get("%s%s%s" % (tags, operand, excludes))
+    from resrc.utils.hash2 import hash2
+    h = hash2("%s%s%s" % (tags, operand, excludes))
+    result = cache.get(h)
     if result is None:
         from django.db.models import Q
         import operator
@@ -83,7 +85,7 @@ def search(request, tags, operand, excludes):
         result = []
         result.append(link_result)
         result.append(list_result)
-        cache.set("%s%s%s" % (tags, operand, excludes), result, 60*60*24*3)
+        cache.set(h, result, 60*60*24*3)
 
     result = simplejson.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")

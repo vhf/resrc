@@ -71,7 +71,6 @@ def single(request, link_pk, link_slug=None):
                     add_similars = add_similars.exclude(pk=link.pk)
                     similars += add_similars
                     similars = list(set(similars))
-                    print len(similars)
                     if len(similars) > 10:
                         similars[:10]
                         raise Enough
@@ -79,12 +78,15 @@ def single(request, link_pk, link_slug=None):
             pass
         cache.set('similar_link_%s' % link_pk, similars, 60*60*2)
 
-    try:
-        from tldr.tldr import TLDRClient
-        client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
-        tldr = client.searchByUrl(link.url)
-    except:
-        tldr = False
+    tldr = cache.get('tldr_%s' % link_pk)
+    if tldr is None:
+        try:
+            from tldr.tldr import TLDRClient
+            client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
+            tldr = client.searchByUrl(link.url)
+        except:
+            tldr = False
+        cache.set('tldr_%s' % link_pk, tldr, 60*60*24*8)
     from resrc.vote.models import Vote
     return render_template('links/show_single.html', {
         'link': link,
@@ -163,8 +165,6 @@ def new_link(request, title=None, url=None):
             data = simplejson.dumps({'result': 'added'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
-            from pprint import pprint
-            pprint(request.POST)
             if not 'ajax' in form.data:
                 form = NewLinkForm()
 

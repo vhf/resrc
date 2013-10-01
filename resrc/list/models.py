@@ -15,7 +15,7 @@ class ListManager(models.Manager):
     def personal_lists(self, owner):
         return self.get_query_set().prefetch_related('links') \
             .filter(owner=owner) \
-            .exclude(title__in=['Bookmarks', 'Reading list'])
+            .exclude(title='Reading list')
 
     def user_lists(self, owner, only_public=True):
         qs = self.get_query_set().prefetch_related('links') \
@@ -33,14 +33,14 @@ class ListManager(models.Manager):
     def my_list_titles(self, owner, link_pk):
         '''returns  titles of my own Lists containing this Link'''
         titles = self.all_my_list_titles(owner, link_pk) \
-            .exclude(title__in=['Bookmarks', 'Reading list'])
+            .exclude(title='Reading list')
         return titles
 
     def some_lists_from_link(self, link_pk):
         '''To display : "as seen in..."'''
         lists = self.get_query_set().prefetch_related('links') \
             .filter(links__pk=link_pk) \
-            .exclude(title__in=['Bookmarks', 'Reading list']) \
+            .exclude(title='Reading list') \
             .exclude(is_public=False)[:5]
         ''' Now excluding all private lists. To keep showing MY private
             lists : from django.db.models import Q
@@ -49,16 +49,24 @@ class ListManager(models.Manager):
         return list(lists)
 
     def latest(self,limit=10):
-        return self.get_query_set() \
-            .exclude(title__in=['Bookmarks', 'Reading list']) \
-            .exclude(is_public=False) \
-            .order_by('-pubdate')[:limit]
+        latest = cache.get('link_latest_%s' % limit)
+        if latest is None:
+            latest = self.get_query_set() \
+                .exclude(title='Reading list') \
+                .exclude(is_public=False) \
+                .order_by('-pubdate')[:limit]
+            cache.set('link_latest_%s' % limit, list(latest), 30)
+        return latest
 
     def most_viewed(self,limit=10):
-        return self.get_query_set() \
-            .exclude(title__in=['Bookmarks', 'Reading list']) \
-            .exclude(is_public=False) \
-            .order_by('-views')[:limit]
+        most_viewed = cache.get('link_most_viewed_%s' % limit)
+        if most_viewed is None:
+            most_viewed = self.get_query_set() \
+                .exclude(title='Reading list') \
+                .exclude(is_public=False) \
+                .order_by('-views')[:limit]
+            cache.set('link_most_viewed_%s' % limit, list(most_viewed), 60*60)
+        return most_viewed
 
 
 class List(models.Model):

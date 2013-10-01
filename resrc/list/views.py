@@ -55,7 +55,7 @@ def single(request, list_pk, list_slug=None):
         'count': Vote.objects.votes_for_list(alist.pk),
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
-        'default_lists': ['Bookmarks', 'Reading list'],
+        'reading_list': 'Reading list',
         # 'tldrs': tldrs,
         # 'tldr_urls': tldr_urls,
         'request': request

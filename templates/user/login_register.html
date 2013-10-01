@@ -108,9 +108,7 @@ Log in
 
 {% endblock %}
 
-{% block foundation_plugins %}
-<script src="{% static "js/foundation/foundation.section.js" %}"></script>
-<script src="{% static "js/foundation/foundation.abide.js" %}"></script>
+{% block last_body %}
 <script>
 $(document).foundation('abide', {
   patterns: {
@@ -124,5 +122,4 @@ $('#registration').on('invalid', function() {
   return false;
 });
 </script>
-{# TODO : JS refresh captcha button #}
 {% endblock %}
