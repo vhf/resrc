@@ -243,7 +243,7 @@ def edit(request, list_pk):
 
     if request.method == 'POST':
         form = EditListForm(
-            private_checkbox, alist.md_content, from_url, request.POST)
+            private_checkbox, alist, from_url, request.POST)
         if form.is_valid():
             is_private = False
 
@@ -275,7 +275,7 @@ def edit(request, list_pk):
 
     else:
 
-        form = EditListForm(private_checkbox, alist.md_content, from_url, initial={
+        form = EditListForm(private_checkbox, alist, from_url, initial={
             'title': alist.title,
             'description': alist.description,
             'private': not alist.is_public,

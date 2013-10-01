@@ -3,10 +3,6 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
-{% block meta %}
-<script type="text/javascript">var jq = true;</script>
-{% endblock %}
-
 {% block title %}
 Search by tags
 {% endblock %}
@@ -89,7 +85,7 @@ Search by tags
 
       $.ajax({
         type:"GET",
-        url: '/search/'+tags+'%25'+op+'%25'+excludes,
+        url: '/tag/search/'+tags+'%25'+op+'%25'+excludes,
         success: function(result) {
           result = $.parseJSON(result);
           if (result[0].length > 0) {

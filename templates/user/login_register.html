@@ -22,7 +22,7 @@ Log in
   <div class="large-12 columns">
     {% if not user.is_authenticated %}
     <div class="section-container auto" data-section>
-      <section>
+      <section{%if register == False %} class="active"{% endif %}>
         <p class="title" data-section-title>
           <a href="#">Login</a>
         </p>

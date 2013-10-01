@@ -96,7 +96,7 @@ class NewListForm(forms.Form):
                         HTML('<div class="ctrlHolder"><label>preview</label><div class="editable"><h5>lala</h5><ul><li>@3</li><li>ho</li></ul></div></div>'),
                         css_class='large-6'
                     ),
-                    css_class='halloform'
+                    css_class='markdownform'
                 ),
             ),
             Row(
@@ -161,7 +161,7 @@ class EditListForm(forms.Form):
                             HTML('<div class="ctrlHolder"><label>preview</label><div class="editable">%s</div></div>' % md_content),
                             css_class='large-6'
                         ),
-                        css_class='halloform'
+                        css_class='markdownform'
                     ),
                 ),
                 Row(

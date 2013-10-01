@@ -55,7 +55,7 @@ class NewListForm(forms.Form):
     )
     private = forms.BooleanField(label='private', required=False)
     mdcontent = forms.CharField(
-        label='list source', required=False, widget=forms.Textarea()
+        label='content', required=False, widget=forms.Textarea()
     )
 
     def __init__(self, *args, **kwargs):
@@ -92,7 +92,7 @@ class NewListForm(forms.Form):
                         Field('mdcontent'),
                         css_class='large-12'
                     ),
-                    css_class='halloform'
+                    css_class='markdownform'
                 ),
             ),
             Row(
@@ -118,15 +118,17 @@ class EditListForm(forms.Form):
         label='list source', required=False, widget=forms.Textarea()
     )
 
-    def __init__(self, private_checkbox, md_content, from_url, *args, **kwargs):
+    def __init__(self, private_checkbox, alist, from_url, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
         self.helper.form_id = 'createlistform'
 
+        delete_url = reverse('list-delete', args=(alist.pk,))
+
         if not from_url:
             self.helper.layout = Layout(
                 Fieldset(
-                    u'Create a list',
+                    u'Edit a list',
                     Row(
                         Column(
                             Field('title'), css_class='large-12'
@@ -153,13 +155,17 @@ class EditListForm(forms.Form):
                             Field('mdcontent'),
                             css_class='large-12'
                         ),
-                        css_class='halloform'
+                        css_class='markdownform'
                     ),
                 ),
                 Row(
                     Column(
                         Submit('submit', 'Save', css_class='small button'),
-                        css_class='large-12',
+                        css_class='large-6',
+                    ),
+                    Column(
+                        HTML('<a href="%s" class="small button alert right">Delete list</a>' % delete_url),
+                        css_class='large-6'
                     ),
                 )
             )

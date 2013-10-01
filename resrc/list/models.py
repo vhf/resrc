@@ -88,8 +88,6 @@ class List(models.Model):
     def save(self, *args, **kwargs):
         cache.delete('list_%s' % self.pk)
         self.do_unique_slug()
-        if not self.description:
-            self.description = self.title
         cache.set('list_%s' % self.pk, self, 60*5)
         super(List, self).save(*args, **kwargs)
 
@@ -157,8 +155,8 @@ class ListLinks(models.Model):
         listlink = self
         alist = listlink.alist
         link = listlink.links
-        md_link = "1. [%s](%s)" % (
-            link.get_absolute_url(), link.title, link.url
+        md_link = "1. [link](%s) [%s](%s)" % (
+            link.url, link.title, link.get_absolute_url()
         )
         alist.md_content = "\n".join([alist.md_content, md_link])
         alist.html_content = listmarkdown(alist.md_content, alist)

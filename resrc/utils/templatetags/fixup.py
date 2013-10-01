@@ -7,6 +7,7 @@ from markdown.util import etree
 from django.core.urlresolvers import reverse
 from django.template.defaultfilters import slugify
 
+
 def fixup(elem, alist):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         a = etree.Element('a')
@@ -48,8 +49,8 @@ def fixup(elem, alist):
                 elem.text = elem.text.replace('#!uds!#', '_')
                 elem.text = elem.text.replace('#!ast!#', '*')
                 a = etree.Element('a')
-                a.set("class", "addthis")
-                a.text = u'  [add]'
+                a.set("class", "addthis tiny button secondary")
+                a.text = u'add'
                 elem.append(a)
             else:
                 newlink = etree.Element('a')
@@ -58,8 +59,12 @@ def fixup(elem, alist):
                 icon.text = "link "
                 icon.set("class", "lsf symbol")
 
-                newlink.text = link.title
-                newlink.set("href", reverse("link-single-slug", args=(link.pk, link.slug)))
+                # ne pas forcer l'intitulé des liens
+                newlink.text = elem.text + ' '
+                newlink.set(
+                    "href",
+                    reverse("link-single-slug", args=(link.pk, link.slug))
+                )
 
                 elem.text = ''
                 elem.append(icon)

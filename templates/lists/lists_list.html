@@ -11,13 +11,15 @@
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
 <li><a href="{% url "lists" %}">Lists</a></li>
-<li class="current">My lists</li>
+{% if owner %}<li class="current">My lists</li>{% else %}
+<li class="current">{{ username }}'s lists</li>
+{% endif %}
 {% endblock %}
 
 {% block content %}
 <div class="row">
   <div class="large-12 columns">
-    <h1>{{ username }}'s lists</h1>
+    <h1>{{ username }}'s lists{% if owner %} | <a href="{% url "new-list" %}">create a list</a>{% endif %}</h1>
     {% for list in lists %}
     <div class="panel">
           <h5>

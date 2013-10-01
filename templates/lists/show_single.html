@@ -5,10 +5,6 @@
 {% load crispy_forms_tags %}
 {% load emarkdown %}
 
-{% block meta %}
-<script type="text/javascript">var jq = true;</script>
-{% endblock %}
-
 {% block title %}
 {{ list.title }}
 {% endblock %}
@@ -31,15 +27,15 @@
 
 {% block content %}
 
-<div class="row">
-  <div class="large-12 columns">
-    <p>
-      {% for name, slug, count in tags %}{% if slug %}
-      <p class="tag left"><a href="{% url "tag-single-slug" slug %}"><span class="c">{{ count }}</span><span class="t">{{ name }}</span></a></p>
-      {% endif %}{% endfor %}
-    </p>
-  </div>
-</div>
+{#<div class="row">#}
+{#  <div class="large-12 columns">#}
+{#    <p>#}
+{#      {% for name, slug, count in tags %}{% if slug %}#}
+{#      <p class="tag left"><a href="{% url "tag-single-slug" slug %}"><span class="c">{{ count }}</span><span class="t">{{ name }}</span></a></p>#}
+{#      {% endif %}{% endfor %}#}
+{#    </p>#}
+{#  </div>#}
+{#</div>#}
 
 <div class="row">
   <div class="large-12 columns">
@@ -87,9 +83,7 @@
 {% if request.user.is_authenticated %}
 <script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
-<script type="text/javascript">
 
-</script>
 <script type="text/javascript">
 $(function(){
   $("#id_tags").tagit({
@@ -113,6 +107,9 @@ $(function(){
         var title = link.html();
         $('#id_url').val(url);
         $('#id_title').val(title);
+        $('#form-message').hide();
+        $('.errorField').hide();
+        $('.error').removeClass('error');
         $('#addmodal').attr('data-link', idx);
         $('#addmodal').foundation('reveal', 'open');
       });
@@ -134,7 +131,8 @@ $(function(){
           $('#'+$('#addmodal').attr('data-link')).remove();
           $('#addmodal').foundation('reveal', 'close');
         } else {
-          message.text('Error.');
+          message.show();
+          message.text('Invalid form. Please fill required fields.');
           message.removeClass('success').addClass('alert');
         }
         message.show();

@@ -4,10 +4,6 @@
 {% load crispy_forms_tags %}
 {% load cache %}
 
-{% block meta %}{% if request.user.is_authenticated %}
-<script type="text/javascript">var jq = true;</script>
-{% endif %}{% endblock %}
-
 {% block extrahead %}{% if request.user.is_authenticated %}
   <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
   <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
@@ -21,7 +17,7 @@
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "links" %}">Links</a></li>{# TODO : Add real URLs here #}
+<li><a href="{% url "links" %}">Links</a></li>
 <li class="current">{{ link.title }}</li>
 {% endblock %}
 
@@ -30,7 +26,7 @@
     <div class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
-        {% if request.user.is_authenticated %}<i class="lsf" data-reveal-id="revise-link" data-tooltip-title="Suggest tag modification">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
+        {% if request.user.is_authenticated and link.author != request.user %}<i class="lsf pointer" data-tooltip-title="Suggest tag modification" data-reveal-id="revise-link">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
         {% for tag in tags %}{% if tag.slug %}
         <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
         {% endif %}{% endfor %}
@@ -41,7 +37,7 @@
       <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span>{% if author = request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
@@ -85,7 +81,6 @@
   </div>
 </div>
 
-{% if lists %}
 <div class="row">
   <div class="large-6 columns">
     <h4 class="subheader">as seen in</h4>
@@ -104,14 +99,9 @@
     </ul>
   </div>
 </div>
-{% endif %}
 
 {% endblock %}
 
-{% block foundation_plugins %}
-<script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
-<script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
-{% endblock %}
 
 {% block last_body %}
   {% if request.user.is_authenticated %}
@@ -140,17 +130,16 @@
     $.ajax({
       type:"POST",
       url:"{% url "ajax-add-to-list-or-create" %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list,
-      error: function(xhr) {
-        console.log(xhr.response);
-        result = $.parseJSON(xhr.response).result;
-        if (result == 'added') {
-          icon.removeClass('waiting unchecked');
-          icon.addClass('checked');
-        } else {
-          icon.removeClass('waiting checked');
-          icon.addClass('unchecked');
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list
+    }).always(function(xhr) {
+      console.log(xhr.responseText);
+      result = $.parseJSON(xhr.responseText).result;
+      if (result == 'added') {
+        icon.removeClass('waiting unchecked');
+        icon.addClass('checked');
+      } else {
+        icon.removeClass('waiting checked');
+        icon.addClass('unchecked');
       }
     });
   }
@@ -160,55 +149,55 @@
   $('#toread').click(function() {
     add_to_default_list('toread');
   });
+
   $('#vote,.votes').click(function() {
     var symbol = $('#vote');
     $.ajax({
       type:"POST",
       url:"{% url "link-upvote" link.pk %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}',
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        console.log(result);
-        if (result == 'success') {
-          $(symbol).html('checkbox');
-          $('.votes').html(parseInt($('.votes').html(), 10)+1);
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}'
+    }).always(function(xhr) {
+      result = $.parseJSON(xhr.responseText).result;
+      console.log(result);
+      if (result == 'success') {
+        $(symbol).html('checkbox');
+        $('.votes').html(parseInt($('.votes').html(), 10)+1);
       }
     });
   });
 
   $('#createlist').click(function() {
-    form = $('#createlistform');
-    message = $('#create-list-message');
-    submit = $('#createlist');
-    titlefield = $('#id_title');
+    var form = $('#createlistform');
+    var message = $('#create-list-message');
+    var submit = $('#createlist');
+    var titlefield = $('#id_title');
     submit.prop('disable', true);
     $.ajax({
       type:"POST",
       url: form.attr('action'),
-      data: form.serialize(),
-      error: function(xhr) {
-        console.log(xhr.response);
-        result = $.parseJSON(xhr.response).result;
-        if (result == 'success') {
-          titlefield.removeClass('error');
-          message.text('Success !');
-          message.removeClass('alert').addClass('success');
-          submit.prop('disable', false);
-          submit.text('Create another list');
-          $('#createclose').show();
-        } else if(result == 'invalid') {
-          message.text('Please give your list a title.');
-          titlefield.addClass('error');
-          message.removeClass('success').addClass('alert');
-          submit.prop('disable', false);
-        } else {
-          message.text('Error.');
-          message.removeClass('success').addClass('alert');
-          submit.prop('disable', false);
-        }
-        message.show();
+      data: form.serialize()
+    }).always(function(data) {
+      var result = $.parseJSON(data.responseText).result;
+      console.log(data.responseText)
+      console.log(result)
+      if (result == 'success') {
+        titlefield.removeClass('error');
+        message.text('Success !');
+        message.removeClass('alert').addClass('success');
+        submit.prop('disable', false);
+        submit.text('Create another list');
+        $('#createclose').show();
+      } else if(result == 'invalid') {
+        message.text('Please give your list a title.');
+        titlefield.addClass('error');
+        message.removeClass('success').addClass('alert');
+        submit.prop('disable', false);
+      } else {
+        message.text('Error.');
+        message.removeClass('success').addClass('alert');
+        submit.prop('disable', false);
       }
+      message.show();
     });
   });
 
@@ -218,21 +207,21 @@
 
   $(document).foundation('tooltip', {"disable-for-touch": true});
 
-
   $('#edit-tag-form').submit(function(e) {
     e.preventDefault();
     $.ajax({
       type:"POST",
       url: "{% url 'revise-link' link.pk %}",
-      data: $(this).serialize(),
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        if (result == 'success') {
-          $('#revise-link').foundation('reveal', 'close');
-        }
-      },
+      data: $(this).serialize()
+    }).always(function(xhr) {
+      console.log(xhr.responseText);
+      result = $.parseJSON(xhr.responseText).result;
+      if (result == 'success') {
+        $('#revise-link').foundation('reveal', 'close');
+      }
     });
   });
+
   $(function(){
     $("#id_tags").tagit({
       availableTags: [{{ tags|safe }}],
