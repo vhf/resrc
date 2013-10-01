@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-:
-from django.db import models
-from django.core import urlresolvers
-from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
+from django.core import urlresolvers
+from django.core.cache import cache
+from django.db import models
 from django.db.models import Count
+from django.template.defaultfilters import slugify
 
 from taggit.managers import TaggableManager
 
@@ -85,9 +86,11 @@ class List(models.Model):
     views = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
+        cache.delete('list_%s' % self.pk)
         self.do_unique_slug()
         if not self.description:
             self.description = self.title
+        cache.set('list_%s' % self.pk, self, 60*5)
         super(List, self).save(*args, **kwargs)
 
     def do_unique_slug(self):

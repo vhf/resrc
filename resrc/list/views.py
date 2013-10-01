@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, redirect
-from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 import simplejson
 import urllib2
 
@@ -34,9 +35,12 @@ def single(request, list_pk, list_slug=None):
         from resrc.link.forms import NewLinkForm
         form = NewLinkForm(request.POST)
         from taggit.models import Tag
-        tags_addlink = '","'.join(
-            Tag.objects.all().values_list('name', flat=True))
-        tags_addlink = '"%s"' % tags_addlink
+        tags_addlink = cache.get('tags_csv')
+        if tags_addlink is None:
+            from taggit.models import Tag
+            tags_addlink = '","'.join(Tag.objects.all().values_list('name', flat=True))
+            tags_addlink = '"%s"' % tags_addlink
+            cache.set('tags_csv', tags_addlink, 60*15)
 
         # from tldr.tldr import TLDRClient
         # client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
@@ -72,7 +76,10 @@ def ajax_add_to_list_or_create(request):
         if list_type not in ['bookmark', 'toread', 'personal']:
             raise Http404
 
-        link = get_object_or_404(Link, pk=link_pk)
+        link = cache.get('link_%s' % link_pk)
+        if link is None:
+            link = get_object_or_404(Link, pk=link_pk)
+            cache.set('link_%s' % link_pk, link, 60*5)
 
         if list_type in ['bookmark', 'toread']:
             list_title = None
@@ -150,7 +157,10 @@ def ajax_create_list(request, link_pk):
             )
             alist.save()
 
-            link = get_object_or_404(Link, pk=link_pk)
+            link = cache.get('link_%s' % link_pk)
+            if link is None:
+                link = get_object_or_404(Link, pk=link_pk)
+                cache.set('link_%s' % link_pk, link, 60*5)
 
             listlink = ListLinks.objects.create(
                 alist=alist,

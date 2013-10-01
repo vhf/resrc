@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, redirect
-from django.http import Http404, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
+from django.core.cache import cache
+from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 import simplejson
 
 from taggit.models import Tag
@@ -15,7 +15,11 @@ from resrc.utils import render_template
 
 
 def single(request, link_pk, link_slug=None):
-    link = get_object_or_404(Link, pk=link_pk)
+    link = cache.get('link_%s' % link_pk)
+    if link is None:
+        link = get_object_or_404(Link, pk=link_pk)
+        cache.set('link_%s' % link_pk, link, 60*5)
+
     titles = []
     newlistform = None
 
@@ -39,8 +43,12 @@ def single(request, link_pk, link_slug=None):
             'level': link.level
         })
         # for tag autocomplete
-        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags = '"%s"' % tags
+        tags = cache.get('tags_csv')
+        if tags is None:
+            from taggit.models import Tag
+            tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+            tags = '"%s"' % tags
+            cache.set('tags_csv', tags, 60*15)
 
     lists = List.objects.some_lists_from_link(link_pk)
 
@@ -83,8 +91,12 @@ def new_link(request, title=None, url=None):
             'url': url,
         })
 
-        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags = '"%s"' % tags
+        tags = cache.get('tags_csv')
+        if tags is None:
+            from taggit.models import Tag
+            tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+            tags = '"%s"' % tags
+            cache.set('tags_csv', tags, 60*15)
 
         return render_template('links/new_link_button.html', {
             'form': form,
@@ -111,6 +123,8 @@ def new_link(request, title=None, url=None):
             list_tags = data['tags'].split(',')
             for tag in list_tags:
                 link.tags.add(tag)
+                cache.delete('tags_all')
+                cache.delete('tags_csv')
             link.save()
 
             if not 'ajax' in data:
@@ -136,9 +150,14 @@ def new_link(request, title=None, url=None):
             pprint(request.POST)
             if not 'ajax' in form.data:
                 form = NewLinkForm()
-                tags = '","'.join(
-                    Tag.objects.all().values_list('name', flat=True))
-                tags = '"%s"' % tags
+
+                tags = cache.get('tags_csv')
+                if tags is None:
+                    from taggit.models import Tag
+                    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+                    tags = '"%s"' % tags
+                    cache.set('tags_csv', tags, 60*15)
+
                 return render_template('links/new_link.html', {
                     'form': form,
                     'tags': tags
@@ -150,8 +169,12 @@ def new_link(request, title=None, url=None):
     else:
         form = NewLinkForm()
 
-    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-    tags = '"%s"' % tags
+    tags = cache.get('tags_csv')
+    if tags is None:
+        from taggit.models import Tag
+        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags = '"%s"' % tags
+        cache.set('tags_csv', tags, 60*15)
 
     return render_template('links/new_link.html', {
         'form': form,
@@ -161,7 +184,10 @@ def new_link(request, title=None, url=None):
 
 @login_required
 def edit_link(request, link_pk):
-    link = get_object_or_404(Link, pk=link_pk)
+    link = cache.get('link_%s' % link_pk)
+    if link is None:
+        link = get_object_or_404(Link, pk=link_pk)
+        cache.set('link_%s' % link_pk, link, 60*5)
     if request.user != link.author:
         raise Http404
     if request.method == 'POST':
@@ -194,8 +220,14 @@ def edit_link(request, link_pk):
                 'language': link.language,
                 'level': link.level
             })
-            tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-            tags = '"%s"' % tags
+
+            tags = cache.get('tags_csv')
+            if tags is None:
+                from taggit.models import Tag
+                tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+                tags = '"%s"' % tags
+                cache.set('tags_csv', tags, 60*15)
+
             return render_template('links/new_link.html', {
                 'edit': True,
                 'form': form,
@@ -211,8 +243,12 @@ def edit_link(request, link_pk):
             'level': link.level
         })
 
-    tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-    tags = '"%s"' % tags
+    tags = cache.get('tags_csv')
+    if tags is None:
+        from taggit.models import Tag
+        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags = '"%s"' % tags
+        cache.set('tags_csv', tags, 60*15)
 
     return render_template('links/new_link.html', {
         'edit': True,
@@ -223,7 +259,11 @@ def edit_link(request, link_pk):
 
 def ajax_upvote_link(request, link_pk, list_pk=None):
     if request.user.is_authenticated() and request.method == 'POST':
-        link = get_object_or_404(Link, pk=link_pk)
+        link = cache.get('link_%s' % link_pk)
+        if link is None:
+            link = get_object_or_404(Link, pk=link_pk)
+            cache.set('link_%s' % link_pk, link, 60*5)
+
         from resrc.vote.models import Vote
         already_voted = Vote.objects.filter(
             user=request.user, link=link).exists()
@@ -238,7 +278,11 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
 
 
 def ajax_revise_link(request, link_pk):
-    link = get_object_or_404(Link, pk=link_pk)
+    link = cache.get('link_%s' % link_pk)
+    if link is None:
+        link = get_object_or_404(Link, pk=link_pk)
+        cache.set('link_%s' % link_pk, link, 60*5)
+
     if request.user.is_authenticated() and request.method == 'POST':
         form = SuggestEditForm(link_pk, request.POST)
         data = form.data

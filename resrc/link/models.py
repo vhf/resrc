@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-:
-from django.db import models
-
-from django.core import urlresolvers
-from django.template.defaultfilters import slugify
-from django.contrib.comments import get_model
 from django.contrib.auth.models import User
+from django.contrib.comments import get_model
+from django.core import urlresolvers
+from django.core.cache import cache
+from django.db import models
 from django.shortcuts import get_object_or_404
+from django.template.defaultfilters import slugify
 
 from taggit.managers import TaggableManager
 
@@ -48,10 +48,12 @@ class Link(models.Model):
     tags = TaggableManager()
 
     def save(self, *args, **kwargs):
+        cache.delete('link_%s' % self.pk)
         self.do_unique_slug()
         if not self.id:
             from resrc.utils.hash2 import hash2
             self.hash2 = hash2(self.url)
+        cache.set('link_%s' % self.pk, self, 60*5)
         super(Link, self).save(*args, **kwargs)
 
     def do_unique_slug(self):
