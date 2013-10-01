@@ -23,13 +23,11 @@ def emarkdown(value):
         'i': ['class'],
     }
 
-    md_fixup = fixup.FixupExtension(None)
-
     return mark_safe('{0}'.format(
         bleach.clean(
             markdown.markdown(
                 value,
-                extensions=[md_fixup, 'extra'],
+                extensions=['extra'],
                 safe_mode='escape',
                 output_format='html5'
             ),
