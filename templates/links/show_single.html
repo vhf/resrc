@@ -102,10 +102,6 @@
 
 {% endblock %}
 
-{% block foundation_plugins %}
-<script src="{% static "js/foundation/foundation.tooltips.js" %}"></script>
-<script src="{% static "js/foundation/foundation.reveal.js" %}"></script>
-{% endblock %}
 
 {% block last_body %}
   {% if request.user.is_authenticated %}
@@ -134,17 +130,16 @@
     $.ajax({
       type:"POST",
       url:"{% url "ajax-add-to-list-or-create" %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list,
-      error: function(xhr) {
-        console.log(xhr.response);
-        result = $.parseJSON(xhr.response).result;
-        if (result == 'added') {
-          icon.removeClass('waiting unchecked');
-          icon.addClass('checked');
-        } else {
-          icon.removeClass('waiting checked');
-          icon.addClass('unchecked');
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}&lk={{ link.pk }}&t='+list
+    }).always(function(xhr) {
+      console.log(xhr.responseText);
+      result = $.parseJSON(xhr.responseText).result;
+      if (result == 'added') {
+        icon.removeClass('waiting unchecked');
+        icon.addClass('checked');
+      } else {
+        icon.removeClass('waiting checked');
+        icon.addClass('unchecked');
       }
     });
   }
@@ -154,55 +149,55 @@
   $('#toread').click(function() {
     add_to_default_list('toread');
   });
+
   $('#vote,.votes').click(function() {
     var symbol = $('#vote');
     $.ajax({
       type:"POST",
       url:"{% url "link-upvote" link.pk %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}',
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        console.log(result);
-        if (result == 'success') {
-          $(symbol).html('checkbox');
-          $('.votes').html(parseInt($('.votes').html(), 10)+1);
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}'
+    }).always(function(xhr) {
+      result = $.parseJSON(xhr.responseText).result;
+      console.log(result);
+      if (result == 'success') {
+        $(symbol).html('checkbox');
+        $('.votes').html(parseInt($('.votes').html(), 10)+1);
       }
     });
   });
 
   $('#createlist').click(function() {
-    form = $('#createlistform');
-    message = $('#create-list-message');
-    submit = $('#createlist');
-    titlefield = $('#id_title');
+    var form = $('#createlistform');
+    var message = $('#create-list-message');
+    var submit = $('#createlist');
+    var titlefield = $('#id_title');
     submit.prop('disable', true);
     $.ajax({
       type:"POST",
       url: form.attr('action'),
-      data: form.serialize(),
-      error: function(xhr) {
-        console.log(xhr.response);
-        result = $.parseJSON(xhr.response).result;
-        if (result == 'success') {
-          titlefield.removeClass('error');
-          message.text('Success !');
-          message.removeClass('alert').addClass('success');
-          submit.prop('disable', false);
-          submit.text('Create another list');
-          $('#createclose').show();
-        } else if(result == 'invalid') {
-          message.text('Please give your list a title.');
-          titlefield.addClass('error');
-          message.removeClass('success').addClass('alert');
-          submit.prop('disable', false);
-        } else {
-          message.text('Error.');
-          message.removeClass('success').addClass('alert');
-          submit.prop('disable', false);
-        }
-        message.show();
+      data: form.serialize()
+    }).always(function(data) {
+      var result = $.parseJSON(data.responseText).result;
+      console.log(data.responseText)
+      console.log(result)
+      if (result == 'success') {
+        titlefield.removeClass('error');
+        message.text('Success !');
+        message.removeClass('alert').addClass('success');
+        submit.prop('disable', false);
+        submit.text('Create another list');
+        $('#createclose').show();
+      } else if(result == 'invalid') {
+        message.text('Please give your list a title.');
+        titlefield.addClass('error');
+        message.removeClass('success').addClass('alert');
+        submit.prop('disable', false);
+      } else {
+        message.text('Error.');
+        message.removeClass('success').addClass('alert');
+        submit.prop('disable', false);
       }
+      message.show();
     });
   });
 
@@ -212,21 +207,21 @@
 
   $(document).foundation('tooltip', {"disable-for-touch": true});
 
-
   $('#edit-tag-form').submit(function(e) {
     e.preventDefault();
     $.ajax({
       type:"POST",
       url: "{% url 'revise-link' link.pk %}",
-      data: $(this).serialize(),
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        if (result == 'success') {
-          $('#revise-link').foundation('reveal', 'close');
-        }
-      },
+      data: $(this).serialize()
+    }).always(function(xhr) {
+      console.log(xhr.responseText);
+      result = $.parseJSON(xhr.responseText).result;
+      if (result == 'success') {
+        $('#revise-link').foundation('reveal', 'close');
+      }
     });
   });
+
   $(function(){
     $("#id_tags").tagit({
       availableTags: [{{ tags|safe }}],

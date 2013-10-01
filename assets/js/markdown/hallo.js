@@ -138,7 +138,7 @@
   })(jQuery);
 
   (function(jQuery) {
-    return jQuery.widget("IKS.halloformat", {
+    return jQuery.widget("IKS.markdownformat", {
       options: {
         editable: null,
         uuid: '',

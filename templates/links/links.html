@@ -24,8 +24,7 @@ Links summary
     <h3>latest</h3>
     <ul class="no-bullet">
       {% for link in latest %}
-      <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
-      <hr>
+      <li{% if forloop.counter > 10 %} class="hide-for-small"{% endif %}><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
       {% endfor %}
     </ul>
   </div>
@@ -34,7 +33,7 @@ Links summary
       <h3>hottest</h3>
       <ul class="no-bullet">
         {% for link in hottest %}
-        <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
         <hr>
         {% endfor %}
       </ul>
@@ -43,7 +42,7 @@ Links summary
       <h3>most appreciated</h3>
       <ul class="no-bullet">
         {% for link in most_voted %}
-        <li><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b">link</i><span class="votes lsf" data-id="{{link.link__pk}}">{{ link.count }}</span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
         <hr>
         {% endfor %}
       </ul>
@@ -53,12 +52,15 @@ Links summary
 
 
 <div class="row">
-  <div class="large-12 columns">
+  <div class="large-12 columns panel hide-for-small">
     <h6>legend</h6>
     <ul class="no-bullet inline-list">
-      <li><a href="#"><i class="lsf i-b">link</i>I'm a link</a></li>
+      <li><a href="#"><i class="lsf i-b">link</i> I'm a link</a></li>
       <li><a href="#"><i class="lsf i-b">link</i> <span class="votes lsf" data-tooltip title="Click to upvote">17</span>I'm a link with 17 votes</a></li>
     </ul>
+
+    <p><strong>hottest</strong> are the most upvoted links lately</p>
+    <p><strong>most appreciated</strong> are the most upvoted links all time</p>
   </div>
 </div>
 {% endblock %}

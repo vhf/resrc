@@ -8094,8 +8094,9 @@ i {
   margin-right: 5px;
   line-height: 1;
   margin-bottom: 0.5em;
+  font-size: 14px;
 }
-/* line 66, ../sass/_icons.scss */
+/* line 67, ../sass/_icons.scss */
 .tag .t {
   font-weight: bold;
   text-align: center;
@@ -8109,7 +8110,7 @@ i {
   background-color: #2ba6cb;
   color: white;
 }
-/* line 69, ../sass/_icons.scss */
+/* line 70, ../sass/_icons.scss */
 .tag .c {
   font-weight: bold;
   text-align: center;
@@ -8126,7 +8127,7 @@ i {
   color: #333333;
 }
 
-/* line 77, ../sass/_icons.scss */
+/* line 78, ../sass/_icons.scss */
 .votes {
   font-weight: bold;
   text-align: center;
@@ -8145,12 +8146,12 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 84, ../sass/_icons.scss */
+/* line 85, ../sass/_icons.scss */
 .votes.lsf:after {
   content: ' check';
 }
 
-/* line 89, ../sass/_icons.scss */
+/* line 90, ../sass/_icons.scss */
 .views {
   font-weight: bold;
   text-align: center;
@@ -8168,12 +8169,12 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 95, ../sass/_icons.scss */
+/* line 96, ../sass/_icons.scss */
 .views.lsf:after {
   content: ' view';
 }
 
-/* line 100, ../sass/_icons.scss */
+/* line 101, ../sass/_icons.scss */
 .pointer {
   cursor: pointer;
 }
@@ -8247,25 +8248,25 @@ h3::selection {
 }
 
 /* line 2, ../sass/_lists.scss */
-.halloform .editable, .halloform #id_mdcontent {
+.markdownform .editable, .markdownform #id_mdcontent {
   line-height: 20px !important;
   font-size: 14px !important;
 }
 /* line 5, ../sass/_lists.scss */
-.halloform .editable ol, .halloform .editable li, .halloform .editable p, .halloform .editable a, .halloform #id_mdcontent ol, .halloform #id_mdcontent li, .halloform #id_mdcontent p, .halloform #id_mdcontent a {
+.markdownform .editable ol, .markdownform .editable li, .markdownform .editable p, .markdownform .editable a, .markdownform #id_mdcontent ol, .markdownform #id_mdcontent li, .markdownform #id_mdcontent p, .markdownform #id_mdcontent a {
   line-height: 20px !important;
   font-size: 14px !important;
 }
 /* line 10, ../sass/_lists.scss */
-.halloform .editable {
+.markdownform .editable {
   padding-top: 8px;
 }
 /* line 13, ../sass/_lists.scss */
-.halloform #div_id_mdcontent {
+.markdownform #div_id_mdcontent {
   padding-right: 13px;
 }
 /* line 16, ../sass/_lists.scss */
-.halloform #id_mdcontent {
+.markdownform #id_mdcontent {
   min-height: 200px;
 }
 
