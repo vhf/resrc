@@ -15,6 +15,7 @@ from resrc.utils import render_template
 
 
 def single(request, link_pk, link_slug=None):
+    from taggit.models import Tag
     link = cache.get('link_%s' % link_pk)
     if link is None:
         link = get_object_or_404(Link, pk=link_pk)
@@ -29,7 +30,7 @@ def single(request, link_pk, link_slug=None):
     # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
     if link.slug != link_slug:
         raise Http404
-    tags = ''
+
     reviselinkform = ''
     if request.user.is_authenticated():
         titles = list(List.objects.all_my_list_titles(request.user, link_pk)
@@ -45,23 +46,38 @@ def single(request, link_pk, link_slug=None):
         # for tag autocomplete
         tags = cache.get('tags_csv')
         if tags is None:
-            from taggit.models import Tag
             tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
             tags = '"%s"' % tags
             cache.set('tags_csv', tags, 60*15)
 
     lists = List.objects.some_lists_from_link(link_pk)
 
-    # rather naive : take them two by two. In case tags are Python, Flask, TDD,
-    # look for Python-Flask, Flask-TDD, unfortunately ignores Python-TDD :(
-    similars = list()
-    link_tags = list(link.tags.all())
-    for i in xrange(0, len(link_tags)-1):
-        add_similars = Link.objects.filter(tags__name=link_tags[i].name) \
-                                   .filter(tags__name=link_tags[i+1].name) \
-                                   .exclude(pk=link.pk)
-        similars += add_similars
-    similars = list(set(similars))[:10]
+    similars = cache.get('similar_link_%s' % link_pk)
+    if similars is None:
+        similars = list()
+        link_tags = list(link.tags.all())
+        max_grams = len(link_tags)
+        if max_grams > 10:
+            max_grams = 10
+        class Enough(Exception): pass
+        try:
+            for nlen in xrange(max_grams, 1, -1):
+                ngram = [link_tags[x:x+nlen] for x in xrange(len(link_tags)-nlen+1)]
+                for i in xrange(len(ngram)):
+                    igram = ngram[i]
+                    add_similars = Link.objects.filter(tags__name=link_tags[0].name)
+                    for idx in xrange(1, len(igram)):
+                        add_similars = add_similars.filter(tags__name=igram[idx].name)
+                    add_similars = add_similars.exclude(pk=link.pk)
+                    similars += add_similars
+                    similars = list(set(similars))
+                    print len(similars)
+                    if len(similars) > 10:
+                        similars[:10]
+                        raise Enough
+        except Enough:
+            pass
+        cache.set('similar_link_%s' % link_pk, similars, 60*60*2)
 
     try:
         from tldr.tldr import TLDRClient
