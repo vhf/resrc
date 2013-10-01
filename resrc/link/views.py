@@ -252,6 +252,7 @@ def edit_link(request, link_pk):
             })
 
     else:
+        from taggit.models import Tag
         form = EditLinkForm(link_pk=link_pk, initial={
             'url': link.url,
             'title': link.title,

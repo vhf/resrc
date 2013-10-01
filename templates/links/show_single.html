@@ -37,7 +37,7 @@
       <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes x-bg">{{ count }} <i class="lsf"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
