@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import get_object_or_404, redirect
+from django.core.cache import cache
 from django.http import Http404, HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 import simplejson
 from taggit.models import Tag
 
@@ -34,52 +35,55 @@ def index(request):
 
 
 def search(request, tags, operand, excludes):
-    from django.db.models import Q
-    import operator
-    tags = tags.split(',')
-    excludes = excludes.split(',')
+    result = cache.get("%s%s%s" % (tags, operand, excludes))
+    if result is None:
+        from django.db.models import Q
+        import operator
+        tags = tags.split(',')
+        excludes = excludes.split(',')
 
-    # filter after operands
-    if tags[0] != u'':
-        if operand == 'or':
-            # clever "or" trick
-            op = operator.or_
-            tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
-            links = Link.objects.filter(tag_qs)
+        # filter after operands
+        if tags[0] != u'':
+            if operand == 'or':
+                # clever "or" trick
+                op = operator.or_
+                tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
+                links = Link.objects.filter(tag_qs)
+            else:
+                # stupid "and" trick
+                links = Link.objects.filter(tags__name=tags[0])
+                for tag in tags:
+                    links = links.filter(tags__name=tag)
         else:
-            # stupid "and" trick
-            links = Link.objects.filter(tags__name=tags[0])
-            for tag in tags:
-                links = links.filter(tags__name=tag)
-    else:
-        links = Link.objects.all()
-    for exclude in excludes:
-        links = links.exclude(tags__name=exclude)
-    links = links.exclude(list__is_public=False)
+            links = Link.objects.all()
+        for exclude in excludes:
+            links = links.exclude(tags__name=exclude)
+        links = links.exclude(list__is_public=False)
 
-    link_result = []
-    links_pk = []
-    for link in links:
-        link_result.append({
-            'pk': link.pk,
-            'title': link.title,
-            'url': link.get_absolute_url()
-        })
-        links_pk.append(link.pk)
+        link_result = []
+        links_pk = []
+        for link in links:
+            link_result.append({
+                'pk': link.pk,
+                'title': link.title,
+                'url': link.get_absolute_url()
+            })
+            links_pk.append(link.pk)
 
-    from resrc.list.models import List
-    lists = List.objects.filter(links__in=links_pk).distinct()
-    list_result = []
-    for alist in lists:
-        list_result.append({
-            'pk': alist.pk,
-            'title': alist.title,
-            'url': alist.get_absolute_url()
-        })
+        from resrc.list.models import List
+        lists = List.objects.filter(links__in=links_pk).distinct()
+        list_result = []
+        for alist in lists:
+            list_result.append({
+                'pk': alist.pk,
+                'title': alist.title,
+                'url': alist.get_absolute_url()
+            })
 
-    result = []
-    result.append(link_result)
-    result.append(list_result)
+        result = []
+        result.append(link_result)
+        result.append(list_result)
+        cache.set("%s%s%s" % (tags, operand, excludes), result, 60*60*24*3)
 
     result = simplejson.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
