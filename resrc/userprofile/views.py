@@ -17,6 +17,7 @@ from resrc.userprofile.models import Profile
 from resrc.userprofile.forms import LoginForm, ProfileForm, RegisterForm, ChangePasswordForm
 
 
+@login_required
 def user_list(request):
     #profiles = Profile.objects.select_related('User').order_by('user__date_joined')
     users = User.objects.exclude(username='root')
