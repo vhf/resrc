@@ -39,12 +39,15 @@ def search(request, tags, operand, excludes):
     tags = tags.split(',')
     excludes = excludes.split(',')
 
+    # filter after operands
     if tags[0] != u'':
         if operand == 'or':
+            # clever "or" trick
             op = operator.or_
             tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
             links = Link.objects.filter(tag_qs)
         else:
+            # stupid "and" trick
             links = Link.objects.filter(tags__name=tags[0])
             for tag in tags:
                 links = links.filter(tags__name=tag)
@@ -52,6 +55,7 @@ def search(request, tags, operand, excludes):
         links = Link.objects.all()
     for exclude in excludes:
         links = links.exclude(tags__name=exclude)
+    links = links.exclude(list__is_public=False)
 
     link_result = []
     links_pk = []
