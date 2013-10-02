@@ -74,6 +74,7 @@
             </a>
             <ul class="dropdown">
               <li><a href="{% url "user-url" user.username %}">Profil</a></li>
+              <li><a href="{% url "upvoted-list" %}">Votes</a></li>
               <li><a href="{% url "user-settings" %}">Settings</a></li>
               <li><a href="{% url "user-logout" %}">Logout</a></li>
             </ul>
