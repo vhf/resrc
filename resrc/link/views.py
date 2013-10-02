@@ -23,6 +23,7 @@ def single(request, link_pk, link_slug=None):
 
     titles = []
     newlistform = None
+    tags = None
 
     if link_slug is None:
         return redirect(link)
