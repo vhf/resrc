@@ -291,26 +291,20 @@ def edit(request, list_pk):
             'links': links
         })
 
+
 @login_required
-def delete(request, list_pk, confirm=False):
-    if not request.user.is_authenticated():
+def delete(request, list_pk):
+    if not request.user.is_authenticated() and request.method == 'POST':
         raise Http404
     alist = get_object_or_404(List, pk=list_pk)
 
     if request.user.pk != alist.owner.pk:
         raise Http404
 
-    if not confirm:
-        from resrc.vote.models import Vote
-        return render_template('lists/delete_list.html', {
-            'usr': request.user,
-            'list': alist,
-            'count': Vote.objects.votes_for_list(alist.pk),
-        })
-    else:
-        alist.delete()
-        from django.core.urlresolvers import reverse
-        return redirect(reverse('user-lists', args=(request.user.username,)))
+    alist.delete()
+    from django.core.urlresolvers import reverse
+    return redirect(reverse('user-lists', args=(request.user.username,)))
+
 
 def my_lists(request, user_name):
     from django.db.models import Count
