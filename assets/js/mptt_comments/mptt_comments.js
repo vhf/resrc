@@ -72,7 +72,7 @@ $(document).ready(function() {
             post_data[this.name] = this.value;
         });
 
-        form.bind("submit", function(e) {
+        form.on("submit", function(e) {
             var data_dict = $(":input", form).serializeArray();
             $.each(data_dict, function() {
                 post_data[this.name] = this.value;

@@ -76,10 +76,8 @@ def single(request, link_pk, link_slug=None):
                     for link in add_similars:
                         if link not in similars:
                             similars.append(link)
-                    print similars
-                    if len(similars) >= 5:
-                        similars = similars[:5]
-                        print "Found 5, stop"
+                    if len(similars) >= 10:
+                        similars = similars[:10]
                         raise Enough
         except Enough:
             pass
