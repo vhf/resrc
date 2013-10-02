@@ -14,10 +14,13 @@ LEVELS = ['beginner', 'intermediate', 'advanced']
 
 class LinkManager(models.Manager):
 
-    def latest(self,limit=10):
-        return self.get_query_set() \
-            .values('pk', 'slug', 'title') \
-            .order_by('-pubdate')[:limit]
+    def latest(self,limit=10, en_only=True):
+        qs = self.get_query_set()
+        if en_only:
+            qs = qs.filter(language=1)
+        qs = qs.values('pk', 'slug', 'title') \
+               .order_by('-pubdate')[:limit]
+        return qs
 
 
 class Link(models.Model):

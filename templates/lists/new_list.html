@@ -19,7 +19,33 @@ Create a list
 <div class="row">
   <div class="large-12 columns">
     <h1>Create a list</h1>
+    <p>Lists are created using Markdown. A short Markdown syntax help you can find at the end of this page.</p>
+    <p>You can either write your list here or pull it from a URL. Using URLs is a practical way of maintaining your list somewhere else, e.g. with versioning and PRs on GitHub, and still having it simply displayed here.</p>
+    <p>Private field lets you decide whether other people can see your list or not.</p>
     {% crispy form %}
+  </div>
+</div>
+<div class="row">
+  <div class="large-12 columns">
+    <pre># header level 1 (h1)
+## header level 2 (h2)
+##### header level 2 (h5)
+
+This is a
+paragraph.
+
+And another paragraph.
+
+* Unordered
+* List
+
+1. Ordered
+2. List
+
+We _both_ are *emphasized*. We __both__ are **bold**.
+
+Please [click here](http://reSRC.io) to discover reSRC.
+Automatic links : &lt;http://reSRC.io&gt;.</pre>
   </div>
 </div>
 {% endblock %}

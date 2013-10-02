@@ -7,25 +7,31 @@ from django.contrib.auth.models import User
 
 class VoteManager(models.Manager):
 
-    def my_upvoted_links(self, user):
-        return self.get_query_set() \
+    def my_upvoted_links(self, user, en_only=True):
+        qs = self.get_query_set() \
+            .filter(user=user)
+        if en_only:
+            qs = qs.filter(language=1)
+        qs = qs \
             .exclude(link=None) \
-            .filter(user=user) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-time')
 
 
-    def hottest_links(self, limit=10, days=1):
-        return self.get_query_set() \
-            .filter(time__gt=datetime.now() - timedelta(days=days)) \
+    def hottest_links(self, limit=10, days=1, en_only=True):
+        qs = self.get_query_set() \
+            .filter(time__gt=datetime.now() - timedelta(days=days))
+        if en_only:
+            qs = qs.filter(language=1)
+        qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]
 
 
-    def latest_links(self, limit=10, days=1):
+    def latest_links(self, limit=10, days=1, en_only=True):
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
         voted = list(self.get_query_set() \

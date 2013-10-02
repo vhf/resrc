@@ -34,7 +34,7 @@ def index(request):
     })
 
 
-def search(request, tags, operand, excludes):
+def search(request, tags, operand, excludes, en_only=True):
     from resrc.utils.hash2 import hash2
     h = hash2("%s%s%s" % (tags, operand, excludes))
     result = cache.get(h)
@@ -61,6 +61,9 @@ def search(request, tags, operand, excludes):
         for exclude in excludes:
             links = links.exclude(tags__name=exclude)
         links = links.exclude(list__is_public=False)
+
+        if en_only:
+            links = links.filter(language=1)
 
         link_result = []
         links_pk = []
