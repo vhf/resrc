@@ -24,7 +24,7 @@
 <div class="row">
   <div class="large-12 columns">
     {% for tag in tags %}{% if tag.slug %}
-    <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
+    <p class="tag left" style="margin-bottom: none"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
     {% endif %}{% endfor %}
   </div>
 </div>

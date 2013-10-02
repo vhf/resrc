@@ -7,6 +7,15 @@ from django.contrib.auth.models import User
 
 class VoteManager(models.Manager):
 
+    def my_upvoted_links(self, user):
+        return self.get_query_set() \
+            .exclude(link=None) \
+            .filter(user=user) \
+            .values('link__pk', 'link__slug', 'link__title') \
+            .annotate(count=Count('id')) \
+            .order_by('-time')
+
+
     def hottest_links(self, limit=10, days=1):
         return self.get_query_set() \
             .filter(time__gt=datetime.now() - timedelta(days=days)) \
@@ -14,6 +23,7 @@ class VoteManager(models.Manager):
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]
+
 
     def latest_links(self, limit=10, days=1):
         from resrc.link.models import Link
@@ -39,6 +49,15 @@ class VoteManager(models.Manager):
                 new_link['link__title'] = link['title']
                 links += [new_link]
         return links[:limit]
+
+
+    def my_upvoted_lists(self, user):
+        return self.get_query_set() \
+            .exclude(alist=None) \
+            .filter(user=user) \
+            .values('alist__pk', 'alist__slug', 'alist__title') \
+            .annotate(count=Count('id')) \
+            .order_by('-time')
 
 
     def hottest_lists(self, limit=10, days=1):

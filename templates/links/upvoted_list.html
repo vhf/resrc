@@ -1,0 +1,48 @@
+{% extends "lists/base.html" %}
+{% load profile %}
+{% load mptt_comments_tags %}
+
+{% block title %}
+Links you upvoted
+{% endblock %}
+
+
+{% block breadcrumb %}
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "links" %}">Links</a></li>
+<li class="current">Upvoted links</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <h1>You upvoted :</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="large-6 medium-6 columns">
+    <div>
+      <h3>links</h3>
+      <ul class="no-bullet">
+        {% for link in upvoted_links %}
+        <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+  <div class="large-6 medium-6 columns">
+    <div>
+      <h3>lists</h3>
+      <ul class="no-bullet">
+        {% for list in upvoted_lists %}
+        <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{list.alist__pk}}">{{ link.count }} <i class="lsf"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a><hr></li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block last_body %}
+{% endblock last_body %}

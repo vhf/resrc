@@ -318,6 +318,9 @@ def my_lists(request, user_name):
         user = request.user
         only_public = False
         owner = True
+        from resrc.vote.models import Vote
+        upvoted_count = len(list(Vote.objects.exclude(link=None).filter(user=user).values_list('pk')))
+
     else:
         user = get_object_or_404(User, username=user_name)
         only_public = True
@@ -329,7 +332,8 @@ def my_lists(request, user_name):
     return render_template('lists/lists_list.html', {
         'lists': lists,
         'owner': owner,
-        'username': user_name
+        'username': user_name,
+        'upvoted_count': upvoted_count,
     })
 
 

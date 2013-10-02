@@ -20,18 +20,28 @@
 <div class="row">
   <div class="large-12 columns">
     <h1>{{ username }}'s lists{% if owner %} | <a href="{% url "new-list" %}">create a list</a>{% endif %}</h1>
+    {% if owner %}
+    <div class="panel">
+      <h5>
+        <span class="label round">{{ upvoted_count }}</span> <a href="{% url "upvoted-list" %}">Links you upvoted</a>
+      </h5>
+      <p>
+        Useful on many occasions.
+      </p>
+    </div>
+    {% endif %}
     {% for list in lists %}
     <div class="panel">
-          <h5>
-            <span class="label round">{{ list.c }}</span> <a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}
-            <span class="right">
-              <a href="{% url "list-edit" list.pk %}" class="lsf i-b">pencil</a>&nbsp;
-              <a href="{% url "list-delete" list.pk %}" class="lsf i-b">trash</a>
-            </span>{% endif %}
-          </h5>
-          <p>
-            {{ list.description|emarkdown }}
-          </p>
+      <h5>
+        <span class="label round">{{ list.c }}</span> <a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}
+        <span class="right">
+          <a href="{% url "list-edit" list.pk %}" class="lsf i-b">pencil</a>&nbsp;
+          <a href="{% url "list-delete" list.pk %}" class="lsf i-b">trash</a>
+        </span>{% endif %}
+      </h5>
+      <p>
+        {{ list.description|emarkdown }}
+      </p>
     </div>
     {% endfor %}
   </div>

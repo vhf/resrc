@@ -54,26 +54,32 @@ def single(request, link_pk, link_slug=None):
     lists = List.objects.some_lists_from_link(link_pk)
 
     similars = cache.get('similar_link_%s' % link_pk)
-    if similars is None:
+    if similars is None or True:
         similars = list()
         link_tags = list(link.tags.all())
-        max_grams = len(link_tags)
-        if max_grams > 10:
-            max_grams = 10
+        max_n = len(link_tags)
+        if max_n > 10:
+            max_n = 10
         class Enough(Exception): pass
         try:
-            for nlen in xrange(max_grams, 1, -1):
-                ngram = [link_tags[x:x+nlen] for x in xrange(len(link_tags)-nlen+1)]
-                for i in xrange(len(ngram)):
-                    igram = ngram[i]
+            # n as in n-gram
+            for n in xrange(max_n, 1, -1):
+                n_gram = [link_tags[x:x+n] for x in xrange(len(link_tags)-n+1)]
+                # iterate over all n_grams for this n
+                for i in xrange(len(n_gram)):
+                    tag_tuple = n_gram[i]
                     add_similars = Link.objects.filter(tags__name=link_tags[0].name)
-                    for idx in xrange(1, len(igram)):
-                        add_similars = add_similars.filter(tags__name=igram[idx].name)
+                    for idx in xrange(1, n):
+                        add_similars = add_similars.filter(tags__name=tag_tuple[idx].name)
                     add_similars = add_similars.exclude(pk=link.pk)
-                    similars += add_similars
-                    similars = list(set(similars))
-                    if len(similars) > 10:
-                        similars[:10]
+                    # add them to similars if not already in, do it in the right order
+                    for link in add_similars:
+                        if link not in similars:
+                            similars.append(link)
+                    print similars
+                    if len(similars) >= 5:
+                        similars = similars[:5]
+                        print "Found 5, stop"
                         raise Enough
         except Enough:
             pass
@@ -225,6 +231,8 @@ def edit_link(request, link_pk):
             for tag in list_tags:
                 if tag not in has_tags:
                     link.tags.add(tag)
+                    cache.delete('tags_all')
+                    cache.delete('tags_csv')
             for tag in has_tags:
                 if tag not in list_tags:
                     link.tags.remove(tag)
@@ -345,4 +353,16 @@ def links_page(request):
         'latest': latest,
         'hottest': hottest,
         'most_voted': most_voted,
+    })
+
+
+@login_required
+def upvoted_list(request):
+    from resrc.vote.models import Vote
+    upvoted_links = Vote.objects.my_upvoted_links(request.user)
+    upvoted_lists = Vote.objects.my_upvoted_lists(request.user)
+
+    return render_template('links/upvoted_list.html', {
+        'upvoted_links': upvoted_links,
+        'upvoted_lists': upvoted_lists,
     })
