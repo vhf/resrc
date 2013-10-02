@@ -11,35 +11,43 @@ class VoteManager(models.Manager):
         qs = self.get_query_set() \
             .filter(user=user)
         if en_only:
-            qs = qs.filter(language=1)
+            qs = qs.filter(link__language=1)
         qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-time')
+        return qs
 
 
     def hottest_links(self, limit=10, days=1, en_only=True):
         qs = self.get_query_set() \
             .filter(time__gt=datetime.now() - timedelta(days=days))
         if en_only:
-            qs = qs.filter(language=1)
+            qs = qs.filter(link__language=1)
         qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]
+        return qs
 
 
     def latest_links(self, limit=10, days=1, en_only=True):
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
-        voted = list(self.get_query_set() \
+        voted = self.get_query_set() \
             .filter(time__gt=datetime.now() - timedelta(days=days)) \
-            .exclude(link=None) \
+            .exclude(link=None)
+        if en_only:
+            voted = voted.filter(link__language=1)
+
+        voted = voted \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
-            .order_by('-link__pubdate')[:limit])
+            .order_by('-link__pubdate')[:limit]
+        voted = list(voted)
+
         voted_id = [link['link__pk'] for link in voted]
 
         links = []
