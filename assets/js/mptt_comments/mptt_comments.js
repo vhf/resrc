@@ -29,7 +29,7 @@ $(document).ready(function() {
     function append_data_and_rebind_form(node, data) {
         node.empty();
         node.append(data);
-        node.toggle(); console.log('32')
+        //node.toggle(); console.log('32')
 
         var form = $("form", node);
         bind_submit(form, node);
@@ -60,7 +60,8 @@ $(document).ready(function() {
             $('.' + classname, nxt).html(data);
         }
         if (nxt.is(':hidden')) {
-            nxt.toggle(); console.log('63')
+            nxt.toggle();
+            console.log('63');
         }
     }
 
@@ -72,13 +73,16 @@ $(document).ready(function() {
             post_data[this.name] = this.value;
         });
 
-        form.on("submit", function(e) {
+        form.submit(function(e) {
+            e.preventDefault();
+
             var data_dict = $(":input", form).serializeArray();
             $.each(data_dict, function() {
                 post_data[this.name] = this.value;
             });
             $(":input", form).attr('disabled', 'disabled');
             post_data.is_ajax = 1;
+
             $.ajax({
                 type: 'POST',
                 url: form.attr('action'),
@@ -111,8 +115,7 @@ $(document).ready(function() {
                                 // the comment was posted but is awaiting moderation, we shouldn't update counts etc
                                 nxt.html('<p>Your comment was posted, it is now awaiting moderation to be displayed.</p>');
                             }
-                        }
-                        else {
+                        } else {
                             update_replies_count(nxt);
                             nxt.replaceWith(data);
                         }
@@ -122,7 +125,8 @@ $(document).ready(function() {
                     }
                 }
             }); // end ajax call
-            e.preventDefault();
+
+
         }); // end submit callback
     }
 
@@ -146,16 +150,15 @@ $(document).ready(function() {
 
         if (!parent.length) {
             nxt = $('.new_comment_form_wrapper');
-        }
-        else if (!nxt.length) {
+        } else if (!nxt.length) {
             nxt = $('<div class="comment_form_wrapper"></div>').insertAfter(parent);
             nxt.toggle();
         }
         visible = nxt.is(':visible');
-        if(!visible && nxt.find('form').length == 0) {
+        if (!visible && nxt.find('form').length === 0) {
             load_new_comment_form($(this).attr('href') + '?is_ajax=1', nxt);
         } else {
-            nxt.toggle()
+            nxt.toggle();
         }
         e.preventDefault();
     });
@@ -173,8 +176,8 @@ $(document).ready(function() {
                     $('#' + id).append(comments_tree.html);
                     count = link.text().match(/\d+/);
                     count = parseInt(count[0], 10);
-                    text = count+(count > 1 ? ' replies' : ' reply');
-                    link.replaceWith('<span class="comment_replies" data-commentscount="'+count+'">'+text+'</span>');
+                    text = count + (count > 1 ? ' replies' : ' reply');
+                    link.replaceWith('<span class="comment_replies" data-commentscount="' + count + '">' + text + '</span>');
                 }
                 replies_loaded.push(id);
             }, "json");
@@ -198,9 +201,9 @@ $(document).ready(function() {
             comment_el.removeClass('comment_expanded');
             $(this).text('right');
         }
-        comment_el.find('.comment').each(function(index){
+        comment_el.find('.comment').each(function(index) {
             $(this).toggle();
-        })
+        });
     });
 
     $('div.comment_collapsed > div > p > a.comment_expand.lsf.symbol').each(function() {
@@ -208,7 +211,7 @@ $(document).ready(function() {
     });
 
     $('.comments_more').on("click", function(e) {
-        $.get($(this).attr('href') + '?is_ajax=1', { }, function(data, textStatus) {
+        $.get($(this).attr('href') + '?is_ajax=1', {}, function(data, textStatus) {
             var comments_for_update = data.comments_for_update;
             var tid = data.tid;
             var more = $('#c' + tid + ' .comments_more');
@@ -224,8 +227,7 @@ $(document).ready(function() {
                     if ("parent" in comment) {
                         if (comment.parent == tid && morep) {
                             morep.before(comment.html);
-                        }
-                        else {
+                        } else {
                             $('#c' + comment.parent).append(comment.html);
                         }
                     }
@@ -243,15 +245,13 @@ $(document).ready(function() {
                 $('#c' + tid + ' .comments_more_remaining').html(remaining_count);
                 if (update_len) {
                     last_comment_pk = comments_for_update[update_len - 1].pk;
-                }
-                else {
+                } else {
                     last_comment_pk = comments_tree.end_pk;
                 }
 
                 more.attr('href', old_href.replace(new RegExp("\\d+/$"), last_comment_pk + '/'));
-            }
-            else {
-                morep.toggle(); console.log('250')
+            } else {
+                morep.toggle();
             }
 
         }, "json");
