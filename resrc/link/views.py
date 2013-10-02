@@ -73,9 +73,9 @@ def single(request, link_pk, link_slug=None):
                         add_similars = add_similars.filter(tags__name=tag_tuple[idx].name)
                     add_similars = add_similars.exclude(pk=link.pk)
                     # add them to similars if not already in, do it in the right order
-                    for link in add_similars:
-                        if link not in similars:
-                            similars.append(link)
+                    for tmp_link in add_similars:
+                        if tmp_link not in similars:
+                            similars.append(tmp_link)
                     if len(similars) >= 10:
                         similars = similars[:10]
                         raise Enough
