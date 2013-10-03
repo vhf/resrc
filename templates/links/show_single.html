@@ -45,7 +45,7 @@
       <div class="row">
         {% if request.user.is_authenticated %}
         <div class="large-4 columns">
-          <a class="lsf symbol" id="vote" data-tooltip title="Upvote this link">check</a>
+          <a class="lsf symbol" id="vote" data-tooltip title="Upvote this link">{% if voted %}checkbox{% else %}check{% endif %}</a>
         </div>
         <div class="large-4 columns">
           <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
@@ -150,10 +150,12 @@
       data: 'csrfmiddlewaretoken={{csrf_token}}'
     }).always(function(xhr) {
       result = $.parseJSON(xhr.responseText).result;
-      console.log(result);
-      if (result == 'success') {
+      if (result == 'voted') {
         $(symbol).html('checkbox');
-        $('.votes').html(parseInt($('.votes').html(), 10)+1);
+        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf"></i>');
+      } else if (result == 'unvoted') {
+        $(symbol).html('check');
+        $('.votes').html(parseInt($('.votes').html(), 10)-1+' <i class="lsf"></i>');
       }
     });
   });

@@ -38,9 +38,10 @@ def single(request, list_pk, list_slug=None):
         tags_addlink = cache.get('tags_csv')
         if tags_addlink is None:
             from taggit.models import Tag
-            tags_addlink = '","'.join(Tag.objects.all().values_list('name', flat=True))
+            tags_addlink = '","'.join(
+                Tag.objects.all().values_list('name', flat=True))
             tags_addlink = '"%s"' % tags_addlink
-            cache.set('tags_csv', tags_addlink, 60*15)
+            cache.set('tags_csv', tags_addlink, 60 * 15)
 
         # from tldr.tldr import TLDRClient
         # client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
@@ -53,6 +54,7 @@ def single(request, list_pk, list_slug=None):
         'form': form,
         'list': alist,
         'count': Vote.objects.votes_for_list(alist.pk),
+        'voted': Vote.objects.filter(alist=alist.pk, user=request.user).exists(),
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'reading_list': 'Reading list',
@@ -79,7 +81,7 @@ def ajax_add_to_list_or_create(request):
         link = cache.get('link_%s' % link_pk)
         if link is None:
             link = get_object_or_404(Link, pk=link_pk)
-            cache.set('link_%s' % link_pk, link, 60*5)
+            cache.set('link_%s' % link_pk, link, 60 * 5)
 
         if list_type in ['bookmark', 'toread']:
             list_title = None
@@ -160,7 +162,7 @@ def ajax_create_list(request, link_pk):
             link = cache.get('link_%s' % link_pk)
             if link is None:
                 link = get_object_or_404(Link, pk=link_pk)
-                cache.set('link_%s' % link_pk, link, 60*5)
+                cache.set('link_%s' % link_pk, link, 60 * 5)
 
             listlink = ListLinks.objects.create(
                 alist=alist,
@@ -313,7 +315,8 @@ def my_lists(request, user_name):
         only_public = False
         owner = True
         from resrc.vote.models import Vote
-        upvoted_count = len(list(Vote.objects.exclude(link=None).filter(user=user).values_list('pk')))
+        upvoted_count = len(
+            list(Vote.objects.exclude(link=None).filter(user=user).values_list('pk')))
 
     else:
         user = get_object_or_404(User, username=user_name)
@@ -339,10 +342,11 @@ def ajax_upvote_list(request, list_pk):
             user=request.user, alist=alist).exists()
         if not already_voted:
             alist.vote(request.user)
-            data = simplejson.dumps({'result': 'success'})
+            data = simplejson.dumps({'result': 'voted'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
-            data = simplejson.dumps({'result': 'fail'})
+            Vote.objects.get(user=request.user, alist=alist).delete()
+            data = simplejson.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404
 

@@ -39,11 +39,11 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <h1>{{ list.title }}{% if request.user.is_authenticated %}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Vote for this list">check</a>{% endif %}</h1>
+    <h1>{{ list.title }}{% if request.user.is_authenticated %}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Upvote this list">{% if voted %}checkbox{% else %}check{% endif %}</a>{% endif %}</h1>
     <p>{{ list.description|emarkdown }}</p>
     <p class="byline">
       {% with author=list.owner %}
-      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago | <span class="votes lsf">{{ count }}</span><span class="views lsf">{{ list.views }}</span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
+      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago | <span class="votes y-bg">{{ count }} <i class="lsf"></i></span><span class="views y-bg">{{ list.views }} <i class="lsf"></i></span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
       {%endwith%}
     </p>
   </div>
@@ -145,14 +145,15 @@ $(function(){
     $.ajax({
       type:"POST",
       url:"{% url "list-upvote" list.pk %}",
-      data: 'csrfmiddlewaretoken={{csrf_token}}',
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        console.log(result);
-        if (result == 'success') {
-          $(symbol).html('checkbox');
-          $('.votes').html(parseInt($('.votes').html(), 10)+1);
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}'
+    }).always(function(xhr) {
+      result = $.parseJSON(xhr.responseText).result;
+      if (result == 'voted') {
+        $(symbol).html('checkbox');
+        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf"></i>');
+      } else if (result == 'unvoted') {
+        $(symbol).html('check');
+        $('.votes').html(parseInt($('.votes').html(), 10)-1+' <i class="lsf"></i>');
       }
     });
   });

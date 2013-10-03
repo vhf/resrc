@@ -76,9 +76,11 @@ Links summary
       url: url,
       data: 'csrfmiddlewaretoken={{csrf_token}}',
       error: function(xhr) {
-        result = $.parseJSON(xhr.response).result;
-        if (result == 'success') {
-          $(button).html(parseInt($(button).html(), 10)+1);
+        result = $.parseJSON(xhr.responseText).result;
+        if (result == 'voted') {
+          $(button).html(parseInt($(button).html(), 10)+1+' <i class="lsf"></i>');
+        } else if (result == 'unvoted') {
+          $(button).html(parseInt($(button).html(), 10)-1+' <i class="lsf"></i>');
         }
       }
     });

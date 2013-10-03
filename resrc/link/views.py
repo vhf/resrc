@@ -96,6 +96,7 @@ def single(request, link_pk, link_slug=None):
     return render_template('links/show_single.html', {
         'link': link,
         'count': Vote.objects.votes_for_link(link.pk),
+        'voted': Vote.objects.filter(link=link.pk, user=request.user).exists(),
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
@@ -290,14 +291,14 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
             cache.set('link_%s' % link_pk, link, 60*5)
 
         from resrc.vote.models import Vote
-        already_voted = Vote.objects.filter(
-            user=request.user, link=link).exists()
+        already_voted = Vote.objects.filter(user=request.user, link=link).exists()
         if not already_voted:
             link.vote(request.user, list_pk)
-            data = simplejson.dumps({'result': 'success'})
+            data = simplejson.dumps({'result': 'voted'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
-            data = simplejson.dumps({'result': 'fail'})
+            Vote.objects.get(user=request.user, link=link).delete()
+            data = simplejson.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404
 
