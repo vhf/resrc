@@ -73,7 +73,6 @@ Search by tags
       var tags = $('#tags').val();
       var excludes = $('#tags2').val();
       var op = $('input[name="op"]:checked').val();
-      $('#link_results,#list_results').html('');
 
       var url = '/search/'+tags+'%25'+op+'%25'+excludes;
 
@@ -90,34 +89,36 @@ Search by tags
         return;
       } else {
         $('#query').html('<a href="/page'+url+'">'+query+'</a>');
+        console.log('hehe');
+        $.ajax({
+          type:"GET",
+          url: '/tag' + url,
+          success: function(result) {
+            result = $.parseJSON(result);
+            $('#link_results,#list_results').html('');
+            if (result[0].length > 0) {
+              for (var i = 0; i < result[0].length; i++) {
+                link = result[0][i];
+                $('#link_results').append('<div class="panel">'
+                  + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
+                  + '</div>');
+              }
+            } else {
+              $('#link_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+            }
+            if (result[1].length > 0) {
+              for (var i = 0; i < result[1].length; i++) {
+                list = result[1][i];
+                $('#list_results').append('<div class="panel">'
+                  + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
+                  + '</div>');
+              }
+            } else {
+              $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+            }
+          }
+        });
       }
-      $.ajax({
-        type:"GET",
-        url: '/tag' + url,
-        success: function(result) {
-          result = $.parseJSON(result);
-          if (result[0].length > 0) {
-            for (var i = 0; i < result[0].length; i++) {
-              link = result[0][i];
-              $('#link_results').append('<div class="panel">'
-                + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
-                + '</div>');
-            }
-          } else {
-            $('#link_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
-          }
-          if (result[1].length > 0) {
-            for (var i = 0; i < result[1].length; i++) {
-              list = result[1][i];
-              $('#list_results').append('<div class="panel">'
-                + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
-                + '</div>');
-            }
-          } else {
-            $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
-          }
-        }
-      });
     };
 
     $('#tags').tagit({
@@ -136,9 +137,6 @@ Search by tags
 
     $('input[name="op"]').on('change', search);
 
-    if($('#tags').val() !== '') {
-      search();
-    }
   });
 </script>
 {% endblock last_body %}
