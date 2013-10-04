@@ -43,16 +43,24 @@ def about(request):
     return render_template('pages/about.html', {})
 
 
-def search(request):
-    tags = cache.get('tags_csv')
-    if tags is None:
+def search(request, tags=None, operand=None, excludes=None, en_only=True):
+    tags_csv = cache.get('tags_csv')
+    if tags_csv is None:
         from taggit.models import Tag
-        tags = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags = '"%s"' % tags
-        cache.set('tags_csv', tags, 60*15)
-    return render_template('pages/search.html', {
-        'tags': tags,
-    })
+        tags_csv = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags_csv = '"%s"' % tags_csv
+        cache.set('tags_csv', tags_csv, 60*15)
+    if operand is not None:
+        return render_template('pages/search.html', {
+            'tags': tags_csv,
+            'stags': tags,
+            'sop': operand,
+            'sex': excludes,
+        })
+    else:
+        return render_template('pages/search.html', {
+            'tags': tags_csv,
+        })
 
 
 def listlinks(request):

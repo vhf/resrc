@@ -9,5 +9,6 @@ urlpatterns = patterns(
     url(r'^faq$', views.faq, name="page-faq"),
     url(r'^about$', views.about, name="page-about"),
     url(r'^search$', views.search, name="page-search"),
+    url(r'^search/(?P<tags>[^/]*)%(?P<operand>[^/]*)%(?P<excludes>[^/]*)$', views.search),
     url(r'^ll$', views.listlinks, name="page-listlinks"),
 )

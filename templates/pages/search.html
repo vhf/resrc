@@ -28,17 +28,17 @@ Search by tags
 <div class="row">
   <div class="large-2 small-2 columns">
     <p>
-      <input type="radio" name="op" id="op-or" value="or" checked="checked">
+      <input type="radio" name="op" id="op-or" value="or"{% if sop != 'and' %} checked="checked"{% endif %}>
       &nbsp;
       <label for="op-or" style="display: inline;"><strong>or</strong></label>
       <br />
-      <input type="radio" name="op" id="op-and" value="and">
+      <input type="radio" name="op" id="op-and" value="and"{% if sop == 'and' %} checked="checked"{% endif %}>
       &nbsp;
       <label for="op-and" style="display: inline;"><strong>and</strong></label>
     </p>
   </div>
   <div class="large-10 columns">
-    <input type="text" id="tags" />
+    <input type="text" id="tags" value="{{ stags }}"/>
   </div>
 </div>
 
@@ -47,7 +47,7 @@ Search by tags
     <p><strong>exclude tags :</strong></p>
   </div>
   <div class="large-10 small-10 columns">
-    <input type="text" id="tags2" />
+    <input type="text" id="tags2" value="{{ sex }}"/>
   </div>
 </div>
 
@@ -75,22 +75,25 @@ Search by tags
       var op = $('input[name="op"]:checked').val();
       $('#link_results,#list_results').html('');
 
+      var url = '/search/'+tags+'%25'+op+'%25'+excludes;
+
       var query = tags.split(',').join(' '+(op == 'and' ? '&' : '|')+' ');
       if (excludes.length > 0) {
         query += ' ~(';
         query += excludes.split(',').join(' | ');
         query += ')';
       }
+
+
       if (query.length === 0) {
         $('#query').html('Search by tags');
         return;
       } else {
-        $('#query').html(query);
+        $('#query').html('<a href="/page'+url+'">'+query+'</a>');
       }
-
       $.ajax({
         type:"GET",
-        url: '/tag/search/'+tags+'%25'+op+'%25'+excludes,
+        url: '/tag' + url,
         success: function(result) {
           result = $.parseJSON(result);
           if (result[0].length > 0) {
@@ -133,6 +136,9 @@ Search by tags
 
     $('input[name="op"]').on('change', search);
 
+    if($('#tags').val() !== '') {
+      search();
+    }
   });
 </script>
 {% endblock last_body %}
