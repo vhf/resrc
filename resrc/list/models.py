@@ -163,30 +163,27 @@ class ListLinks(models.Model):
         listlink = self
         alist = listlink.alist
         link = listlink.links
-        md_link = "1. [link](%s) [%s](%s)" % (
-            link.url, link.title, link.get_absolute_url()
+        md_link = "1. [%s](%s)" % (
+            link.title, link.url
         )
         alist.md_content = "\n".join([alist.md_content, md_link])
         alist.html_content = listmarkdown(alist.md_content, alist)
         alist.save()
 
     def remove(self):
-        pass
-        # Probably the best way is to create a listmarkdown() like to properly remove links
-        # listlink = self
-        # alist = listlink.alist
-        # link = listlink.links
-        # md_link = "[%s](%s)" % (
-        #     link.get_absolute_url(), link.title, link.url
-        # )
+        listlink = self
+        alist = listlink.alist
+        link = listlink.links
+        md_link = "[%s](%s)" % (
+            link.title, link.url
+        )
 
-        # alist.md_content = alist.md_content.replace(md_link, '')
+        alist.md_content = alist.md_content.replace(md_link, '')
 
-        # import re
-        # SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
-        # REPLACE = r' '
-        # alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
-
-        # from resrc.utils.templatetags.emarkdown import listmarkdown
-        # alist.html_content = listmarkdown(alist.md_content, alist)
-        # alist.save()
+        import re
+        SEARCH = re.compile("^(\d+\.|-)(\s)$", re.MULTILINE)
+        REPLACE = r' '
+        alist.md_content = SEARCH.sub(REPLACE, alist.md_content)
+        from resrc.utils.templatetags.emarkdown import listmarkdown
+        alist.html_content = listmarkdown(alist.md_content, alist)
+        alist.save()
