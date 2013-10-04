@@ -43,11 +43,12 @@ def fixup(elem, alist):
         except Link.DoesNotExist:
             link_exists = False
 
+        elem.text = elem.text.replace('#!uds!#', '_')
+        elem.text = elem.text.replace('#!ast!#', '*')
+
         if not internal_link:
             if not link_exists:
                 elem.set("rel", "nofollow external")
-                elem.text = elem.text.replace('#!uds!#', '_')
-                elem.text = elem.text.replace('#!ast!#', '*')
                 a = etree.Element('a')
                 a.set("class", "addthis tiny button secondary")
                 a.text = u'add'
