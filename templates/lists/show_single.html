@@ -81,6 +81,7 @@
 
 {% block last_body %}
 {% if request.user.is_authenticated %}
+<script src="{% static "js/mptt_comments/mptt_comments.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 

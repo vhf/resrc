@@ -21,7 +21,11 @@ $(document).ready(function() {
                 var d = {
                     count: count
                 };
-                item.text(interpolate(ngettext('%(count)s reply', '%(count)s replies', d.count), d, true));
+                if (d.count > 2) {
+                    item.text(d.count + ' replies');
+                } else {
+                    item.text(d.count + ' reply');
+                }
             }
         });
     }
