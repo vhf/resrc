@@ -18,5 +18,4 @@ django-storages
 -e git://github.com/jhgaylor/tldrio-python-client.git@master#egg=tldrio
 -e git://github.com/vhf/django-taggit.git@master#egg=django-taggit
 -e git://github.com/vhf/django-mptt-comments.git@master#egg=django-mptt-comments
-MySQL-python
 python-memcached
