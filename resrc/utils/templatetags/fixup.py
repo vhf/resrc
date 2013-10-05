@@ -43,8 +43,9 @@ def fixup(elem, alist):
         except Link.DoesNotExist:
             link_exists = False
 
-        elem.text = elem.text.replace('#!uds!#', '_')
-        elem.text = elem.text.replace('#!ast!#', '*')
+        if elem.text is not None:
+            elem.text = elem.text.replace('#!uds!#', '_')
+            elem.text = elem.text.replace('#!ast!#', '*')
 
         if not internal_link:
             if not link_exists:
