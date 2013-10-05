@@ -160,6 +160,7 @@ def new_link(request, title=None, url=None):
                 cache.delete('tags_all')
                 cache.delete('tags_csv')
             link.save()
+            cache.set('link_%s' % link.pk, link, 60*5)
 
             if not 'ajax' in data:
                 return redirect(link.get_absolute_url())
@@ -245,6 +246,7 @@ def edit_link(request, link_pk):
                 if tag not in list_tags:
                     link.tags.remove(tag)
             link.save()
+            cache.set('link_%s' % link_pk, link, 60*5)
             return redirect(link.get_absolute_url())
         else:
             from taggit.models import Tag
