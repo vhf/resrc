@@ -50,11 +50,15 @@ def single(request, list_pk, list_slug=None):
         #     tl['id'] = tl['_id']
         # tldr_urls = [tl['originalUrl'] for tl in tldrs['tldrs']]
     from resrc.vote.models import Vote
+    if request.user.is_authenticated():
+        voted = Vote.objects.filter(alist=alist.pk, user=request.user).exists()
+    else:
+        voted = False
     return render_template('lists/show_single.html', {
         'form': form,
         'list': alist,
         'count': Vote.objects.votes_for_list(alist.pk),
-        'voted': Vote.objects.filter(alist=alist.pk, user=request.user).exists(),
+        'voted': voted,
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'reading_list': 'Reading list',
