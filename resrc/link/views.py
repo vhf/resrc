@@ -58,8 +58,8 @@ def single(request, link_pk, link_slug=None):
         similars = list()
         link_tags = list(link.tags.all())
         max_n = len(link_tags)
-        if max_n > 10:
-            max_n = 10
+        if max_n > 5:
+            max_n = 5
         class Enough(Exception): pass
         try:
             # n as in n-gram
@@ -93,10 +93,14 @@ def single(request, link_pk, link_slug=None):
             tldr = False
         cache.set('tldr_%s' % link_pk, tldr, 60*60*24*8)
     from resrc.vote.models import Vote
+    if request.user.is_authenticated():
+        voted = Vote.objects.filter(link=link.pk, user=request.user).exists()
+    else:
+        voted = False
     return render_template('links/show_single.html', {
         'link': link,
         'count': Vote.objects.votes_for_link(link.pk),
-        'voted': Vote.objects.filter(link=link.pk, user=request.user).exists(),
+        'voted': voted,
         'request': request,
         'titles': list(titles),
         'newlistform': newlistform,
