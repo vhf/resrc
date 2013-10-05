@@ -137,7 +137,12 @@ def new_link(request, title=None, url=None):
             link.title = data['title']
             link.url = data['url']
             from resrc.language.models import Language
-            link.language = Language.objects.get(language=data['language'])
+            try:
+                link.language = Language.objects.get(language=data['language'])
+            except Language.DoesNotExist:
+                lang = Language.objects.create(language=data['language'])
+                link.language = lang
+
             link.level = data['level']
             link.author = request.user
 
