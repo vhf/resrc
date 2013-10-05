@@ -247,6 +247,7 @@ def edit_link(request, link_pk):
             link.save()
             return redirect(link.get_absolute_url())
         else:
+            from taggit.models import Tag
             form = EditLinkForm(link_pk=link_pk, initial={
                 'url': link.url,
                 'title': link.title,
