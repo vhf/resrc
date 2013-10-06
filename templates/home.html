@@ -39,7 +39,7 @@
     <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link in upvoted_links %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link in upvoted_links %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -58,7 +58,7 @@
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-id="{{link.link__pk}}"> {{ link.count }} <i class="lsf{% if link in upvoted_links %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+      <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"> {{ link.count }} <i class="lsf{% if link in upvoted_links %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -79,36 +79,7 @@
 
 {% block last_body %}
 <script>
-  $('.votes').click(function() {
-    var button = $(this);
-    var type;
-    if ($(button).attr('data-type') == 'list') {
-      type = 'list';
-    } else {
-      type = 'link';
-    }
-    var url = '/'+type+'/'+$(button).attr('data-id')+'/upvote';
-
-    $.ajax({
-      type: 'POST',
-      url: url,
-      data: 'csrfmiddlewaretoken={{csrf_token}}'
-    }).always(function (xhr) {
-      var result = $.parseJSON(xhr.responseText).result,
-          curValue = parseInt($(button).html(), 10),
-          newValue, iconClasses;
-
-      if (result === 'voted') {
-        newValue = curValue + 1;
-        iconClasses = 'lsf lsf2';
-      }
-      else if (result === 'unvoted') {
-        newValue = curValue - 1;
-        iconClasses = 'lsf';
-      }
-
-      $(button).html('' + newValue +' <i class="' + iconClasses + '"></i>');
-    });
-  });
+  window.csrfToken = '{{ csrf_token }}';
 </script>
+<script src="{% static "js/votes.js" %}"></script>
 {% endblock %}

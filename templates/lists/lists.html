@@ -1,6 +1,7 @@
 {% extends "lists/base.html" %}
 {% load profile %}
 {% load mptt_comments_tags %}
+{% load staticfiles %}
 
 {% block title %}
 Lists summary
@@ -42,7 +43,7 @@ Lists summary
     <h3>hottest</h3>
     <ul class="no-bullet">
       {% for list in hottest %}
-      <li><span class="votes y-bg" data-id="{{list.alist__pk}}">{{ list.count }} <i class="lsf{% if list in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}">{{ list.count }} <i class="lsf{% if list in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -51,7 +52,7 @@ Lists summary
     <h3>most appreciated</h3>
     <ul class="no-bullet">
       {% for list in most_voted %}
-      <li><span class="votes y-bg" data-id="{{list.alist__pk}}">{{ list.count }} <i class="lsf{% if list in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}">{{ list.count }} <i class="lsf{% if list in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -72,22 +73,7 @@ Lists summary
 
 {% block last_body %}
 <script>
-  $('.votes').click(function() {
-    var button = $(this);
-    var url = '/list/'+$(button).attr('data-id')+'/upvote';
-    $.ajax({
-      type:"POST",
-      url: url,
-      data: 'csrfmiddlewaretoken={{csrf_token}}',
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        if (result == 'voted') {
-          $(button).html(parseInt($(button).html(), 10)+1+' <i class="lsf lsf2"></i>');
-        } else if (result == 'unvoted') {
-          $(button).html(parseInt($(button).html(), 10)-1+' <i class="lsf"></i>');
-        }
-      }
-    });
-  });
+  window.csrfToken = '{{ csrf_token }}';
 </script>
-{% endblock last_body %}
+<script src="{% static "js/votes.js" %}"></script>
+{% endblock %}
