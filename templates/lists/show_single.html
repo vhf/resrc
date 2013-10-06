@@ -43,7 +43,7 @@
     <p>{{ list.description|emarkdown }}</p>
     <p class="byline">
       {% with author=list.owner %}
-      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago | <span class="votes y-bg">{{ count }} <i class="lsf"></i></span><span class="views y-bg">{{ list.views }} <i class="lsf"></i></span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
+      by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ list.pubdate|timesince }} ago | <span class="votes y-bg">{{ count }} <i class="lsf{% if voted %} lsf2{% endif %}"></i></span><span class="views y-bg">{{ list.views }} <i class="lsf"></i></span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
       {%endwith%}
     </p>
   </div>
@@ -151,7 +151,7 @@ $(function(){
       result = $.parseJSON(xhr.responseText).result;
       if (result == 'voted') {
         $(symbol).html('checkbox');
-        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf"></i>');
+        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf lsf2"></i>');
       } else if (result == 'unvoted') {
         $(symbol).html('check');
         $('.votes').html(parseInt($('.votes').html(), 10)-1+' <i class="lsf"></i>');

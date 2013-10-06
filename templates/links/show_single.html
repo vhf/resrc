@@ -37,7 +37,7 @@
       <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}">{{ link.title }}</a></h3>
       <p class="byline">
         {% with author=link.author %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes y-bg">{{ count }} <i class="lsf"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes y-bg">{{ count }} <i class="lsf{% if voted %} lsf2{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
@@ -152,7 +152,7 @@
       result = $.parseJSON(xhr.responseText).result;
       if (result == 'voted') {
         $(symbol).html('checkbox');
-        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf"></i>');
+        $('.votes').html(parseInt($('.votes').html(), 10)+1+' <i class="lsf lsf2"></i>');
       } else if (result == 'unvoted') {
         $(symbol).html('check');
         $('.votes').html(parseInt($('.votes').html(), 10)-1+' <i class="lsf"></i>');
