@@ -18,6 +18,10 @@ def home(request):
         hottest_lists = Vote.objects.hottest_lists(limit=10, days=7)
         cache.set('hot_ls_10_7', list(hottest_lists), 60*3+5)
 
+    user = request.user
+    user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
+    user_upvoted_links = Vote.objects.my_upvoted_links(user)
+
     tags = cache.get('tags_all')
     if tags is None:
         from taggit.models import Tag
@@ -31,6 +35,8 @@ def home(request):
         'hottest_links': hottest_links,
         'tags': tags[:55],
         'hottest_lists': hottest_lists,
+        'upvoted_links': user_upvoted_links,
+        'upvoted_lists': user_upvoted_lists,
     })
 
 
