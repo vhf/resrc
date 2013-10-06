@@ -90,15 +90,24 @@
     var url = '/'+type+'/'+$(button).attr('data-id')+'/upvote';
 
     $.ajax({
-      type:"POST",
+      type: 'POST',
       url: url,
-      data: 'csrfmiddlewaretoken={{csrf_token}}',
-      error: function(xhr) {
-        result = $.parseJSON(xhr.responseText).result;
-        if (result == 'success') {
-          $(button).html(""+(parseInt($(button).html(), 10)+1)+' <i class="lsf lsf2"></i>');
-        }
+      data: 'csrfmiddlewaretoken={{csrf_token}}'
+    }).always(function (xhr) {
+      var result = $.parseJSON(xhr.responseText).result,
+          curValue = parseInt($(button).html(), 10),
+          newValue, iconClasses;
+
+      if (result === 'voted') {
+        newValue = curValue + 1;
+        iconClasses = 'lsf lsf2';
       }
+      else if (result === 'unvoted') {
+        newValue = curValue - 1;
+        iconClasses = 'lsf';
+      }
+
+      $(button).html('' + newValue +' <i class="' + iconClasses + '"></i>');
     });
   });
 </script>
