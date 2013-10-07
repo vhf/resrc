@@ -9,19 +9,21 @@ def home(request):
     hottest_links = cache.get('hot_lk_10_7')
     if hottest_links is None:
         hottest_links = Vote.objects.hottest_links(limit=10, days=7)
-        cache.set('hot_lk_10_7', list(hottest_links), 60*3)
+        cache.set('hot_lk_10_7', list(hottest_links), 60*60)
 
     latest_links = Vote.objects.latest_links(limit=10, days=7)
 
     hottest_lists = cache.get('hot_ls_10_7')
     if hottest_lists is None:
         hottest_lists = Vote.objects.hottest_lists(limit=10, days=7)
-        cache.set('hot_ls_10_7', list(hottest_lists), 60*3+5)
+        cache.set('hot_ls_10_7', list(hottest_lists), 60*61+2)
 
     user = request.user
     if user.is_authenticated():
         user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
+        user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
         user_upvoted_links = Vote.objects.my_upvoted_links(user)
+        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
     else:
         user_upvoted_lists = []
         user_upvoted_links = []

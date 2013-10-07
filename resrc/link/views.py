@@ -304,6 +304,7 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
 
         from resrc.vote.models import Vote
         already_voted = Vote.objects.filter(user=request.user, link=link).exists()
+        cache.delete('hot_lk_10_7')
         if not already_voted:
             link.vote(request.user, list_pk)
             data = simplejson.dumps({'result': 'voted'})

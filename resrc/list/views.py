@@ -344,6 +344,7 @@ def ajax_upvote_list(request, list_pk):
         from resrc.vote.models import Vote
         already_voted = Vote.objects.filter(
             user=request.user, alist=alist).exists()
+        cache.delete('hot_ls_10_7')
         if not already_voted:
             alist.vote(request.user)
             data = simplejson.dumps({'result': 'voted'})
