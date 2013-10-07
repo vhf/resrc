@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^edit$', views.settings_profile, name="user-settings"),
     url(r'^account$', views.settings_account, name="user-account"),
     url(r'^login$', views.login_register_view, name="user-login"),
+    url(r'^modal/login$', views.login_register_view, {"modal": True}, name="user-login-modal"),
     url(r'^register$', views.login_register_view, {"register": True}, name="user-register"),
     url(r'^logout$', views.logout_view, name="user-logout"),
     url(r'^$', views.user_list, name="user-list"),

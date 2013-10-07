@@ -77,5 +77,16 @@ Lists summary
   window.csrfToken = '{{ csrf_token }}';
 </script>
 <script src="{% static "js/votes.js" %}"></script>
+{% else %}
+<div id="login-modal" class="reveal-modal"></div>
+<script>
+$(function () {
+  $('#vote, .votes').click(function() {
+    $('#login-modal').foundation('reveal', 'open', {
+      url: "http://resrc.io{% url "user-login-modal" %}"
+    });
+  });
+});
+</script>
 {% endif %}
 {% endblock %}

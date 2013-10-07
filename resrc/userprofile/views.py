@@ -41,7 +41,7 @@ def details(request, user_name):
     })
 
 
-def login_register_view(request, register=False):
+def login_register_view(request, register=False, modal=False):
     csrf_tk = {}
     csrf_tk.update(csrf(request))
 
@@ -89,7 +89,10 @@ def login_register_view(request, register=False):
     csrf_tk['register'] = register
     if 'next' in request.GET:
         csrf_tk['next']  = request.GET.get('next')
-    return render_template('user/login_register.html', csrf_tk)
+    if not modal:
+        return render_template('user/login_register.html', csrf_tk)
+    else:
+        return render_template('user/login_register_modal.html', csrf_tk)
 
 
 @login_required
