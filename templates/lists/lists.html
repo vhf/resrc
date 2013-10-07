@@ -72,8 +72,10 @@ Lists summary
 
 
 {% block last_body %}
+{% if user.is_authenticated %}
 <script>
   window.csrfToken = '{{ csrf_token }}';
 </script>
 <script src="{% static "js/votes.js" %}"></script>
+{% endif %}
 {% endblock %}
