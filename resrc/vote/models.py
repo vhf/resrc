@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-:
 from django.db import models
 from django.db.models import Count
+from django.utils.timezone import utc
 from datetime import timedelta, datetime
 from django.contrib.auth.models import User
 
@@ -31,7 +32,7 @@ class VoteManager(models.Manager):
 
     def hottest_links(self, limit=10, days=1, en_only=True):
         qs = self.get_query_set() \
-            .filter(time__gt=datetime.now() - timedelta(days=days))
+            .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days))
         if en_only:
             qs = qs.filter(link__language=1)
         qs = qs \
@@ -46,7 +47,7 @@ class VoteManager(models.Manager):
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
         voted = self.get_query_set() \
-            .filter(time__gt=datetime.now() - timedelta(days=days)) \
+            .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(link=None)
         if en_only:
             voted = voted.filter(link__language=1)
@@ -76,7 +77,7 @@ class VoteManager(models.Manager):
 
     def hottest_lists(self, limit=10, days=1):
         return self.get_query_set() \
-            .filter(time__gt=datetime.now() - timedelta(days=days)) \
+            .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(alist=None) \
             .exclude(alist__is_public=False) \
             .values('alist__pk', 'alist__slug', 'alist__title') \
