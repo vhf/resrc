@@ -21,9 +21,7 @@ def home(request):
     user = request.user
     if user.is_authenticated():
         user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
-        user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
         user_upvoted_links = Vote.objects.my_upvoted_links(user)
-        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
     else:
         user_upvoted_lists = []
         user_upvoted_links = []
