@@ -360,7 +360,10 @@ def links_page(request):
     hottest = Vote.objects.hottest_links(limit=15, days=7)
     most_voted = Vote.objects.hottest_links(limit=10, days=30)
 
-    user_upvoted = Vote.objects.my_upvoted_links(request.user)
+    if request.user.is_authenticated():
+        user_upvoted = Vote.objects.my_upvoted_links(request.user)
+    else:
+        user_upvoted = []
 
     return render_template('links/links.html', {
         'latest': latest,

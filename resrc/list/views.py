@@ -362,7 +362,10 @@ def lists_page(request):
     hottest = Vote.objects.hottest_lists(limit=25, days=7)
     most_voted = Vote.objects.hottest_lists(limit=25, days=30)
 
-    user_upvoted = Vote.objects.my_upvoted_lists(request.user)
+    if request.user.is_authenticated():
+        user_upvoted = Vote.objects.my_upvoted_lists(request.user)
+    else:
+        user_upvoted = []
 
     return render_template('lists/lists.html', {
         'latest': latest,

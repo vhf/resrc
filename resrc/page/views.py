@@ -19,8 +19,12 @@ def home(request):
         cache.set('hot_ls_10_7', list(hottest_lists), 60*3+5)
 
     user = request.user
-    user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
-    user_upvoted_links = Vote.objects.my_upvoted_links(user)
+    if user.is_authenticated():
+        user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
+        user_upvoted_links = Vote.objects.my_upvoted_links(user)
+    else:
+        user_upvoted_lists = []
+        user_upvoted_links = []
 
     tags = cache.get('tags_all')
     if tags is None:
