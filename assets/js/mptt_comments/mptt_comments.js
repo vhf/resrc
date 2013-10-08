@@ -33,7 +33,7 @@ $(document).ready(function() {
     function append_data_and_rebind_form(node, data) {
         node.empty();
         node.append(data);
-        //node.toggle(); console.log('32')
+        node.show();
 
         var form = $("form", node);
         bind_submit(form, node);
@@ -64,8 +64,7 @@ $(document).ready(function() {
             $('.' + classname, nxt).html(data);
         }
         if (nxt.is(':hidden')) {
-            nxt.toggle();
-            console.log('63');
+            nxt.show();
         }
     }
 
@@ -205,7 +204,7 @@ $(document).ready(function() {
             comment_el.removeClass('comment_expanded');
             $(this).text('right');
         }
-        comment_el.find('.comment').each(function(index) {
+        comment_el.find('.comment,.comment_form').each(function(index) {
             $(this).toggle();
         });
     });
