@@ -39,6 +39,9 @@ $(function () {
       }
 
       $symbol.html(symbolIcon);
+      if (isNaN(newValue)) {
+        newValue = '';
+      }
       $buttons.html('' + newValue +' <i class="' + iconClasses + '"></i>');
     });
   });
