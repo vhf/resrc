@@ -3,7 +3,7 @@
   <a href="{% url "user-url" comment.name %}">{{ comment.name }}</a> |
   {{ comment.submit_date|timesince }} ago |
   <a href="{% url "comment-detail" comment_id %}">link</a>
-  {% if comment.pk %}| <a class="comment_flag" href="{% url "comments-flag" comment.pk %}">flag</a>{% endif %}
+  {#{% if comment.pk %}| <a class="comment_flag" href="{% url "comments-flag" comment.pk %}">flag</a>{% endif %}#}
   {% if false and debug %}{% include "comments/_comment_debug.html" %}{% endif %}
   {% if comment.is_removed %}
     <i>Comment removed</i>
