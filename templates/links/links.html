@@ -25,7 +25,7 @@ Links summary
     <h3>latest</h3>
     <ul class="no-bullet">
       {% for link in latest %}
-      <li{% if forloop.counter > 10 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
+      <li{% if forloop.counter > 10 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link.link__pk in upvoted_pk %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
       {% endfor %}
     </ul>
   </div>
@@ -34,7 +34,7 @@ Links summary
       <h3>hottest</h3>
       <ul class="no-bullet">
         {% for link in hottest %}
-        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link.link__pk in upvoted_pk %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
         <hr>
         {% endfor %}
       </ul>
@@ -43,7 +43,7 @@ Links summary
       <h3>most appreciated</h3>
       <ul class="no-bullet">
         {% for link in most_voted %}
-        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link in upvoted %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="lsf{% if link.link__pk in upvoted_pk %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
         <hr>
         {% endfor %}
       </ul>

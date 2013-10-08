@@ -365,8 +365,10 @@ def lists_page(request):
 
     if request.user.is_authenticated():
         user_upvoted = Vote.objects.my_upvoted_lists(request.user)
+        user_upvoted_pk = [x['alist__pk'] for x in user_upvoted]
     else:
         user_upvoted = []
+        user_upvoted_pk = []
 
     return render_template('lists/lists.html', {
         'latest': latest,
@@ -374,4 +376,5 @@ def lists_page(request):
         'hottest': hottest,
         'most_voted': most_voted,
         'upvoted': user_upvoted,
+        'upvoted_pk': user_upvoted_pk,
     })

@@ -363,14 +363,17 @@ def links_page(request):
 
     if request.user.is_authenticated():
         user_upvoted = Vote.objects.my_upvoted_links(request.user)
+        user_upvoted_pk = [x['link__pk'] for x in user_upvoted]
     else:
         user_upvoted = []
+        user_upvoted_pk = []
 
     return render_template('links/links.html', {
         'latest': latest,
         'hottest': hottest,
         'most_voted': most_voted,
         'upvoted': user_upvoted,
+        'upvoted_pk': user_upvoted_pk,
     })
 
 
