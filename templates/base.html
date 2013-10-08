@@ -68,15 +68,15 @@
         <ul class="right">
           {% if user.is_authenticated %}
           <li class="has-dropdown">
-            <a href="#">
+            <a href="{% url "user-url" user.username %}">
               {% gravatar user.email 24 %}
               {{ user.username }}
             </a>
             <ul class="dropdown">
-              <li><a href="{% url "user-url" user.username %}">Profile</a></li>
-              <li><a href="{% url "upvoted-list" %}">Votes</a></li>
-              <li><a href="{% url "user-settings" %}">Settings</a></li>
-              <li><a href="{% url "user-logout" %}">Logout</a></li>
+              <li><a href="{% url "upvoted-list" %}">my upvotes</a></li>
+              <li><a href="{% url "user-settings" %}">edit profile</a></li>
+              <li><a href="{% url "user-account" %}">edit account</a></li>
+              <li><a href="{% url "user-logout" %}">logout</a></li>
             </ul>
           </li>
           {% else %}

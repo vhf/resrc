@@ -8,12 +8,7 @@
 <li class="current">Profile</li>
 {% endblock %}
 
-{% block subnav %}
-  <dd class="active"><a href="{% url "user-settings" %}">Public profile</a></dd>
-  <dd><a href="{% url "user-account" %}">Change password</a></dd>
-{% endblock %}
-
-{% block settings_form %}
+{% block content %}
 <div class="row">
   <div class="large-12 columns">
     {% crispy form %}
