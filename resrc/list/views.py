@@ -313,6 +313,7 @@ def delete(request, list_pk):
 
 
 def my_lists(request, user_name):
+    upvoted_count = 0
     from django.db.models import Count
     if request.user.username == user_name:
         user = request.user
