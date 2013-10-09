@@ -55,7 +55,7 @@ def about(request):
     return render_template('pages/about.html', {})
 
 
-def search(request, tags=None, operand=None, excludes=None, en_only=True):
+def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
     tags_csv = cache.get('tags_csv')
     if tags_csv is None:
         from taggit.models import Tag

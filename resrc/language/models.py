@@ -4,6 +4,7 @@ from django.db import models
 
 class Language(models.Model):
     language = models.CharField(max_length=7, choices=settings.LANGUAGES)
+    name = models.CharField(max_length=30)
 
     def __unicode__(self):
         from django.conf import settings

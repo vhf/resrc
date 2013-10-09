@@ -17,8 +17,8 @@ class Profile(models.Model):
 
     about = models.TextField('about', blank=True)
 
-    # from resrc.language.models import Language
-    # languages = models.ManyToManyField(Language)
+    from resrc.language.models import Language
+    languages = models.ManyToManyField(Language)
 
     # karma = models.IntegerField('karma', null=True, blank=True)
 

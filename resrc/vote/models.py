@@ -8,11 +8,11 @@ from django.contrib.auth.models import User
 
 class VoteManager(models.Manager):
 
-    def my_upvoted_links(self, user, en_only=True):
+    def my_upvoted_links(self, user, lang_filter=[1]):
         qs = self.get_query_set() \
             .filter(user=user)
-        if en_only:
-            qs = qs.filter(link__language=1)
+        if len(lang_filter) > 0:
+            qs = qs.filter(link__language__in=lang_filter)
         qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
@@ -30,11 +30,11 @@ class VoteManager(models.Manager):
             .order_by('-time')
 
 
-    def hottest_links(self, limit=10, days=1, en_only=True):
+    def hottest_links(self, limit=10, days=1, lang_filter=[1]):
         qs = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days))
-        if en_only:
-            qs = qs.filter(link__language=1)
+        if len(lang_filter) > 0:
+            qs = qs.filter(link__language__in=lang_filter)
         qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
@@ -43,14 +43,14 @@ class VoteManager(models.Manager):
         return qs
 
 
-    def latest_links(self, limit=10, days=1, en_only=True):
+    def latest_links(self, limit=10, days=1, lang_filter=[1]):
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
         voted = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(link=None)
-        if en_only:
-            voted = voted.filter(link__language=1)
+        if len(lang_filter) > 0:
+            voted = voted.filter(link__language__in=lang_filter)
 
         voted = voted \
             .values('link__pk', 'link__slug', 'link__title') \
