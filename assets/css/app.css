@@ -8134,7 +8134,7 @@ i {
 
 /* line 83, ../sass/_icons.scss */
 .y-bg {
-  background-color: #FFFFCC !important;
+  background-color: #fff1d2 !important;
   color: #555555 !important;
 }
 
@@ -8198,31 +8198,31 @@ i {
   font-size: 0.8125em;
 }
 
-/* line 15, ../sass/_resrc.scss */
+/* line 16, ../sass/_resrc.scss */
 nav.top-bar {
   background-color: #75a2aa;
 }
 
-/* line 18, ../sass/_resrc.scss */
+/* line 19, ../sass/_resrc.scss */
 .contain-to-grid {
   background: none;
 }
 
-/* line 24, ../sass/_resrc.scss */
+/* line 25, ../sass/_resrc.scss */
 .top-bar-section ul li {
   font-family: Helvetica;
 }
-/* line 26, ../sass/_resrc.scss */
+/* line 27, ../sass/_resrc.scss */
 .top-bar-section ul li a {
   background-color: #75a2aa;
   color: white;
   font-size: 0.8em;
 }
-/* line 30, ../sass/_resrc.scss */
+/* line 31, ../sass/_resrc.scss */
 .top-bar-section ul li a:hover {
-  color: #ff0084;
+  color: #2b3d77;
 }
-/* line 33, ../sass/_resrc.scss */
+/* line 34, ../sass/_resrc.scss */
 .top-bar-section ul li a:not(.button) {
   background-color: #75a2aa;
 }
