@@ -359,10 +359,15 @@ def ajax_upvote_list(request, list_pk):
 
 def lists_page(request):
     from resrc.vote.models import Vote
-    latest = List.objects.latest(limit=25)
-    most_viewed = List.objects.most_viewed(limit=25)
-    hottest = Vote.objects.hottest_lists(limit=25, days=7)
-    most_voted = Vote.objects.hottest_lists(limit=25, days=30)
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+    latest = List.objects.latest(limit=25, lang_filter=lang_filter)
+    most_viewed = List.objects.most_viewed(limit=25, lang_filter=lang_filter)
+    hottest = Vote.objects.hottest_lists(limit=25, days=7, lang_filter=lang_filter)
+    most_voted = Vote.objects.hottest_lists(limit=25, days=30, lang_filter=lang_filter)
 
     if request.user.is_authenticated():
         user_upvoted = Vote.objects.my_upvoted_lists(request.user)

@@ -8,11 +8,9 @@ from django.contrib.auth.models import User
 
 class VoteManager(models.Manager):
 
-    def my_upvoted_links(self, user, lang_filter=[1]):
+    def my_upvoted_links(self, user):
         qs = self.get_query_set() \
             .filter(user=user)
-        if len(lang_filter) > 0:
-            qs = qs.filter(link__language__in=lang_filter)
         qs = qs \
             .exclude(link=None) \
             .values('link__pk', 'link__slug', 'link__title') \
@@ -44,6 +42,7 @@ class VoteManager(models.Manager):
 
 
     def latest_links(self, limit=10, days=1, lang_filter=[1]):
+        print lang_filter
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
         voted = self.get_query_set() \
@@ -75,7 +74,7 @@ class VoteManager(models.Manager):
         return links[:limit]
 
 
-    def hottest_lists(self, limit=10, days=1):
+    def hottest_lists(self, limit=10, days=1, lang_filter=[1]):  # TODO: implement lang filter
         return self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(alist=None) \

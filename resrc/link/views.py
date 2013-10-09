@@ -357,9 +357,14 @@ def ajax_revise_link(request, link_pk):
 
 def links_page(request):
     from resrc.vote.models import Vote
-    latest = Vote.objects.latest_links(limit=25, days=7)
-    hottest = Vote.objects.hottest_links(limit=15, days=7)
-    most_voted = Vote.objects.hottest_links(limit=10, days=30)
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+    latest = Vote.objects.latest_links(limit=25, days=7, lang_filter=lang_filter)
+    hottest = Vote.objects.hottest_links(limit=15, days=7, lang_filter=lang_filter)
+    most_voted = Vote.objects.hottest_links(limit=10, days=30, lang_filter=lang_filter)
 
     if request.user.is_authenticated():
         user_upvoted = Vote.objects.my_upvoted_links(request.user)
