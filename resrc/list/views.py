@@ -195,7 +195,7 @@ def new_list(request):
             if 'private' in form.data:
                 is_private = form.data['private']
 
-            if len(form.data['url']) > 0:
+            if form.data['url']:
                 opener = urllib2.build_opener()
                 opener.addheaders = [('Accept-Charset', 'utf-8')]
                 url_response = opener.open(form.data['url'])
@@ -256,7 +256,7 @@ def edit(request, list_pk):
             if 'private' in form.data:
                 is_private = form.data['private']
 
-            if len(form.data['url']) > 0:
+            if form.data['url']:
                 opener = urllib2.build_opener()
                 opener.addheaders = [('Accept-Charset', 'utf-8')]
                 url_response = opener.open(form.data['url'])

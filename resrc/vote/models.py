@@ -31,7 +31,7 @@ class VoteManager(models.Manager):
     def hottest_links(self, limit=10, days=1, lang_filter=[1]):
         qs = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days))
-        if len(lang_filter) > 0:
+        if lang_filter:
             qs = qs.filter(link__language__in=lang_filter)
         qs = qs \
             .exclude(link=None) \
@@ -48,7 +48,7 @@ class VoteManager(models.Manager):
         voted = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(link=None)
-        if len(lang_filter) > 0:
+        if lang_filter:
             voted = voted.filter(link__language__in=lang_filter)
 
         voted = voted \

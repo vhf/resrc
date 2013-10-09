@@ -62,7 +62,7 @@ def search(request, tags, operand, excludes, lang_filter=[1]):
             links = links.exclude(tags__name=exclude)
         links = links.exclude(list__is_public=False)
 
-        if len(lang_filter) > 0:
+        if lang_filter:
             links = links.filter(language__in=lang_filter)
 
         link_result = []
