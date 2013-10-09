@@ -27,7 +27,8 @@ New link
   $(function(){
       $("#id_tags").tagit({
         availableTags: [{{ tags|safe }}],
-        autocomplete: {delay: 0, minLength: 2}
+        autocomplete: {delay: 0, minLength: 2},
+        allowSpaces: true
     });
   });
 </script>

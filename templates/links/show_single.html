@@ -4,10 +4,7 @@
 {% load crispy_forms_tags %}
 {% load cache %}
 
-{% block extrahead %}{% if request.user.is_authenticated %}
-  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
-{% endif %}
+{% block extrahead %}
   <link rel="canonical" href="{{ link.get_absolute_url }}" />
 {% endblock %}
 
@@ -206,7 +203,8 @@
   $(function(){
     $("#id_tags").tagit({
       availableTags: [{{ tags|safe }}],
-      autocomplete: {delay: 0, minLength: 2}
+      autocomplete: {delay: 0, minLength: 2},
+      allowSpaces: true
     });
   });
   </script>
