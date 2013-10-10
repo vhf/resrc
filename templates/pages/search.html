@@ -8,6 +8,8 @@ Search by tags
 {% endblock %}
 
 {% block extrahead %}
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -62,8 +64,6 @@ Search by tags
 {% endblock %}
 
 {% block last_body %}
-<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
-<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 <script type="text/javascript">
   $(function(){
 
