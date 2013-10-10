@@ -42,7 +42,6 @@ class VoteManager(models.Manager):
 
 
     def latest_links(self, limit=10, days=1, lang_filter=[1]):
-        print lang_filter
         from resrc.link.models import Link
         latest = list(Link.objects.latest(limit=limit))
         voted = self.get_query_set() \

@@ -115,6 +115,8 @@ def single(request, link_pk, link_slug=None):
 @login_required
 def new_link(request, title=None, url=None):
     if title is not None and url is not None:
+        url = url.replace('http:/', 'http://')
+        url = url.replace('https:/', 'https://')
         form = NewLinkForm(initial={
             'title': title,
             'url': url,

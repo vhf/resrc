@@ -124,7 +124,6 @@ def settings_profile(request):
                 from resrc.language.models import Language
                 for lang in languages:
                     profile.languages.add(Language.objects.get(pk=lang))
-                    print "add %s" % lang
                 profile.save()
                 request.user.save()
             except:
