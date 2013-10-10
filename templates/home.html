@@ -13,16 +13,27 @@
 
 {% block content %}
 
+{% if not user.is_authenticated %}
 <div class="row">
-  <div class="large-12">
+  <div class="large-12 columns">
     <div class="panel">
-      <h1><span>Find Y resources about X in <span class="show-for-large">Zero</span><span class="hide-for-large">0</span> minutes</span></h1>
-      <p>Sometimes, search engine fail at recommanding the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
-      <p>Find articles, tutorials, documentation, screencasts just about anything programming related. Browse by <strong>tags</strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
-      <p>Create and publish your lists or import them directly (e.g. from GitHub) in Markdown, add links to your Reading List.</p>
+      <h1><span>Find Y resources about X in <span class="show-for-medium">Zero</span><span class="hide-for-medium">0</span> minutes</span></h1>
+      <div class="row">
+        <div class="large-3 columns">
+          <p>
+            <a href="{% url "user-register" %}" class="button large-12">Register now!</a>
+          </p>
+        </div>
+        <div class="large-9 columns">
+          <p>Sometimes, search engine fail at recommanding the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
+          <p>Find articles, tutorials, documentation, screencasts just about anything programming related. Browse by <strong>tags</strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
+          <p>Create and publish your lists or import them directly (e.g. from GitHub) in Markdown, add links to your Reading List.</p>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+{% endif %}
 
 <div class="row">
   <div class="medium-6 large-3 columns">
