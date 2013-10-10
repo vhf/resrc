@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^login$', views.login_register_view, name="user-login"),
     url(r'^modal/login$', views.login_register_view, {"modal": True}, name="user-login-modal"),
     url(r'^register$', views.login_register_view, {"register": True}, name="user-register"),
+    url(r'^register/success$', views.register_success, name="user-register-success"),
     url(r'^logout$', views.logout_view, name="user-logout"),
     url(r'^$', views.user_list, name="user-list"),
 )

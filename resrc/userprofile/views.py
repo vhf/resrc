@@ -81,7 +81,7 @@ def login_register_view(request, register=False, modal=False):
             profile.save()
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
-            return render_template('user/register_success.html')
+            return redirect('/user/register/success')
 
     csrf_tk['register_form'] = register_form
     csrf_tk['login_error'] = login_error
@@ -94,6 +94,9 @@ def login_register_view(request, register=False, modal=False):
     else:
         return render_template('user/login_register_modal.html', csrf_tk)
 
+@login_required
+def register_success(request):
+    return render_template('user/register_success.html')
 
 @login_required
 def logout_view(request):
