@@ -195,7 +195,7 @@ def new_list(request):
             if 'private' in form.data:
                 is_private = form.data['private']
 
-            if len(form.data['url']) > 0:
+            if form.data['url']:
                 opener = urllib2.build_opener()
                 opener.addheaders = [('Accept-Charset', 'utf-8')]
                 url_response = opener.open(form.data['url'])
@@ -256,7 +256,7 @@ def edit(request, list_pk):
             if 'private' in form.data:
                 is_private = form.data['private']
 
-            if len(form.data['url']) > 0:
+            if form.data['url']:
                 opener = urllib2.build_opener()
                 opener.addheaders = [('Accept-Charset', 'utf-8')]
                 url_response = opener.open(form.data['url'])
@@ -313,6 +313,7 @@ def delete(request, list_pk):
 
 
 def my_lists(request, user_name):
+    upvoted_count = 0
     from django.db.models import Count
     if request.user.username == user_name:
         user = request.user
@@ -358,10 +359,15 @@ def ajax_upvote_list(request, list_pk):
 
 def lists_page(request):
     from resrc.vote.models import Vote
-    latest = List.objects.latest(limit=25)
-    most_viewed = List.objects.most_viewed(limit=25)
-    hottest = Vote.objects.hottest_lists(limit=25, days=7)
-    most_voted = Vote.objects.hottest_lists(limit=25, days=30)
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+    latest = List.objects.latest(limit=25, lang_filter=lang_filter)
+    most_viewed = List.objects.most_viewed(limit=25, lang_filter=lang_filter)
+    hottest = Vote.objects.hottest_lists(limit=25, days=7, lang_filter=lang_filter)
+    most_voted = Vote.objects.hottest_lists(limit=25, days=30, lang_filter=lang_filter)
 
     if request.user.is_authenticated():
         user_upvoted = Vote.objects.my_upvoted_lists(request.user)

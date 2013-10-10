@@ -34,7 +34,7 @@ def index(request):
     })
 
 
-def search(request, tags, operand, excludes, en_only=True):
+def search(request, tags, operand, excludes, lang_filter=[1]):
     from resrc.utils.hash2 import hash2
     h = hash2("%s%s%s" % (tags, operand, excludes))
     result = cache.get(h)
@@ -62,8 +62,8 @@ def search(request, tags, operand, excludes, en_only=True):
             links = links.exclude(tags__name=exclude)
         links = links.exclude(list__is_public=False)
 
-        if en_only:
-            links = links.filter(language=1)
+        if lang_filter:
+            links = links.filter(language__in=lang_filter)
 
         link_result = []
         links_pk = []

@@ -9,6 +9,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Div, Fieldset, Submit, Field, HTML
 
 from captcha.fields import CaptchaField
+from django.conf import settings
 
 
 class LoginForm(forms.Form):
@@ -107,6 +108,10 @@ class RegisterForm(forms.Form):
 class ProfileForm(forms.Form):
     about = forms.CharField(label='about yourself', required=False, widget=forms.Textarea())
     email = forms.EmailField(label='email')
+
+    # display a select with languages ordered by most used first
+    from resrc.language.models import Language
+    languages = forms.ModelMultipleChoiceField(label='languages', widget=forms.SelectMultiple(), queryset=Language.objects.all())
     show_email = forms.BooleanField(label='show email', required=False)
 
     def __init__(self, *args, **kwargs):
@@ -118,6 +123,7 @@ class ProfileForm(forms.Form):
                 u'Public profile',
                 Field('about'),
                 Field('email'),
+                Field('languages'),
                 Field('show_email'),
             ),
             Div(

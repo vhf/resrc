@@ -57,6 +57,14 @@
         {{ profile.about|emarkdown }}
       {% endif %}
     </p>
+    <p>
+      reads :
+      <ul>
+        {% for lang in profile.languages.all %}
+          <li>{{ lang.name }}</li>
+        {% endfor %}
+      </ul>
+    </p>
   </div>
 </div>
 

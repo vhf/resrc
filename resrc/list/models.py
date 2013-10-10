@@ -48,7 +48,7 @@ class ListManager(models.Manager):
             '''
         return list(lists)
 
-    def latest(self,limit=10):
+    def latest(self,limit=10, lang_filter=[1]):  # TODO: implement lang filter
         latest = cache.get('link_latest_%s' % limit)
         if latest is None:
             latest = self.get_query_set() \
@@ -58,7 +58,7 @@ class ListManager(models.Manager):
             cache.set('link_latest_%s' % limit, list(latest), 30)
         return latest
 
-    def most_viewed(self,limit=10):
+    def most_viewed(self,limit=10, lang_filter=[1]):  # TODO: implement lang filter
         most_viewed = cache.get('link_most_viewed_%s' % limit)
         if most_viewed is None:
             most_viewed = self.get_query_set() \

@@ -8138,7 +8138,7 @@ i {
   color: #555555 !important;
 }
 
-/* line 88, ../sass/_icons.scss */
+/* line 89, ../sass/_icons.scss */
 .votes {
   font-weight: bold;
   text-align: center;
@@ -8155,18 +8155,18 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 93, ../sass/_icons.scss */
+/* line 94, ../sass/_icons.scss */
 .votes i.lsf:after {
   content: 'check';
   font-size: 14px;
 }
-/* line 97, ../sass/_icons.scss */
+/* line 98, ../sass/_icons.scss */
 .votes i.lsf.lsf2:after {
   content: 'checkbox';
   font-size: 14px;
 }
 
-/* line 103, ../sass/_icons.scss */
+/* line 104, ../sass/_icons.scss */
 .views {
   font-weight: bold;
   text-align: center;
@@ -8182,13 +8182,13 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 107, ../sass/_icons.scss */
+/* line 108, ../sass/_icons.scss */
 .views i.lsf:after {
   font-size: 14px;
   content: 'view';
 }
 
-/* line 113, ../sass/_icons.scss */
+/* line 114, ../sass/_icons.scss */
 .pointer {
   cursor: pointer;
 }
@@ -8198,31 +8198,31 @@ i {
   font-size: 0.8125em;
 }
 
-/* line 15, ../sass/_resrc.scss */
+/* line 16, ../sass/_resrc.scss */
 nav.top-bar {
   background-color: #75a2aa;
 }
 
-/* line 18, ../sass/_resrc.scss */
+/* line 19, ../sass/_resrc.scss */
 .contain-to-grid {
   background: none;
 }
 
-/* line 24, ../sass/_resrc.scss */
+/* line 25, ../sass/_resrc.scss */
 .top-bar-section ul li {
   font-family: Helvetica;
 }
-/* line 26, ../sass/_resrc.scss */
+/* line 27, ../sass/_resrc.scss */
 .top-bar-section ul li a {
   background-color: #75a2aa;
   color: white;
   font-size: 0.8em;
 }
-/* line 30, ../sass/_resrc.scss */
+/* line 31, ../sass/_resrc.scss */
 .top-bar-section ul li a:hover {
-  color: #ff0084;
+  color: #2b3d77;
 }
-/* line 33, ../sass/_resrc.scss */
+/* line 34, ../sass/_resrc.scss */
 .top-bar-section ul li a:not(.button) {
   background-color: #75a2aa;
 }

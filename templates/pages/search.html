@@ -8,8 +8,6 @@ Search by tags
 {% endblock %}
 
 {% block extrahead %}
-  <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block breadcrumb %}
@@ -124,6 +122,7 @@ Search by tags
     $('#tags').tagit({
       availableTags: [{{ tags|safe }}],
       autocomplete: {delay: 0, minLength: 2},
+      allowSpaces: true,
       afterTagAdded: search,
       afterTagRemoved: search
     });
@@ -131,6 +130,7 @@ Search by tags
     $('#tags2').tagit({
       availableTags: [{{ tags|safe }}],
       autocomplete: {delay: 0, minLength: 2},
+      allowSpaces: true,
       afterTagAdded: search,
       afterTagRemoved: search
     });

@@ -113,6 +113,7 @@ def settings_profile(request):
         if form.is_valid():
             profile.about = form.data['about']
             request.user.email = form.data['email']
+            languages = request.POST.getlist('languages')
             if 'show_email' in form.data:
                 profile.show_email = form.data['show_email']
             else:
@@ -122,6 +123,10 @@ def settings_profile(request):
             # and redirect the user to the configuration space
             # with message indicate the state of the operation
             try:
+                profile.languages.clear()
+                from resrc.language.models import Language
+                for lang in languages:
+                    profile.languages.add(Language.objects.get(pk=lang))
                 profile.save()
                 request.user.save()
             except:
@@ -137,10 +142,10 @@ def settings_profile(request):
                 'form': form,
             })
     else:
-        print "here"
         form = ProfileForm(initial={
             'about': profile.about,
             'email': request.user.email,
+            'languages': profile.languages.all(),
             'show_email': profile.show_email
             }
         )
