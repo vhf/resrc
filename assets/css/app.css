@@ -8134,11 +8134,11 @@ i {
 
 /* line 83, ../sass/_icons.scss */
 .y-bg {
-  background-color: #fff1d2 !important;
+  background-color: #FFFFCC !important;
   color: #555555 !important;
 }
 
-/* line 88, ../sass/_icons.scss */
+/* line 89, ../sass/_icons.scss */
 .votes {
   font-weight: bold;
   text-align: center;
@@ -8155,18 +8155,18 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 93, ../sass/_icons.scss */
+/* line 94, ../sass/_icons.scss */
 .votes i.lsf:after {
   content: 'check';
   font-size: 14px;
 }
-/* line 97, ../sass/_icons.scss */
+/* line 98, ../sass/_icons.scss */
 .votes i.lsf.lsf2:after {
   content: 'checkbox';
   font-size: 14px;
 }
 
-/* line 103, ../sass/_icons.scss */
+/* line 104, ../sass/_icons.scss */
 .views {
   font-weight: bold;
   text-align: center;
@@ -8182,13 +8182,13 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 107, ../sass/_icons.scss */
+/* line 108, ../sass/_icons.scss */
 .views i.lsf:after {
   font-size: 14px;
   content: 'view';
 }
 
-/* line 113, ../sass/_icons.scss */
+/* line 114, ../sass/_icons.scss */
 .pointer {
   cursor: pointer;
 }
