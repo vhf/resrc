@@ -49,7 +49,8 @@ def fixup(elem, alist):
 
         if not internal_link:
             if not link_exists:
-                elem.set("rel", "nofollow external")
+                elem.set("rel", "external")
+                #elem.set("rel", "nofollow external")
                 a = etree.Element('a')
                 a.set("class", "addthis tiny button secondary")
                 a.text = u'add'
