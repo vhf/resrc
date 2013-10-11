@@ -42,6 +42,15 @@ def fixup(elem, alist):
             link_exists = True
         except Link.DoesNotExist:
             link_exists = False
+            try:
+                if url[-1] == '/':
+                    link = Link.objects.get(url=url[:-1])
+                else:
+                    url = url+'/'
+                    link = Link.objects.get(url=url)
+                link_exists = True
+            except Link.DoesNotExist:
+                link_exists = False
 
         if elem.text is not None:
             elem.text = elem.text.replace('#!uds!#', '_')
@@ -82,6 +91,7 @@ def fixup(elem, alist):
                     alist=alist,
                     links=link
                 )
+            # TODO : Store all the links parsed, compare to ListLinks, remove the one not there anymore
 
 
 class FixupProcessor(Treeprocessor):
