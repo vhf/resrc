@@ -14,9 +14,10 @@
 {% block content %}
 
 {% if not user.is_authenticated %}
-<div class="row">
+<div class="row welcome">
   <div class="large-12 columns">
     <div class="panel">
+      <div style="position: absolute; right: 30px; top: 10px; font-size: 2em;"><a href="#" id="close">&#215;</a></div>
       <h1><span>Find Y resources about X in <span class="show-for-medium">Zero</span><span class="hide-for-medium">0</span> minutes</span></h1>
       <div class="row">
         <div class="large-3 columns">
@@ -103,7 +104,18 @@ $(function () {
       url: "http://resrc.io{% url "user-login-modal" %}"
     });
   });
+  $('#close').click(function() {
+    document.cookie = "hide=True";
+    $('.welcome').remove();
+  });
 });
+
+var x = document.cookie;
+var hideDiv = x.split(";");
+for(i = 0; i < hideDiv.length; i++)
+if(hideDiv[i] == " hide=True") {
+  $('.welcome').remove();
+}
 </script>
 {% endif %}
 {% endblock %}
