@@ -50,7 +50,17 @@
           <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
         </div>
         <div class="large-4 columns">
-          <a class="lsf symbol"{% if request.user.is_authenticated %} href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true"{% endif %} data-tooltip title="Add to a (new) list">list</a>
+          <a class="lsf symbol" href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true" data-tooltip title="Add to a (new) list">list</a>
+        </div>
+        {% else %}
+        <div class="large-4 columns">
+          <a class="lsf symbol disabled" id="vote" data-tooltip title="Sign in to upvote this link" data-type="link" data-id="{{ link.id }}">{% if voted %}checkbox{% else %}check{% endif %}</a>
+        </div>
+        <div class="large-4 columns">
+          <a class="lsf symbol disabled" id="toread" data-tooltip title="Sign in to add this link to your reading list">save</a>
+        </div>
+        <div class="large-4 columns">
+          <a class="lsf symbol disabled" data-tooltip title="Sign in to add this link to one of your lists">list</a>
         </div>
         {% endif %}
       </div>

@@ -28,6 +28,9 @@ i {
   a.checked {
     color:#2ba6cb;
   }
+  .disabled {
+    color: #777;
+  }
 }
 @media only screen and (min-width: 768px) {
   .list-symbols {

@@ -8064,36 +8064,40 @@ i {
 .list-symbols a.checked {
   color: #2ba6cb;
 }
+/* line 31, ../sass/_icons.scss */
+.list-symbols .disabled {
+  color: #777;
+}
 
 @media only screen and (min-width: 768px) {
-  /* line 34, ../sass/_icons.scss */
+  /* line 37, ../sass/_icons.scss */
   .list-symbols .symbol {
     font-size: 1.875em;
   }
 }
 @media only screen and (min-width: 1280px) {
-  /* line 42, ../sass/_icons.scss */
+  /* line 45, ../sass/_icons.scss */
   .list-symbols .symbol {
     font-size: 2.1875em;
   }
 }
-/* line 49, ../sass/_icons.scss */
+/* line 52, ../sass/_icons.scss */
 .symbol.i-b, .lsf.i-b {
   color: black;
 }
 
-/* line 54, ../sass/_icons.scss */
+/* line 57, ../sass/_icons.scss */
 .t-i {
   font-size: 15px;
 }
 
-/* line 59, ../sass/_icons.scss */
+/* line 62, ../sass/_icons.scss */
 .listcontent a.symbol {
   color: black;
   font-size: 1.5em;
 }
 
-/* line 65, ../sass/_icons.scss */
+/* line 68, ../sass/_icons.scss */
 .tag {
   display: block;
   margin-right: 5px;
@@ -8101,7 +8105,7 @@ i {
   margin-bottom: 0.5em;
   font-size: 14px;
 }
-/* line 72, ../sass/_icons.scss */
+/* line 75, ../sass/_icons.scss */
 .tag .t {
   font-weight: bold;
   text-align: center;
@@ -8115,7 +8119,7 @@ i {
   background-color: #2ba6cb;
   color: white;
 }
-/* line 75, ../sass/_icons.scss */
+/* line 78, ../sass/_icons.scss */
 .tag .c {
   font-weight: bold;
   text-align: center;
@@ -8132,13 +8136,13 @@ i {
   color: #333333;
 }
 
-/* line 83, ../sass/_icons.scss */
+/* line 86, ../sass/_icons.scss */
 .y-bg {
   background-color: #FFFFCC !important;
   color: #555555 !important;
 }
 
-/* line 89, ../sass/_icons.scss */
+/* line 92, ../sass/_icons.scss */
 .votes {
   font-weight: bold;
   text-align: center;
@@ -8155,18 +8159,18 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 94, ../sass/_icons.scss */
+/* line 97, ../sass/_icons.scss */
 .votes i.lsf:after {
   content: 'check';
   font-size: 14px;
 }
-/* line 98, ../sass/_icons.scss */
+/* line 101, ../sass/_icons.scss */
 .votes i.lsf.lsf2:after {
   content: 'checkbox';
   font-size: 14px;
 }
 
-/* line 104, ../sass/_icons.scss */
+/* line 107, ../sass/_icons.scss */
 .views {
   font-weight: bold;
   text-align: center;
@@ -8182,13 +8186,13 @@ i {
   margin-right: 3px;
   padding-top: 2px;
 }
-/* line 108, ../sass/_icons.scss */
+/* line 111, ../sass/_icons.scss */
 .views i.lsf:after {
   font-size: 14px;
   content: 'view';
 }
 
-/* line 114, ../sass/_icons.scss */
+/* line 117, ../sass/_icons.scss */
 .pointer {
   cursor: pointer;
 }
