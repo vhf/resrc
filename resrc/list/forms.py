@@ -3,6 +3,7 @@ from django import forms
 from django.core.urlresolvers import reverse
 from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Column, Fieldset, Field, HTML, Submit
+from django.conf import settings
 
 
 class NewListAjaxForm(forms.Form):
@@ -10,6 +11,19 @@ class NewListAjaxForm(forms.Form):
     description = forms.CharField(
         label='Description', required=False, widget=forms.Textarea())
     private = forms.BooleanField(label='private', required=False)
+
+    # display a select with languages ordered by most used first
+    from resrc.language.models import Language
+    from django.db.models import Count
+    used_langs = Language.objects.all().annotate(
+        c=Count('link')).order_by('-c').values_list()
+    used_langs = [x[1] for x in used_langs]
+    lang_choices = []
+    for lang in used_langs:
+        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
+    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+
+    language = forms.ChoiceField(label='Language', choices=lang_choices)
 
     def __init__(self, link_pk, *args, **kwargs):
         self.helper = FormHelper()
@@ -34,6 +48,9 @@ class NewListAjaxForm(forms.Form):
                     Column(
                         Field('private'), css_class='large-4'
                     ),
+                    Column(
+                        Field('language'), css_class='large-4'
+                    ),
                 ),
             ),
             Row(
@@ -57,6 +74,19 @@ class NewListForm(forms.Form):
     mdcontent = forms.CharField(
         label='content', required=False, widget=forms.Textarea()
     )
+
+    # display a select with languages ordered by most used first
+    from resrc.language.models import Language
+    from django.db.models import Count
+    used_langs = Language.objects.all().annotate(
+        c=Count('link')).order_by('-c').values_list()
+    used_langs = [x[1] for x in used_langs]
+    lang_choices = []
+    for lang in used_langs:
+        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
+    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+
+    language = forms.ChoiceField(label='Language', choices=lang_choices)
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
@@ -84,7 +114,11 @@ class NewListForm(forms.Form):
                 Row(
                     Column(
                         HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox"> private</label>'),
-                        css_class='large-12'
+                        css_class='large-6'
+                    ),
+                    Column(
+                        Field('language'),
+                        css_class='large-6'
                     ),
                 ),
                 Row(
@@ -118,6 +152,19 @@ class EditListForm(forms.Form):
         label='list source', required=False, widget=forms.Textarea()
     )
 
+    # display a select with languages ordered by most used first
+    from resrc.language.models import Language
+    from django.db.models import Count
+    used_langs = Language.objects.all().annotate(
+        c=Count('link')).order_by('-c').values_list()
+    used_langs = [x[1] for x in used_langs]
+    lang_choices = []
+    for lang in used_langs:
+        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
+    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+
+    language = forms.ChoiceField(label='Language', choices=lang_choices)
+
     def __init__(self, private_checkbox, alist, from_url, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_method = 'post'
@@ -147,7 +194,11 @@ class EditListForm(forms.Form):
                     Row(
                         Column(
                             HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox" %s> private</label>' % private_checkbox),
-                            css_class='large-12'
+                            css_class='large-6'
+                        ),
+                        Column(
+                            Field('language'),
+                            css_class='large-6'
                         ),
                     ),
                     Row(

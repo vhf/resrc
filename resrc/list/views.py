@@ -155,13 +155,19 @@ def ajax_create_list(request, link_pk):
             is_private = form.data['private']
 
         try:
+            from resrc.language.models import Language
+            try:
+                lang = Language.objects.get(language=form.data['language'])
+            except Language.DoesNotExist:
+                lang = Language.objects.create(language=form.data['language'])
+
             alist = List.objects.create(
                 title=form.data['title'],
                 description=form.data['description'],
                 owner=request.user,
                 is_public=not is_private,
+                language=lang,
             )
-            alist.save()
 
             link = cache.get('link_%s' % link_pk)
             if link is None:
@@ -203,6 +209,12 @@ def new_list(request):
             else:
                 mdcontent = form.data['mdcontent']
 
+            from resrc.language.models import Language
+            try:
+                lang = Language.objects.get(language=form.data['language'])
+            except Language.DoesNotExist:
+                lang = Language.objects.create(language=form.data['language'])
+
             from resrc.utils.templatetags.emarkdown import listmarkdown
             alist = List.objects.create(
                 title=form.data['title'],
@@ -211,9 +223,9 @@ def new_list(request):
                 md_content=mdcontent,
                 html_content='',
                 owner=request.user,
-                is_public=not is_private
+                is_public=not is_private,
+                language=lang,
             )
-            alist.save()
             alist.html_content = listmarkdown(mdcontent, alist)
             alist.save()
 
@@ -266,12 +278,19 @@ def edit(request, list_pk):
 
             from resrc.utils.templatetags.emarkdown import listmarkdown
 
+            from resrc.language.models import Language
+            try:
+                lang = Language.objects.get(language=form.data['language'])
+            except Language.DoesNotExist:
+                lang = Language.objects.create(language=form.data['language'])
+
             alist.title = form.data['title']
             alist.description = form.data['description']
             alist.url = form.data['url']
             alist.md_content = mdcontent
             alist.html_content = ''
             alist.is_public = not is_private
+            alist.language = lang
             alist.save()
             # once saved, we parse the markdown to add links found to list
             alist.html_content = listmarkdown(mdcontent, alist)
@@ -286,7 +305,8 @@ def edit(request, list_pk):
             'description': alist.description,
             'private': not alist.is_public,
             'url': alist.url,
-            'mdcontent': alist.md_content
+            'mdcontent': alist.md_content,
+            'language': alist.language
         })
 
         links = list(Link.objects.all())

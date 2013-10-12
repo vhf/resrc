@@ -48,24 +48,27 @@ class ListManager(models.Manager):
             '''
         return list(lists)
 
-    def latest(self,limit=10, lang_filter=[1]):  # TODO: implement lang filter
-        latest = cache.get('link_latest_%s' % limit)
+    def latest(self,limit=10, lang_filter=[1]):
+        latest = cache.get('link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter))))
         if latest is None:
             latest = self.get_query_set() \
+                .filter(language__in=lang_filter) \
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
-                .order_by('-pubdate')[:limit]
-            cache.set('link_latest_%s' % limit, list(latest), 60*5)
+                .distinct().order_by('-pubdate')[:limit]
+            cache.set('link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter))), list(latest), 60*5)
         return latest
 
-    def most_viewed(self,limit=10, lang_filter=[1]):  # TODO: implement lang filter
-        most_viewed = cache.get('link_most_viewed_%s' % limit)
+    def most_viewed(self,limit=10, lang_filter=[1]):
+        print lang_filter
+        most_viewed = cache.get('link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter))))
         if most_viewed is None:
             most_viewed = self.get_query_set() \
+                .filter(language__in=lang_filter) \
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
                 .order_by('-views')[:limit]
-            cache.set('link_most_viewed_%s' % limit, list(most_viewed), 60*5)
+            cache.set('link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter))), list(most_viewed), 60*5)
         return most_viewed
 
 
@@ -84,6 +87,8 @@ class List(models.Model):
     md_content = models.TextField('md_content')
     html_content = models.TextField('html_content')
     url = models.URLField('url', null=True, blank=True)
+
+    language = models.ForeignKey('language.Language', default=1)
 
     links = models.ManyToManyField("link.Link", through='ListLinks')
 
