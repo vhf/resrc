@@ -55,7 +55,7 @@ class ListManager(models.Manager):
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
                 .order_by('-pubdate')[:limit]
-            cache.set('link_latest_%s' % limit, list(latest), 30)
+            cache.set('link_latest_%s' % limit, list(latest), 60*5)
         return latest
 
     def most_viewed(self,limit=10, lang_filter=[1]):  # TODO: implement lang filter
@@ -65,7 +65,7 @@ class ListManager(models.Manager):
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
                 .order_by('-views')[:limit]
-            cache.set('link_most_viewed_%s' % limit, list(most_viewed), 60*60)
+            cache.set('link_most_viewed_%s' % limit, list(most_viewed), 60*5)
         return most_viewed
 
 
