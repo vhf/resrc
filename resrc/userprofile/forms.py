@@ -21,7 +21,7 @@ class RegisterForm(forms.Form):
     email = forms.EmailField(label='email')
     username = forms.CharField(label='username', max_length=30)
     password = forms.CharField(label='password', max_length=76, widget=forms.PasswordInput)
-    password_confirm = forms.CharField(label='again', max_length=76, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(label='confirm password', max_length=76, widget=forms.PasswordInput)
     captcha = CaptchaField()
 
     def __init__(self, *args, **kwargs):
@@ -56,7 +56,7 @@ class RegisterForm(forms.Form):
                 </div>\
                 <div class="columns large-6">\
                   <label for="id_password_confirm" class="requiredField">\
-                    again\
+                    confirm password\
                   </label>\
                   <input id="id_password_confirm" maxlength="76" name="password_confirm" type="password" required pattern="pass_confirm"/>\
                   <small class="error">password mismatch</small>\
