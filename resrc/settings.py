@@ -207,8 +207,8 @@ LOGGING = {
 COMMENTS_APP = "mptt_comments"
 
 # simple captcha
-CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
-CAPTCHA_LETTER_ROTATION = (0, 1)
+# CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+# CAPTCHA_LETTER_ROTATION = (0, 1)
 
 # debug toolbar
 INTERNAL_IPS = ('127.0.0.1',)
