@@ -20,7 +20,7 @@ from resrc.userprofile.forms import LoginForm, ProfileForm, RegisterForm, Change
 @login_required
 def user_list(request):
     #profiles = Profile.objects.select_related('User').order_by('user__date_joined')
-    users = User.objects.exclude(username='root')
+    users = User.objects.exclude(username='root').order_by('date_joined')
     return render_template('user/list.html', {
         'users': list(users)
     })
