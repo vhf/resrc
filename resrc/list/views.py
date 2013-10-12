@@ -299,14 +299,13 @@ def edit(request, list_pk):
             return redirect(alist.get_absolute_url())
 
     else:
-
         form = EditListForm(private_checkbox, alist, from_url, initial={
             'title': alist.title,
             'description': alist.description,
             'private': not alist.is_public,
             'url': alist.url,
             'mdcontent': alist.md_content,
-            'language': alist.language
+            'language': alist.language.language,
         })
 
         links = list(Link.objects.all())

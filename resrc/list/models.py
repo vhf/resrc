@@ -49,26 +49,27 @@ class ListManager(models.Manager):
         return list(lists)
 
     def latest(self,limit=10, lang_filter=[1]):
-        latest = cache.get('link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter))))
+        cache_name = 'link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter)))
+        latest = cache.get(cache_name)
         if latest is None:
             latest = self.get_query_set() \
                 .filter(language__in=lang_filter) \
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
                 .distinct().order_by('-pubdate')[:limit]
-            cache.set('link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter))), list(latest), 60*5)
+            cache.set(cache_name, list(latest), 60*5)
         return latest
 
     def most_viewed(self,limit=10, lang_filter=[1]):
-        print lang_filter
-        most_viewed = cache.get('link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter))))
+        cache_name = 'link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter)))
+        most_viewed = cache.get(cache_name)
         if most_viewed is None:
             most_viewed = self.get_query_set() \
                 .filter(language__in=lang_filter) \
                 .exclude(title='Reading list') \
                 .exclude(is_public=False) \
                 .order_by('-views')[:limit]
-            cache.set('link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter))), list(most_viewed), 60*5)
+            cache.set(cache_name, list(most_viewed), 60*5)
         return most_viewed
 
 

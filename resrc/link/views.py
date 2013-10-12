@@ -41,7 +41,7 @@ def single(request, link_pk, link_slug=None):
             'url': link.url,
             'title': link.title,
             'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
-            'language': link.language,
+            'language': link.language.language,
             'level': link.level
         })
         # for tag autocomplete
@@ -144,10 +144,10 @@ def new_link(request, title=None, url=None):
             link.url = data['url']
             from resrc.language.models import Language
             try:
-                link.language = Language.objects.get(language=data['language'])
+                lang = Language.objects.get(language=data['language'])
             except Language.DoesNotExist:
                 lang = Language.objects.create(language=data['language'])
-                link.language = lang
+            link.language = lang
 
             link.level = data['level']
             link.author = request.user
@@ -256,7 +256,7 @@ def edit_link(request, link_pk):
                 'url': link.url,
                 'title': link.title,
                 'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
-                'language': link.language,
+                'language': link.language.language,
                 'level': link.level
             })
 
@@ -279,7 +279,7 @@ def edit_link(request, link_pk):
             'url': link.url,
             'title': link.title,
             'tags': ','.join([t for t in Tag.objects.filter(link=link_pk).values_list('name', flat=True)]),
-            'language': link.language,
+            'language': link.language.language,
             'level': link.level
         })
 
