@@ -298,23 +298,23 @@ def edit(request, list_pk):
 
             return redirect(alist.get_absolute_url())
 
-    else:
-        form = EditListForm(private_checkbox, alist, from_url, initial={
-            'title': alist.title,
-            'description': alist.description,
-            'private': not alist.is_public,
-            'url': alist.url,
-            'mdcontent': alist.md_content,
-            'language': alist.language.language,
-        })
+        print form.errors.items()
+    form = EditListForm(private_checkbox, alist, from_url, initial={
+        'title': alist.title,
+        'description': alist.description,
+        'private': not alist.is_public,
+        'url': alist.url,
+        'mdcontent': alist.md_content,
+        'language': alist.language.language,
+    })
 
-        links = list(Link.objects.all())
+    links = list(Link.objects.all())
 
-        return render_template('lists/edit_list.html', {
-            'list': alist,
-            'form': form,
-            'links': links
-        })
+    return render_template('lists/edit_list.html', {
+        'list': alist,
+        'form': form,
+        'links': links
+    })
 
 
 @login_required

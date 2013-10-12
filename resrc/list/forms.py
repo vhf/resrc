@@ -223,7 +223,7 @@ class EditListForm(forms.Form):
         else:
             self.helper.layout = Layout(
                 Fieldset(
-                    u'Create a list',
+                    u'Edit a list',
                     Row(
                         Column(
                             Field('title'), css_class='large-12'
@@ -242,7 +242,11 @@ class EditListForm(forms.Form):
                     Row(
                         Column(
                             HTML('<label for="id_private"><input class="checkboxinput" id="id_private" name="private" type="checkbox" %s> private</label>' % private_checkbox),
-                            css_class='large-12'
+                            css_class='large-6'
+                        ),
+                        Column(
+                            Field('language'),
+                            css_class='large-6'
                         ),
                     ),
                 ),
