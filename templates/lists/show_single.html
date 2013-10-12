@@ -37,7 +37,12 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <h1>{{ list.title }}{% if request.user.is_authenticated %}<a class="lsf symbol right i-b" id="vote" data-tooltip title="Upvote this list" data-type="list" data-id="{{ list.id }}">{% if voted %}checkbox{% else %}check{% endif %}</a>{% endif %}</h1>
+    <h1>{{ list.title }}
+      {% if request.user.is_authenticated %}
+        <a class="lsf symbol right i-b" id="vote" data-tooltip title="Upvote this list" data-type="list" data-id="{{ list.id }}">{% if voted %}checkbox{% else %}check{% endif %}</a>
+      {% else %}
+        <a class="lsf symbol right i-b" id="vote" data-tooltip title="Login to save or upvote this list">check</a>
+        {% endif %}</h1>
     <p>{{ list.description|emarkdown }}</p>
     <p class="byline">
       {% with author=list.owner %}
@@ -176,11 +181,19 @@ $(function(){
   <a class="close-reveal-modal">&#215;</a>
 </div>
 {% else %}
+<div id="login-modal" class="reveal-modal"></div>
 <script>
-$('.listcontent').find('a').each(function(){
-  if($(this).hasClass('addthis')) {
-    $(this).remove();
-  }
+$(function () {
+  $('#vote, .votes').click(function() {
+    $('#login-modal').foundation('reveal', 'open', {
+      url: "http://resrc.io{% url "user-login-modal" %}"
+    });
+  });
+  $('.listcontent').find('a').each(function(){
+    if($(this).hasClass('addthis')) {
+      $(this).remove();
+    }
+  });
 });
 </script>
 {% endif %}
