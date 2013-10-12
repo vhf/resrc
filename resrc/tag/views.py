@@ -34,9 +34,17 @@ def index(request):
     })
 
 
-def search(request, tags, operand, excludes, lang_filter=[1]):
+def search(request, tags, operand, excludes):
+
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+    langs = '_'.join(map(str, lang_filter))
+
     from resrc.utils.hash2 import hash2
-    h = hash2("%s%s%s" % (tags, operand, excludes))
+    h = hash2("%s%s%s%s" % (tags, operand, excludes, langs))
     result = cache.get(h)
     if result is None:
         from django.db.models import Q
@@ -62,8 +70,7 @@ def search(request, tags, operand, excludes, lang_filter=[1]):
             links = links.exclude(tags__name=exclude)
         links = links.exclude(list__is_public=False)
 
-        if lang_filter:
-            links = links.filter(language__in=lang_filter)
+        links = links.filter(language__in=lang_filter)
 
         link_result = []
         links_pk = []
@@ -76,7 +83,9 @@ def search(request, tags, operand, excludes, lang_filter=[1]):
             links_pk.append(link.pk)
 
         from resrc.list.models import List
-        lists = List.objects.filter(links__in=links_pk).distinct()
+        lists = List.objects.filter(links__in=links_pk)
+        lists = lists.filter(language__in=lang_filter)
+        lists = lists.distinct()
         list_result = []
         for alist in lists:
             list_result.append({
