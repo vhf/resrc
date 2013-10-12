@@ -7,7 +7,7 @@ pytz==2013d
 PIL==1.1.7
 django-crispy-forms>=1.4.0
 crispy-forms-foundation>=0.2.3
-django-recaptcha>=0.4.0
+django-simple-captcha>=0.4.0
 django-email-obfuscator>=0.1.1
 django-floppyforms>=1.1
 django-mptt==0.6.0

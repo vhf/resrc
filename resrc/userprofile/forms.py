@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate
 from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Div, Fieldset, Submit, Field, HTML
 
-from captcha.fields import ReCaptchaField
+from captcha.fields import CaptchaField
 from django.conf import settings
 
 
@@ -22,7 +22,7 @@ class RegisterForm(forms.Form):
     username = forms.CharField(label='username', max_length=30)
     password = forms.CharField(label='password', max_length=76, widget=forms.PasswordInput)
     password_confirm = forms.CharField(label='again', max_length=76, widget=forms.PasswordInput)
-    captcha = ReCaptchaField()
+    captcha = CaptchaField()
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
