@@ -83,6 +83,10 @@
 
 <div class="row">
   <div class="large-12 columns">
+    {% if not user.is_authenticated %}
+    <h5>Please sign in to leave comments, upvote this resource, save it to your reading list</h5>
+    <p>and much more !</p>
+    {% endif %}
     {% display_comment_toplevel_for link %}
   </div>
 </div>
