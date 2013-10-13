@@ -5,14 +5,25 @@ from markdown.extensions import Extension
 from markdown.util import etree
 
 from django.core.urlresolvers import reverse
-from django.template.defaultfilters import slugify
+import re
 
+
+REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+]+', re.UNICODE)
+REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
+
+
+def github_slugify(text):
+    from urllib import quote_plus
+    text = REPLACE1_REXP.sub('', text)
+    text = quote_plus(text)
+    text = REPLACE2_REXP.sub('-', text.lower())
+    return text
 
 def fixup(elem, alist):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         a = etree.Element('a')
         a.text = elem.text
-        slug = slugify(a.text)
+        slug = github_slugify(a.text)
         a.set("href", '#%s' % slug)
         a.set("name", '%s' % slug)
         a.set("class", "anchor")
