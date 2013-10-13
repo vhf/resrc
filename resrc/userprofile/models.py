@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core import urlresolvers
-from django.template.defaultfilters import slugify
+from resrc.utils import slugify
 
 
 class Profile(models.Model):

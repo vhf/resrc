@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.shortcuts import render_to_response
-from django.template import RequestContext, defaultfilters
+from django.template import RequestContext
 
 try:
     from threading import local
@@ -31,4 +31,6 @@ def render_template(tmpl, dct=None):
 
 
 def slugify(text):
-    return defaultfilters.slugify(text)
+    from unidecode import unidecode
+    from django.template import defaultfilters
+    return defaultfilters.slugify(unidecode(text))

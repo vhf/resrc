@@ -4,7 +4,7 @@ from django.core import urlresolvers
 from django.core.cache import cache
 from django.db import models
 from django.db.models import Count
-from django.template.defaultfilters import slugify
+from resrc.utils import slugify
 
 from taggit.managers import TaggableManager
 

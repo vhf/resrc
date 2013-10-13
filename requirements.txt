@@ -5,6 +5,7 @@ Pygments==1.6
 South==0.8.2
 pytz==2013d
 PIL==1.1.7
+unidecode
 django-crispy-forms>=1.4.0
 crispy-forms-foundation>=0.2.3
 django-simple-captcha>=0.4.0

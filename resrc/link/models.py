@@ -5,7 +5,7 @@ from django.core import urlresolvers
 from django.core.cache import cache
 from django.db import models
 from django.shortcuts import get_object_or_404
-from django.template.defaultfilters import slugify
+from resrc.utils import slugify
 
 from taggit.managers import TaggableManager
 
