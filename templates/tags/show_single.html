@@ -19,8 +19,8 @@
       <h1>Tag: {{ tag.name }}</h1>
       <ul class="no-bullet">
         {% for link in links %}
-        <li>
-          <a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a>
+        <li class="panel">
+          <h5><a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a></h5>
           <ul class="inline inline-list">
             {% for tag2 in link.tags.all %}{% if tag2.name != tag.name %}
             <li><p class="tag left"><a href="{% url "tag-single-slug" tag2.slug %}"><span class="t">{{ tag2.name }}</span></a></p></li>
