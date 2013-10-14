@@ -18,14 +18,14 @@ def home(request):
 
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
-        hottest_links = Vote.objects.hottest_links(limit=10, days=7, lang_filter=lang_filter)
+        hottest_links = Vote.objects.hottest_links(limit=5, days=7, lang_filter=lang_filter)
         cache.set(hot_lk_cache, list(hottest_links), 60*60)
 
-    latest_links = Vote.objects.latest_links(limit=10, days=7, lang_filter=lang_filter)
+    latest_links = Vote.objects.latest_links(limit=5, days=7, lang_filter=lang_filter)
 
     hottest_lists = cache.get(hot_ls_cache)
     if hottest_lists is None:
-        hottest_lists = Vote.objects.hottest_lists(limit=10, days=7, lang_filter=lang_filter)
+        hottest_lists = Vote.objects.hottest_lists(limit=5, days=7, lang_filter=lang_filter)
         cache.set(hot_ls_cache, list(hottest_lists), 60*61+2)
 
     user = request.user
@@ -46,10 +46,19 @@ def home(request):
             .annotate(c=Count('link')).order_by('-c') \
             .all()
         cache.set('tags_all', list(tags), 60*15)
+
+    tags_csv = cache.get('tags_csv')
+    if tags_csv is None:
+        from taggit.models import Tag
+        tags_csv = '","'.join(Tag.objects.all().values_list('name', flat=True))
+        tags_csv = '"%s"' % tags_csv
+        cache.set('tags_csv', tags_csv, 60*15)
+
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,
-        'tags': tags[:55],
+        'tags': tags[:25],
+        'csvtags': tags_csv,
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
         'upvoted_lists': user_upvoted_lists,

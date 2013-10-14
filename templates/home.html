@@ -7,6 +7,11 @@
 <meta name="description" content="reSRC, the root of actual learning" />
 {% endblock %}
 
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
 {% block breadcrumb_container %} {% endblock %}
 
 {# Content #}
@@ -87,6 +92,51 @@
     </ul>
   </div>
 </div>
+
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1 id="query">Search by tags</h1>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-2 small-2 columns">
+    <p>
+      <input type="radio" name="op" id="op-or" value="or" checked="checked">
+      &nbsp;
+      <label for="op-or" style="display: inline;"><strong>or</strong></label>
+      <br />
+      <input type="radio" name="op" id="op-and" value="and">
+      &nbsp;
+      <label for="op-and" style="display: inline;"><strong>and</strong></label>
+    </p>
+  </div>
+  <div class="large-10 columns">
+    <input type="text" id="tags" value=""/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-2 small-2 columns">
+    <p><strong>exclude tags :</strong></p>
+  </div>
+  <div class="large-10 small-10 columns">
+    <input type="text" id="tags2" value=""/>
+  </div>
+</div>
+
+<div class="row">
+  <div class="large-6 columns">
+    <h4>Links</h4>
+    <div id="link_results"></div>
+  </div>
+  <div class="large-6 columns">
+    <h4>Lists</h4>
+    <div id="list_results"></div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block last_body %}
@@ -118,4 +168,81 @@ if(hideDiv[i] == " hide=True") {
 }
 </script>
 {% endif %}
+
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript">
+  $(function(){
+    var search = function() {
+      var tags = $('#tags').val();
+      var excludes = $('#tags2').val();
+      var op = $('input[name="op"]:checked').val();
+
+      var url = '/search/'+tags+'%25'+op+'%25'+excludes;
+
+      var query = tags.split(',').join(' '+(op == 'and' ? '&' : '|')+' ');
+      if (excludes.length > 0) {
+        query += ' ~(';
+        query += excludes.split(',').join(' | ');
+        query += ')';
+      }
+
+
+      if (query.length === 0) {
+        $('#query').html('Search by tags');
+        return;
+      } else {
+        $('#query').html('<a href="/page'+url+'">'+query+'</a>');
+        console.log('hehe');
+        $.ajax({
+          type:"GET",
+          url: '/tag' + url,
+          success: function(result) {
+            result = $.parseJSON(result);
+            $('#link_results,#list_results').html('');
+            if (result[0].length > 0) {
+              for (var i = 0; i < result[0].length; i++) {
+                link = result[0][i];
+                $('#link_results').append('<div class="panel">'
+                  + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
+                  + '</div>');
+              }
+            } else {
+              $('#link_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+            }
+            if (result[1].length > 0) {
+              for (var i = 0; i < result[1].length; i++) {
+                list = result[1][i];
+                $('#list_results').append('<div class="panel">'
+                  + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
+                  + '</div>');
+              }
+            } else {
+              $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
+            }
+          }
+        });
+      }
+    };
+
+    $('#tags').tagit({
+      availableTags: [{{ csvtags|safe }}],
+      autocomplete: {delay: 0, minLength: 2},
+      allowSpaces: true,
+      afterTagAdded: search,
+      afterTagRemoved: search
+    });
+
+    $('#tags2').tagit({
+      availableTags: [{{ csvtags|safe }}],
+      autocomplete: {delay: 0, minLength: 2},
+      allowSpaces: true,
+      afterTagAdded: search,
+      afterTagRemoved: search
+    });
+
+    $('input[name="op"]').on('change', search);
+
+  });
+</script>
 {% endblock %}
