@@ -17,22 +17,23 @@
   <div class="row">
     <div class="large-12 columns">
       <h1>Tag: {{ tag.name }}</h1>
-      <ul class="no-bullet">
+      <div  class="js-masonry" data-masonry-options='{ "itemSelector": ".panel", "gutter": 10 }'>
         {% for link in links %}
-        <li class="panel">
+        <div class="panel medium-3">
           <h5><a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a></h5>
           <ul class="inline inline-list">
             {% for tag2 in link.tags.all %}{% if tag2.name != tag.name %}
             <li><p class="tag left"><a href="{% url "tag-single-slug" tag2.slug %}"><span class="t">{{ tag2.name }}</span></a></p></li>
             {% endif %}{% endfor %}
           </ul>
-        </li>
+        </div>
         {% endfor %}
-      </ul>
+      </div>
   </div>
 </div>
 
 {% endblock %}
 
 {% block last_body %}
+<script src="{% static "js/masonry.min.js" %}"></script>
 {% endblock %}
