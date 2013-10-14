@@ -11,6 +11,7 @@ import re
 REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+]+', re.UNICODE)
 REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
+SLUGS = []
 
 def github_slugify(text):
     from urllib import quote_plus
@@ -19,11 +20,29 @@ def github_slugify(text):
     text = REPLACE2_REXP.sub('-', text.lower())
     return text
 
+def get_unique_slug(slug):
+    """
+    Iterates until a unique slug is found
+    """
+    orig_slug = slug
+    counter = 1
+
+    while True:
+        if slug not in SLUGS:
+            return slug
+
+        slug = '%s-%s' % (orig_slug, counter)
+        counter += 1
+
 def fixup(elem, alist):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         a = etree.Element('a')
         a.text = elem.text
+
         slug = github_slugify(a.text)
+        slug = get_unique_slug(slug)
+        SLUGS.append(slug)
+
         a.set("href", '#%s' % slug)
         a.set("name", '%s' % slug)
         a.set("class", "anchor")
