@@ -22,21 +22,23 @@
 
 {% block content %}
   <div class="row">
-    <div class="large-10 small-10 columns">
+    <div itemscope itemtype="http://schema.org/Article" class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
         {% if request.user.is_authenticated and link.author != request.user %}<i class="lsf pointer" data-tooltip-title="Suggest tag modification" data-reveal-id="revise-link">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
         {% for tag in tags %}{% if tag.slug %}
-        <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="t">{{ tag.name }}</span></a></p>
+        <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span itemprop="articleSection" class="t">{{ tag.name }}</span></a></p>
         {% endif %}{% endfor %}
       </div>
       {% endwith %}
 
 
-      <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}" rel="external">{{ link.title }}</a></h3>
+      <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}" rel="external"><span itemprop="name">{{ link.title }}</span></a></h3>
       <p class="byline">
         {% with author=link.author %}
-        by <a href="{% url "user-url" author.username %}">{{ author.username }}</a> | {{ link.pubdate|timesince }} ago | <span class="votes y-bg" data-type="link" data-id="{{ link.id }}">{{ count }} <i class="lsf{% if voted %} lsf2{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author.username }}</span></span></a> |
+        <span itemprop="datePublished" content="{{ link.pubdate }}">{{ link.pubdate|timesince }}</span> ago |
+        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}">{{ count }} <i class="lsf{% if voted %} lsf2{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
