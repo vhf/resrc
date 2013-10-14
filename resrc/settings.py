@@ -158,8 +158,7 @@ EXTERNAL_APPS = [
     'mptt',
     'mptt_comments',
     'floppyforms',
-    'taggit',
-    'mailer',
+    'taggit'
 ]
 
 INTERNAL_APPS = [
@@ -234,12 +233,6 @@ ABSOLUTE_URL_OVERRIDES = {
 
 GOOGLE_ANALYTICS_KEY = ''
 
-try:
-    import mailer
-    INSTALLED_APPS += ('mailer',)
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-except ImportError:
-    pass
 
 # Load the production settings, overwrite the existing ones if needed
 try:

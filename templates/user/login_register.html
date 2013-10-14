@@ -70,6 +70,8 @@ Log in
                     <a href="/" class="button secondary">
                       Cancel
                     </a>
+                    <br />
+                    <a href="{% url "django.contrib.auth.views.password_reset" %}">Forgot your password?</a>
                   </div>
                 </div>
                 <input type="hidden" name="next" value="{{ next }}" />

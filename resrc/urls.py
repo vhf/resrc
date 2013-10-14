@@ -23,6 +23,7 @@ urlpatterns = patterns(
     url(r'^$', home, name="home"),
 
     url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
+    url(r'^account/', include('django.contrib.auth.urls')),
 )
 
 if settings.DEBUG:
