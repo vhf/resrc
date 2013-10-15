@@ -98,8 +98,8 @@ def fixup(elem, alist):
                 newlink = etree.Element('a')
 
                 icon = etree.Element("i")
-                icon.text = "link "
-                icon.set("class", "lsf symbol")
+                icon.text = ""
+                icon.set("class", "fi-link")
 
                 # ne pas forcer l'intitulé des liens
                 newlink.text = elem.text + ' '
