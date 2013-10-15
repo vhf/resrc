@@ -2,7 +2,7 @@
   <fieldset>
     <legend>Add to list</legend>
     <div class="row">
-      <div class="small-8 columns">
+      <div class="small-12 columns">
         {% if lists %}
           {% for list in lists %}
           <label for="list-{{ list.pk }}">
@@ -11,12 +11,12 @@
           </label>
           {% endfor %}
           <p>
-            <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> New List</a>
+            <a href="#" data-reveal-id="create-list"><span class="symbol" style="color: black"><i class="fi-list-thumbnails"></i></span> New List</a>
           </p>
         {% else %}
           <label>You don't have any list.</label>
           <p>
-            <a href="#" data-reveal-id="create-list"><span class="lsf symbol" style="color: black">list</span> Create a list ?</a>
+            <a href="#" data-reveal-id="create-list"><span class="symbol" style="color: black"><i class="fi-list-thumbnails"></i></span> Create a list ?</a>
           </p>
         {% endif %}
       </div>

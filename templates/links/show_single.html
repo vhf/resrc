@@ -25,7 +25,7 @@
     <div itemscope itemtype="http://schema.org/Article" class="large-10 small-10 columns">
       {% with tags=link.tags.all %}
       <div>
-        {% if request.user.is_authenticated and link.author != request.user %}<i class="lsf pointer" data-tooltip-title="Suggest tag modification" data-reveal-id="revise-link">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
+        {% if request.user.is_authenticated and link.author != request.user %}<i class="pointer fi-page-edit" data-tooltip-title="Suggest tag modification" data-reveal-id="revise-link">edit</i>{% endif %}<p class="tag left"><a href="#"><span class="lang {{ link.get_lang }}">{{ link.get_lang }}</span></a>{% if link.level %}</p><p class="tag left"><a href="#"><span class="level {{ link.level }}">{{ link.level }}</span></a>{% endif %}</p>
         {% for tag in tags %}{% if tag.slug %}
         <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span itemprop="articleSection" class="t">{{ tag.name }}</span></a></p>
         {% endif %}{% endfor %}
@@ -33,12 +33,12 @@
       {% endwith %}
 
 
-      <h3 class="link-title" style="clear:left"><a class="lsf symbol i-b" href="{{ link.get_absolute_url }}" title="Link to the current page">link</a> <a href="{{ link.url }}" rel="external"><span itemprop="name">{{ link.title }}</span></a></h3>
+      <h3 class="link-title" style="clear:left"><a href="{{ link.get_absolute_url }}" title="Link to the current page"><i class="fi-link"></i></a> <a href="{{ link.url }}" rel="external"><span itemprop="name">{{ link.title }}</span></a></h3>
       <p class="byline">
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author.username }}</span></span></a> |
         <span itemprop="datePublished" content="{{ link.pubdate }}">{{ link.pubdate|timesince }}</span> ago |
-        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}">{{ count }} <i class="lsf{% if voted %} lsf2{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}">{{ count }} <i class="fi-check{% if voted %}box{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>
@@ -46,23 +46,23 @@
       <div class="row">
         {% if request.user.is_authenticated %}
         <div class="large-4 columns">
-          <a class="lsf symbol" id="vote" data-tooltip title="Upvote this link" data-type="link" data-id="{{ link.id }}">{% if voted %}checkbox{% else %}check{% endif %}</a>
+          <a class="symbol" id="vote" data-tooltip title="Upvote this link" data-type="link" data-id="{{ link.id }}"><i class="fi-check{% if voted %}box{% endif %}"></i></a>
         </div>
         <div class="large-4 columns">
-          <a class="lsf symbol{% if 'Reading list' in titles %} checked{%endif%}" id="toread" data-tooltip title="Add to reading list">save</a>
+          <a class="symbol" id="toread" data-tooltip title="Add to reading list"><i class="fi-page-{% if 'Reading list' in titles %}remove{% else %}add{% endif %}"></i></a>
         </div>
         <div class="large-4 columns">
-          <a class="lsf symbol" href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true" data-tooltip title="Add to a (new) list">list</a>
+          <a class="symbol" href="{% url "ajax-own-lists" link.pk %}" data-reveal-id="add-to-list" data-reveal-ajax="true" data-tooltip title="Add to a (new) list"><i class="fi-list-thumbnails"></i></a>
         </div>
         {% else %}
         <div class="large-4 columns">
-          <a class="lsf symbol disabled" id="vote" data-tooltip title="Sign in to upvote this link" data-type="link" data-id="{{ link.id }}">{% if voted %}checkbox{% else %}check{% endif %}</a>
+          <a class="symbol disabled" id="vote" data-tooltip title="Sign in to upvote this link" data-type="link" data-id="{{ link.id }}"><i class="fi-check"></i></a>
         </div>
         <div class="large-4 columns">
-          <a class="lsf symbol disabled" id="toread" data-tooltip title="Sign in to add this link to your reading list">save</a>
+          <a class="symbol disabled" id="toread" data-tooltip title="Sign in to add this link to your reading list"><i class="fi-page-add"></i></a>
         </div>
         <div class="large-4 columns">
-          <a class="lsf symbol disabled" data-tooltip title="Sign in to add this link to one of your lists">list</a>
+          <a class="symbol disabled" data-tooltip title="Sign in to add this link to one of your lists"><i class="fi-list-thumbnails"></i></a>
         </div>
         {% endif %}
       </div>

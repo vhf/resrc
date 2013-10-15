@@ -29,16 +29,13 @@ $(function () {
 
       if (result === 'voted') {
         newValue = curValue + 1;
-        iconClasses = 'lsf lsf2';
-        symbolIcon = 'checkbox';
+        iconClasses = 'fi-checkbox';
       }
       else if (result === 'unvoted') {
         newValue = curValue - 1;
-        iconClasses = 'lsf';
-        symbolIcon = 'check';
+        iconClasses = 'fi-check';
       }
 
-      $symbol.html(symbolIcon);
       if (isNaN(newValue)) {
         newValue = '';
       }
