@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 import re
 
 
-REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+]+', re.UNICODE)
+REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+\&]+', re.UNICODE)
 REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
 SLUGS = []
