@@ -1,4 +1,5 @@
 {% extends "user/base.html" %}
+{% load staticfiles %}
 
 {% block title %}
   Users
@@ -19,12 +20,16 @@
 
 <div class="row">
   <div class="large-12 columns">
-    <ul class="no-bullet">
+    <div  class="js-masonry" data-masonry-options='{ "itemSelector": ".user", "gutter": 20 }'>
       {% for u in users %}
         {% include "user/user_item_common.part.html" %}
       {% endfor %}
-    </ul>
+    </div>
   </div>
 </div>
 
+{% endblock %}
+
+{% block last_body %}
+<script src="{% static "js/masonry.min.js" %}"></script>
 {% endblock %}

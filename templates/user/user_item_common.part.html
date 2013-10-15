@@ -1,7 +1,9 @@
 {% load gravatar %}
-<li>
-  <a href="{% url "user-url" u.username %}">
-      {% gravatar u.email 16 u.username %}
-      {{ u.username }}
-  </a>
-</li>
+<div class="user">
+  <p>
+    <a href="{% url "user-url" u.username %}">
+        {% gravatar u.email 16 u.username %}
+        {{ u.username }}
+    </a>
+  </p>
+</div>
