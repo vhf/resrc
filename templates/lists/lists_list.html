@@ -35,8 +35,8 @@
       <h5>
         <span class="label round">{{ list.c }}</span> <a href="{% url "list-single-slug" list.pk list.slug %}">{{ list.title }}</a> {% if owner %}
         <span class="right">
-          <a href="{% url "list-edit" list.pk %}" class="lsf i-b">pencil</a>&nbsp;
-          <a href="#" class="lsf i-b trash" data-id="{{ list.pk }}">trash</a>
+          <a href="{% url "list-edit" list.pk %}" class="lsf i-b"><i class="fi-pencil"></i></a>&nbsp;
+          <a href="#" class="lsf i-b trash" data-id="{{ list.pk }}"><i class="fi-trash"></i></a>
         </span>{% endif %}
       </h5>
       <p>

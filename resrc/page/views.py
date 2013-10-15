@@ -19,14 +19,14 @@ def home(request):
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
         hottest_links = Vote.objects.hottest_links(limit=5, days=7, lang_filter=lang_filter)
-        cache.set(hot_lk_cache, list(hottest_links), 60*60)
+        cache.set(hot_lk_cache, list(hottest_links), 60*2)
 
     latest_links = Vote.objects.latest_links(limit=5, days=7, lang_filter=lang_filter)
 
     hottest_lists = cache.get(hot_ls_cache)
     if hottest_lists is None:
         hottest_lists = Vote.objects.hottest_lists(limit=5, days=7, lang_filter=lang_filter)
-        cache.set(hot_ls_cache, list(hottest_lists), 60*61+2)
+        cache.set(hot_ls_cache, list(hottest_lists), 60*2+2)
 
     user = request.user
     if user.is_authenticated():

@@ -5,6 +5,8 @@ from django.utils.timezone import utc
 from datetime import timedelta, datetime
 from django.contrib.auth.models import User
 
+from mptt_comments.models import MpttComment
+
 
 class VoteManager(models.Manager):
 
@@ -38,6 +40,9 @@ class VoteManager(models.Manager):
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')[:limit]
+
+        for link in qs:
+            link['commentcount'] = MpttComment.objects.filter(object_pk=link['link__pk']).count()
         return qs
 
 
@@ -69,6 +74,7 @@ class VoteManager(models.Manager):
                 new_link['link__pk'] = link['pk']
                 new_link['link__slug'] = link['slug']
                 new_link['link__title'] = link['title']
+                new_link['commentcount'] = MpttComment.objects.filter(object_pk=link['pk']).count()
                 links += [new_link]
         return links[:limit]
 

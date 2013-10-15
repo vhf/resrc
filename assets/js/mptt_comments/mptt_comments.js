@@ -198,11 +198,11 @@ $(document).ready(function() {
         if (comment_el.hasClass('comment_collapsed')) {
             comment_el.removeClass('comment_collapsed');
             comment_el.addClass('comment_expanded');
-            $(this).text('down');
+            $(this).find('i').attr('class', 'fi-minus');
         } else {
             comment_el.addClass('comment_collapsed');
             comment_el.removeClass('comment_expanded');
-            $(this).text('right');
+            $(this).find('i').attr('class', 'fi-plus');
         }
         comment_el.find('.comment,.comment_form').each(function(index) {
             $(this).toggle();
@@ -210,7 +210,7 @@ $(document).ready(function() {
     });
 
     $('div.comment_collapsed > div > p > a.comment_expand.lsf.symbol').each(function() {
-        var nxt = $(this).text('right');
+        var nxt = $(this).find('i').attr('class', 'fi-plus');
     });
 
     $('.comments_more').on("click", function(e) {

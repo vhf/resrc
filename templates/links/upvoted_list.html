@@ -26,7 +26,7 @@ Links you upvoted
       <h3>links</h3>
       <ul class="no-bullet">
         {% for link in upvoted_links %}
-        <li><i class="lsf i-b t-i">link</i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><i class="lsf{% if link in upvoted_links %} lsf2{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
+        <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><i class="fi-check{% if link in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
         {% endfor %}
       </ul>
     </div>
@@ -36,7 +36,7 @@ Links you upvoted
       <h3>lists</h3>
       <ul class="no-bullet">
         {% for list in upvoted_lists %}
-        <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list"><i class="lsf{% if list in upvoted_lists %} lsf2{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a><hr></li>
+        <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list"><i class="fi-check{% if list in upvoted_lists %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a><hr></li>
         {% endfor %}
       </ul>
     </div>
