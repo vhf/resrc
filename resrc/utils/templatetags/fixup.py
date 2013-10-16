@@ -11,7 +11,6 @@ import re
 REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+\&]+', re.UNICODE)
 REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
-SLUGS = []
 
 def github_slugify(text):
     from urllib import quote_plus
@@ -20,28 +19,31 @@ def github_slugify(text):
     text = REPLACE2_REXP.sub('-', text.lower())
     return text
 
-def get_unique_slug(slug):
+def get_unique_slug(slug, all_slugs):
     """
     Iterates until a unique slug is found
     """
+    counter=1
     orig_slug = slug
-    counter = 1
 
     while True:
-        if slug not in SLUGS:
+        if slug not in all_slugs:
             return slug
 
         slug = '%s-%s' % (orig_slug, counter)
         counter += 1
+        if counter > 2:
+            print "Alalalalaa"
 
-def fixup(elem, alist):
+
+def fixup(elem, alist, all_slugs):
     if elem.tag.startswith('h') and elem.tag[1] >= '1' and elem.tag[1] <= '6':
         a = etree.Element('a')
         a.text = elem.text
 
         slug = github_slugify(a.text)
-        slug = get_unique_slug(slug)
-        SLUGS.append(slug)
+        slug = get_unique_slug(slug, all_slugs)
+        all_slugs.append(slug)
 
         a.set("href", '#%s' % slug)
         a.set("name", '%s' % slug)
@@ -54,7 +56,7 @@ def fixup(elem, alist):
         url = elem.get("href")
         internal_link = True
         if url is None or len(url) < 1:
-            return
+            return all_slugs
         try:
             reverse(url)
         except:
@@ -123,15 +125,19 @@ def fixup(elem, alist):
                 )
             # TODO : Store all the links parsed, compare to ListLinks, remove the one not there anymore
 
+    return all_slugs
+
 
 class FixupProcessor(Treeprocessor):
 
     def __init__(self, alist, *args, **kwargs):
         self.alist = alist
+        self.all_slugs = []
 
     def run(self, root):
         for child in root:
-            fixup(child, self.alist)
+            #print self.all_slugs
+            self.all_slugs = fixup(child, self.alist, self.all_slugs)
             self.run(child)
 
         return root
