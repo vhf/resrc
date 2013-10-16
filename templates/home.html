@@ -41,6 +41,24 @@
 </div>
 {% endif %}
 
+<div class="row panel discover_panel"{% if not user.is_authenticated %} style="display:none"{% endif %}>
+  <div class="large-12 columns">
+    <h3>Share and discover great learning resources</h3>
+    <div class="row">
+      <div class="large-4 columns">
+        <p>Share your bookmarks about everything programming related.</p>
+      </div>
+      <div class="large-4 columns">
+        <p>Find awesome resources. Browse by tag, or try typing "Haskell", "tutorial" in the form below. Try it with <em>and</em> and <em>or</em>.</p>
+      </div>
+      <div class="large-4 columns">
+        <p>Discuss links and lists, upvote and tag them, curate and share your lists.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="row">
   <div class="medium-6 large-3 columns">
     <h3><a href="{% url "lists" %}">Best lists</a></h3>
@@ -154,6 +172,7 @@
 {% else %}
 <div id="login-modal" class="reveal-modal"></div>
 <script>
+var _gaq = _gaq || [];
 $(function () {
   $('#vote, .votes').click(function() {
     $('#login-modal').foundation('reveal', 'open', {
@@ -164,6 +183,7 @@ $(function () {
     document.cookie = "hide=True";
     _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Hide']);
     $('.welcome').remove();
+    $('.discover_panel').show();
   });
 });
 
@@ -173,6 +193,7 @@ for(i = 0; i < hideDiv.length; i++)
 if(hideDiv[i] == " hide=True") {
   _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Already hidden']);
   $('.welcome').remove();
+  $('.discover_panel').show();
 }
 </script>
 {% endif %}
