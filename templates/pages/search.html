@@ -89,7 +89,9 @@ Search by tags
         return;
       } else {
         $('#query').html('<a href="/page'+url+'">'+query+'</a>');
-        console.log('hehe');
+
+        _gaq.push(['_trackEvent', 'Search', 'Searchpage', query]);
+
         $.ajax({
           type:"GET",
           url: '/tag' + url,
