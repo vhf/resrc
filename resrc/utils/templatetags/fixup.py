@@ -13,6 +13,7 @@ REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
 
 def github_slugify(text):
+    text = text.encode('utf-8')
     from urllib import quote_plus
     text = REPLACE1_REXP.sub('', text)
     text = quote_plus(text)
