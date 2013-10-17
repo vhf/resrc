@@ -119,6 +119,18 @@ class Link(models.Model):
         )
         vote.save()
 
+    def get_categories(self):
+        categories = ['book', 'tutorial', 'interactive tutorial', 'guide',
+            'resource', 'cheat sheet', 'article', 'blog']
+        cats = []
+        for tag in self.tags.all().values_list('name', flat=True):
+            if tag in categories:
+                cats.append(tag)
+        if cats:
+            return "(%s)" % "/".join(cats)
+        else:
+            return ""
+
 
 class RevisedLink(models.Model):
     link = models.ForeignKey('link.Link')

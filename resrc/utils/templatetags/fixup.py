@@ -19,11 +19,12 @@ def github_slugify(text):
     text = REPLACE2_REXP.sub('-', text.lower())
     return text
 
+
 def get_unique_slug(slug, all_slugs):
     """
     Iterates until a unique slug is found
     """
-    counter=1
+    counter = 1
     orig_slug = slug
 
     while True:
@@ -78,7 +79,7 @@ def fixup(elem, alist, all_slugs):
                 if url[-1] == '/':
                     link = Link.objects.get(url=url[:-1])
                 else:
-                    url = url+'/'
+                    url = url + '/'
                     link = Link.objects.get(url=url)
                 link_exists = True
             except Link.DoesNotExist:
@@ -90,29 +91,35 @@ def fixup(elem, alist, all_slugs):
 
         if not internal_link:
             if not link_exists:
-                elem.set("rel", "external")
-                #elem.set("rel", "nofollow external")
+                elem.set("rel", "external")  # elem.set("rel", "nofollow external")
                 a = etree.Element('a')
                 a.set("class", "addthis tiny button secondary")
                 a.text = u'add'
                 elem.append(a)
             else:
-                newlink = etree.Element('a')
-
+                # create link icon
                 icon = etree.Element("i")
                 icon.text = ""
                 icon.set("class", "fi-link")
 
-                # ne pas forcer l'intitulé des liens
-                newlink.text = elem.text + ' '
+                # create link to resrc page
+                newlink = etree.Element('a')
+                newlink.text = elem.text + ' '  # ne pas forcer l'intitulé des liens
                 newlink.set(
                     "href",
                     reverse("link-single-slug", args=(link.pk, link.slug))
                 )
 
                 elem.text = ''
+                # add link icon
                 elem.append(icon)
+                # add link to resrc page
                 elem.append(newlink)
+
+                # add span with e.g. (book)
+                span = etree.Element('span')
+                span.text = link.get_categories()
+                elem.append(span)
 
         from resrc.list.models import ListLinks
         if link_exists and alist is not None:
@@ -123,7 +130,8 @@ def fixup(elem, alist, all_slugs):
                     alist=alist,
                     links=link
                 )
-            # TODO : Store all the links parsed, compare to ListLinks, remove the one not there anymore
+            # TODO : Store all the links parsed, compare to ListLinks, remove
+            # the one not there anymore
 
     return all_slugs
 
@@ -136,7 +144,7 @@ class FixupProcessor(Treeprocessor):
 
     def run(self, root):
         for child in root:
-            #print self.all_slugs
+            # print self.all_slugs
             self.all_slugs = fixup(child, self.alist, self.all_slugs)
             self.run(child)
 
