@@ -20,8 +20,10 @@ class LoginForm(forms.Form):
 class RegisterForm(forms.Form):
     email = forms.EmailField(label='email')
     username = forms.CharField(label='username', max_length=30)
-    password = forms.CharField(label='password', max_length=76, widget=forms.PasswordInput)
-    password_confirm = forms.CharField(label='confirm password', max_length=76, widget=forms.PasswordInput)
+    password = forms.CharField(
+        label='password', max_length=76, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(
+        label='confirm password', max_length=76, widget=forms.PasswordInput)
     captcha = CaptchaField()
 
     def __init__(self, *args, **kwargs):
@@ -111,7 +113,14 @@ class ProfileForm(forms.Form):
 
     # display a select with languages ordered by most used first
     from resrc.language.models import Language
-    languages = forms.ModelMultipleChoiceField(label='languages', widget=forms.SelectMultiple(), queryset=Language.objects.all())
+    languages = forms.ModelMultipleChoiceField(
+        label='languages',
+        widget=forms.SelectMultiple(),
+        queryset=Language.objects.all(),
+        help_text='Select the content languages you want to see. \
+        Hint : select several languages by holding shift. \
+        Hint² : since most content is in English, you might want to keep this one selected.'
+    )
     show_email = forms.BooleanField(label='show email', required=False)
 
     def __init__(self, *args, **kwargs):
@@ -135,9 +144,12 @@ class ProfileForm(forms.Form):
 
 
 class ChangePasswordForm(forms.Form):
-    password_new = forms.CharField(label='New password ', max_length=76, widget=forms.PasswordInput)
-    password_old = forms.CharField(label='Current password ', max_length=76, widget=forms.PasswordInput)
-    password_confirm = forms.CharField(label='New password, again ', max_length=76, widget=forms.PasswordInput)
+    password_new = forms.CharField(
+        label='New password ', max_length=76, widget=forms.PasswordInput)
+    password_old = forms.CharField(
+        label='Current password ', max_length=76, widget=forms.PasswordInput)
+    password_confirm = forms.CharField(
+        label='New password, again ', max_length=76, widget=forms.PasswordInput)
 
     def __init__(self, user, *args, **kwargs):
         self.helper = FormHelper()
@@ -168,9 +180,11 @@ class ChangePasswordForm(forms.Form):
         password_confirm = cleaned_data.get('password_confirm')
 
         if password_old:
-            user_exist = authenticate(username=self.user.username, password=password_old)
+            user_exist = authenticate(
+                username=self.user.username, password=password_old)
             if not user_exist and password_old != "":
-                self._errors['password_old'] = self.error_class([u'Old password incorrect'])
+                self._errors['password_old'] = self.error_class(
+                    [u'Old password incorrect'])
                 if 'password_old' in cleaned_data:
                     del cleaned_data['password_old']
 

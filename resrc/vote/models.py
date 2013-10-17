@@ -77,7 +77,7 @@ class VoteManager(models.Manager):
                 new_link['link__pk'] = link['pk']
                 new_link['link__slug'] = link['slug']
                 new_link['link__title'] = link['title']
-                new_link['commentcount'] = comment_count 
+                new_link['commentcount'] = comment_count
                 links += [new_link]
         return links[:limit]
 
