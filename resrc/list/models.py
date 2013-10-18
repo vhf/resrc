@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.contrib.auth.models import User
+from django.contrib.comments import get_model
 from django.core import urlresolvers
 from django.core.cache import cache
 from django.db import models
@@ -157,6 +158,13 @@ class List(models.Model):
             alist=self
         )
         vote.save()
+
+    def get_votes(self):
+        from resrc.vote.models import Vote
+        return Vote.objects.filter(alist=self).count()
+
+    def get_comment_count(self):
+        return get_model().objects.filter(object_pk=self.pk).count()
 
 
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany

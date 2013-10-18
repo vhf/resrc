@@ -119,10 +119,14 @@ class Link(models.Model):
         )
         vote.save()
 
+    def get_votes(self):
+        from resrc.vote.models import Vote
+        return Vote.objects.filter(link=self).count()
+
     def get_categories(self):
         categories = ['book', 'tutorial', 'interactive tutorial', 'guide',
             'resource', 'cheat sheet', 'article', 'blog', 'reference',
-            'documentation']
+            'documentation', 'course', 'slides', 'video']
         cats = []
         for tag in self.tags.all().values_list('name', flat=True):
             if tag in categories:
