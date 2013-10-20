@@ -317,6 +317,26 @@ def edit(request, list_pk):
     })
 
 
+def auto_pull(request, list_pk):
+    alist = get_object_or_404(List, pk=list_pk)
+
+    opener = urllib2.build_opener()
+    opener.addheaders = [('Accept-Charset', 'utf-8')]
+    url_response = opener.open(alist.url)
+    mdcontent = url_response.read().decode('utf-8')
+
+
+    alist.md_content = mdcontent
+    alist.html_content = ''
+
+    from resrc.utils.templatetags.emarkdown import listmarkdown
+    alist.html_content = listmarkdown(mdcontent, alist)
+    alist.save()
+
+    return redirect(alist.get_absolute_url())
+
+
+
 @login_required
 def delete(request, list_pk):
     if not request.user.is_authenticated() and request.method == 'POST':
