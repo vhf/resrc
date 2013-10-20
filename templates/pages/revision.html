@@ -29,65 +29,69 @@ Search by tags
     {% for rev in revised %}
         <div class="row">
           <div class="large-2 columns">
-            Title:
+            <p>Title:</p>
           </div>
           <div class="large-5 columns">
-            <a href="{{ rev.link.get_absolute_url }}">{{ rev.link.title }}</a>
+            <p><a href="{{ rev.link.get_absolute_url }}">{{ rev.link.title }}</a></p>
           </div>
           <div class="large-5 columns">
-            <a href="{{ rev.link.get_absolute_url }}">{{ rev.title }}</a>
+            <p><a href="{{ rev.link.get_absolute_url }}">{{ rev.title }}</a></p>
           </div>
         </div>
         <div class="row">
           <div class="large-2 columns">
-            Url:
+            <p>Url:</p>
           </div>
           <div class="large-5 columns">
-            <a href="{{ rev.link.url }}">{{ rev.link.url }}</a>
+            <p><a href="{{ rev.link.url }}">{{ rev.link.url }}</a></p>
           </div>
           <div class="large-5 columns">
-            <a href="{{ rev.url }}">{{ rev.url }}</a>
+            <p><a href="{{ rev.url }}">{{ rev.url }}</a></p>
           </div>
         </div>
       {% if rev.level != '' %}
         <div class="row">
           <div class="large-2 columns">
-            Level:
+            <p>Level:</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.link.level }}
+            <p>{{ rev.link.level }}</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.level }}
+            <p>{{ rev.level }}</p>
           </div>
         </div>
       {% endif %}
       {% if rev.language != None %}
         <div class="row">
           <div class="large-2 columns">
-            Language:
+            <p>Language:</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.link.language }}
+            <p>{{ rev.link.language }}</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.language }}
+            <p>{{ rev.language }}</p>
           </div>
         </div>
       {% endif %}
       {% if rev.tags != '' %}
         <div class="row">
           <div class="large-2 columns">
-            Tags:
+            <p>Tags:</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.link.tags }}
+            <p>{{ rev.link.tags }}</p>
           </div>
           <div class="large-5 columns">
-            {{ rev.tags }}
+            <p>{{ rev.tags }}</p>
           </div>
         </div>
       {% endif %}
+      <div class="row">
+        <iframe class="large-12 columns" src="/a/link/link/{{ rev.link.pk }}/" style="height: 520px"></iframe>
+        <a href="/a/link/revisedlink/2/delete/">DELETE REVISION PROPOSITION</a>
+      </div>
       <hr />
     {% endfor %}
   </div>
