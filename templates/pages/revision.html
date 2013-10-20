@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load mptt_comments_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Search by tags
+{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block breadcrumb %}{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <div class="large-2 columns">&nbsp;</div>
+      <div class="large-5 columns">
+        <h2>Original</h2>
+      </div>
+      <div class="large-5 columns">
+        <h2>Proposed</h2>
+      </div>
+    </div>
+    {% for rev in revised %}
+        <div class="row">
+          <div class="large-2 columns">
+            Title:
+          </div>
+          <div class="large-5 columns">
+            <a href="{{ rev.link.get_absolute_url }}">{{ rev.link.title }}</a>
+          </div>
+          <div class="large-5 columns">
+            <a href="{{ rev.link.get_absolute_url }}">{{ rev.title }}</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="large-2 columns">
+            Url:
+          </div>
+          <div class="large-5 columns">
+            <a href="{{ rev.link.url }}">{{ rev.link.url }}</a>
+          </div>
+          <div class="large-5 columns">
+            <a href="{{ rev.url }}">{{ rev.url }}</a>
+          </div>
+        </div>
+      {% if rev.level != '' %}
+        <div class="row">
+          <div class="large-2 columns">
+            Level:
+          </div>
+          <div class="large-5 columns">
+            {{ rev.link.level }}
+          </div>
+          <div class="large-5 columns">
+            {{ rev.level }}
+          </div>
+        </div>
+      {% endif %}
+      {% if rev.language != None %}
+        <div class="row">
+          <div class="large-2 columns">
+            Language:
+          </div>
+          <div class="large-5 columns">
+            {{ rev.link.language }}
+          </div>
+          <div class="large-5 columns">
+            {{ rev.language }}
+          </div>
+        </div>
+      {% endif %}
+      {% if rev.tags != '' %}
+        <div class="row">
+          <div class="large-2 columns">
+            Tags:
+          </div>
+          <div class="large-5 columns">
+            {{ rev.link.tags }}
+          </div>
+          <div class="large-5 columns">
+            {{ rev.tags }}
+          </div>
+        </div>
+      {% endif %}
+      <hr />
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block last_body %}
+<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript">
+  $('#tags').tagit({
+    availableTags: [{{ tags|safe }}],
+    autocomplete: {delay: 0, minLength: 2},
+    allowSpaces: true,
+    afterTagAdded: search,
+    afterTagRemoved: search
+  });
+
+  $('#tags2').tagit({
+    availableTags: [{{ tags|safe }}],
+    autocomplete: {delay: 0, minLength: 2},
+    allowSpaces: true,
+    afterTagAdded: search,
+    afterTagRemoved: search
+  });
+
+});
+</script>
+{% endblock last_body %}
