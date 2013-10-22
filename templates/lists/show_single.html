@@ -49,7 +49,7 @@
     <p class="byline">
       {% with author=list.owner %}
       by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person">
-<span itemprop="name">{{ author.username }}</span></span></a> | <span itemprop="datePublished" content="{{ list.pubdate }}">{{ list.pubdate|timesince }}</span> ago | <span class="votes y-bg" data-type="list" data-id="{{ list.id }}">{{ count }} <i class="fi-check{% if voted %}box{% endif %}"></i></span><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="views y-bg"><span itemprop="ratingValue">{{ list.views }}</span> <i class="fi-eye"></i></span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
+              <span itemprop="name">{{ author.username }}</span></span></a> | <span itemprop="datePublished" content="{{ list.pubdate }}">{{ list.pubdate|timesince }}</span> ago | <span class="votes y-bg" data-type="list" data-id="{{ list.id }}"><span class="votes-count"> {{ count }} </span><i class="fi-check{% if voted %}box{% endif %}"></i></span><span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating" class="views y-bg"><span itemprop="ratingValue">{{ list.views }}</span> <i class="fi-eye"></i></span>{% if author = request.user %} | <a href="{% url "list-edit" list_pk=list.pk %}">edit</a>{% endif %}
       {%endwith%}
     </p>
   </div>

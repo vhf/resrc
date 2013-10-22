@@ -38,7 +38,7 @@
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author.username }}</span></span></a> |
         <span itemprop="datePublished" content="{{ link.pubdate }}">{{ link.pubdate|timesince }}</span> ago |
-        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}">{{ count }} <i class="fi-check{% if voted %}box{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}"><span class="votes-count"> {{ count }} </span><i class="fi-check{% if voted %}box{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
         {%endwith%}
       </p>
     </div>

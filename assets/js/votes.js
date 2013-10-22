@@ -1,14 +1,25 @@
 
 $(function () {
+  "use strict";
+
+  var VOTED_CLASS = 'fi-checkbox';
+  var UNVOTED_CLASS = 'fi-check';
+
   $('#vote, .votes').click(function() {
     var $this = $(this);
     var itemType = $this.attr('data-type');
     var itemId = $this.attr('data-id');
 
-    var $symbol = $('#vote');  // button without the number of votes
-    var $buttons = $(  // buttons to upvote the same item
+    // Upper-right button on single link/list page
+    var $bigButtonsIcon = $('#vote i');
+    // Yellow buttons on the page
+    var $buttons = $(
       '.votes[data-id="' + itemId + '"][data-type="' + itemType + '"]'
     );
+    var $buttonsIcon = $buttons.find('i');
+
+    var $icons = $buttonsIcon.add($bigButtonsIcon);
+    var $votesCounts = $buttons.find('.votes-count');
 
     // TODO: use django's url function
     var voteUrl = '/' + itemType + '/' + itemId +'/upvote';
@@ -17,29 +28,24 @@ $(function () {
       type: 'POST',
       url: voteUrl,
       data: 'csrfmiddlewaretoken=' + window.csrfToken
-    }).always(function (xhr) {
+    }).always(function (xhr) {  // TODO: always ? really ?
       var result = $.parseJSON(xhr.responseText).result,
-          curValue = parseInt($this.html(), 10),
-          newValue, iconClasses, symbolIcon;
+          curVotesCount = parseInt($votesCounts.eq(0).text(), 10),
+          newVotesCount;
 
-      // when clicking on button w/out n. of votes
-      if (isNaN(curValue) && $buttons.length > 0) {
-        curValue = parseInt($buttons.eq(0).html(), 10);
+      if (isNaN(curVotesCount)) {  // no n. of votes displayed on the page
+          newVotesCount = '';
       }
-
-      if (result === 'voted') {
-        newValue = curValue + 1;
-        iconClasses = 'fi-checkbox';
+      else if (result === 'voted') {
+          newVotesCount = curVotesCount + 1;
       }
       else if (result === 'unvoted') {
-        newValue = curValue - 1;
-        iconClasses = 'fi-check';
+          newVotesCount = curVotesCount - 1;
       }
 
-      if (isNaN(newValue)) {
-        newValue = '';
-      }
-      $buttons.html('' + newValue +' <i class="' + iconClasses + '"></i>');
+      $icons.toggleClass(VOTED_CLASS);
+      $icons.toggleClass(UNVOTED_CLASS);
+      $votesCounts.text(' ' + newVotesCount + ' ');
     });
   });
 }(jQuery));

@@ -64,7 +64,7 @@
     <h3><a href="{% url "lists" %}">Best lists</a></h3>
     <ul class="no-bullet">
       {% for list in hottest_lists %}
-      <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list">{{ list.count }} <i class="fi-check{% if list.alist__pk in upvoted_lists %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list"><span class="votes-count"> {{ list.count }} </span><i class="fi-check{% if list.alist__pk in upvoted_lists %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -74,7 +74,7 @@
     <h3><a href="{% url "links" %}">Latest links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}">{{ link.count }} <i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
          &#183;
         {{ link.commentcount }} comment{{ link.commentcount|pluralize }}
       </li>
@@ -96,7 +96,7 @@
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"> {{ link.count }} <i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
          &#183;
         {{ link.commentcount }}&#160;comment{{ link.commentcount|pluralize }}
       </li>

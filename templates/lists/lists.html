@@ -43,7 +43,7 @@ Lists summary
     <h3>hottest</h3>
     <ul class="no-bullet">
       {% for list in hottest %}
-      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}">{{ list.count }} <i class="fi-check{% if list.alist__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}"><span class="votes-count"> {{ list.count }} </span><i class="fi-check{% if list.alist__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
@@ -52,7 +52,7 @@ Lists summary
     <h3>most appreciated</h3>
     <ul class="no-bullet">
       {% for list in most_voted %}
-      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}">{{ list.count }} <i class="fi-check{% if list.alist__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
+      <li><span class="votes y-bg" data-type="list" data-id="{{list.alist__pk}}"><span class="votes-count"> {{ list.count }} </span><i class="fi-check{% if list.alist__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
     </ul>
