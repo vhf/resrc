@@ -21,6 +21,12 @@ def single(request, link_pk, link_slug=None):
         link = get_object_or_404(Link, pk=link_pk)
         cache.set('link_%s' % link_slug, link, 60*5)
 
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+
     titles = []
     newlistform = None
     tags = None
@@ -51,7 +57,7 @@ def single(request, link_pk, link_slug=None):
             tags = '"%s"' % tags
             cache.set('tags_csv', tags, 60*15)
 
-    lists = List.objects.some_lists_from_link(link_pk)
+    lists = List.objects.some_lists_from_link(link_pk, lang_filter)
 
     similars = cache.get('similar_link_%s' % link_pk)
     if similars is None or True:

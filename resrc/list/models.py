@@ -37,10 +37,11 @@ class ListManager(models.Manager):
             .exclude(title='Reading list')
         return titles
 
-    def some_lists_from_link(self, link_pk):
+    def some_lists_from_link(self, link_pk, lang_filter=[1]):
         '''To display : "as seen in..."'''
         lists = self.get_query_set().prefetch_related('links') \
             .filter(links__pk=link_pk) \
+            .filter(language__in=lang_filter) \
             .exclude(title='Reading list') \
             .exclude(is_public=False)[:5]
         ''' Now excluding all private lists. To keep showing MY private
