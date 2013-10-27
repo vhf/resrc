@@ -13,6 +13,8 @@ REPLACE2_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
 
 def github_slugify(text):
+    if text is None:
+        return text
     text = text.encode('utf-8')
     from urllib import quote_plus
     text = REPLACE1_REXP.sub('', text)
@@ -34,8 +36,6 @@ def get_unique_slug(slug, all_slugs):
 
         slug = '%s-%s' % (orig_slug, counter)
         counter += 1
-        if counter > 2:
-            print "Alalalalaa"
 
 
 def fixup(elem, alist, all_slugs):
