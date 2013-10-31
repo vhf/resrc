@@ -19,41 +19,18 @@
 
 {% block content %}
 
-{% if not user.is_authenticated %}
-<div class="row welcome">
-  <div class="large-12 columns">
-    <div class="panel">
-      <div style="position: absolute; right: 30px; top: 10px; font-size: 2em;"><a href="#" id="close">&#215;</a></div>
-      <h1><span>Find Y resources about X in <span class="show-for-medium">Zero</span><span class="hide-for-medium">0</span> minutes</span></h1>
-      <div class="row">
-        <div class="large-3 columns">
-          <p>
-            <a href="{% url "user-register" %}" class="button large-12">Register now!</a>
-          </p>
-        </div>
-        <div class="large-9 columns">
-          <p>Sometimes, search engines fail at recommending the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
-          <p>Find articles, tutorials, documentation, screencasts just about anything programming related. Browse by <strong>tags</strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
-          <p>Create and publish your lists or import them directly (e.g. from GitHub) in Markdown, add links to your Reading List.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-{% endif %}
-
 <div class="row panel discover_panel"{% if not user.is_authenticated %} style="display:none"{% endif %}>
   <div class="large-12 columns">
-    <h3>Share and discover great learning resources</h3>
+    <h3>Featured</h3>
     <div class="row">
       <div class="large-4 columns">
-        <p>Share your bookmarks about everything programming related.</p>
+        <h5><a href="/list/10/list-of-free-programming-books/">List of free programming books</a></h5>
       </div>
       <div class="large-4 columns">
-        <p>Find awesome resources. Browse by tag, or try typing "Haskell", "tutorial" in the form below. Try it with <em>and</em> and <em>or</em>.</p>
+        <h5><a href="/list/18/javascript-frameworks/">JavaScript frameworks resources and tutorials</a></h5>
       </div>
       <div class="large-4 columns">
-        <p>Discuss links and lists, upvote and tag them, curate and share your lists.</p>
+        <h5><a href="/list/4/pycrumbs/">pycrumbs - All free Python learning resources</a></h5>
       </div>
     </div>
   </div>
@@ -61,39 +38,7 @@
 
 
 <div class="row">
-  <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "lists" %}">Best lists</a></h3>
-    <ul class="no-bullet">
-      {% for list in hottest_lists %}
-      <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list"><span class="votes-count"> {{ list.count }} </span><i class="fi-check{% if list.alist__pk in upvoted_lists %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
-      <hr>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "links" %}">Latest links</a></h3>
-    <ul class="no-bullet">
-      {% for link in latest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
-         &#183;
-        {% commentcount link.link__pk %}&#160;comment
-      </li>
-      <hr>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="medium-6 large-3 columns">
-    <h3><a href="{% url "tag-index" %}">Most used tags</a></h3>
-    <div>
-      {% for tag in tags %}{% if tag.slug %}
-      <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
-      {% endif %}{% endfor %}
-    </div>
-  </div>
-
-  <div class="medium-6 large-3 columns">
+  <div class="large-12 columns">
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
@@ -107,16 +52,6 @@
   </div>
 </div>
 
-<div class="row">
-  <div class="large-12 columns panel">
-    <h6>legend</h6>
-    <ul class="no-bullet inline-list">
-      <li><a href="#"><span class="votes y-bg" data-tooltip title="Click to upvote">74 <i class="fi-check"></i></span>I'm a list with 74 votes</a></li>
-      <li class="tag" style="margin-top: 5px"><a href="#"><span class="c">8</span><span class="t">I'm a tag with 8 links</span></a></li>
-      <li><a href="#"><i class="fi-link" style="color:black"></i><span class="votes y-bg" data-tooltip title="Click to upvote">17 <i class="fi-check"></i></span>I'm a link with 17 votes</a></li>
-    </ul>
-  </div>
-</div>
 
 
 <div class="row">
