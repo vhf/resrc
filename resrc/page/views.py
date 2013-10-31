@@ -9,12 +9,21 @@ def home(request):
     hot_lk_cache = 'hot_lk_10_7'
     hot_ls_cache = 'hot_ls_10_7'
     lang_filter = [1]
-    if request.user.is_authenticated():
+    user = request.user
+    if user.is_authenticated():
         from resrc.userprofile.models import Profile
-        profile = Profile.objects.get(user=request.user)
+        profile = Profile.objects.get(user=user)
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
         hot_lk_cache = 'hot_lk_10_7_%s' % '_'.join(map(str, lang_filter))
         hot_ls_cache = 'hot_ls_10_7_%s' % '_'.join(map(str, lang_filter))
+
+        user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
+        user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
+        user_upvoted_links = Vote.objects.my_upvoted_links(user)
+        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
+    else:
+        user_upvoted_lists = []
+        user_upvoted_links = []
 
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
@@ -27,16 +36,6 @@ def home(request):
     if hottest_lists is None:
         hottest_lists = Vote.objects.hottest_lists(limit=5, days=7, lang_filter=lang_filter)
         cache.set(hot_ls_cache, list(hottest_lists), 60*2+2)
-
-    user = request.user
-    if user.is_authenticated():
-        user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
-        user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
-        user_upvoted_links = Vote.objects.my_upvoted_links(user)
-        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
-    else:
-        user_upvoted_lists = []
-        user_upvoted_links = []
 
     tags = cache.get('tags_all')
     if tags is None:
@@ -65,8 +64,38 @@ def home(request):
     })
 
 
-def faq(request):
-    return render_template('pages/faq.html', {})
+def new(request):
+    from resrc.vote.models import Vote
+    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+    lang_filter = [1]
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+
+    links = Vote.objects.latest_links(limit=None, days=60, lang_filter=lang_filter)
+
+    paginator = Paginator(links, 15)
+    page = request.GET.get('page')
+    try:
+        links = paginator.page(page)
+    except PageNotAnInteger:
+        links = paginator.page(1)
+    except EmptyPage:
+        links = paginator.page(paginator.num_pages)
+
+    user = request.user
+    if user.is_authenticated():
+        user_upvoted_links = Vote.objects.my_upvoted_links(user)
+        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
+    else:
+        user_upvoted_links = []
+
+    return render_template('pages/new.html', {
+        'links': links,
+        'upvoted_links': user_upvoted_links,
+    })
 
 
 @cache_page(60 * 15)

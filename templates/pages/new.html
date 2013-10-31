@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load commentcount %}
+
+{% block title %}{% endblock %}
+
+{% block meta %}
+<meta name="description" content="reSRC, the root of actual learning" />
+{% endblock %}
+
+{% block extrahead %}
+<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
+<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block breadcrumb_container %} {% endblock %}
+
+{# Content #}
+
+{% block content %}
+
+<div class="row">
+  <div class="large-12 columns">
+    <h1><a href="{% url "links" %}">Latest links</a></h1>
+    <ul class="no-bullet">
+      {% for link in links %}
+      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+         &#183;
+        {% commentcount link.link__pk %} comment
+      </li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="pagination-centered">
+  <ul class="pagination">
+    <li class="arrow">
+    {% if links.has_previous %}
+      <a href="?page={{ links.previous_page_number }}">&laquo;</a>
+    {% endif %}
+    </li>
+    <li class="current"><a href="">Page {{ links.number }} of {{ links.paginator.num_pages }}.</a></li>
+    <li class="arrow">
+    {% if links.has_next %}
+      <a href="?page={{ links.next_page_number }}">&raquo;</a>
+    {% endif %}</a>
+    </li>
+  </ul>
+</div>
+
+{% endblock %}
+
+{% block last_body %}
+{% if user.is_authenticated %}
+<script>
+  window.csrfToken = '{{ csrf_token }}';
+</script>
+<script src="{% static "js/votes.js" %}"></script>
+{% else %}
+<div id="login-modal" class="reveal-modal"></div>
+<script>
+var _gaq = _gaq || [];
+$(function () {
+  $('#vote, .votes').click(function() {
+    $('#login-modal').foundation('reveal', 'open', {
+      url: "http://resrc.io{% url "user-login-modal" %}"
+    });
+  });
+});
+
+</script>
+{% endif %}
+
+{% endblock %}

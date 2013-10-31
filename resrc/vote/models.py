@@ -65,11 +65,8 @@ class VoteManager(models.Manager):
 
         links = []
         for link in latest:
-            comment_count = MpttComment.objects.filter(object_pk=link['pk']).count()
             if link['pk'] in voted_id:
                 new_link = [l for l in voted if l['link__pk'] == link['pk']]
-                for l in new_link:
-                    l['commentcount'] = comment_count
                 links += new_link
             else:
                 new_link = {}
@@ -77,7 +74,6 @@ class VoteManager(models.Manager):
                 new_link['link__pk'] = link['pk']
                 new_link['link__slug'] = link['slug']
                 new_link['link__title'] = link['title']
-                new_link['commentcount'] = comment_count
                 links += [new_link]
         return links[:limit]
 
