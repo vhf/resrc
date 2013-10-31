@@ -45,6 +45,11 @@
       <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
          &#183;
         {% commentcount link.link__pk %}&#160;comment
+          <ul class="inline inline-list" style="margin-top: 3px">
+            {% for tag in link.tags %}
+            <li><p class="tag left"><a href="{% url "tag-single-slug" tag.0 %}"><span class="t">{{ tag.1 }}</span></a></p></li>
+            {% endfor %}
+          </ul>
       </li>
       <hr>
       {% endfor %}

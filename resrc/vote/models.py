@@ -31,6 +31,7 @@ class VoteManager(models.Manager):
 
 
     def hottest_links(self, limit=10, days=1, lang_filter=[1]):
+        from resrc.link.models import Link
         qs = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days))
         if lang_filter:
@@ -43,6 +44,7 @@ class VoteManager(models.Manager):
 
         for link in qs:
             link['commentcount'] = MpttComment.objects.filter(object_pk=link['link__pk']).count()
+            link['tags'] = Link.objects.filter(pk=link['link__pk']).select_related('tags').values_list('tags__slug', 'tags__name')
         return qs
 
 

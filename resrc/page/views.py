@@ -7,7 +7,7 @@ from django.views.decorators.cache import cache_page
 def home(request):
     from resrc.vote.models import Vote
     hot_lk_cache = 'hot_lk_10_7'
-    hot_ls_cache = 'hot_ls_10_7'
+
     lang_filter = [1]
     user = request.user
     if user.is_authenticated():
@@ -15,36 +15,16 @@ def home(request):
         profile = Profile.objects.get(user=user)
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
         hot_lk_cache = 'hot_lk_10_7_%s' % '_'.join(map(str, lang_filter))
-        hot_ls_cache = 'hot_ls_10_7_%s' % '_'.join(map(str, lang_filter))
 
-        user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
-        user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
         user_upvoted_links = Vote.objects.my_upvoted_links(user)
         user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
     else:
-        user_upvoted_lists = []
         user_upvoted_links = []
 
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
-        hottest_links = Vote.objects.hottest_links(limit=5, days=7, lang_filter=lang_filter)
+        hottest_links = Vote.objects.hottest_links(limit=15, days=14, lang_filter=lang_filter)
         cache.set(hot_lk_cache, list(hottest_links), 60*2)
-
-    latest_links = Vote.objects.latest_links(limit=5, days=7, lang_filter=lang_filter)
-
-    hottest_lists = cache.get(hot_ls_cache)
-    if hottest_lists is None:
-        hottest_lists = Vote.objects.hottest_lists(limit=5, days=7, lang_filter=lang_filter)
-        cache.set(hot_ls_cache, list(hottest_lists), 60*2+2)
-
-    tags = cache.get('tags_all')
-    if tags is None:
-        from taggit.models import Tag
-        from django.db.models import Count
-        tags = Tag.objects.select_related('links') \
-            .annotate(c=Count('link')).order_by('-c') \
-            .all()
-        cache.set('tags_all', list(tags), 60*15)
 
     tags_csv = cache.get('tags_csv')
     if tags_csv is None:
@@ -54,13 +34,8 @@ def home(request):
         cache.set('tags_csv', tags_csv, 60*15)
 
     return render_template('home.html', {
-        'latest_links': latest_links,
         'hottest_links': hottest_links,
-        'tags': tags[:25],
         'csvtags': tags_csv,
-        'hottest_lists': hottest_lists,
-        'upvoted_links': user_upvoted_links,
-        'upvoted_lists': user_upvoted_lists,
     })
 
 
