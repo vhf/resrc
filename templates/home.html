@@ -18,7 +18,16 @@
 {# Content #}
 
 {% block content %}
-
+{% if not user.is_authenticated %}
+<div class="row panel">
+  <div class="large-12 columns">
+    <h2>Help us find and tag all free programming learning resources</h2>
+    <p>Sign in and give some of your free time to classify and regroup all the best learning resources.</p>
+    <p>Come back anytime to visit your reading list, to find the resource you need by browsing the tags, to browse or create great lists of learning resources.</p>
+    <p>Keep on reading and learning. Don't forget to upvote and comment. And of course share the love, share the resources.</p>
+  </div>
+</div>
+{% endif %}
 <div class="row panel discover_panel"{% if not user.is_authenticated %} style="display:none"{% endif %}>
   <div class="large-12 columns">
     <h3>Featured</h3>
