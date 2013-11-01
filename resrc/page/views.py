@@ -35,6 +35,7 @@ def home(request):
 
     return render_template('home.html', {
         'hottest_links': hottest_links,
+        'upvoted_links': user_upvoted_links,
         'csvtags': tags_csv,
     })
 
