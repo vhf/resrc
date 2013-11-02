@@ -34,6 +34,21 @@ def index(request):
     })
 
 
+def tokeninput_json(request):
+    from resrc.utils import slugify
+
+    query = request.GET.get('q')
+
+    result = cache.get("tokeninput-%s" % slugify(query))
+    if result is None :
+        from taggit.models import Tag
+        tags_json = Tag.objects.filter(name__icontains=query).values('id', 'name')
+        result = simplejson.dumps(list(tags_json))
+        cache.set("tokeninput-%s" % slugify(query), result)
+
+    return HttpResponse(result, mimetype="application/javascript")
+
+
 def search(request, tags, operand, excludes):
 
     lang_filter = [1]

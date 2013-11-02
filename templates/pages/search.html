@@ -64,22 +64,33 @@ Search by tags
 {% endblock %}
 
 {% block last_body %}
-<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
-<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "js/jquery-tokeninput/src/jquery.tokeninput.js" %}" ></script>
+<link rel="stylesheet" type="text/css" href="{% static "js/jquery-tokeninput/styles/token-input.css" %}" />
+
 <script type="text/javascript">
 var _gaq = _gaq || [];
 $(function(){
-  var search = function() {
-    var tags = $('#tags').val();
-    var excludes = $('#tags2').val();
+  var search = function(item) {
+    var tags_li = $($('.token-input-list')[0]).find('li.token-input-token');
+    var tags = [];
+    for(var i = 0; i < tags_li.length; i++) {
+      tags.push($(tags_li[i]).children('p').html());
+    }
+
+    var excludes_li = $($('.token-input-list')[1]).find('li.token-input-token');
+    var excludes = [];
+    for(var i = 0; i < excludes_li.length; i++) {
+      excludes.push($(excludes_li[i]).children('p').html());
+    }
+
     var op = $('input[name="op"]:checked').val();
 
-    var url = '/search/'+tags+'%25'+op+'%25'+excludes;
+    var url = '/search/'+tags.join(',')+'%25'+op+'%25'+excludes.join(',');
 
-    var query = tags.split(',').join(' '+(op == 'and' ? '&' : '|')+' ');
+    var query = tags.join(' '+(op == 'and' ? '&' : '|')+' ');
     if (excludes.length > 0) {
       query += ' ~(';
-      query += excludes.split(',').join(' | ');
+      query += excludes.join(' | ');
       query += ')';
     }
 
@@ -123,21 +134,17 @@ $(function(){
     }
   };
 
-  $('#tags').tagit({
-    availableTags: [{{ tags|safe }}],
-    autocomplete: {delay: 0, minLength: 2},
-    allowSpaces: true,
-    afterTagAdded: search,
-    afterTagRemoved: search
+
+  $("#tags").tokenInput("{% url "tokeninput-json" %}", { //item.name
+    onAdd: search,
+    onDelete: search
   });
 
-  $('#tags2').tagit({
-    availableTags: [{{ tags|safe }}],
-    autocomplete: {delay: 0, minLength: 2},
-    allowSpaces: true,
-    afterTagAdded: search,
-    afterTagRemoved: search
+  $("#tags2").tokenInput("{% url "tokeninput-json" %}", {
+    onAdd: search,
+    onDelete: search
   });
+
 
   $('input[name="op"]').on('change', search);
 
