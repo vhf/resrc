@@ -49,20 +49,24 @@
 <div class="row">
   <div class="large-12 columns">
     <h3><a href="{% url "links" %}">Hottest links</a></h3>
-    <ul class="no-bullet">
+    <div class="row">
       {% for link in hottest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
-         &#183;
-        {% commentcount link.link__pk %}&#160;comment
-          <ul class="inline inline-list" style="margin-top: 3px">
-            {% for tag in link.tags %}
-            <li><p class="tag left"><a href="{% url "tag-single-slug" tag.0 %}"><span class="t">{{ tag.1 }}</span></a></p></li>
-            {% endfor %}
-          </ul>
-      </li>
+      <div class="small-1 columns"><div class="arrow-up pointer" data-id="{{link.link__pk}}" data-type="link"></div></div>
+      <div class="small-11 columns">
+        <p>
+          <i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+           &#183;
+          {% commentcount link.link__pk %}&#160;comment
+            <ul class="inline inline-list" style="margin-top: 3px">
+              {% for tag in link.tags %}
+              <li><p class="tag left"><a href="{% url "tag-single-slug" tag.0 %}"><span class="t">{{ tag.1 }}</span></a></p></li>
+              {% endfor %}
+            </ul>
+        </p>
+      </div>
       <hr>
       {% endfor %}
-    </ul>
+    </div>
   </div>
 </div>
 
@@ -124,27 +128,12 @@
 <script>
 var _gaq = _gaq || [];
 $(function () {
-  $('#vote, .votes').click(function() {
+  $('#vote, .votes, .arrow-up').click(function() {
     $('#login-modal').foundation('reveal', 'open', {
       url: "http://resrc.io{% url "user-login-modal" %}"
     });
   });
-  $('#close').click(function() {
-    document.cookie = "hide=True";
-    _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Hide']);
-    $('.welcome').remove();
-    $('.discover_panel').show();
-  });
 });
-
-var x = document.cookie;
-var hideDiv = x.split(";");
-for(i = 0; i < hideDiv.length; i++)
-if(hideDiv[i] == " hide=True") {
-  _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Already hidden']);
-  $('.welcome').remove();
-  $('.discover_panel').show();
-}
 </script>
 {% endif %}
 

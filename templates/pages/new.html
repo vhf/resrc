@@ -22,15 +22,19 @@
 <div class="row">
   <div class="large-12 columns">
     <h1><a href="{% url "links" %}">Latest links</a></h1>
-    <ul class="no-bullet">
+    <div class="row">
       {% for link in links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+      <div class="small-1 columns"><div class="arrow-up pointer" data-id="{{link.link__pk}}" data-type="link"></div></div>
+      <div class="small-11 columns">
+        <p>
+          <i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
          &#183;
         {% commentcount link.link__pk %} comment
-      </li>
+        </p>
+      </div>
       <hr>
       {% endfor %}
-    </ul>
+    </div>>
   </div>
 </div>
 

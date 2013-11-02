@@ -8197,6 +8197,16 @@ i {
   cursor: pointer;
 }
 
+/* line 121, ../sass/_icons.scss */
+.arrow-up {
+  margin-top: 20px;
+  width: 10px;
+  height: 10px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid black;
+}
+
 /* line 1, ../sass/_resrc.scss */
 .byline {
   font-size: 0.8125em;

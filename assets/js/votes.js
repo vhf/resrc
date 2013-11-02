@@ -5,7 +5,7 @@ $(function () {
   var VOTED_CLASS = 'fi-checkbox';
   var UNVOTED_CLASS = 'fi-check';
 
-  $('#vote, .votes').click(function() {
+  $('#vote, .votes, .arrow-up').click(function() {
     var $this = $(this);
     var itemType = $this.attr('data-type');
     var itemId = $this.attr('data-id');
