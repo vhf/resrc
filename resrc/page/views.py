@@ -6,7 +6,7 @@ from django.views.decorators.cache import cache_page
 
 def home(request):
     from resrc.vote.models import Vote
-    hot_lk_cache = 'hot_lk_10_7'
+    hot_lk_cache = 'hot_lk_15_10'
 
     lang_filter = [1]
     user = request.user
@@ -23,7 +23,7 @@ def home(request):
 
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
-        hottest_links = Vote.objects.hottest_links(limit=15, days=14, lang_filter=lang_filter)
+        hottest_links = Vote.objects.hottest_links(limit=15, days=10, lang_filter=lang_filter)
         cache.set(hot_lk_cache, list(hottest_links), 60*2)
 
     tags_csv = cache.get('tags_csv')

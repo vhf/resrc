@@ -34,7 +34,7 @@ Links summary
       <h3>hottest</h3>
       <ul class="no-bullet">
         {% for link in hottest %}
-        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span<i class="fi-check{% if link.link__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
+        <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
         <hr>
         {% endfor %}
       </ul>
