@@ -1,10 +1,9 @@
 django>=1.5,<1.6
 -e git://github.com/vhf/python-markdown-linkfix@master#egg=Markdown-2.3.1
 bleach==1.2.2
-Pygments==1.6
 South==0.8.2
 pytz==2013d
-PIL==1.1.7
+Pillow
 unidecode
 django-crispy-forms>=1.4.0
 crispy-forms-foundation>=0.2.3
@@ -20,3 +19,4 @@ django-storages
 -e git://github.com/vhf/django-taggit.git@master#egg=django-taggit
 -e git://github.com/vhf/django-mptt-comments.git@master#egg=django-mptt-comments
 python-memcached
+psycopg2
