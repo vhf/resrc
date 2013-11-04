@@ -126,7 +126,7 @@ class Link(models.Model):
     def get_categories(self):
         categories = ['book', 'tutorial', 'interactive tutorial', 'guide',
             'resource', 'cheat sheet', 'article', 'blog', 'reference',
-            'documentation', 'course', 'slides', 'video', 'MOOC']
+            'documentation', 'course', 'slides', 'video', 'MOOC', 'talk']
         cats = []
         for tag in self.tags.all().values_list('name', flat=True):
             if tag in categories:
