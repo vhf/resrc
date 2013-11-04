@@ -134,8 +134,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 
     # Custom context processors
-    #'resrc.utils.context_processors.analytics',
-    'resrc.utils.context_processors.versions',
+    #'resrc.utils.context_processors.something',
 )
 
 EXTERNAL_APPS = [
@@ -230,9 +229,6 @@ LOGIN_URL = '/user/login'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/user/user/{0}'.format(u.username)
 }
-
-GOOGLE_ANALYTICS_KEY = ''
-
 
 # Load the production settings, overwrite the existing ones if needed
 try:

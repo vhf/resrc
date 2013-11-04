@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-:
-
 from markdown.treeprocessors import Treeprocessor
 from markdown.extensions import Extension
 from markdown.util import etree
