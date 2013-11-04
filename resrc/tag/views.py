@@ -37,20 +37,25 @@ def index(request):
 def tokeninput_json(request):
     from resrc.utils import slugify
     from taggit.models import Tag
+    from django.db.models import Count
 
     query = request.GET.get('q')
-
+    result = None
     if query is None:
-        result = cache.get("tokeninput-_everything_")
+        #result = cache.get("tokeninput-_everything_")
         if result is None :
-            tags_json = Tag.objects.all().values('id', 'name')
+            tags_json = Tag.objects.all().select_related('links') \
+                .annotate(freq=Count('link')) \
+                .values('id', 'name', 'freq')
             result = simplejson.dumps(list(tags_json))
             cache.set("tokeninput-_everything_", result)
     else:
-        result = cache.get("tokeninput-%s" % slugify(query))
+        #result = cache.get("tokeninput-%s" % slugify(query))
         if result is None :
             from taggit.models import Tag
-            tags_json = Tag.objects.filter(name__icontains=query).values('id', 'name')
+            tags_json = Tag.objects.filter(name__icontains=query) \
+                .select_related('links').annotate(freq=Count('link')) \
+                .values('id', 'name', 'freq')
             result = simplejson.dumps(list(tags_json))
             cache.set("tokeninput-%s" % slugify(query), result)
 
