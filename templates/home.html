@@ -19,15 +19,28 @@
 
 {% block content %}
 {% if not user.is_authenticated %}
-<div class="row panel">
+<div class="row welcome">
   <div class="large-12 columns">
-    <h2>Help us find and tag all free programming learning resources</h2>
-    <p>Sign in and give some of your free time to classify and regroup all the best learning resources.</p>
-    <p>Come back anytime to visit your reading list, to find the resource you need by browsing the tags, to browse or create great lists of learning resources.</p>
-    <p>Keep on reading and learning. Don't forget to upvote and comment. And of course share the love, share the resources.</p>
+    <div class="panel">
+      <div style="position: absolute; right: 30px; top: 10px; font-size: 2em;"><a href="#" id="close">&#215;</a></div>
+      <h1><span>Find Y resources about X in <span class="show-for-medium">Zero</span><span class="hide-for-medium">0</span> minutes</span></h1>
+      <div class="row">
+        <div class="large-3 columns">
+          <p>
+            <a href="{% url "user-register" %}" class="button large-12">Register now!</a>
+          </p>
+        </div>
+        <div class="large-9 columns">
+          <p>Sometimes, search engines fail at recommending the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
+          <p>Find articles, tutorials, documentation, screencasts just about anything programming related. Browse by <strong>tags</strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
+          <p>Create and publish your lists or import them directly (e.g. from GitHub) in Markdown, add links to your Reading List.</p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 {% endif %}
+
 <div class="row panel discover_panel"{% if not user.is_authenticated %} style="display:none"{% endif %}>
   <div class="large-12 columns">
     <h3>Featured</h3>
@@ -47,28 +60,63 @@
 
 
 <div class="row">
-  <div class="large-12 columns">
-    <h3><a href="{% url "links" %}">Hottest links</a></h3>
-    <div class="row">
-      {% for link in hottest_links %}
-      <div class="small-1 columns"><div class="arrow-up pointer" data-id="{{link.link__pk}}" data-type="link"></div></div>
-      <div class="small-11 columns">
-        <p>
-          <i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
-           &#183;
-          {% commentcount link.link__pk %}&#160;comment
-            <ul class="inline inline-list" style="margin-top: 3px">
-              {% for tag in link.tags %}
-              <li><p class="tag left"><a href="{% url "tag-single-slug" tag.0 %}"><span class="t">{{ tag.1 }}</span></a></p></li>
-              {% endfor %}
-            </ul>
-        </p>
-      </div>
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "lists" %}">Best lists</a></h3>
+    <ul class="no-bullet">
+      {% for list in hottest_lists %}
+      <li><span class="votes y-bg" data-id="{{list.alist__pk}}" data-type="list"><span class="votes-count"> {{ list.count }} </span><i class="fi-check{% if list.alist__pk in upvoted_lists %}box{% endif %}"></i></span><a href="{% url "list-single-slug" list.alist__pk list.alist__slug %}">{{ list.alist__title }}</a></li>
       <hr>
       {% endfor %}
+    </ul>
+  </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "links" %}">Latest links</a></h3>
+    <ul class="no-bullet">
+      {% for link in latest_links %}
+      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+         &#183;
+        {% commentcount link.link__pk %}&#160;comment
+      </li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "tag-index" %}">Most used tags</a></h3>
+    <div>
+      {% for tag in tags %}{% if tag.slug %}
+      <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
+      {% endif %}{% endfor %}
     </div>
   </div>
+
+  <div class="medium-6 large-3 columns">
+    <h3><a href="{% url "links" %}">Hottest links</a></h3>
+    <ul class="no-bullet">
+      {% for link in hottest_links %}
+      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+         &#183;
+        {% commentcount link.link__pk %}&#160;comment
+      </li>
+      <hr>
+      {% endfor %}
+    </ul>
+  </div>
 </div>
+
+<div class="row">
+  <div class="large-12 columns panel">
+    <h6>legend</h6>
+    <ul class="no-bullet inline-list">
+      <li><a href="#"><span class="votes y-bg" data-tooltip title="Click to upvote">74 <i class="fi-check"></i></span>I'm a list with 74 votes</a></li>
+      <li class="tag" style="margin-top: 5px"><a href="#"><span class="c">8</span><span class="t">I'm a tag with 8 links</span></a></li>
+      <li><a href="#"><i class="fi-link" style="color:black"></i><span class="votes y-bg" data-tooltip title="Click to upvote">17 <i class="fi-check"></i></span>I'm a link with 17 votes</a></li>
+    </ul>
+  </div>
+</div>
+
 
 
 
@@ -133,7 +181,22 @@ $(function () {
       url: "http://resrc.io{% url "user-login-modal" %}"
     });
   });
+  $('#close').click(function() {
+    document.cookie = "hide=True";
+    _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Hide']);
+    $('.welcome').remove();
+    $('.discover_panel').show();
+  });
 });
+
+var x = document.cookie;
+var hideDiv = x.split(";");
+for(i = 0; i < hideDiv.length; i++)
+if(hideDiv[i] == " hide=True") {
+  _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Already hidden']);
+  $('.welcome').remove();
+  $('.discover_panel').show();
+}
 </script>
 {% endif %}
 
