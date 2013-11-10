@@ -29,9 +29,6 @@
 
       <section class="top-bar-section">
         <ul class="left">
-          <li>
-            <a href="{% url "page-new" %}">New !</a>
-          </li>
           <li class="has-dropdown">
             <a href="{% url "lists" %}">
               Lists
@@ -40,7 +37,7 @@
               <li><a href="{% url "lists" %}">Summary</a></li>
               {% if user.is_authenticated %}
               <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
-              <li><a href="{% url "new-list" %}">New list</a></li>
+              <li><a href="{% url "new-list" %}">Create a list</a></li>
               {% endif %}
             </ul>
           </li>
@@ -49,9 +46,10 @@
               Links
             </a>
             <ul class="dropdown">
+              <li><a href="{% url "page-new" %}">New</a></li>
               <li><a href="{% url "links" %}">Summary</a></li>
               {% if user.is_authenticated %}
-              <li><a href="{% url "new-link" %}">New link</a></li>
+              <li><a href="{% url "new-link" %}">Add a link</a></li>
               {% endif %}
             </ul>
           </li>

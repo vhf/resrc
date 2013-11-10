@@ -38,9 +38,14 @@ class VoteManager(models.Manager):
             qs = qs.filter(link__language__in=lang_filter)
         qs = qs \
             .exclude(link=None) \
+            .values_list('link__pk', flat=True)
+        qs = qs[:limit]
+
+        qs = self.get_query_set() \
+            .filter(link__pk__in=qs) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
-            .order_by('-count')[:limit]
+            .order_by('-count')
 
         for link in qs:
             link['commentcount'] = MpttComment.objects.filter(object_pk=link['link__pk']).count()
@@ -81,13 +86,19 @@ class VoteManager(models.Manager):
 
 
     def hottest_lists(self, limit=10, days=1, lang_filter=[1]):  # TODO: implement lang filter
-        return self.get_query_set() \
+        qs = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
             .exclude(alist=None) \
             .exclude(alist__is_public=False) \
+            .values_list('alist__pk', flat=True)
+        qs = qs[:limit]
+
+        qs = self.get_query_set() \
+            .filter(alist__pk__in=qs) \
             .values('alist__pk', 'alist__slug', 'alist__title') \
             .annotate(count=Count('id')) \
-            .order_by('-count')[:limit]
+            .order_by('-count')
+        return qs
 
 
     def votes_for_link(self, link_pk):
