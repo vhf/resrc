@@ -126,6 +126,12 @@ $(function(){
         $('#form-message').hide();
         $('.errorField').hide();
         $('.error').removeClass('error');
+
+        $('#id_tags').val('');
+        $('.tagit-choice').each(function() {
+          $(this).remove();
+        });
+
         $('#addmodal').attr('data-link', idx);
         $('#addmodal').foundation('reveal', 'open');
       });
