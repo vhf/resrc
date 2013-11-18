@@ -20,7 +20,7 @@ class Profile(models.Model):
     from resrc.language.models import Language
     languages = models.ManyToManyField(Language)
 
-    # karma = models.IntegerField('karma', null=True, blank=True)
+    karma = models.IntegerField('karma', null=True, blank=True)
 
     show_email = models.BooleanField('show_email', default=False)
 

@@ -56,6 +56,8 @@ class Link(models.Model):
         if not self.id:
             from resrc.utils.hash2 import hash2
             self.hash2 = hash2(self.url)
+            from resrc.utils.karma import karma_rate
+            karma_rate(self.author_id, 1)
         cache.set('link_%s' % self.pk, self, 60*5)
         super(Link, self).save(*args, **kwargs)
 
@@ -118,6 +120,20 @@ class Link(models.Model):
             alist=alist
         )
         vote.save()
+
+        if user.pk is not self.author.pk:
+            # add karma to link author if not voter
+            from resrc.utils.karma import karma_rate
+            karma_rate(self.author.pk, 1)
+
+    def unvote(self, user):
+        from resrc.vote.models import Vote
+        Vote.objects.get(user=user, link=self).delete()
+
+        if user.pk is not self.author.pk:
+            # remove karma from link author if not voter
+            from resrc.utils.karma import karma_rate
+            karma_rate(self.author.pk, -1)
 
     def get_votes(self):
         from resrc.vote.models import Vote

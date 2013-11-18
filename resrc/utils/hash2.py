@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-:
+
 def base36encode(number, alphabet='0123456789abcdefghijklmnopqrstuvwxyz'):
     """Converts an integer to a base36 string."""
     if not isinstance(number, (int, long)):

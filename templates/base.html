@@ -1,5 +1,6 @@
 ﻿{% load staticfiles %}
 {% load gravatar %}
+{% load karma %}
 <!DOCTYPE html>
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
 <!--[if IE 8]> <html class="no-js lt-ie9" lang="en"> <![endif]-->
@@ -70,6 +71,7 @@
           {% if user.is_authenticated %}
           <li class="has-dropdown">
             <a href="{% url "user-url" user.username %}">
+              <span class="round secondary label" data-tooltip title="Your karma">{{ user|karma }}</span>
               {% gravatar user.email 24 %}
               {{ user.username }}
             </a>

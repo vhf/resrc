@@ -318,7 +318,7 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
             data = simplejson.dumps({'result': 'voted'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
-            Vote.objects.get(user=request.user, link=link).delete()
+            link.unvote(request.user)
             data = simplejson.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
     raise Http404

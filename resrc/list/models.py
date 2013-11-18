@@ -160,6 +160,20 @@ class List(models.Model):
         )
         vote.save()
 
+        if user.pk is not self.owner.pk:
+            # add karma to list owner if not voter
+            from resrc.utils.karma import karma_rate
+            karma_rate(self.owner.pk, 1)
+
+    def unvote(self, user):
+        from resrc.vote.models import Vote
+        Vote.objects.get(user=user, alist=self).delete()
+
+        if user.pk is not self.owner.pk:
+            # remove karma from list owner if not voter
+            from resrc.utils.karma import karma_rate
+            karma_rate(self.owner.pk, -1)
+
     def get_votes(self):
         from resrc.vote.models import Vote
         return Vote.objects.filter(alist=self).count()
