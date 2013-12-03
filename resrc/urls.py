@@ -18,7 +18,6 @@ urlpatterns = patterns(
 
     # third party includes
     url(r'^ca/', include('captcha.urls')),
-    url(r'^comment/', include('mptt_comments.urls')),
 
     url(r'^$', home, name="home"),
 

@@ -1,7 +1,8 @@
 {% extends "lists/base.html" %}
 {% load profile %}
 {% load staticfiles %}
-{% load mptt_comments_tags %}
+{% load disqus_tags %}
+{% disqus_dev %}
 {% load crispy_forms_tags %}
 {% load emarkdown %}
 
@@ -80,7 +81,7 @@
 {% if list.title != reading_list %}
 <div class="row">
   <div class="large-12 columns">
-    {% display_comment_toplevel_for list %}
+    {% disqus_show_comments %}
   </div>
 </div>
 {% endif %}
@@ -89,7 +90,6 @@
 
 {% block last_body %}
 {% if request.user.is_authenticated %}
-<script src="{% static "js/mptt_comments/mptt_comments.js" %}"></script>
 <script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
 

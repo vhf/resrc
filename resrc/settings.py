@@ -154,8 +154,7 @@ EXTERNAL_APPS = [
     'captcha',
     'email_obfuscator',
     'debug_toolbar',
-    'mptt',
-    'mptt_comments',
+    'disqus',
     'floppyforms',
     'taggit'
 ]
@@ -202,8 +201,6 @@ LOGGING = {
     }
 }
 
-COMMENTS_APP = "mptt_comments"
-
 # simple captcha
 #CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
 CAPTCHA_LETTER_ROTATION = None
@@ -219,9 +216,8 @@ DEBUG_TOOLBAR_CONFIG = {
 CRISPY_FAIL_SILENTLY = not DEBUG
 CRISPY_TEMPLATE_PACK = 'foundation'
 
-MPTT_COMMENTS_OFFSET = 20
-MPTT_COMMENTS_COLLAPSE_ABOVE = 4
-MPTT_COMMENTS_CUTOFF = 5
+DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
+DISQUS_WEBSITE_SHORTNAME = 'resrc'
 
 AUTH_PROFILE_MODULE = 'userprofile.Profile'
 LOGIN_URL = '/user/login'
