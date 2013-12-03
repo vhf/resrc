@@ -6,8 +6,8 @@ from django.views.decorators.cache import cache_page
 
 def home(request):
     from resrc.vote.models import Vote
-    hot_lk_cache = 'hot_lk_10_7'
-    hot_ls_cache = 'hot_ls_10_7'
+    hot_lk_cache = 'hot_lk_5_7'
+    hot_ls_cache = 'hot_ls_14_7'
     lang_filter = [1]
     user = request.user
     if user.is_authenticated():
@@ -15,7 +15,7 @@ def home(request):
         profile = Profile.objects.get(user=user)
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
         hot_lk_cache = 'hot_lk_10_7_%s' % '_'.join(map(str, lang_filter))
-        hot_ls_cache = 'hot_ls_10_7_%s' % '_'.join(map(str, lang_filter))
+        hot_ls_cache = 'hot_ls_10_14_%s' % '_'.join(map(str, lang_filter))
 
         user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
         user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
@@ -34,7 +34,7 @@ def home(request):
 
     hottest_lists = cache.get(hot_ls_cache)
     if hottest_lists is None:
-        hottest_lists = Vote.objects.hottest_lists(limit=5, days=7, lang_filter=lang_filter)
+        hottest_lists = Vote.objects.hottest_lists(limit=5, days=14, lang_filter=lang_filter)
         cache.set(hot_ls_cache, list(hottest_lists), 60*2+2)
 
     tags = cache.get('tags_all')
