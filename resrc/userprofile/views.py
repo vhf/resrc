@@ -64,7 +64,10 @@ def login_register_view(request, register=False, modal=False):
             else:
                 login_error = 'Bad user/password'
         else:
-            login_error = 'Form invalid'
+            if request.POST['username'] and request.POST['password']:
+                login_error = 'Form invalid'
+            else:
+                login_error = 'Please enter username and password'
 
     login_form = LoginForm()
     register_form = RegisterForm()
