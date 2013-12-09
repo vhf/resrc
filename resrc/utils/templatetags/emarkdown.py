@@ -41,7 +41,7 @@ def emarkdown(value):
 def listmarkdown(value, alist):
     allowed_tags = ['div', 'span', 'p', 'pre', 'hr', 'br',
                     'strong', 'em', 'i', 'b', 'code', 'sub', 'sup',
-                    'a', 'abbr', 'blockquote',
+                    'a', 'abbr', 'blockquote', 'del',
                     'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']
 
     allowed_attrs = {
