@@ -12,7 +12,7 @@ register = template.Library()
 def emarkdown(value):
     allowed_tags = ['div', 'span', 'p', 'pre', 'hr', 'br',
                     'strong', 'em', 'i', 'b', 'code', 'sub', 'sup',
-                    'a', 'abbr', 'blockquote',
+                    'a', 'abbr', 'blockquote', 'del',
                     'ul', 'ol', 'li', 'h4', 'h5', 'h6',
                     'table', 'thead', 'tbody', 'tr', 'td', 'th']
 
