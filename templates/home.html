@@ -17,44 +17,35 @@
 {# Content #}
 
 {% block content %}
-{% if not user.is_authenticated %}
-<div class="row welcome">
+<div class="row">
   <div class="large-12 columns">
-    <div class="panel">
-      <div style="position: absolute; right: 30px; top: 10px; font-size: 2em;"><a href="#" id="close">&#215;</a></div>
-      <h1><span>All Best Online Learning Resources</span></h1>
-      <div class="row">
-        <div class="large-3 columns">
-          <p>
-            <a href="{% url "user-register" %}" class="button large-12">Register now!</a>
-          </p>
-        </div>
-        <div class="large-9 columns">
-          <p>Sometimes, search engines fail at recommending the best resources about a specific topic. Curated lists are an awesome way to find stuff you might really want to read.</p>
-          <p>Find articles, <a href="/tag/tag/tutorial/">tutorials</a>, documentation, screencasts just about anything programming related. Browse by <strong><a href="/tag/">tags</a></strong>, read <strong>curated lists</strong>, upvote lists and links you like.</p>
-          <p>Create and publish your lists or import them directly (e.g. from GitHub) in raw Markdown, add links to your Reading List.</p>
-          <p><strong>Start learning today. Just choose a topic.</strong></p>
-        </div>
-      </div>
-    </div>
+    <h1 id="query">Search by tags</h1>
   </div>
 </div>
-{% endif %}
+<div class="row">
+  <div class="large-2 small-2 columns">
+    <div class="switch">
+      <input name="op" id="op-or" value="or" type="radio" checked>
+      <label for="x" onclick="">Or</label>
 
-<div class="row panel discover_panel"{% if not user.is_authenticated %} style="display:none"{% endif %}>
-  <div class="large-12 columns">
-    <h3>Featured</h3>
-    <div class="row">
-      <div class="large-4 columns">
-        <h5><a href="/list/10/list-of-free-programming-books/">List of Free Programming Books</a></h5>
-      </div>
-      <div class="large-4 columns">
-        <h5><a href="/list/18/javascript-frameworks/">JavaScript Frameworks Resources and Tutorials</a></h5>
-      </div>
-      <div class="large-4 columns">
-        <h5><a href="/list/4/pycrumbs/">pycrumbs - All Free Python Learning Resources</a></h5>
-      </div>
+      <input name="op" id="op-and" value="and" type="radio">
+      <label for="x1" onclick="">And</label>
+
+      <span></span>
     </div>
+  </div>
+  <div class="large-10 columns">
+    <input type="text" id="tags" value=""/>
+  </div>
+</div>
+<div class="row" id="results">
+  <div class="large-6 columns">
+    <h3>Links</h3>
+    <div id="link_results"></div>
+  </div>
+  <div class="large-6 columns">
+    <h3>Lists</h3>
+    <div id="list_results"></div>
   </div>
 </div>
 
@@ -113,52 +104,6 @@
   </div>
 </div>
 
-
-
-
-<div class="row">
-  <div class="large-12 columns">
-    <h1 id="query">Search by tags</h1>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-2 small-2 columns">
-    <div class="switch">
-      <input name="op" id="op-or" value="or" type="radio" checked>
-      <label for="x" onclick="">Or</label>
-
-      <input name="op" id="op-and" value="and" type="radio">
-      <label for="x1" onclick="">And</label>
-
-      <span></span>
-    </div>
-  </div>
-  <div class="large-10 columns">
-    <input type="text" id="tags" value=""/>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-2 small-2 columns">
-    <p><strong>exclude tags :</strong></p>
-  </div>
-  <div class="large-10 small-10 columns">
-    <input type="text" id="tags2" value=""/>
-  </div>
-</div>
-
-<div class="row">
-  <div class="large-6 columns">
-    <h4>Links</h4>
-    <div id="link_results"></div>
-  </div>
-  <div class="large-6 columns">
-    <h4>Lists</h4>
-    <div id="list_results"></div>
-  </div>
-</div>
-
 {% endblock %}
 
 {% block last_body %}
@@ -201,6 +146,7 @@ if(hideDiv[i] == " hide=True") {
 
 <script type="text/javascript">
 $(function(){
+  $('#results').hide();
   var search = function(item) {
     var tags_li = $($('.token-input-list')[0]).find('li.token-input-token');
     var tags = [];
@@ -228,6 +174,7 @@ $(function(){
 
     if (query.length === 0) {
       $('#query').html('Search by tags');
+      $('#results').hide();
       return;
     } else {
       $('#query').html('<a href="/page'+url+'">'+query+'</a>');
@@ -243,6 +190,7 @@ $(function(){
           if (result[0].length > 0) {
             for (var i = 0; i < result[0].length; i++) {
               link = result[0][i];
+              $('#results').show();
               $('#link_results').append('<div class="panel">'
                 + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
                 + '</div>');
@@ -253,11 +201,13 @@ $(function(){
           if (result[1].length > 0) {
             for (var i = 0; i < result[1].length; i++) {
               list = result[1][i];
+              $('#results').show();
               $('#list_results').append('<div class="panel">'
                 + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
                 + '</div>');
             }
           } else {
+            $('#results').show();
             $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
           }
         }

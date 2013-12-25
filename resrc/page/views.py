@@ -14,8 +14,8 @@ def home(request):
         from resrc.userprofile.models import Profile
         profile = Profile.objects.get(user=user)
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
-        hot_lk_cache = 'hot_lk_10_7_%s' % '_'.join(map(str, lang_filter))
-        hot_ls_cache = 'hot_ls_10_14_%s' % '_'.join(map(str, lang_filter))
+        hot_lk_cache = 'hot_lk_10_30_%s' % '_'.join(map(str, lang_filter))
+        hot_ls_cache = 'hot_ls_10_30_%s' % '_'.join(map(str, lang_filter))
 
         user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
         user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]
@@ -27,14 +27,14 @@ def home(request):
 
     hottest_links = cache.get(hot_lk_cache)
     if hottest_links is None:
-        hottest_links = Vote.objects.hottest_links(limit=5, days=7, lang_filter=lang_filter)
+        hottest_links = Vote.objects.hottest_links(limit=5, days=30, lang_filter=lang_filter)
         cache.set(hot_lk_cache, list(hottest_links), 60*2)
 
     latest_links = Vote.objects.latest_links(limit=5, days=7, lang_filter=lang_filter)
 
     hottest_lists = cache.get(hot_ls_cache)
     if hottest_lists is None:
-        hottest_lists = Vote.objects.hottest_lists(limit=5, days=14, lang_filter=lang_filter)
+        hottest_lists = Vote.objects.hottest_lists(limit=5, days=30, lang_filter=lang_filter)
         cache.set(hot_ls_cache, list(hottest_lists), 60*2+2)
 
     tags = cache.get('tags_all')
