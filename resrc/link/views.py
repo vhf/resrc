@@ -391,6 +391,15 @@ def links_page(request):
 
 
 @login_required
+def my_links(request):
+    links = Link.objects.filter(author=request.user)
+
+    return render_template('links/my_links.html', {
+        'links': links,
+    })
+
+
+@login_required
 def upvoted_list(request):
     from resrc.vote.models import Vote
     upvoted_links = Vote.objects.my_upvoted_links(request.user)

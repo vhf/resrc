@@ -1,0 +1,35 @@
+{% extends "links/base.html" %}
+{% load disqus_tags %}
+{% disqus_dev %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{ tag.name }}
+{% endblock %}
+
+{% block breadcrumb %}
+<li><a href="{% url "home" %}">Home</a></li>
+<li><a href="{% url "links" %}">Links</a></li>
+<li class="current">My links</li>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="large-12 columns">
+      <h1>My links</h1>
+      <div  class="js-masonry" data-masonry-options='{ "itemSelector": ".panel", "gutter": 2 }'>
+        {% for link in links %}
+        <div class="panel medium-3" style="width: 24%">
+          <h5><a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a></h5>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block last_body %}
+<script src="{% static "js/masonry.min.js" %}"></script>
+{% endblock %}

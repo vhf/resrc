@@ -14,7 +14,7 @@
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="#">Links</a></li>{# TODO : Add real URLs here #}
+<li><a href="{% url "links" %}">Links</a></li>
 <li class="current">{% if edit %}Edit link{% else %}New link{% endif %}</li>
 {% endblock %}
 

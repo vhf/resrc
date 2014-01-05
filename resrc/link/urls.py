@@ -11,6 +11,7 @@ urlpatterns = patterns(
     url(r'^(?P<link_pk>\d+)/edit$', views.edit_link, name="link-edit"),
     url(r'^(?P<link_pk>\d+)/upvote$', views.ajax_upvote_link, name="link-upvote"),
     url(r'^(?P<link_pk>\d+)/suggest$', views.ajax_revise_link, name="revise-link"),
+    url(r'^my/$', views.my_links, name="my-links"),
     url(r'^new/$', views.new_link, name="new-link"),
     url(r'^popup/(?P<title>.+)/u/(?P<url>.+)$', views.new_link, name="new-link-popup"),
     url(r'^upvotes/$', views.upvoted_list, name="upvoted-list"),
