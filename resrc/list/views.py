@@ -339,7 +339,7 @@ def auto_pull(request, list_pk):
 
 @login_required
 def delete(request, list_pk):
-    if not request.user.is_authenticated() and request.method == 'POST':
+    if not request.method == 'POST':
         raise Http404
     alist = get_object_or_404(List, pk=list_pk)
 

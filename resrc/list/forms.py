@@ -215,7 +215,7 @@ class EditListForm(forms.Form):
                         css_class='large-6',
                     ),
                     Column(
-                        HTML('<a href="%s" class="small button alert right">Delete list</a>' % delete_url),
+                        HTML('<a href="%s" class="small button alert right" data-id="%s">Delete list</a>' % (delete_url, alist.pk)),
                         css_class='large-6'
                     ),
                 )

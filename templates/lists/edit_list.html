@@ -19,6 +19,14 @@ Edit {{ list.title }}
     {% crispy form %}
   </div>
 </div>
+
+<div id="deletemodal" class="reveal-modal">
+    <h1>Are you sure ?</h1>
+    <p>You are about to delete <strong><a href="#" id="todel">title</a></strong>.</p>
+    <a href="#" class="large button" id="close">Take me back</a> &nbsp;
+    <a href="#" class="large button alert">I'm sure.</a>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
 {% endblock %}
 
 
@@ -41,5 +49,35 @@ Edit {{ list.title }}
       }
     }, 100);
   });
+</script>
+<script>
+
+    $('a.button.alert').on('click', function(e) {
+      e.preventDefault();
+      var id = $(this).attr('data-id');
+      var title = $('#id_title').val();
+      $list = $('lala');
+      var link = $list.attr('href');
+      $('#deletemodal > a.alert').attr('data-id', id);
+      $('#todel').text(title);
+      $('#todel').attr('href', link);
+      $('#deletemodal').foundation('reveal', 'open');
+    });
+
+    $('#close').on('click', function() {
+      $('#deletemodal').foundation('reveal', 'close');
+    });
+
+    $('#deletemodal > a.alert').on('click', function() {
+      var id = $(this).attr('data-id');
+      $.ajax({
+        type:"POST",
+        url: "/list/delete/"+id,
+        data: 'csrfmiddlewaretoken={{csrf_token}}'
+      }).done(function(xhr) {
+        $('#deletemodal').foundation('reveal', 'close');
+        window.location.replace("/");
+      });
+    });
 </script>
 {% endblock last_body %}
