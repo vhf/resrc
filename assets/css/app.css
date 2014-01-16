@@ -6421,10 +6421,10 @@ ul.pagination li {
 .panel {
   border-style: solid;
   border-width: 1px;
-  border-color: #d9d9d9;
+  border-color: #f2f462;
   margin-bottom: 1.25em;
   padding: 1.25em;
-  background: #f2f2f2;
+  background: #f6f792;
 }
 /* line 44, ../../../.gem/ruby/2.0.0/gems/zurb-foundation-4.3.1/scss/foundation/components/_panels.scss */
 .panel > :first-child {
@@ -8214,7 +8214,7 @@ i {
 
 /* line 16, ../sass/_resrc.scss */
 nav.top-bar {
-  background-color: #75a2aa;
+  background-color: #77c4d3;
 }
 
 /* line 19, ../sass/_resrc.scss */
@@ -8228,7 +8228,7 @@ nav.top-bar {
 }
 /* line 27, ../sass/_resrc.scss */
 .top-bar-section ul li a {
-  background-color: #75a2aa;
+  background-color: #77c4d3;
   color: white;
   font-size: 0.8em;
 }
@@ -8238,9 +8238,18 @@ nav.top-bar {
 }
 /* line 34, ../sass/_resrc.scss */
 .top-bar-section ul li a:not(.button) {
-  background-color: #75a2aa;
+  background-color: #77c4d3;
 }
 
+/*
+h3 {
+  color: white;
+  background-color: rgba(234,46,73,1);
+}
+
+h3 a {
+  color: white;
+}*/
 /* line 2, ../sass/_lists.scss */
 .markdownform .editable, .markdownform #id_mdcontent {
   line-height: 20px !important;
