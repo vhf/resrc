@@ -202,7 +202,7 @@ LOGGING = {
 }
 
 # simple captcha
-#CAPTCHA_CHALLENGE_FUNCT = 'captcha.helpers.math_challenge'
+CAPTCHA_CHALLENGE_FUNCT = 'resrc.utils.captcha.random_digit_challenge'
 CAPTCHA_LETTER_ROTATION = None
 CAPTCHA_FONT_SIZE = 50
 
