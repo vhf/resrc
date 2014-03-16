@@ -7,9 +7,7 @@ from django.core.urlresolvers import reverse
 import re
 
 
-REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+\&]+', re.UNICODE)
-REPLACE2_REXP = re.compile(r'[\(]', re.UNICODE)
-REPLACE3_REXP = re.compile(r'[\)]', re.UNICODE)
+REPLACE1_REXP = re.compile(r'[\':\?\!,/\.\+\&\(\)#]+', re.UNICODE)
 REPLACE4_REXP = re.compile(r'[^-\w%]', re.UNICODE)
 
 
@@ -20,8 +18,6 @@ def github_slugify(text):
     from urllib import quote_plus
     text = REPLACE1_REXP.sub('', text)
     text = quote_plus(text)
-    text = REPLACE2_REXP.sub('%28', text)
-    text = REPLACE3_REXP.sub('%29', text)
     text = REPLACE4_REXP.sub('-', text.lower())
     return text
 
