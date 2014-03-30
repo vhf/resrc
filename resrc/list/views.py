@@ -293,7 +293,7 @@ def edit(request, list_pk):
             alist.language = lang
             alist.save()
             # once saved, we parse the markdown to add links found to list
-            alist.html_content = listmarkdown(mdcontent, alist)
+            alist.html_content = listmarkdown(mdcontent.strip(u'\ufeff'), alist)
             alist.save()
 
             return redirect(alist.get_absolute_url())
