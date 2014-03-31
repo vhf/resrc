@@ -330,7 +330,7 @@ def auto_pull(request, list_pk):
     alist.html_content = ''
 
     from resrc.utils.templatetags.emarkdown import listmarkdown
-    alist.html_content = listmarkdown(mdcontent, alist)
+    alist.html_content = listmarkdown(mdcontent.strip(u'\ufeff'), alist)
     alist.save()
 
     return redirect(alist.get_absolute_url())
