@@ -107,14 +107,8 @@ def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
     from taggit.models import Tag
     all_tags = Tag.objects.all().values_list('name', flat=True)
 
-    tags_csv = cache.get('tags_csv')
-    if tags_csv is None:
-        tags_csv = '","'.join(all_tags)
-        tags_csv = '"%s"' % tags_csv
-        cache.set('tags_csv', tags_csv, 60*15)
     if operand is not None:
         return render_template('pages/search.html', {
-            'tags': tags_csv,
             'stags': tags,
             'sop': operand,
             'sex': excludes,
@@ -122,7 +116,6 @@ def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
         })
     else:
         return render_template('pages/search.html', {
-            'tags': tags_csv,
             'all_tags': all_tags,
         })
 
