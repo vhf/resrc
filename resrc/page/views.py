@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-:
+import json
+
 from resrc.utils import render_template
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
@@ -106,17 +108,18 @@ def about(request):
 def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
     from taggit.models import Tag
     all_tags = Tag.objects.all().values_list('name', flat=True)
+    tags_json = json.dumps([{'tag': tag} for tag in all_tags])
 
     if operand is not None:
         return render_template('pages/search.html', {
             'stags': tags,
             'sop': operand,
             'sex': excludes,
-            'all_tags': all_tags,
+            'tags_json': tags_json,
         })
     else:
         return render_template('pages/search.html', {
-            'all_tags': all_tags,
+            'tags_json': tags_json,
         })
 
 

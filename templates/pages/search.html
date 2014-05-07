@@ -75,11 +75,10 @@ Search by tags
       openOnFocus: false,
       highlight: true,
       hideSelected: true,
-      options: [
-        {% for tag in all_tags %}
-        {value: "{{ tag }}", text: "{{ tag }}"},
-        {% endfor %}
-      ],
+      valueField: 'tag',
+      labelField: 'tag',
+      searchField: ['tag'],
+      options: {{ tags_json|safe }},
       onChange: search,
       onInitialize: search,
     };
