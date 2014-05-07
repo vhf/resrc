@@ -34,7 +34,6 @@ def single(request, link_pk, link_slug=None):
     if link_slug is None:
         return redirect(link)
 
-    # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
     if link.slug != link_slug:
         raise Http404
 
@@ -183,7 +182,7 @@ def new_link(request, title=None, url=None):
                     links=link
                 )
             from resrc.utils.templatetags.emarkdown import listmarkdown
-            alist.html_content = listmarkdown(alist.md_content, alist)
+            alist.html_content = listmarkdown(alist.md_content.strip(u'\ufeff'), alist)
             alist.save()
 
             data = simplejson.dumps({'result': 'added'})

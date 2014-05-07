@@ -22,7 +22,6 @@ def single(request, list_pk, list_slug=None):
     if list_slug is None:
         return redirect(alist)
 
-    # avoid https://twitter.com/this_smells_fishy/status/351749761935753216
     if alist.slug != list_slug:
         raise Http404
     if not alist.is_public and request.user != alist.owner:
@@ -226,7 +225,7 @@ def new_list(request):
                 is_public=not is_private,
                 language=lang,
             )
-            alist.html_content = listmarkdown(mdcontent, alist)
+            alist.html_content = listmarkdown(mdcontent.strip(u'\ufeff'), alist)
             alist.save()
 
             return redirect(alist.get_absolute_url())
