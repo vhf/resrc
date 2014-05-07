@@ -88,7 +88,9 @@ Search by tags
 
     $('input[name="op"]').on('change', search);
 
-    $('#selected-tags').siblings('.selectize-control').find('input').focus();
+    if (!($('#selected-tags').val() || $('#excluded-tags').val())) {
+      $('#selected-tags').siblings('.selectize-control').find('input').focus();
+    }
 
 
     function search (selectedTags) {
