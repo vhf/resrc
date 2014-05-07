@@ -124,7 +124,7 @@ Search by tags
     };
 
     function resultTpl (index, content) {
-      var content = index + '. <a href="' + link.url + '">' + link.title + '</a>';
+      var content = index + '. <a href="' + content.url + '">' + content.title + '</a>';
       return resultLayoutTpl(content);
     };
 
