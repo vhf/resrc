@@ -90,6 +90,9 @@
       <p class="tag left"><a href="{% url "tag-single-slug" tag.slug %}"><span class="c">{{ tag.c }}</span><span class="t">{{ tag.name }}</span></a></p>
       {% endif %}{% endfor %}
     </div>
+    <div style="clear:both">
+      <a href="{% url "tag-index" %}">» see all</a>
+    </div>
   </div>
 
   <div class="medium-6 large-3 columns">

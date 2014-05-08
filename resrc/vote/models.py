@@ -37,7 +37,7 @@ class VoteManager(models.Manager):
         qs = qs \
             .exclude(link=None) \
             .values_list('link__pk', flat=True)
-        qs = qs[:limit]
+        qs = qs
 
         qs = self.get_query_set() \
             .filter(link__pk__in=qs) \
@@ -47,7 +47,7 @@ class VoteManager(models.Manager):
 
         for link in qs:
             link['tags'] = Link.objects.filter(pk=link['link__pk']).select_related('tags').values_list('tags__slug', 'tags__name')
-        return qs
+        return qs[:limit]
 
 
     def latest_links(self, limit=10, days=1, lang_filter=[1]):
@@ -88,14 +88,14 @@ class VoteManager(models.Manager):
             .exclude(alist=None) \
             .exclude(alist__is_public=False) \
             .values_list('alist__pk', flat=True)
-        qs = qs[:limit]
+        qs = qs
 
         qs = self.get_query_set() \
             .filter(alist__pk__in=qs) \
             .values('alist__pk', 'alist__slug', 'alist__title') \
             .annotate(count=Count('id')) \
             .order_by('-count')
-        return qs
+        return qs[:limit]
 
 
     def votes_for_link(self, link_pk):

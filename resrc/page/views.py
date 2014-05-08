@@ -56,7 +56,7 @@ def home(request):
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,
-        'tags': tags[:25],
+        'tags': tags[:15],
         'csvtags': tags_csv,
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
@@ -104,22 +104,19 @@ def about(request):
 
 
 def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
-    tags_csv = cache.get('tags_csv')
-    if tags_csv is None:
-        from taggit.models import Tag
-        tags_csv = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags_csv = '"%s"' % tags_csv
-        cache.set('tags_csv', tags_csv, 60*15)
+    from taggit.models import Tag
+    all_tags = Tag.objects.all().values_list('name', flat=True)
+
     if operand is not None:
         return render_template('pages/search.html', {
-            'tags': tags_csv,
             'stags': tags,
             'sop': operand,
             'sex': excludes,
+            'all_tags': all_tags,
         })
     else:
         return render_template('pages/search.html', {
-            'tags': tags_csv,
+            'all_tags': all_tags,
         })
 
 
