@@ -48,13 +48,6 @@ def home(request):
             .all()
         cache.set('tags_all', list(tags), 60*15)
 
-    tags_csv = cache.get('tags_csv')
-    if tags_csv is None:
-        from taggit.models import Tag
-        tags_csv = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags_csv = '"%s"' % tags_csv
-        cache.set('tags_csv', tags_csv, 60*15)
-
     from taggit.models import Tag
     all_tags = Tag.objects.all().values_list('name', flat=True)
     tags_json = json.dumps([{'tag': tag} for tag in all_tags])
@@ -63,7 +56,6 @@ def home(request):
         'latest_links': latest_links,
         'hottest_links': hottest_links,
         'tags': tags[:25],
-        'csvtags': tags_csv,
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
         'upvoted_lists': user_upvoted_lists,
