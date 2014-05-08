@@ -55,6 +55,10 @@ def home(request):
         tags_csv = '"%s"' % tags_csv
         cache.set('tags_csv', tags_csv, 60*15)
 
+    from taggit.models import Tag
+    all_tags = Tag.objects.all().values_list('name', flat=True)
+    tags_json = json.dumps([{'tag': tag} for tag in all_tags])
+
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,
@@ -63,6 +67,7 @@ def home(request):
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
         'upvoted_lists': user_upvoted_lists,
+        'tags_json': tags_json,
     })
 
 

@@ -8,8 +8,8 @@
 {% endblock %}
 
 {% block extrahead %}
-<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="{% static "js/selectize/css/selectize.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "css/selectize.resrc.css" %}" />
 {% endblock %}
 
 {% block breadcrumb_container %} {% endblock %}
@@ -33,8 +33,9 @@
     <h1 id="query">Search by tags</h1>
   </div>
 </div>
+
 <div class="row">
-  <div class="large-2 small-2 columns">
+  <div class="medium-2 columns">
     <div class="switch">
       <input name="op" id="op-or" value="or" type="radio" checked>
       <label for="x" onclick="">Or</label>
@@ -45,10 +46,11 @@
       <span></span>
     </div>
   </div>
-  <div class="large-10 columns">
-    <input type="text" id="tags" value=""/>
+  <div class="medium-10 columns">
+    <input type="text" id="selected-tags" value="" placeholder="Start entering tags" />
   </div>
 </div>
+
 <div class="row" id="results">
   <div class="large-6 columns">
     <h3>Links</h3>
@@ -151,95 +153,10 @@ if(hideDiv[i] == " hide=True") {
 }*/
 </script>
 {% endif %}
-
-<script type="text/javascript" src="{% static "js/jquery-tokeninput/src/jquery.tokeninput.js" %}" ></script>
-<link rel="stylesheet" type="text/css" href="{% static "js/jquery-tokeninput/styles/token-input.css" %}" />
-
-<script type="text/javascript">
-$(function(){
-  $('#results').hide();
-  var search = function(item) {
-    var tags_li = $($('.token-input-list')[0]).find('li.token-input-token');
-    var tags = [];
-    for(var i = 0; i < tags_li.length; i++) {
-      tags.push($(tags_li[i]).children('p').html());
-    }
-
-    var excludes_li = $($('.token-input-list')[1]).find('li.token-input-token');
-    var excludes = [];
-    for(var i = 0; i < excludes_li.length; i++) {
-      excludes.push($(excludes_li[i]).children('p').html());
-    }
-
-    var op = $('input[name="op"]:checked').val();
-
-    var url = '/search/'+tags.join(',')+'%25'+op+'%25'+excludes.join(',');
-
-    var query = tags.join(' '+(op == 'and' ? '&' : '|')+' ');
-    if (excludes.length > 0) {
-      query += ' ~(';
-      query += excludes.join(' | ');
-      query += ')';
-    }
-
-
-    if (query.length === 0) {
-      $('#query').html('Search by tags');
-      $('#results').hide();
-      return;
-    } else {
-      $('#query').html('<a href="/page'+url+'">'+query+'</a>');
-
-      _gaq.push(['_trackEvent', 'Search', 'Homepage', query]);
-
-      $.ajax({
-        type:"GET",
-        url: '/tag' + url,
-        success: function(result) {
-          result = $.parseJSON(result);
-          $('#link_results,#list_results').html('');
-          if (result[0].length > 0) {
-            for (var i = 0; i < result[0].length; i++) {
-              link = result[0][i];
-              $('#results').show();
-              $('#link_results').append('<div class="panel">'
-                + '<h5>'+(i+1)+'. <a href="'+link.url+'">'+link.title+'</a></h5>'
-                + '</div>');
-            }
-          } else {
-            $('#link_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
-          }
-          if (result[1].length > 0) {
-            for (var i = 0; i < result[1].length; i++) {
-              list = result[1][i];
-              $('#results').show();
-              $('#list_results').append('<div class="panel">'
-                + '<h5>'+(i+1)+'. <a href="'+list.url+'">'+list.title+'</a></h5>'
-                + '</div>');
-            }
-          } else {
-            $('#results').show();
-            $('#list_results').append('<div class="panel"><h5>Sorry, no result.</h5></div>');
-          }
-        }
-      });
-    }
-  };
-
-
-  $("#tags").tokenInput("{% url "tokeninput-json" %}", { //item.name
-    onAdd: search,
-    onDelete: search
-  });
-
-  $("#tags2").tokenInput("{% url "tokeninput-json" %}", {
-    onAdd: search,
-    onDelete: search
-  });
-
-
-  $('input[name="op"]').on('change', search);
-
-});
+<script>
+  window._gaq_page_name = 'Homepage';
+  window.tags = {{ tags_json|safe }};
 </script>
+<script src="{% static "js/selectize/js/standalone/selectize.min.js" %}"></script>
+<script src="{% static "js/search.js" %}"></script>
 {% endblock %}
