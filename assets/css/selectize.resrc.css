@@ -1,4 +1,8 @@
 
+.selectize-input {
+  padding: 1px 8px 1px 8px;
+}
+
 .selectize-dropdown, .selectize-input, .selectize-input input {
   font-size: 14px;
 }
