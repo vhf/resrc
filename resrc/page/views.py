@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-:
+import json
+
 from resrc.utils import render_template
 from django.core.cache import cache
 from django.views.decorators.cache import cache_page
@@ -46,21 +48,18 @@ def home(request):
             .all()
         cache.set('tags_all', list(tags), 60*15)
 
-    tags_csv = cache.get('tags_csv')
-    if tags_csv is None:
-        from taggit.models import Tag
-        tags_csv = '","'.join(Tag.objects.all().values_list('name', flat=True))
-        tags_csv = '"%s"' % tags_csv
-        cache.set('tags_csv', tags_csv, 60*15)
+    from taggit.models import Tag
+    all_tags = Tag.objects.all().values_list('name', flat=True)
+    tags_json = json.dumps([{'tag': tag} for tag in all_tags])
 
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,
         'tags': tags[:15],
-        'csvtags': tags_csv,
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
         'upvoted_lists': user_upvoted_lists,
+        'tags_json': tags_json,
     })
 
 
@@ -106,17 +105,18 @@ def about(request):
 def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
     from taggit.models import Tag
     all_tags = Tag.objects.all().values_list('name', flat=True)
+    tags_json = json.dumps([{'tag': tag} for tag in all_tags])
 
     if operand is not None:
         return render_template('pages/search.html', {
             'stags': tags,
             'sop': operand,
             'sex': excludes,
-            'all_tags': all_tags,
+            'tags_json': tags_json,
         })
     else:
         return render_template('pages/search.html', {
-            'all_tags': all_tags,
+            'tags_json': tags_json,
         })
 
 
