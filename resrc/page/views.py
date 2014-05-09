@@ -55,7 +55,7 @@ def home(request):
     return render_template('home.html', {
         'latest_links': latest_links,
         'hottest_links': hottest_links,
-        'tags': tags[:15],
+        'tags': tags[:22],
         'hottest_lists': hottest_lists,
         'upvoted_links': user_upvoted_links,
         'upvoted_lists': user_upvoted_lists,
