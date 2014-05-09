@@ -98,6 +98,7 @@ def search(request, tags, operand, excludes):
             links = links.exclude(tags__name=exclude)
 
         links = links.filter(language__in=lang_filter)
+        links = links.distinct()
 
         link_result = []
         links_pk = []
