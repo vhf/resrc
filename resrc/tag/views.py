@@ -96,7 +96,6 @@ def search(request, tags, operand, excludes):
             links = Link.objects.all()
         for exclude in excludes:
             links = links.exclude(tags__name=exclude)
-        links = links.exclude(list__is_public=False)
 
         links = links.filter(language__in=lang_filter)
 
@@ -112,6 +111,7 @@ def search(request, tags, operand, excludes):
 
         from resrc.list.models import List
         lists = List.objects.filter(links__in=links_pk)
+        lists = lists.exclude(is_public=False)
         lists = lists.filter(language__in=lang_filter)
         lists = lists.distinct()
         list_result = []
@@ -125,7 +125,7 @@ def search(request, tags, operand, excludes):
         result = []
         result.append(link_result)
         result.append(list_result)
-        cache.set(h, result, 60*60*24*3)
+        cache.set(h, result, 60*3)
 
     result = simplejson.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
