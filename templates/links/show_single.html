@@ -34,7 +34,7 @@
       {% endwith %}
 
 
-      <h3 class="link-title" style="clear:left"><a href="{{ link.get_absolute_url }}" title="Link to the current page"><i class="fi-link"></i></a> <a href="{{ link.url }}" rel="external"><span itemprop="name">{{ link.title }}</span></a></h3>
+      <h3 class="link-title" style="clear:left"><a href="{{ link.get_absolute_url }}" title="Link to the current page"><i class="fi-link"></i></a> <a href="{{ link.url }}" rel="external"><span itemprop="name">{{ link.title }}</span><br><small>{{ link.url }}</small></a></h3>
       <p class="byline">
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author.username }}</span></span></a> |
