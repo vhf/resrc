@@ -129,7 +129,7 @@ def revision(request):
     revised = RevisedLink.objects.select_related('link').all()
 
     for rev in revised:
-        rev.link.tags = ",".join(rev.link.tags.values_list('name', flat=True))
+        rev.link.tags = ",".join(rev.link.tags.order_by('name').values_list('name', flat=True))
 
     return render_template('pages/revision.html', {
         'revised': revised,
