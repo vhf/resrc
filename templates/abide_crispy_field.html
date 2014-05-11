@@ -1,0 +1,50 @@
+{% load crispy_forms_field %}
+
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    <div id="div_{{ field.auto_id }}" class="holder{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if field.errors and form_show_errors %} error{% endif %}{% if field|is_checkbox %} checkbox{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">{% spaceless %}
+
+        {% if field.label %}
+            {% if field|is_checkbox %}
+                {% crispy_field field %}
+            {% endif %}
+
+            <label for="{{ field.id_for_label }}" {% if field.field.required %}class="required"{% endif %}>
+                {{ field.label|safe }}{% if field.field.required %}<span class="asterisk">*</span>{% endif %}
+            </label>
+        {% endif %}
+
+        {% if field|is_checkboxselectmultiple %}
+	    {% load l10n %}
+	    <ul>{% for choice in field.field.choices %}<li>
+		<label for="id_{{ field.html_name}}_{{ forloop.counter }}"{% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+		  <input type="checkbox"{% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked"{% endif %} name="{{ field.html_name }}" id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}">
+		  {{ choice.1|unlocalize }}
+		</label>
+	      </li>{% endfor %}</ul>
+        {% endif %}
+
+        {% if not field|is_checkbox and not field|is_checkboxselectmultiple %}
+            {% crispy_field field %}
+        {% endif %}
+
+        {% if form_show_errors %}
+            {% for error in field.errors %}
+                <small id="error_{{ forloop.counter }}_{{ field.auto_id }}" class="error serverside">
+                    {{ error }}
+                </small>
+            {% endfor %}
+        {% endif %}
+
+        {% if clientside_error %}
+            <small id="clientside_error_{{ field.auto_id }}" class="error clientside">
+                {{ clientside_error }}
+            </small>
+        {% endif %}
+
+        {% if field.help_text %}
+            <div id="hint_{{ field.auto_id }}" class="hint">{{ field.help_text|safe }}</div>
+        {% endif %}
+    {% endspaceless %}</div>
+{% endif %}
