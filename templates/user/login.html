@@ -22,7 +22,7 @@ Log in
   <div class="large-12 columns">
     {% if not user.is_authenticated %}
     <div class="section-container auto" data-section>
-      <section{%if register == False %} class="active"{% endif %}>
+      <section class="active">
         <p class="title" data-section-title>
           <a href="#">Login</a>
         </p>
@@ -82,21 +82,10 @@ Log in
         </div>
       </section>
 
-      <section{%if register %} class="active"{% endif %}>
-      <p class="title" data-section-title>
-        <a href="#">Register</a>
-      </p>
-      <div class="content" data-section-content>
-        <div class="row">
-          <div class="large-12 columns">
-            {% if error %}
-            {{ error }}
-            {% endif %}
-            <form id="registration" method="post" action="{% url "user-register" %}" data-abide>
-              {% crispy register_form %}
-            </div>
-          </div>
-        </div>
+      <section>
+        <p class="title" data-section-title>
+          <a href="{% url 'user-register' %}">Register</a>
+        </p>
       </section>
 
     </div>

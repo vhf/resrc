@@ -41,12 +41,12 @@ def details(request, user_name):
     })
 
 
-def login_register_view(request, register=False, modal=False):
+def login_view(request, modal=False):
     csrf_tk = {}
     csrf_tk.update(csrf(request))
 
     login_error = False
-    if request.method == 'POST' and not register:
+    if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
             username = request.POST['username']
@@ -72,7 +72,27 @@ def login_register_view(request, register=False, modal=False):
     login_form = LoginForm()
     register_form = RegisterForm()
 
-    if request.method == 'POST' and register:
+    csrf_tk['register_form'] = register_form
+    csrf_tk['login_error'] = login_error
+    csrf_tk['login_form']  = login_form
+    if 'next' in request.GET:
+        csrf_tk['next']  = request.GET.get('next')
+    if not modal:
+        return render_template('user/login.html', csrf_tk)
+    else:
+        return render_template('user/login_register_modal.html', csrf_tk)
+
+
+def register_view(request):
+    csrf_tk = {}
+    csrf_tk.update(csrf(request))
+
+    login_error = False
+
+    login_form = LoginForm()
+    register_form = RegisterForm()
+
+    if request.method == 'POST':
         register_form = RegisterForm(request.POST)
         if register_form.is_valid():
             data = register_form.data
@@ -89,13 +109,10 @@ def login_register_view(request, register=False, modal=False):
     csrf_tk['register_form'] = register_form
     csrf_tk['login_error'] = login_error
     csrf_tk['login_form']  = login_form
-    csrf_tk['register'] = register
     if 'next' in request.GET:
         csrf_tk['next']  = request.GET.get('next')
-    if not modal:
-        return render_template('user/login_register.html', csrf_tk)
-    else:
-        return render_template('user/login_register_modal.html', csrf_tk)
+    return render_template('user/register.html', csrf_tk)
+
 
 @login_required
 def register_success(request):
