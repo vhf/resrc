@@ -130,7 +130,16 @@
   <script src="{% static "js/vendor/jquery-1.10.2.min.js" %}"></script>
   <script src="{% static "js/foundation/foundation.min.js" %}"></script>
   <script>
-  $(document).foundation();
+    $(document).foundation();
+    $(document).ready(function() {
+      $('.error:has(.serverside.error)')
+      .find('.clientside.error').css('display', 'none').end() // force clientside errors not to be shown yet
+      .find('input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])').one('focus', function() {
+         $(this).closest('.error:has(.error.serverside)').removeClass('error')
+         .find('.serverside').css('display', 'none').end() // force serverside not to be shown again
+         .find('.clientside').removeAttr('style'); // undo force clientside not to be shown yet
+      })
+    });
   </script>
 
   {% block last_body %}{% endblock %}

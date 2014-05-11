@@ -6,24 +6,38 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Div, Fieldset, Submit, Field, HTML
+from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML
 
 from captcha.fields import CaptchaField
 from django.conf import settings
 
+class AbideCrispyField(Field):
+    template = 'abide_crispy_field.html'
+
+    def __init__(self, *args, **kwargs):
+        clientside_error = kwargs.pop('clientside_error', None)
+        super(AbideCrispyField, self).__init__(*args, **kwargs)
+        self.clientside_error = clientside_error
+
+    def render(self, form, form_style, context, *args, **kwargs):
+        if self.clientside_error is not None:
+            context['clientside_error'] = self.clientside_error
+        return super(AbideCrispyField, self).render(form, form_style, context, *args, **kwargs)
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=76, widget=forms.PasswordInput)
 
-
 class RegisterForm(forms.Form):
-    email = forms.EmailField(label='email')
-    username = forms.CharField(label='username', max_length=30)
+    email = forms.EmailField(label='email', widget=forms.TextInput(attrs={'required':''}))
+    username = forms.CharField(label='username', max_length=30, widget=forms.TextInput(attrs={'required':''})
+    )
     password = forms.CharField(
-        label='password', max_length=76, widget=forms.PasswordInput)
+        label='password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
+    )
     password_confirm = forms.CharField(
-        label='confirm password', max_length=76, widget=forms.PasswordInput)
+        label='confirm password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
+    )
     captcha = CaptchaField()
 
     def __init__(self, *args, **kwargs):
@@ -31,54 +45,31 @@ class RegisterForm(forms.Form):
         self.helper.form_method = 'post'
 
         self.helper.layout = Layout(
-            HTML('\
-              <div class="row">\
-                <div class="columns large-6">\
-                  <label for="id_username" class="requiredField">\
-                    username\
-                  </label>\
-                  <input id="id_username" maxlength="30" name="username" type="text" required pattern="username"/>\
-                  <small class="error">3-30 characters, a-z A-Z 0-9 _ .</small>\
-                </div>\
-                <div class="columns large-6">\
-                  <label for="id_email" class="requiredField">\
-                    email\
-                  </label>\
-                  <input id="id_email" name="email" type="email" required/>\
-                  <small class="error">A valid email address is required.</small>\
-                </div>\
-              </div>\
-                \
-              <div class="row">\
-                <div class="columns large-6">\
-                  <label for="id_password" class="requiredField">\
-                    password\
-                  </label>\
-                  <input id="id_password" maxlength="76" name="password" type="password" required/>\
-                </div>\
-                <div class="columns large-6">\
-                  <label for="id_password_confirm" class="requiredField">\
-                    confirm password\
-                  </label>\
-                  <input id="id_password_confirm" maxlength="76" name="password_confirm" type="password" required pattern="pass_confirm"/>\
-                  <small class="error">password mismatch</small>\
-                </div>\
-              </div>\
-                \
-              <div class="row">\
-                <div class="columns large-2">\
-            '),
-            Field('captcha'),
-            HTML('\
-                </div>\
-                <div class="columns large-4">\
-                  <input type="submit" name="submit" value="Register" class="submit button" id="register"/>\
-                  <a href="/" class="button secondary">Cancel</a>\
-                </div>\
-              </div>\
-                \
-            </form>\
-            ')
+            Row(
+                Column(
+                    AbideCrispyField('username', pattern='username', clientside_error='3-30 characters a-z A-Z 0-9 _ .'),
+                    css_class='large-6'
+                ),
+                Column(
+                    AbideCrispyField('email', clientside_error='A valid email address is required.'),
+                    css_class='large-6'
+                )
+            ),
+            Row(
+                Column(AbideCrispyField('password', clientside_error='A password is required.'), css_class='large-6'),
+                Column(
+                    AbideCrispyField('password_confirm', pattern='pass_confirm', clientside_error='Password mismatch.'),
+                    css_class='large-6'
+                )
+            ),
+            Row(
+                Column(AbideCrispyField('captcha'), css_class='large-2'),
+                Column(
+                    Submit('submit', 'Register'),
+                    HTML('<a href="/" class="button secondary">Cancel</a>'),
+                    css_class='large-4'
+                )
+            )
         )
         super(RegisterForm, self).__init__(*args, **kwargs)
 
