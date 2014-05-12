@@ -63,40 +63,6 @@ def home(request):
     })
 
 
-def new(request):
-    from resrc.vote.models import Vote
-    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
-    lang_filter = [1]
-    if request.user.is_authenticated():
-        from resrc.userprofile.models import Profile
-        profile = Profile.objects.get(user=request.user)
-        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
-
-    links = Vote.objects.latest_links(limit=None, days=60, lang_filter=lang_filter)
-
-    paginator = Paginator(links, 15)
-    page = request.GET.get('page')
-    try:
-        links = paginator.page(page)
-    except PageNotAnInteger:
-        links = paginator.page(1)
-    except EmptyPage:
-        links = paginator.page(paginator.num_pages)
-
-    user = request.user
-    if user.is_authenticated():
-        user_upvoted_links = Vote.objects.my_upvoted_links(user)
-        user_upvoted_links = [x['link__pk'] for x in user_upvoted_links]
-    else:
-        user_upvoted_links = []
-
-    return render_template('pages/new.html', {
-        'links': links,
-        'upvoted_links': user_upvoted_links,
-    })
-
-
 @cache_page(60 * 15)
 def about(request):
     return render_template('pages/about.html', {})

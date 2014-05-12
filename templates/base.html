@@ -49,7 +49,6 @@
               Links
             </a>
             <ul class="dropdown">
-              <li><a href="{% url "page-new" %}">New</a></li>
               <li><a href="{% url "links" %}">Summary</a></li>
               <li><a href="{% url "my-links" %}">My links</a></li>
               <li><a href="{% url "new-link" %}">Add a link</a></li>
@@ -64,7 +63,7 @@
             </ul>
           </li>
           <li>
-            <a href="{% url "page-search" %}">Find a resource <span class="round alert label">new</span></a>
+            <a href="{% url "page-search" %}">Search <span class="round alert label">new</span></a>
           </li>
         </ul>
 
@@ -119,6 +118,7 @@
         <div class="large-7 large-offset-5 columns">
           <ul class="inline-list right">
             <li><a href="{% url "home" %}">home</a></li>
+            <li><a href="/list/421/resrcio-faq/">FAQ</a></li>
             <li><a href="{% url "page-about" %}">about</a></li>
           </ul>
         </div>
