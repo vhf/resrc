@@ -9,7 +9,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML
 
 from captcha.fields import CaptchaField
-from django.conf import settings
+
 
 class AbideCrispyField(Field):
     template = 'abide_crispy_field.html'
