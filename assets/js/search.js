@@ -24,6 +24,15 @@ $(function () {
 
   $('input[name="op"]').on('change', search);
 
+  var NProgress = window.NProgress;
+  NProgress.configure({ trickleRate: 0.3 });
+  $(document).ajaxStart(function () {
+    NProgress.start();
+  });
+  $(document).ajaxStop(function () {
+    NProgress.done();
+  });
+
   function search () {
     var op = $('input[name="op"]:checked').val() || 'or',
         selectedTags = $('#selected-tags').val() || '',
