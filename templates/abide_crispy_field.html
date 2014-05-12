@@ -16,13 +16,13 @@
         {% endif %}
 
         {% if field|is_checkboxselectmultiple %}
-	    {% load l10n %}
-	    <ul>{% for choice in field.field.choices %}<li>
-		<label for="id_{{ field.html_name}}_{{ forloop.counter }}"{% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
-		  <input type="checkbox"{% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked"{% endif %} name="{{ field.html_name }}" id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}">
-		  {{ choice.1|unlocalize }}
-		</label>
-	      </li>{% endfor %}</ul>
+        {% load l10n %}
+        <ul>{% for choice in field.field.choices %}<li>
+        <label for="id_{{ field.html_name}}_{{ forloop.counter }}"{% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+          <input type="checkbox"{% if choice.0 in field.value or choice.0|stringformat:"s" in field.value or choice.0|stringformat:"s" == field.value|stringformat:"s" %} checked="checked"{% endif %} name="{{ field.html_name }}" id="id_{{ field.html_name }}_{{ forloop.counter }}" value="{{ choice.0|unlocalize }}">
+          {{ choice.1|unlocalize }}
+        </label>
+          </li>{% endfor %}</ul>
         {% endif %}
 
         {% if not field|is_checkbox and not field|is_checkboxselectmultiple %}
