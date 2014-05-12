@@ -41,7 +41,6 @@ $(function () {
         query = buildQueryString(selectedTags, excludedTags, op);
 
     if (query.length === 0) {
-      console.debug('no query');
       $('#query').html('Search by tags');
       $('#results').hide();
     }
