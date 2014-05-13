@@ -1,0 +1,18 @@
+.fork-me-ribbon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+}
+
+@media only screen and (max-width: 1205px) {
+  .fork-me-ribbon {
+    top: 45px;
+    z-index: 0;
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+  }
+  .top-bar {
+    z-index: 1;
+  }
+}
