@@ -16,10 +16,12 @@ $base-font-size: 100% !default;
 // set the value of $em-base to $base-font-size ($em-base: $base-font-size;)
 $em-base: 16px !default;
 
-// Working in ems is annoying. Think in pixels by using this handy function, emCalc(#px)
-@function emCalc($pxWidth) {
-  @return $pxWidth / $em-base * 1em;
-}
+@import "foundation/functions";
+
+// Working in ems is annoying. Think in pixels by using this handy function, rem-calc(#px)
+//@function rem-calc($pxWidth) {
+//  @return $pxWidth / $em-base * 1em;
+//}
 
 // Change whether or not you include browser prefixes
 $experimental: true !default;
@@ -115,8 +117,8 @@ $global-radius: 0px;
 // Grid Variables
 //
 
-// $row-width: emCalc(1000px);
-// $column-gutter: emCalc(30px);
+// $row-width: rem-calc(1000px);
+// $column-gutter: rem-calc(30px);
 // $total-columns: 12;
 
 //
@@ -126,7 +128,7 @@ $global-radius: 0px;
 // Maximum number of block grid elements per row
 
 // $block-grid-elements: 12;
-// $block-grid-default-spacing: emCalc(20px);
+// $block-grid-default-spacing: rem-calc(20px);
 
 // Enables media queries for block-grid classes. Set to false if writing semantic HTML.
 
@@ -152,11 +154,11 @@ $header-font-color: #484848;
 
 // Heading font sizes
 
-// $h1-font-size: emCalc(44px);
-// $h2-font-size: emCalc(37px);
-// $h3-font-size: emCalc(27px);
-// $h4-font-size: emCalc(23px);
-// $h5-font-size: emCalc(18px);
+// $h1-font-size: rem-calc(44px);
+// $h2-font-size: rem-calc(37px);
+// $h3-font-size: rem-calc(27px);
+// $h4-font-size: rem-calc(23px);
+// $h5-font-size: rem-calc(18px);
 // $h6-font-size: 1em;
 
 // Subheaders
@@ -176,10 +178,10 @@ $header-font-color: #484848;
 
 // $paragraph-font-family: inherit;
 // $paragraph-font-weight: normal;
-$paragraph-font-size: emCalc(13px);
+$paragraph-font-size: rem-calc(13px);
 // $paragraph-line-height: 1.6;
-// $paragraph-margin-bottom: emCalc(20px);
-// $paragraph-aside-font-size: emCalc(14px);
+// $paragraph-margin-bottom: rem-calc(20px);
+// $paragraph-aside-font-size: rem-calc(14px);
 // $paragraph-aside-line-height: 1.35;
 // $paragraph-aside-font-style: italic;
 
@@ -200,23 +202,23 @@ $paragraph-font-size: emCalc(13px);
 // $hr-border-width: 1px;
 // $hr-border-style: solid;
 // $hr-border-color: #ddd;
-// $hr-margin: emCalc(20px);
+// $hr-margin: rem-calc(20px);
 
 // Lists
 
 $list-style-position: inside;
-// $list-side-margin: emCalc(20px);
-// $list-nested-margin: emCalc(20px);
+// $list-side-margin: rem-calc(20px);
+// $list-nested-margin: rem-calc(20px);
 // $definition-list-header-weight: bold;
 // $definition-list-header-margin-bottom: .3em;
-// $definition-list-margin-bottom: emCalc(12px);
+// $definition-list-margin-bottom: rem-calc(12px);
 
 // Blockquotes
 
 // $blockquote-font-color: lighten($header-font-color, 30%);
-// $blockquote-padding: emCalc(9px) emCalc(20px) 0 emCalc(19px);
+// $blockquote-padding: rem-calc(9px) rem-calc(20px) 0 rem-calc(19px);
 // $blockquote-border: 1px solid #ddd;
-// $blockquote-cite-font-size: emCalc(13px);
+// $blockquote-cite-font-size: rem-calc(13px);
 // $blockquote-cite-font-color: lighten($header-font-color, 20%);
 // $blockquote-cite-link-color: $blockquote-cite-font-color;
 
@@ -226,8 +228,8 @@ $list-style-position: inside;
 
 // Padding and margin
 
-// $microformat-padding: emCalc(10px) emCalc(12px);
-// $microformat-margin: 0 0 emCalc(20px) 0;
+// $microformat-padding: rem-calc(10px) rem-calc(12px);
+// $microformat-margin: 0 0 rem-calc(20px) 0;
 
 // Border styles
 
@@ -238,7 +240,7 @@ $list-style-position: inside;
 // Full name font styles
 
 // $microformat-fullname-font-weight: bold;
-// $microformat-fullname-font-size: emCalc(15px);
+// $microformat-fullname-font-size: rem-calc(15px);
 
 // Summary font styles
 
@@ -246,7 +248,7 @@ $list-style-position: inside;
 
 // <abbr> padding
 
-// $microformat-abbr-padding: 0 emCalc(1px);
+// $microformat-abbr-padding: 0 rem-calc(1px);
 
 // <abbr> font styles
 
@@ -259,18 +261,18 @@ $list-style-position: inside;
 
 // Base for lots of form spacing and positioning styles
 
-// $form-spacing: emCalc(16px);
+// $form-spacing: rem-calc(16px);
 
 // Labels
 
 // $form-label-pointer: pointer;
-// $form-label-font-size: emCalc(14px);
+// $form-label-font-size: rem-calc(14px);
 // $form-label-font-weight: 500;
 // $form-label-font-color: lighten(#000, 30%);
-// $form-label-bottom-margin: emCalc(3px);
+// $form-label-bottom-margin: rem-calc(3px);
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
-// $input-font-size: emCalc(14px);
+// $input-font-size: rem-calc(14px);
 // $input-bg-color: #fff;
 // $input-focus-bg-color: darken(#fff, 2%);
 // $input-border-color: darken(#fff, 20%);
@@ -286,14 +288,14 @@ $list-style-position: inside;
 // $fieldset-border-style: solid;
 // $fieldset-border-width: 1px;
 // $fieldset-border-color: #ddd;
-// $fieldset-padding: emCalc(20px);
-// $fieldset-margin: emCalc(18px) 0;
+// $fieldset-padding: rem-calc(20px);
+// $fieldset-margin: rem-calc(18px) 0;
 
 // Legends
 
 // $legend-bg: #fff;
 // $legend-font-weight: bold;
-// $legend-padding: 0 emCalc(3px);
+// $legend-padding: 0 rem-calc(3px);
 
 // Prefix and postfix input elements
 
@@ -307,9 +309,9 @@ $list-style-position: inside;
 
 // Error states for inputs and labels
 
-// $input-error-message-padding: emCalc(6px) emCalc(4px);
-// $input-error-message-top: -($form-spacing) - emCalc(5px);
-// $input-error-message-font-size: emCalc(12px);
+// $input-error-message-padding: rem-calc(6px) rem-calc(4px);
+// $input-error-message-top: -($form-spacing) - rem-calc(5px);
+// $input-error-message-font-size: rem-calc(12px);
 // $input-error-message-font-weight: bold;
 // $input-error-message-font-color: #fff;
 // $input-error-message-font-color-alt: #333;
@@ -325,25 +327,25 @@ $list-style-position: inside;
 
 // Padding for buttons.
 
-// $button-tny: emCalc(7px);
-// $button-sml: emCalc(9px);
-// $button-med: emCalc(12px);
-// $button-lrg: emCalc(16px);
+// $button-tny: rem-calc(7px);
+// $button-sml: rem-calc(9px);
+// $button-med: rem-calc(12px);
+// $button-lrg: rem-calc(16px);
 
 // Display property.
 
 // $button-display: inline-block;
-// $button-margin-bottom: emCalc(20px);
+// $button-margin-bottom: rem-calc(20px);
 
 // Button text styles.
 
 // $button-font-family: inherit;
 // $button-font-color: #fff;
 // $button-font-color-alt: #333;
-// $button-font-med: emCalc(16px);
-// $button-font-tny: emCalc(11px);
-// $button-font-sml: emCalc(13px);
-// $button-font-lrg: emCalc(20px);
+// $button-font-med: rem-calc(16px);
+// $button-font-tny: rem-calc(11px);
+// $button-font-sml: rem-calc(13px);
+// $button-font-lrg: rem-calc(20px);
 // $button-font-weight: bold;
 // $button-font-align: center;
 
@@ -371,7 +373,7 @@ $list-style-position: inside;
 
 // Sets the margin for the right side by default, and the left margin if right-to-left direction is used
 
-// $button-bar-margin-opposite: emCalc(10px);
+// $button-bar-margin-opposite: rem-calc(10px);
 
 //
 // Dropdown Button Variables
@@ -387,28 +389,28 @@ $list-style-position: inside;
 // $dropdown-button-padding-tny: $button-tny * 5;
 // $dropdown-button-pip-size-tny: $button-tny;
 // $dropdown-button-pip-right-tny: $button-tny * 2;
-// $dropdown-button-pip-top-tny: -$button-tny / 2 + emCalc(1px);
+// $dropdown-button-pip-top-tny: -$button-tny / 2 + rem-calc(1px);
 
 // Small dropdown buttons
 
 // $dropdown-button-padding-sml: $button-sml * 5;
 // $dropdown-button-pip-size-sml: $button-sml;
 // $dropdown-button-pip-right-sml: $button-sml * 2;
-// $dropdown-button-pip-top-sml: -$button-sml / 2 + emCalc(1px);
+// $dropdown-button-pip-top-sml: -$button-sml / 2 + rem-calc(1px);
 
 // Medium dropdown buttons
 
-// $dropdown-button-padding-med: $button-med * 4 + emCalc(3px);
-// $dropdown-button-pip-size-med: $button-med - emCalc(3px);
+// $dropdown-button-padding-med: $button-med * 4 + rem-calc(3px);
+// $dropdown-button-pip-size-med: $button-med - rem-calc(3px);
 // $dropdown-button-pip-right-med: $button-med * 2;
-// $dropdown-button-pip-top-med: -$button-med / 2 + emCalc(2px);
+// $dropdown-button-pip-top-med: -$button-med / 2 + rem-calc(2px);
 
 // Large dropdown buttons
 
 // $dropdown-button-padding-lrg: $button-lrg * 4;
-// $dropdown-button-pip-size-lrg: $button-lrg - emCalc(6px);
-// $dropdown-button-pip-right-lrg: $button-lrg + emCalc(12px);
-// $dropdown-button-pip-top-lrg: -$button-lrg / 2 + emCalc(3px);
+// $dropdown-button-pip-size-lrg: $button-lrg - rem-calc(6px);
+// $dropdown-button-pip-right-lrg: $button-lrg + rem-calc(12px);
+// $dropdown-button-pip-top-lrg: -$button-lrg / 2 + rem-calc(3px);
 
 //
 // Split Button Variables
@@ -427,7 +429,7 @@ $list-style-position: inside;
 // $split-button-span-width-tny: $button-tny * 6.5;
 // $split-button-pip-size-tny: $button-tny;
 // $split-button-pip-top-tny: $button-tny * 2;
-// $split-button-pip-left-tny: emCalc(-5px);
+// $split-button-pip-left-tny: rem-calc(-5px);
 
 // Small split buttons
 
@@ -435,23 +437,23 @@ $list-style-position: inside;
 // $split-button-span-width-sml: $button-sml * 5;
 // $split-button-pip-size-sml: $button-sml;
 // $split-button-pip-top-sml: $button-sml * 1.5;
-// $split-button-pip-left-sml: emCalc(-9px);
+// $split-button-pip-left-sml: rem-calc(-9px);
 
 // Medium split buttons
 
 // $split-button-padding-med: $button-med * 6.4;
 // $split-button-span-width-med: $button-med * 4;
-// $split-button-pip-size-med: $button-med - emCalc(3px);
+// $split-button-pip-size-med: $button-med - rem-calc(3px);
 // $split-button-pip-top-med: $button-med * 1.5;
-// $split-button-pip-left-med: emCalc(-9px);
+// $split-button-pip-left-med: rem-calc(-9px);
 
 // Large split buttons
 
 // $split-button-padding-lrg: $button-lrg * 6;
 // $split-button-span-width-lrg: $button-lrg * 3.75;
-// $split-button-pip-size-lrg: $button-lrg - emCalc(6px);
-// $split-button-pip-top-lrg: $button-lrg + emCalc(5px);
-// $split-button-pip-left-lrg: emCalc(-9px);
+// $split-button-pip-size-lrg: $button-lrg - rem-calc(6px);
+// $split-button-pip-top-lrg: $button-lrg + rem-calc(5px);
+// $split-button-pip-left-lrg: rem-calc(-9px);
 
 //
 // Alert Variables
@@ -459,15 +461,15 @@ $list-style-position: inside;
 
 // Alert padding
 
-// $alert-padding-top: emCalc(11px);
+// $alert-padding-top: rem-calc(11px);
 // $alert-padding-default-float: $alert-padding-top;
-// $alert-padding-opposite-direction: $alert-padding-top + emCalc(10px);
-// $alert-padding-bottom: $alert-padding-top + emCalc(1px);
+// $alert-padding-opposite-direction: $alert-padding-top + rem-calc(10px);
+// $alert-padding-bottom: $alert-padding-top + rem-calc(1px);
 
 // Text style
 
 // $alert-font-weight: bold;
-// $alert-font-size: emCalc(14px);
+// $alert-font-size: rem-calc(14px);
 // $alert-font-color: #fff;
 // $alert-font-color-alt: darken($secondary-color, 60%);
 
@@ -480,13 +482,13 @@ $list-style-position: inside;
 // $alert-border-style: solid;
 // $alert-border-width: 1px;
 // $alert-border-color: darken($primary-color, $alert-function-factor);
-// $alert-bottom-margin: emCalc(20px);
+// $alert-bottom-margin: rem-calc(20px);
 
 // Close Button style
 
 // $alert-close-color: #333;
-// $alert-close-position: emCalc(5px);
-// $alert-close-font-size: emCalc(22px);
+// $alert-close-position: rem-calc(5px);
+// $alert-close-font-size: rem-calc(22px);
 // $alert-close-opacity: 0.3;
 // $alert-close-opacity-hover: 0.5;
 // $alert-close-padding: 5px 4px 4px;
@@ -506,8 +508,8 @@ $list-style-position: inside;
 
 // Padding around the breadcrumbs.
 
-// $crumb-padding: emCalc(6px) emCalc(14px) emCalc(9px);
-// $crumb-side-padding: emCalc(12px);
+// $crumb-padding: rem-calc(6px) rem-calc(14px) rem-calc(9px);
+// $crumb-side-padding: rem-calc(12px);
 
 // Border styles.
 
@@ -587,8 +589,8 @@ $crumb-font-size: 1em;
 // $custom-select-border-color: #ddd;
 // $custom-select-triangle-color: #aaa;
 // $custom-select-triangle-color-open: #222;
-// $custom-select-height: emCalc(13px) + ($form-spacing * 1.5);
-// $custom-select-margin-bottom: emCalc(20px);
+// $custom-select-height: rem-calc(13px) + ($form-spacing * 1.5);
+// $custom-select-margin-bottom: rem-calc(20px);
 // $custom-select-font-color-selected: #141414;
 // $custom-select-disabled-color: #888;
 
@@ -600,15 +602,15 @@ $crumb-font-size: 1em;
 // $custom-dropdown-border-width: 1px;
 // $custom-dropdown-border-style: solid;
 // $custom-dropdown-font-color: #555;
-// $custom-dropdown-font-size: emCalc(14px);
+// $custom-dropdown-font-size: rem-calc(14px);
 // $custom-dropdown-color-selected: #eeeeee;
 // $custom-dropdown-font-color-selected: #000;
 // $custom-dropdown-shadow: 0 2px 2px 0px rgba(0,0,0,0.1);
 // $custom-dropdown-offset-top: none;
-// $custom-dropdown-list-padding: emCalc(4px);
-// $custom-dropdown-left-padding: emCalc(6px);
-// $custom-dropdown-right-padding: emCalc(38px);
-// $custom-dropdown-list-item-min-height: emCalc(24px);
+// $custom-dropdown-list-padding: rem-calc(4px);
+// $custom-dropdown-left-padding: rem-calc(6px);
+// $custom-dropdown-right-padding: rem-calc(38px);
+// $custom-dropdown-list-item-min-height: rem-calc(24px);
 
 //
 // Dropdown Variables
@@ -641,15 +643,15 @@ $crumb-font-size: 1em;
 
 // $f-dropdown-list-style: none;
 // $f-dropdown-font-color: #555;
-// $f-dropdown-font-size: emCalc(14px);
-// $f-dropdown-list-padding: emCalc(5px) emCalc(10px);
-// $f-dropdown-line-height: emCalc(18px);
+// $f-dropdown-font-size: rem-calc(14px);
+// $f-dropdown-list-padding: rem-calc(5px) rem-calc(10px);
+// $f-dropdown-line-height: rem-calc(18px);
 // $f-dropdown-list-hover-bg: #eeeeee;
 // $dropdown-mobile-left: 0;
 
 // When the dropdown has custom content.
 
-// $f-dropdown-content-padding: emCalc(20px);
+// $f-dropdown-content-padding: rem-calc(20px);
 
 //
 // Flex Video Variables
@@ -657,9 +659,9 @@ $crumb-font-size: 1em;
 
 // Video container padding and margins
 
-// $flex-video-padding-top: emCalc(25px);
+// $flex-video-padding-top: rem-calc(25px);
 // $flex-video-padding-bottom: 67.5%;
-// $flex-video-margin-bottom: emCalc(16px);
+// $flex-video-margin-bottom: rem-calc(16px);
 
 // Widescreen bottom padding
 
@@ -671,7 +673,7 @@ $crumb-font-size: 1em;
 
 // Margins and padding of the inline list.
 
-// $inline-list-margin-bottom: emCalc(17px) emCalc(-22px );
+// $inline-list-margin-bottom: rem-calc(17px) rem-calc(-22px );
 // $inline-list-margin: 0 0;
 // $inline-list-padding: 0;
 
@@ -695,7 +697,7 @@ $crumb-font-size: 1em;
 
 // $joyride-tip-bg: rgb(0,0,0);
 // $joyride-tip-default-width: 300px;
-// $joyride-tip-padding: emCalc(18px) emCalc(20px) emCalc(24px);
+// $joyride-tip-padding: rem-calc(18px) rem-calc(20px) rem-calc(24px);
 // $joyride-tip-border: solid 1px #555;
 // $joyride-tip-radius: 4px;
 // $joyride-tip-position-offset: 22px;
@@ -703,7 +705,7 @@ $crumb-font-size: 1em;
 // Tip font styles
 
 // $joyride-tip-font-color: #fff;
-// $joyride-tip-font-size: emCalc(14px);
+// $joyride-tip-font-size: rem-calc(14px);
 // $joyride-tip-header-weight: bold;
 
 // Changes the nub size
@@ -733,14 +735,14 @@ $crumb-font-size: 1em;
 // Text styles.
 
 // $keystroke-font: "Consolas", "Menlo", "Courier", monospace;
-// $keystroke-font-size: emCalc(15px);
+// $keystroke-font-size: rem-calc(15px);
 // $keystroke-font-color: #222;
 // $keystroke-font-color-alt: #fff;
 // $keystroke-function-factor: 7%;
 
 // Keystroke padding.
 
-// $keystroke-padding: emCalc(2px) emCalc(4px) emCalc(0px);
+// $keystroke-padding: rem-calc(2px) rem-calc(4px) rem-calc(0px);
 
 // Background and border styles.
 
@@ -756,12 +758,12 @@ $crumb-font-size: 1em;
 
 // Style the labels
 
-// $label-padding: emCalc(3px) emCalc(10px) emCalc(4px);
+// $label-padding: rem-calc(3px) rem-calc(10px) rem-calc(4px);
 // $label-radius: $global-radius;
 
 // We use these to style the label text
 
-// $label-font-sizing: emCalc(14px);
+// $label-font-sizing: rem-calc(14px);
 // $label-font-weight: bold;
 // $label-font-color: #333;
 // $label-font-color-alt: #fff;
@@ -805,7 +807,7 @@ $crumb-font-size: 1em;
 
 // $orbit-slide-number-bg: rgba(0,0,0,0);
 // $orbit-slide-number-font-color: #fff;
-// $orbit-slide-number-padding: emCalc(5px);
+// $orbit-slide-number-padding: rem-calc(5px);
 
 // Graceful Loading Wrapper and preloader
 
@@ -818,20 +820,20 @@ $crumb-font-size: 1em;
 
 // Pagination container
 
-// $pagination-height: emCalc(24px);
-// $pagination-margin: emCalc(-5px);
+// $pagination-height: rem-calc(24px);
+// $pagination-margin: rem-calc(-5px);
 
 // List-item properties
 
 // $pagination-li-float: $default-float;
-// $pagination-li-height: emCalc(24px);
+// $pagination-li-height: rem-calc(24px);
 // $pagination-li-font-color: #222;
-// $pagination-li-font-size: emCalc(14px);
-// $pagination-li-margin: emCalc(5px);
+// $pagination-li-font-size: rem-calc(14px);
+// $pagination-li-margin: rem-calc(5px);
 
 // Pagination anchor links
 
-// $pagination-link-pad: emCalc(1px) emCalc(7px) emCalc(1px);
+// $pagination-link-pad: rem-calc(1px) rem-calc(7px) rem-calc(1px);
 // $pagination-link-font-color: #999;
 // $pagination-link-active-bg: darken(#fff, 10%);
 
@@ -866,8 +868,8 @@ $panel-bg: rgba(246,247,146,1);
 
 // Inner padding and bottom margin
 
-// $panel-margin-bottom: emCalc(20px);
-// $panel-padding: emCalc(20px);
+// $panel-margin-bottom: rem-calc(20px);
+// $panel-padding: rem-calc(20px);
 
 // Font colors
 
@@ -885,33 +887,33 @@ $panel-bg: rgba(246,247,146,1);
 
 // Bottom margin of the pricing table
 
-// $price-table-margin-bottom: emCalc(20px);
+// $price-table-margin-bottom: rem-calc(20px);
 
 // Control the title styles
 
 // $price-title-bg: #ddd;
-// $price-title-padding: emCalc(15px) emCalc(20px);
+// $price-title-padding: rem-calc(15px) rem-calc(20px);
 // $price-title-align: center;
 // $price-title-color: #333;
 // $price-title-weight: bold;
-// $price-title-size: emCalc(16px);
+// $price-title-size: rem-calc(16px);
 
 // Control the price styles
 
 // $price-money-bg: #eee;
-// $price-money-padding: emCalc(15px) emCalc(20px);
+// $price-money-padding: rem-calc(15px) rem-calc(20px);
 // $price-money-align: center;
 // $price-money-color: #333;
 // $price-money-weight: normal;
-// $price-money-size: emCalc(20px);
+// $price-money-size: rem-calc(20px);
 
 // Description styles
 
 // $price-bg: #fff;
 // $price-desc-color: #777;
-// $price-desc-padding: emCalc(15px);
+// $price-desc-padding: rem-calc(15px);
 // $price-desc-align: center;
-// $price-desc-font-size: emCalc(12px);
+// $price-desc-font-size: rem-calc(12px);
 // $price-desc-weight: normal;
 // $price-desc-line-height: 1.4;
 // $price-desc-bottom-border: dotted 1px #ddd;
@@ -919,9 +921,9 @@ $panel-bg: rgba(246,247,146,1);
 // List item styles
 
 // $price-item-color: #333;
-// $price-item-padding: emCalc(15px);
+// $price-item-padding: rem-calc(15px);
 // $price-item-align: center;
-// $price-item-font-size: emCalc(14px);
+// $price-item-font-size: rem-calc(14px);
 // $price-item-weight: normal;
 // $price-item-bottom-border: dotted 1px #ddd;
 
@@ -929,7 +931,7 @@ $panel-bg: rgba(246,247,146,1);
 
 // $price-cta-bg: #f5f5f5;
 // $price-cta-align: center;
-// $price-cta-padding: emCalc(20px) emCalc(20px) 0;
+// $price-cta-padding: rem-calc(20px) rem-calc(20px) 0;
 
 //
 // Progress Bar Variables
@@ -937,7 +939,7 @@ $panel-bg: rgba(246,247,146,1);
 
 // Progress bar height
 
-// $progress-bar-height: emCalc(25px);
+// $progress-bar-height: rem-calc(25px);
 // $progress-bar-color: transparent;
 
 // Border styles
@@ -949,8 +951,8 @@ $panel-bg: rgba(246,247,146,1);
 
 // Margin & padding
 
-// $progress-bar-pad: emCalc(2px);
-// $progress-bar-margin-bottom: emCalc(10px);
+// $progress-bar-pad: rem-calc(2px);
+// $progress-bar-margin-bottom: rem-calc(10px);
 
 // Meter colors
 
@@ -973,14 +975,14 @@ $panel-bg: rgba(246,247,146,1);
 // $reveal-modal-bg: #fff;
 // $reveal-position-top: 50px;
 // $reveal-default-width: 80%;
-// $reveal-modal-padding: emCalc(20px);
+// $reveal-modal-padding: rem-calc(20px);
 // $reveal-box-shadow: 0 0 10px rgba(#000,.4);
 
 // Reveal close button
 
-// $reveal-close-font-size: emCalc(22px);
-// $reveal-close-top: emCalc(8px);
-// $reveal-close-side: emCalc(11px);
+// $reveal-close-font-size: rem-calc(22px);
+// $reveal-close-top: rem-calc(8px);
+// $reveal-close-side: rem-calc(11px);
 // $reveal-close-color: #aaa;
 // $reveal-close-weight: bold;
 
@@ -999,8 +1001,8 @@ $panel-bg: rgba(246,247,146,1);
 
 // Padding and hover factor
 
-// $section-title-padding: emCalc(15px);
-// $section-content-padding: emCalc(15px);
+// $section-title-padding: rem-calc(15px);
+// $section-content-padding: rem-calc(15px);
 // $section-function-factor: 10%;
 
 // Titles
@@ -1019,14 +1021,14 @@ $panel-bg: rgba(246,247,146,1);
 
 // Font controls
 
-// $section-font-size: emCalc(14px);
+// $section-font-size: rem-calc(14px);
 
 // Control the color of the background and some size options
 
 // $section-content-bg: #fff;
-// $section-vertical-nav-min-width: emCalc(200px);
-// $section-vertical-tabs-title-width: emCalc(200px);
-// $section-bottom-margin: emCalc(20px);
+// $section-vertical-nav-min-width: rem-calc(200px);
+// $section-vertical-tabs-title-width: rem-calc(200px);
+// $section-bottom-margin: rem-calc(20px);
 
 // $title-selector: ".title";
 // $content-selector: ".content";
@@ -1037,19 +1039,19 @@ $panel-bg: rgba(246,247,146,1);
 
 // Padding
 
-// $side-nav-padding: emCalc(14px) 0;
+// $side-nav-padding: rem-calc(14px) 0;
 
 // List styles
 
 // $side-nav-list-type: none;
 // $side-nav-list-position: inside;
-// $side-nav-list-margin: 0 0 emCalc(7px) 0;
+// $side-nav-list-margin: 0 0 rem-calc(7px) 0;
 
 // Link styles
 
 // $side-nav-link-color: $primary-color;
 // $side-nav-link-color-active: lighten(#000, 30%);
-// $side-nav-font-size: emCalc(14px);
+// $side-nav-font-size: rem-calc(14px);
 // $side-nav-font-weight: bold;
 
 // Border styles
@@ -1064,12 +1066,12 @@ $panel-bg: rgba(246,247,146,1);
 
 // Margin and padding
 
-// $sub-nav-list-margin: emCalc(-4px) 0 emCalc(18px);
-// $sub-nav-list-padding-top: emCalc(4px);
+// $sub-nav-list-margin: rem-calc(-4px) 0 rem-calc(18px);
+// $sub-nav-list-padding-top: rem-calc(4px);
 
 // Definition
 
-// $sub-nav-font-size: emCalc(14px);
+// $sub-nav-font-size: rem-calc(14px);
 // $sub-nav-font-color: #999;
 // $sub-nav-font-weight: normal;
 // $sub-nav-text-decoration: none;
@@ -1080,7 +1082,7 @@ $panel-bg: rgba(246,247,146,1);
 // $sub-nav-active-font-weight: bold;
 // $sub-nav-active-bg: $primary-color;
 // $sub-nav-active-color: #fff;
-// $sub-nav-active-padding: emCalc(3px) emCalc(9px);
+// $sub-nav-active-padding: rem-calc(3px) rem-calc(9px);
 // $sub-nav-active-cursor: $cursor-default-value;
 
 //
@@ -1100,7 +1102,7 @@ $panel-bg: rgba(246,247,146,1);
 // $switch-height-sml: 28px;
 // $switch-height-med: 36px;
 // $switch-height-lrg: 44px;
-// $switch-bottom-margin: emCalc(20px);
+// $switch-bottom-margin: rem-calc(20px);
 
 // Font sizes for our classes.
 
@@ -1144,22 +1146,22 @@ $panel-bg: rgba(246,247,146,1);
 // Table head styles
 
 // $table-head-bg: #f5f5f5;
-// $table-head-font-size: emCalc(14px);
+// $table-head-font-size: rem-calc(14px);
 // $table-head-font-color: #222;
 // $table-head-font-weight: bold;
-// $table-head-padding: emCalc(8px) emCalc(10px) emCalc(10px);
+// $table-head-padding: rem-calc(8px) rem-calc(10px) rem-calc(10px);
 
 // Row padding and font styles
 
-// $table-row-padding: emCalc(9px) emCalc(10px);
-// $table-row-font-size: emCalc(14px);
+// $table-row-padding: rem-calc(9px) rem-calc(10px);
+// $table-row-font-size: rem-calc(14px);
 // $table-row-font-color: #222;
-// $table-line-height: emCalc(18px);
+// $table-line-height: rem-calc(18px);
 
 // Display and margin of tables
 
 // $table-display: table-cell;
-// $table-margin-bottom: emCalc(20px);
+// $table-margin-bottom: rem-calc(20px);
 
 //
 // Image Thumbnail Variables
@@ -1189,16 +1191,16 @@ $panel-bg: rgba(246,247,146,1);
 // $has-tip-font-color-hover: $primary-color;
 // $has-tip-cursor-type: help;
 
-// $tooltip-padding: emCalc(8px);
+// $tooltip-padding: rem-calc(8px);
 // $tooltip-bg: #000;
-// $tooltip-font-size: emCalc(15px);
+// $tooltip-font-size: rem-calc(15px);
 // $tooltip-font-weight: bold;
 // $tooltip-font-color: #fff;
 // $tooltip-line-height: 1.3;
-// $tooltip-close-font-size: emCalc(10px);
+// $tooltip-close-font-size: rem-calc(10px);
 // $tooltip-close-font-weight: normal;
 // $tooltip-close-font-color: #888;
-// $tooltip-font-size-sml: emCalc(14px);
+// $tooltip-font-size-sml: rem-calc(14px);
 // $tooltip-radius: $global-radius;
 // $tooltip-pip-size: 5px;
 
@@ -1213,7 +1215,7 @@ $panel-bg: rgba(246,247,146,1);
 // Height and margin
 
 // $topbar-height: 45px;
-// $topbar-margin-bottom: emCalc(30px);
+// $topbar-margin-bottom: rem-calc(30px);
 
 // Control Input height for top bar
 
@@ -1222,7 +1224,7 @@ $panel-bg: rgba(246,247,146,1);
 // Controlling the styles for the title in the top bar
 
 // $topbar-title-weight: bold;
-// $topbar-title-font-size: emCalc(17px);
+// $topbar-title-font-size: rem-calc(17px);
 
 // Style the top bar dropdown elements
 
@@ -1239,7 +1241,7 @@ $panel-bg: rgba(246,247,146,1);
 // $topbar-link-color-hover: #fff;
 // $topbar-link-color-active: #fff;
 // $topbar-link-weight: bold;
-// $topbar-link-font-size: emCalc(13px);
+// $topbar-link-font-size: rem-calc(13px);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 // $topbar-link-bg-hover: darken($topbar-bg, 3%);
 // $topbar-link-bg-active: darken($topbar-bg, 3%);
@@ -1247,12 +1249,12 @@ $panel-bg: rgba(246,247,146,1);
 // $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
 // $topbar-dropdown-label-font-weight: bold;
-// $topbar-dropdown-label-font-size: emCalc(10px);
+// $topbar-dropdown-label-font-size: rem-calc(10px);
 
 // Top menu icon styles
 
 // $topbar-menu-link-transform: uppercase;
-// $topbar-menu-link-font-size: emCalc(13px);
+// $topbar-menu-link-font-size: rem-calc(13px);
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
@@ -1262,7 +1264,7 @@ $panel-bg: rgba(246,247,146,1);
 // Transitions and breakpoint styles
 
 // $topbar-transition-speed: 300ms;
-// $topbar-breakpoint: emCalc(940px); // Change to 9999px for always mobile layout
+// $topbar-breakpoint: rem-calc(940px); // Change to 9999px for always mobile layout
 // $topbar-media-query: "only screen and (min-width: #{$topbar-breakpoint})";
 
 // Divider Styles
