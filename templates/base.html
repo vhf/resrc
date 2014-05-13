@@ -61,7 +61,7 @@
 
         <ul class="right">
           {% if user.is_authenticated %}
-          <li class="has-dropdown">
+          <li class="has-dropdown not-click">
             <a href="{% url "user-url" user.username %}">
               <span class="round secondary label" data-tooltip title="Your karma">{{ user|karma }}</span>
               {% gravatar user.email 24 %}
@@ -124,8 +124,8 @@
   </footer>
   {% endblock %}
 
-  <script src="{% static "js/vendor/jquery-1.10.2.min.js" %}"></script>
-  <script src="{% static "js/foundation/foundation.min.js" %}"></script>
+  <script src="{% static "bower_components/jquery/dist/jquery.min.js" %}"></script>
+  <script src="{% static "bower_components/foundation/js/foundation.min.js" %}"></script>
   <script>
     $(document).foundation();
     $(document).ready(function() {
