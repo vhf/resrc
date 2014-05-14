@@ -20,7 +20,7 @@
 <body>
   <div class="contain-to-grid">
     <!-- Header and Nav -->
-    <nav class="top-bar">
+    <nav class="top-bar" data-topbar>
       <ul class="title-area">
         <li class="name">
           <h1><a href="{% url "home" %}">reSRC</a></h1>
@@ -61,7 +61,7 @@
 
         <ul class="right">
           {% if user.is_authenticated %}
-          <li class="has-dropdown not-click">
+          <li class="has-dropdown ">
             <a href="{% url "user-url" user.username %}">
               <span class="round secondary label" data-tooltip title="Your karma">{{ user|karma }}</span>
               {% gravatar user.email 24 %}

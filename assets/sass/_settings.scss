@@ -857,9 +857,9 @@ $crumb-font-size: 1em;
 
 // Background and border styles
 
-//$panel-bg: rgba(246,247,146,1);
-// $panel-border-style: solid;
-// $panel-border-size: 1px;
+$panel-bg: rgba(246,247,146,1);
+$panel-border-style: solid;
+$panel-border-size: 1px;
 
 // Control how much we darken things on hover
 
@@ -1215,7 +1215,7 @@ $crumb-font-size: 1em;
 // Height and margin
 
 // $topbar-height: 45px;
-// $topbar-margin-bottom: rem-calc(30px);
+$topbar-margin-bottom: rem-calc(30px);
 
 // Control Input height for top bar
 
@@ -1223,7 +1223,7 @@ $crumb-font-size: 1em;
 
 // Controlling the styles for the title in the top bar
 
-// $topbar-title-weight: bold;
+$topbar-title-weight: bold;
 // $topbar-title-font-size: rem-calc(17px);
 
 // Style the top bar dropdown elements
