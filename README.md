@@ -38,4 +38,4 @@ Main work branch is [resrc/master](https://github.com/vhf/resrc/tree/master). Pr
 Changelog
 ---------
 
-* 1.0.0 - Display version in footer
+* 0.8.0 - Display version in footer
