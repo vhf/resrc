@@ -95,7 +95,7 @@
 </div>
 
 <div class="row">
-  <div class="large-6 columns">
+  <div class="medium-6 columns">
     <h4 class="subheader">as seen in</h4>
     <ul>
     {% for list in lists %}
@@ -103,7 +103,7 @@
     {% endfor %}
     </ul>
   </div>
-  <div class="large-6 columns">
+  <div class="medium-6 columns">
     <h4 class="subheader">similar links</h4>
     <ul>
     {% cache 3600 similar_links link.pk %}{% for similar in similars %}
