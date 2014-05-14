@@ -30,7 +30,7 @@ $experimental: true !default;
 
 $default-float: left;
 
-$body-bg: #F0F0F0;
+$body-bg: #fff;
 // $body-font-color: #222;
 $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-family: Verdana;
@@ -328,10 +328,10 @@ $list-style-position: inside;
 
 // Padding for buttons.
 
-// $button-tny: rem-calc(7px);
-// $button-sml: rem-calc(9px);
-// $button-med: rem-calc(12px);
-// $button-lrg: rem-calc(16px);
+$button-tny: rem-calc(7px);
+$button-sml: rem-calc(9px);
+$button-med: rem-calc(12px);
+$button-lrg: rem-calc(16px);
 
 // Display property.
 
