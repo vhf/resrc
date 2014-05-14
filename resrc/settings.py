@@ -108,7 +108,6 @@ MIDDLEWARE_CLASSES = (
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'resrc.utils.ThreadLocals',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'resrc.urls'
@@ -153,7 +152,6 @@ EXTERNAL_APPS = [
     'crispy_forms_foundation',
     'captcha',
     'email_obfuscator',
-    'debug_toolbar',
     'disqus',
     'floppyforms',
     'taggit'

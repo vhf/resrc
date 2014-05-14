@@ -17,5 +17,4 @@ django-storages
 -e git://github.com/jhgaylor/tldrio-python-client.git@master#egg=tldrio
 -e git://github.com/vhf/django-taggit.git@master#egg=django-taggit
 python-memcached
-psycopg2
 django-disqus
