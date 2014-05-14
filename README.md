@@ -1,7 +1,7 @@
 [reSRC.io](http://resrc.io)
 ========
 
-Indexing and gathering all freely available learning **res**ou**rc**es.
+Indexing and gathering all freely available learning resources.
 
 
 Installing and running the project
@@ -37,3 +37,5 @@ Main work branch is [resrc/master](https://github.com/vhf/resrc/tree/master). Pr
 
 Changelog
 ---------
+
+* 1.0.0 - Display version in footer
