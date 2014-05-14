@@ -134,6 +134,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
     # Custom context processors
     #'resrc.utils.context_processors.something',
+    'resrc.utils.context_processors.version',
 )
 
 EXTERNAL_APPS = [
