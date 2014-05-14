@@ -8244,12 +8244,17 @@ nav.top-bar {
   font-size: 0.8em;
 }
 /* line 30, ../sass/_resrc.scss */
-.top-bar-section li a:hover {
+.top-bar-section li a:hover, .top-bar-section li a:focus {
   color: #2b3d77;
 }
 /* line 33, ../sass/_resrc.scss */
 .top-bar-section li a:not(.button) {
   background-color: #77c4d3 !important;
+}
+
+/* line 40, ../sass/_resrc.scss */
+.breadcrumbs > * a:focus {
+  text-decoration: underline;
 }
 
 /*
