@@ -27,7 +27,7 @@ nav.top-bar {
       background-color: $cadetblue;
       color: white;
       font-size: 0.8em;
-      &:hover {
+      &:hover, &:focus {
         color: $nav-hovered;
       }
       &:not(.button) {
@@ -35,6 +35,10 @@ nav.top-bar {
       }
     }
   }
+}
+
+.breadcrumbs > * a:focus {
+  text-decoration: underline;
 }
 
 /*
