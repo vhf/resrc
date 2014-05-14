@@ -8040,74 +8040,6 @@ a.th {
     float: left !important;
   }
 }
-/* line 1, ../sass/_comment_thread.scss */
-.comment_reply {
-  text-decoration: underline;
-  cursor: hand;
-}
-
-/* line 6, ../sass/_comment_thread.scss */
-.comment_title {
-  font-size: 0.8125em;
-  margin-bottom: 2px;
-  padding: 3px;
-}
-
-/* line 12, ../sass/_comment_thread.scss */
-.comment_meta {
-  font-weight: bold;
-}
-
-/* line 16, ../sass/_comment_thread.scss */
-.comment {
-  margin-left: 1.5625em;
-  margin-top: 0.625em;
-  padding-left: 0.3125em;
-}
-
-/* line 24, ../sass/_comment_thread.scss */
-.comment_level_0 {
-  margin-left: 0;
-}
-
-/* line 30, ../sass/_comment_thread.scss */
-.comment_content p:nth-last-child(2) {
-  margin-bottom: 0.375em;
-}
-
-/* line 35, ../sass/_comment_thread.scss */
-.preview {
-  border-color: #f0e6d6;
-}
-
-/* line 39, ../sass/_comment_thread.scss */
-.preview.comment_title {
-  background: #eee5d7;
-}
-
-/* line 45, ../sass/_comment_thread.scss */
-.comment_collapsed > .comment_outer > .comment_content {
-  display: none;
-}
-
-/* line 53, ../sass/_comment_thread.scss */
-.comment_expanded > .comment_outer > .comment_content {
-  display: block;
-}
-
-/* line 59, ../sass/_comment_thread.scss */
-.comment_debug {
-  font-size: 0.8em;
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-/* line 63, ../sass/_comment_thread.scss */
-.comment_debug td, .comment_debug th {
-  border: 1px solid black;
-  text-align: center;
-  padding: 0.3em;
-}
-
 /* line 1, ../sass/_icons.scss */
 i {
   font-style: normal;
@@ -8301,23 +8233,23 @@ nav.top-bar {
   background: none;
 }
 
-/* line 25, ../sass/_resrc.scss */
-.top-bar-section ul li {
+/* line 24, ../sass/_resrc.scss */
+.top-bar-section li {
   font-family: Helvetica;
 }
-/* line 27, ../sass/_resrc.scss */
-.top-bar-section ul li a {
+/* line 26, ../sass/_resrc.scss */
+.top-bar-section li a {
   background-color: #77c4d3;
   color: white;
   font-size: 0.8em;
 }
-/* line 31, ../sass/_resrc.scss */
-.top-bar-section ul li a:hover {
+/* line 30, ../sass/_resrc.scss */
+.top-bar-section li a:hover {
   color: #2b3d77;
 }
-/* line 34, ../sass/_resrc.scss */
-.top-bar-section ul li a:not(.button) {
-  background-color: #77c4d3;
+/* line 33, ../sass/_resrc.scss */
+.top-bar-section li a:not(.button) {
+  background-color: #77c4d3 !important;
 }
 
 /*

@@ -21,19 +21,17 @@ nav.top-bar {
 }
 
 .top-bar-section {
-  & ul {
-    & li {
-      font-family: Helvetica;
-      & a {
-        background-color: $cadetblue;
-        color: white;
-        font-size: 0.8em;
-        &:hover {
-          color: $nav-hovered;
-        }
-        &:not(.button) {
-          background-color: $cadetblue;
-        }
+  & li {
+    font-family: Helvetica;
+    & a {
+      background-color: $cadetblue;
+      color: white;
+      font-size: 0.8em;
+      &:hover {
+        color: $nav-hovered;
+      }
+      &:not(.button) {
+        background-color: $cadetblue !important;
       }
     }
   }
