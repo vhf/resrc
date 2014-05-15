@@ -15,7 +15,7 @@ Installing and running the project
 ### Installation
 Run the following commands:
 
-    git clone git@github.com:vhf/resrc.git
+    git clone https://github.com/vhf/resrc.git
     cd resrc
     virtualenv2 -p /usr/bin/python2 venv --distribute
     source venv/bin/activate
