@@ -1,0 +1,8 @@
+div.switch input:first-of-type:checked + label, div.switch input:first-of-type:checked + span + label {
+  left: 5%;
+}
+
+div.switch input:last-of-type:checked + label, div.switch input:last-of-type:checked + span + label {
+  right: 5%;
+  left: auto;
+}
