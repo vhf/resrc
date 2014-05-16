@@ -86,20 +86,3 @@ class Profile(models.Model):
 
     def get_private_lists(self):
         return self.get_tutorials().filter(is_public=False)
-
-    # karma
-    def get_karma(self):
-        user = self.user
-        karma = 0
-        from resrc.link.models import Link
-        links = Link.objects.filter(author=user)
-        for link in links:
-            karma = karma + link.get_votes()
-            karma = karma + link.get_comment_count()
-
-        from resrc.list.models import List
-        lists = List.objects.filter(owner=user)
-        for alist in lists:
-            karma = karma + alist.get_votes()
-            karma = karma + alist.get_comment_count()
-        print karma
