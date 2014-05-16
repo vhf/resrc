@@ -10,6 +10,7 @@ Installing and running the project
 ### Dependencies
 * Git
 * Python >=2.6
+* virtualenv (python2 version)
 * [pip](https://github.com/pypa/pip)
 
 ### Installation
