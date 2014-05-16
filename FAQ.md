@@ -1,5 +1,7 @@
-### What is reSRC.io and how should I use it ?
-reSRC stands for resource. It came to birth because I could not find a website
+### What is reSRC.io and how should I use it ? [whatisit]
+#### A brief history
+reSRC stands for *resource* (programmers often shorten source to *src*). 
+It came to birth because I could not find a website
 displaying both quality curated lists and tag-sorted learning resources
 (articles, books, tutorials, documentations, blog posts, ...).
 
@@ -9,7 +11,8 @@ and there.
 
 Programmers sometimes need lists of links on a specific programming topic, be
 it a technology, a framework, a language, ... Programmers sometimes want to
-create such lists but don't know where to go to keep them and share them.
+create such lists but don't know where to go to keep them and share them. 
+Non programmers sometimes want to do that kind of stuff too and it's allright.
 
 On reSRC, you are free to create your own lists or to pull the list you already
 have on GitHub or anywhere else. But most of you will probably be more
