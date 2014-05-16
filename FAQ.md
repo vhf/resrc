@@ -1,6 +1,7 @@
 ### What is reSRC.io and how should I use it ? [whatisit]
 #### A brief history
-reSRC stands for *resource* (programmers often shorten source to *src*). 
+reSRC stands for *resource* (programmers often abbreviate source to *src*).
+
 It came to birth because I could not find a website
 displaying both quality curated lists and tag-sorted learning resources
 (articles, books, tutorials, documentations, blog posts, ...).
@@ -11,8 +12,9 @@ and there.
 
 Programmers sometimes need lists of links on a specific programming topic, be
 it a technology, a framework, a language, ... Programmers sometimes want to
-create such lists but don't know where to go to keep them and share them. 
-Non programmers sometimes want to do that kind of stuff too and it's allright.
+create such lists but don't know where to go to keep them and share them.
+
+Non programmers sometimes want to do that kind of stuff too and it's alright.
 
 On reSRC, you are free to create your own lists or to pull the list you already
 have on GitHub or anywhere else. But most of you will probably be more
@@ -20,21 +22,21 @@ interested by discovering great resources from great lists.
 
 #### How reSRC works
 
-There are two kinds of entities on reSRC, both allowing comments and upvotes, and 
+There are two kinds of entities on reSRC, both allowing comments and upvotes, and
 both owned by someone.
 
-The first one is link, links are pretty straightforward : add their URL, give them 
-some tag and you're done. You are now the owner of the link (the entry in reSRC, not 
-what the URL points to) and are the only one who can edit it. Other memebers can 
-still submit modifications, but they can only be accepted by an administrator for now. 
+The first one is link, links are pretty straightforward : add their URL, give them
+some tags and you're done. You are now the owner of the link (the entry in reSRC, not
+what the URL points to) and are the only one who can edit it. Other members can
+still submit modifications, but they can only be accepted by an administrator for now.
 When an administrator validate a modification, the link's owner is not informed.
 
-Lists are hardly harder to understand. A list is basically a Markdown file with a 
-special handling of links. Links that have already been added to reSRC are displayed 
-with a nice little blue link symbol on their left. If you click the link like you would 
-normally do, you are sent to its reSRC page and can view upvotes, comments and stuff. If 
-you click the link symbol, you are directly redirected to the URL. On the other hand if 
-the link isn't published on reSRC yet, an "add" button is displayed on its right. You can 
+Lists are hardly harder to understand. A list is basically a Markdown file with a
+special handling of links. Links that have already been added to reSRC are displayed
+with a nice little blue link symbol on their left. If you click the link like you would
+normally do, you are sent to its reSRC page and can view upvotes, comments and stuff. If
+you click the link symbol, you are directly redirected to the URL. On the other hand if
+the link isn't published on reSRC yet, an "add" button is displayed on its right. You can
 click it to become the reSRC owner of the link if you feel like doing so.
 
 
