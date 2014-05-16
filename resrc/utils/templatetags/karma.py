@@ -10,6 +10,6 @@ register = template.Library()
 def karma(user):
     try:
         profile = Profile.objects.get(user=user)
+        return profile.karma
     except Profile.DoesNotExist:
-        profile = None
-    return profile.karma or 0
+        return 0
