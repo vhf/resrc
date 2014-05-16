@@ -19,7 +19,8 @@
 
 {% block content %}
 {% if not user.is_authenticated %}
-<div class="row panel">
+<div class="row panel welcome">
+  <a class="close-reveal-modal" id="close">&#215;</a>
   <div class="large-12 columns">
     <h2>Help us find and tag all free programming learning resources</h2>
     <p>Sign in and give some of your free time to classify and regroup all the best learning resources.</p>
@@ -143,18 +144,16 @@ $(function () {
     document.cookie = "hide=True";
     _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Hide']);
     $('.welcome').remove();
-    $('.discover_panel').show();
   });
 });
-/*
+
 var x = document.cookie;
 var hideDiv = x.split(";");
 for(i = 0; i < hideDiv.length; i++)
 if(hideDiv[i] == " hide=True") {
   _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Already hidden']);
   $('.welcome').remove();
-  $('.discover_panel').show();
-}*/
+}
 </script>
 {% endif %}
 <script>
