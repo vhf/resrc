@@ -93,9 +93,6 @@ class Link(models.Model):
     def __unicode__(self):
         return self.title
 
-    def get_comment_count(self):
-        return get_model().objects.filter(object_pk=self.pk).count()
-
     def get_absolute_url(self):
         return urlresolvers.reverse("link-single-slug", args=(
             self.pk,

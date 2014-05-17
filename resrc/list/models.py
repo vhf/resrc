@@ -178,9 +178,6 @@ class List(models.Model):
         from resrc.vote.models import Vote
         return Vote.objects.filter(alist=self).count()
 
-    def get_comment_count(self):
-        return get_model().objects.filter(object_pk=self.pk).count()
-
 
 # https://docs.djangoproject.com/en/dev/topics/db/models/#intermediary-manytomany
 class ListLinks(models.Model):
