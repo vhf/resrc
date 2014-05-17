@@ -3,16 +3,16 @@
 {% load staticfiles %}
 
 {% block title %}
-Login
+Register
 {% endblock %}
 
 {% block headline %}
-Log in
+Register
 {% endblock %}
 
 {% block breadcrumb %}
 <li class="current">
-  <a href="#">Login</a>
+  <a href="#">Register</a>
 </li>
 {% endblock %}
 
@@ -22,16 +22,7 @@ Log in
   <div class="large-12 columns">
     {% if not user.is_authenticated %}
     <div class="section-container auto" data-section>
-      <section{%if register == False %} class="active"{% endif %}>
-      <p class="title" data-section-title>
-        <a href="{% url "user-login" %}">Login</a>
-      </p>
-    </section>
-
     <section class="active">
-      <p class="title" data-section-title>
-        <a href="#">Register</a>
-      </p>
       <div class="content" data-section-content>
         <div class="row">
           <div class="large-12 columns">
