@@ -178,7 +178,7 @@ def settings_profile(request):
 @login_required
 def settings_account(request):
     if request.method == 'POST':
-        form = ChangePasswordForm(request.POST, request.user)
+        form = ChangePasswordForm(request.user, request.POST)
         if form.is_valid():
             try:
                 request.user.set_password(form.data['password_new'])
@@ -195,7 +195,7 @@ def settings_account(request):
                 'form': form,
             })
     else:
-        form = ChangePasswordForm(request.user)
+        form = ChangePasswordForm(request.user, request.POST)
         return render_template('user/settings_account.html', {
             'usr': request.user,
             'form': form,
