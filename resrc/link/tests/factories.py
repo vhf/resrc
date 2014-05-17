@@ -1,7 +1,7 @@
 import factory
 
 from resrc.link.models import Link
-from resrc.tests.factories import UserFactory
+from resrc.userprofile.tests.factories import UserFactory
 
 
 class LinkFactory(factory.Factory):
