@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-:
-from django.contrib.auth import get_user_model
 from resrc.userprofile.models import Profile
 
 
