@@ -42,7 +42,6 @@ def tokeninput_json(request):
     query = request.GET.get('q')
     result = None
     if query is None:
-        #result = cache.get("tokeninput-_everything_")
         if result is None :
             tags_json = Tag.objects.all().select_related('links') \
                 .annotate(freq=Count('link')) \
@@ -50,7 +49,6 @@ def tokeninput_json(request):
             result = simplejson.dumps(list(tags_json))
             cache.set("tokeninput-_everything_", result)
     else:
-        #result = cache.get("tokeninput-%s" % slugify(query))
         if result is None :
             from taggit.models import Tag
             tags_json = Tag.objects.filter(name__icontains=query) \
