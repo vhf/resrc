@@ -35,8 +35,6 @@ class Link(models.Model):
 
     slug = models.SlugField(max_length=255)
 
-    hash2 = models.CharField(max_length=11, editable=False)
-
     url = models.URLField('url')
 
     pubdate = models.DateTimeField(
@@ -54,8 +52,6 @@ class Link(models.Model):
         cache.delete('link_%s' % self.pk)
         self.do_unique_slug()
         if not self.id:
-            from resrc.utils.hash2 import hash2
-            self.hash2 = hash2(self.url)
             from resrc.utils.karma import karma_rate
             karma_rate(self.author_id, 1)
         cache.set('link_%s' % self.pk, self, 60*5)

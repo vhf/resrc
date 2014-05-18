@@ -71,8 +71,8 @@ def search(request, tags, operand, excludes):
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
     langs = '_'.join(map(str, lang_filter))
 
-    from resrc.utils.hash2 import hash2
-    h = hash2("%s%s%s%s" % (tags, operand, excludes, langs))
+    import hashlib
+    h = hashlib.md5("%s%s%s%s" % (tags, operand, excludes, langs)).hexdigest()
     result = cache.get(h)
     if result is None:
         from django.db.models import Q
