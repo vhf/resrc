@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-:
 from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate
 
 from resrc.link.tests.factories import LinkFactory
 from resrc.userprofile.tests.factories import ProfileFactory
-from resrc.list.tests.factories import ListFactory
-from resrc.link.models import Link
-from resrc.list.models import List
 from taggit.models import Tag
 
-class LinkViewTestCase(TestCase):
+class TagViewTestCase(TestCase):
 
     def setUp(self):
         self.profile = ProfileFactory()
@@ -58,8 +54,9 @@ class LinkViewTestCase(TestCase):
             'operand': 'or',
             'excludes': ''
         }))
-        self.client.login(username=self.user.username, password='test123')
         self.assertEqual(resp.status_code, 200)
+
+        self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('tags-search', kwargs={
             'tags': 'Ruby,Python',
             'operand': 'and',
