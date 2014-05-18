@@ -18,12 +18,12 @@ class UserprofileTestCase(TestCase):
 
     def test_latest(self):
         link = LinkFactory()
-        link.author_id = self.user.pk
+        link.author = self.user
         link.title = 'A'
         link.save()
         link2 = LinkFactory()
         link.title = 'B'
-        link2.author_id = self.user.pk
+        link2.author = self.user
         link2.save()
 
         self.assertEqual(Link.objects.latest(1, [1])[0]['title'],
@@ -32,21 +32,21 @@ class UserprofileTestCase(TestCase):
     def test_slug(self):
         """test link slug"""
         link = LinkFactory()
-        link.author_id = self.user.pk
+        link.author = self.user
         link.save()
         self.assertEqual(link.do_unique_slug(), False)
         self.assertEqual(
             link.slug, 'example-8')
 
         link = LinkFactory()
-        link.author_id = self.user.pk
+        link.author = self.user
         link.save()
         self.assertEqual(
             link.slug, 'example-9')
 
     def test_lang(self):
         link = LinkFactory()
-        link.author_id = self.user.pk
+        link.author = self.user
         self.assertEqual(link.get_lang(), 'English')
 
     def test_get_votes(self):
@@ -61,7 +61,7 @@ class UserprofileTestCase(TestCase):
 
     def test_categories(self):
         link = LinkFactory()
-        link.author_id = self.user.pk
+        link.author = self.user
         link.save()
         self.assertEqual(link.get_categories(), "")
 

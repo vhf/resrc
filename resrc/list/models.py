@@ -50,7 +50,7 @@ class ListManager(models.Manager):
             '''
         return list(lists)
 
-    def latest(self,limit=10, lang_filter=[1]):
+    def latest(self, limit=10, lang_filter=[1]):
         cache_name = 'link_latest_%s_%s' % (limit, '_'.join(map(str, lang_filter)))
         latest = cache.get(cache_name)
         if latest is None:
@@ -62,7 +62,7 @@ class ListManager(models.Manager):
             cache.set(cache_name, list(latest), 60*5)
         return latest
 
-    def most_viewed(self,limit=10, lang_filter=[1]):
+    def most_viewed(self, limit=10, lang_filter=[1]):
         cache_name = 'link_most_viewed_%s_%s' % (limit, '_'.join(map(str, lang_filter)))
         most_viewed = cache.get(cache_name)
         if most_viewed is None:
