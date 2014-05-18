@@ -14,14 +14,3 @@ class LinkFactory(factory.Factory):
     author = factory.SubFactory(UserFactory)
     language = factory.SubFactory(LanguageFactory)
     level = 'beginner'
-
-    @factory.post_generation
-    def tags(self, create, extracted, **kwargs):
-        if not create:
-            # Simple build, do nothing.
-            return
-
-        if extracted:
-            # A list of tags were passed in, use them
-            for tag in extracted:
-                self.tags.add(tag)
