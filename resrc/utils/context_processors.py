@@ -10,5 +10,5 @@ def version(request):
         git_version = 'unknown'
 
     return {
-        'version': "{0}-{1}".format("0.8.0", git_version[:6])
+        'version': "{0}-{1}".format("0.8.1", git_version[:6])
     }
