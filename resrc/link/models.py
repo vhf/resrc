@@ -90,10 +90,10 @@ class Link(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return urlresolvers.reverse("link-single-slug", args=(
-            self.pk,
-            self.slug
-        ))
+        return urlresolvers.reverse("link-single-slug", kwargs={
+            'link_pk': self.pk,
+            'link_slug': self.slug
+        })
 
     def get_lang(self):
         from django.conf import settings

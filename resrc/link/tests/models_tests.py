@@ -36,13 +36,13 @@ class UserprofileTestCase(TestCase):
         link.save()
         self.assertEqual(link.do_unique_slug(), False)
         self.assertEqual(
-            link.slug, 'single-page-simple-comprehensive-overview-of-javascript')
+            link.slug, 'example-8')
 
         link = LinkFactory()
         link.author_id = self.user.pk
         link.save()
         self.assertEqual(
-            link.slug, 'single-page-simple-comprehensive-overview-of-javascript-1')
+            link.slug, 'example-9')
 
     def test_lang(self):
         link = LinkFactory()

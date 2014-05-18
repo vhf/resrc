@@ -16,10 +16,10 @@ from resrc.utils import render_template
 
 def single(request, link_pk, link_slug=None):
     from taggit.models import Tag
-    link = cache.get('link_%s' % link_slug)
+    link = cache.get('link_%s' % link_pk)
     if link is None:
         link = get_object_or_404(Link, pk=link_pk)
-        cache.set('link_%s' % link_slug, link, 60*5)
+        cache.set('link_%s' % link_pk, link, 60*5)
 
     lang_filter = [1]
     if request.user.is_authenticated():
