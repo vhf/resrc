@@ -88,8 +88,7 @@ def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
 
 def revision(request):
     if not request.user.is_staff:
-        from django.http import Http404
-        raise Http404
+        raise PermissionDenied
 
     from resrc.link.models import RevisedLink
     revised = RevisedLink.objects.select_related('link').all()

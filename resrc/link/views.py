@@ -31,10 +31,6 @@ def single(request, link_pk, link_slug=None):
     newlistform = None
     tags = None
 
-    from pprint import pprint
-    from resrc.utils.automatic_keyword_extraction import get_keywords_from_url
-    pprint(get_keywords_from_url(link.url))
-
     if link_slug is None:
         return redirect(link)
 
@@ -119,6 +115,20 @@ def single(request, link_pk, link_slug=None):
         'reviselinkform': reviselinkform,
         'tags': tags
     })
+
+
+
+def ake(request, link_pk, link_slug):
+    if not request.user.is_staff:
+        raise PermissionDenied
+    link = cache.get('link_%s' % link_pk)
+    if link is None:
+        link = get_object_or_404(Link, pk=link_pk)
+        cache.set('link_%s' % link_pk, link, 60*5)
+
+    from pprint import pprint
+    from resrc.utils.automatic_keyword_extraction import get_keywords_from_url
+    keywords = get_keywords_from_url(link.url)
 
 
 @login_required
