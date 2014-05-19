@@ -24,10 +24,10 @@ class LinkViewTestCase(TestCase):
         link.author = self.user
         link.save()
         resp = self.client.get(reverse('link-upvote', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('link-upvote', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
         #vote
         resp = self.client.post(reverse('link-upvote', kwargs={'link_pk': link.pk}), {})
         self.assertEqual(resp.status_code, 200)
@@ -41,10 +41,10 @@ class LinkViewTestCase(TestCase):
         link.author = self.user
         link.save()
         resp = self.client.get(reverse('revise-link', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('revise-link', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         resp = self.client.post(reverse('revise-link', kwargs={'link_pk': link.pk}), {
             'title': 'example',

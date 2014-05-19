@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-:
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 import simplejson
@@ -320,7 +321,7 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
             link.unvote(request.user)
             data = simplejson.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
-    raise Http404
+    raise PermissionDenied
 
 
 def ajax_revise_link(request, link_pk):
@@ -359,7 +360,7 @@ def ajax_revise_link(request, link_pk):
         data = simplejson.dumps({'result': 'success'})
         return HttpResponse(data, mimetype="application/javascript")
     else:
-        raise Http404
+        raise PermissionDenied
 
 
 def links_page(request):

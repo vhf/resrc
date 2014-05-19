@@ -2,6 +2,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 import simplejson
@@ -25,7 +26,7 @@ def single(request, list_pk, list_slug=None):
     if alist.slug != list_slug:
         raise Http404
     if not alist.is_public and request.user != alist.owner:
-        raise Http404
+        raise PermissionDenied
 
     form = None
     tags_addlink = ''
@@ -120,7 +121,7 @@ def ajax_add_to_list_or_create(request):
 
 def ajax_own_lists(request, link_pk):
     if not request.user.is_authenticated():
-        raise Http404
+        raise PermissionDenied
 
     all_lists = List.objects.personal_lists(request.user)
     titles = list(List.objects.my_list_titles(request.user, link_pk)
@@ -135,7 +136,7 @@ def ajax_own_lists(request, link_pk):
 
 def ajax_create_list(request, link_pk):
     if request.method != 'POST' or not request.user.is_authenticated():
-        raise Http404
+        raise PermissionDenied
 
     form = NewListAjaxForm(link_pk, request.POST)
 
@@ -230,7 +231,7 @@ def edit(request, list_pk):
     alist = get_object_or_404(List, pk=list_pk)
 
     if request.user.pk != alist.owner.pk:
-        raise Http404
+        raise PermissionDenied
 
     if alist.is_public:
         private_checkbox = ''
@@ -321,7 +322,7 @@ def auto_pull(request, list_pk):
 @login_required
 def delete(request, list_pk):
     if not request.method == 'POST':
-        raise Http404
+        raise PermissionDenied
     alist = get_object_or_404(List, pk=list_pk)
 
     if request.user.pk != alist.owner.pk:
@@ -374,7 +375,7 @@ def ajax_upvote_list(request, list_pk):
             alist.unvote(request.user)
             data = simplejson.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
-    raise Http404
+    raise PermissionDenied
 
 
 def lists_page(request):

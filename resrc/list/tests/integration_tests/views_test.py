@@ -56,7 +56,7 @@ class LinkViewTestCase(TestCase):
         alist.is_public = False
         alist.save()
         resp = self.client.get(reverse('list-single-slug', kwargs={'list_pk': alist.pk, 'list_slug': alist.slug}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
     def test_delete_list(self):
         alist = ListFactory()
@@ -68,7 +68,7 @@ class LinkViewTestCase(TestCase):
 
         self.client.login(username=self.user2.username, password='test123')
         resp = self.client.get(reverse('list-delete', kwargs={'list_pk': alist.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         resp = self.client.post(reverse('list-delete', kwargs={'list_pk': alist.pk}), {})
         self.assertEqual(resp.status_code, 404)
@@ -130,7 +130,7 @@ class LinkViewTestCase(TestCase):
         link.save()
 
         resp = self.client.get(reverse('ajax-own-lists', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('ajax-own-lists', kwargs={'link_pk': link.pk}))
@@ -144,11 +144,11 @@ class LinkViewTestCase(TestCase):
         cache.delete('link_%s' % link.pk)
 
         resp = self.client.get(reverse('ajax-create-list', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('ajax-create-list', kwargs={'link_pk': link.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         resp = self.client.post(reverse('ajax-create-list', kwargs={'link_pk': link.pk}), {
             'title': 'My list',
@@ -198,7 +198,7 @@ class LinkViewTestCase(TestCase):
 
         self.client.login(username=self.user2.username, password='test123')
         resp = self.client.get(reverse('list-edit', kwargs={'list_pk': alist.pk}))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('list-edit', kwargs={'list_pk': alist.pk}))
