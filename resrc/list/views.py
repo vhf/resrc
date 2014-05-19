@@ -42,12 +42,6 @@ def single(request, list_pk, list_slug=None):
             tags_addlink = '"%s"' % tags_addlink
             cache.set('tags_csv', tags_addlink, 60 * 15)
 
-        # from tldr.tldr import TLDRClient
-        # client = TLDRClient("victorfelder", "4vle5U5zqElu9xQrsoYC")
-        # tldrs = client.searchBatch(list(alist.links.values_list('url', flat=True).all()[:100]))
-        # for tl in tldrs['tldrs']:
-        #     tl['id'] = tl['_id']
-        # tldr_urls = [tl['originalUrl'] for tl in tldrs['tldrs']]
     from resrc.vote.models import Vote
     if request.user.is_authenticated():
         voted = Vote.objects.filter(alist=alist.pk, user=request.user).exists()
@@ -61,8 +55,6 @@ def single(request, list_pk, list_slug=None):
         'tags': alist.get_tags(),
         'tags_addlink': tags_addlink,
         'reading_list': 'Reading list',
-        # 'tldrs': tldrs,
-        # 'tldr_urls': tldr_urls,
         'request': request
     })
 
@@ -153,38 +145,31 @@ def ajax_create_list(request, link_pk):
         if 'private' in form.data:
             is_private = form.data['private']
 
-        try:
-            from resrc.language.models import Language
-            try:
-                lang = Language.objects.get(language=form.data['language'])
-            except Language.DoesNotExist:
-                lang = Language.objects.create(language=form.data['language'])
+        from resrc.language.models import Language
+        lang = Language.objects.get(language=form.data['language'])
 
-            alist = List.objects.create(
-                title=form.data['title'],
-                description=form.data['description'],
-                owner=request.user,
-                is_public=not is_private,
-                language=lang,
-            )
+        alist = List.objects.create(
+            title=form.data['title'],
+            description=form.data['description'],
+            owner=request.user,
+            is_public=not is_private,
+            language=lang,
+        )
 
-            link = cache.get('link_%s' % link_pk)
-            if link is None:
-                link = get_object_or_404(Link, pk=link_pk)
-                cache.set('link_%s' % link_pk, link, 60 * 5)
+        link = cache.get('link_%s' % link_pk)
+        if link is None:
+            link = get_object_or_404(Link, pk=link_pk)
+            cache.set('link_%s' % link_pk, link, 60 * 5)
 
-            listlink = ListLinks.objects.create(
-                alist=alist,
-                links=link,
-            )
-            listlink.add()
-            listlink.save()
+        listlink = ListLinks.objects.create(
+            alist=alist,
+            links=link,
+        )
+        listlink.add()
+        listlink.save()
 
-            data = simplejson.dumps({'result': 'success'})
-            return HttpResponse(data, mimetype="application/javascript")
-        except:
-            data = simplejson.dumps({'result': 'fail'})
-            return HttpResponse(data, mimetype="application/javascript")
+        data = simplejson.dumps({'result': 'success'})
+        return HttpResponse(data, mimetype="application/javascript")
     else:
         data = simplejson.dumps({'result': 'invalid'})
         return HttpResponse(data, mimetype="application/javascript")
@@ -242,8 +227,6 @@ def new_list(request):
 
 @login_required
 def edit(request, list_pk):
-    if not request.user.is_authenticated():
-        raise Http404
     alist = get_object_or_404(List, pk=list_pk)
 
     if request.user.pk != alist.owner.pk:
@@ -297,7 +280,6 @@ def edit(request, list_pk):
 
             return redirect(alist.get_absolute_url())
 
-        print form.errors.items()
     form = EditListForm(private_checkbox, alist, from_url, initial={
         'title': alist.title,
         'description': alist.description,

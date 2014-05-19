@@ -33,6 +33,13 @@ class UserprofileViewTestCase(TestCase):
         self.assertEqual(resp.status_code, 200)
 
 
+        self.client.login(username=self.user.username, password='test123')
+        resp = self.client.get(reverse('user-lists', kwargs={
+            'user_name': self.user.username
+        }))
+        self.assertEqual(resp.status_code, 200)
+
+
     def test_my_details(self):
         resp = self.client.get(reverse('user-url', kwargs={
             'user_name': self.user.username
