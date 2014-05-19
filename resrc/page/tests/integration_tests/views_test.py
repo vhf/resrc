@@ -36,11 +36,11 @@ class PageViewTestCase(TestCase):
 
     def test_revision_view(self):
         resp = self.client.get(reverse('page-revision'))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('page-revision'))
-        self.assertEqual(resp.status_code, 404)
+        self.assertEqual(resp.status_code, 403)
 
         self.user.is_staff = True
         self.user.save()

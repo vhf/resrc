@@ -3,6 +3,7 @@ import json
 
 from resrc.utils import render_template
 from django.core.cache import cache
+from django.core.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
 
 

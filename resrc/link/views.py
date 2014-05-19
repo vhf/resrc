@@ -127,10 +127,12 @@ def ake(request, link_pk, link_slug):
         link = get_object_or_404(Link, pk=link_pk)
         cache.set('link_%s' % link_pk, link, 60*5)
 
-    from pprint import pprint
     from resrc.utils.automatic_keyword_extraction import get_keywords_from_url
     keywords = get_keywords_from_url(link.url)
 
+    return render_template('links/ake.html', {
+        'keywords': keywords
+    })
 
 @login_required
 def new_link(request, title=None, url=None):
