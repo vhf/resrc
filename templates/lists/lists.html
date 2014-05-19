@@ -9,14 +9,19 @@ Lists summary
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "lists" %}">Lists</a></li>
-<li class="current">Summary</li>
+<li class="current">Lists</li>
 {% endblock %}
 
 {% block content %}
 <div class="row">
-  <div class="large-12 columns">
+  <div class="small-4 columns">
     <h1>Lists</h1>
+  </div>
+  <div class="small-8 columns clearfix header-buttons">
+    <a href="{% url "new-list" %}" class="button small right">
+      <i class="fi-plus"></i>
+      Create a list
+    </a>
   </div>
 </div>
 <div class="row">

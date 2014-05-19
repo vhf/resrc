@@ -11,14 +11,19 @@ Links summary
 
 {% block breadcrumb %}
 <li><a href="{% url "home" %}">Home</a></li>
-<li><a href="{% url "links" %}">Links</a></li>
-<li class="current">Summary</li>
+<li class="current">Links</li>
 {% endblock %}
 
 {% block content %}
 <div class="row">
-  <div class="large-12 columns">
+  <div class="small-4 columns">
     <h1>Links</h1>
+  </div>
+  <div class="small-8 columns clearfix header-buttons">
+    <a href="{% url "new-link" %}" class="button small right">
+      <i class="fi-plus"></i>
+      Add a link
+    </a>
   </div>
 </div>
 <div class="row">

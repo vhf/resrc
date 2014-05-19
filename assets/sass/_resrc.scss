@@ -16,6 +16,7 @@ $visited-grey: #666;
 nav.top-bar {
   background-color: $cadetblue;
 }
+
 .contain-to-grid {
   background: none;
 }
@@ -37,10 +38,31 @@ nav.top-bar {
   }
 }
 
+@media #{$topbar-media-query} {
+  .top-bar-section ul li {
+    .add-button {
+      padding-left: 0;
+      .help-label {
+        display: none;
+      }
+    }
+  }
+}
+
 .breadcrumbs > * a:focus {
   text-decoration: underline;
 }
 
 .addthis {
   margin-left: 5px;
+}
+
+.header-buttons {
+  padding-top: 0.6em;
+}
+
+@media only screen and (min-width: $small-screen) {
+  .header-buttons {
+    padding-top: 1.4em;
+  }
 }

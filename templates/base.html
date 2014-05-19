@@ -30,40 +30,32 @@
 
       <section class="top-bar-section">
         <ul class="left">
-          <li class="has-dropdown">
-            <a href="{% url "lists" %}">
-              Lists
-            </a>
-            <ul class="dropdown">
-              <li><a href="{% url "lists" %}">Summary</a></li>
-              {% if user.is_authenticated %}
-              <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
-              {% else %}
-              <li><a href="{% url "user-register" %}">My lists</a></li>
-              {% endif %}
-              <li><a href="{% url "new-list" %}">Create a list</a></li>
-            </ul>
-          </li>
-          <li class="has-dropdown">
-            <a href="{% url "links" %}">
-              Links
-            </a>
-            <ul class="dropdown">
-              <li><a href="{% url "links" %}">Summary</a></li>
-              <li><a href="{% url "my-links" %}">My links</a></li>
-              <li><a href="{% url "new-link" %}">Add a link</a></li>
-            </ul>
-          </li>
-          <li class="has-dropdown">
-            <a href="{% url "tag-index" %}">
-              Tags
-            </a>
-            <ul class="dropdown">
-              <li><a href="{% url "tag-index" %}">Summary</a></li>
-            </ul>
+          <li>
+            <a href="{% url "links" %}">Links</a>
           </li>
           <li>
-            <a href="{% url "page-search" %}">Search <span class="round alert label">new</span></a>
+            <a href="{% url "new-link" %}" title="Add a link" class="add-button">
+              <i class="fi-plus"></i>
+              <span class="help-label">Add a link</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url "lists" %}">Lists</a>
+          </li>
+          <li>
+            <a href="{% url "new-list" %}" title="Create a list" class="add-button">
+              <i class="fi-plus"></i>
+              <span class="help-label">Create a list</span>
+            </a>
+          </li>
+          <li>
+            <a href="{% url "tag-index" %}">Tags</a>
+          </li>
+          <li>
+            <a href="{% url "page-search" %}">
+              Search
+              <span class="round alert label">new</span>
+            </a>
           </li>
         </ul>
 
@@ -76,6 +68,8 @@
               {{ user.username }}
             </a>
             <ul class="dropdown">
+              <li><a href="{% url "my-links" %}">my links</a></li>
+              <li><a href="{% url "user-lists" user.username %}">my lists</a></li>
               <li><a href="{% url "upvoted-list" %}">my upvotes</a></li>
               <li><a href="{% url "user-settings" %}">edit profile</a></li>
               <li><a href="{% url "user-account" %}">edit account</a></li>
