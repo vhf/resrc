@@ -30,7 +30,11 @@ $experimental: true !default;
 
 $default-float: left;
 
-$body-bg: #fff;
+$primary-color: #027CB6;
+$secondary-color: #FFFFFF;
+$thirdary-color: #EBEBEB;
+
+$body-bg: $thirdary-color;
 // $body-font-color: #222;
 $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-family: Verdana;
@@ -48,8 +52,6 @@ $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // Colors
 
 //$primary-color: #2ba6cb;
-$primary-color: #027CB6;
-$secondary-color: #e9e9e9;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
@@ -328,10 +330,10 @@ $list-style-position: inside;
 
 // Padding for buttons.
 
-$button-tny: rem-calc(7px);
-$button-sml: rem-calc(9px);
-$button-med: rem-calc(12px);
-$button-lrg: rem-calc(16px);
+$button-tny: rem-calc(6px);
+$button-sml: rem-calc(8px);
+$button-med: rem-calc(11px);
+$button-lrg: rem-calc(14px);
 
 // Display property.
 
@@ -858,7 +860,7 @@ $crumb-font-size: 1em;
 
 // Background and border styles
 
-$panel-bg: #fff;
+$panel-bg: $secondary-color;
 $panel-border-style: solid;
 $panel-border-size: 1px;
 

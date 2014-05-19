@@ -28,7 +28,7 @@ Links summary
 </div>
 <div class="row">
   <div class="medium-6 large-6 columns">
-    <h3>latest</h3>
+    <h3>Latest</h3>
     <ul class="no-bullet">
       {% for link in latest %}
       <li{% if forloop.counter > 10 %} class="hide-for-small"{% endif %}><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a><hr></li>
@@ -37,7 +37,7 @@ Links summary
   </div>
   <div class="medium-6 large-6 columns">
     <div>
-      <h3>hottest</h3>
+      <h3>Hottest</h3>
       <ul class="no-bullet">
         {% for link in hottest %}
         <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
@@ -46,7 +46,7 @@ Links summary
       </ul>
     </div>
     <div>
-      <h3>most appreciated</h3>
+      <h3>Most appreciated</h3>
       <ul class="no-bullet">
         {% for link in most_voted %}
         <li{% if forloop.counter > 5 %} class="hide-for-small"{% endif %}><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_pk %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a></li>
@@ -60,14 +60,14 @@ Links summary
 
 <div class="row">
   <div class="large-12 columns panel hide-for-small">
-    <h6>legend</h6>
+    <h6>Legend</h6>
     <ul class="no-bullet inline-list">
       <li><a href="#"><i class="fi-link" style="color:black"></i> I'm a link</a></li>
       <li><a href="#"><i class="fi-link" style="color:black"></i> <span class="votes y-bg" data-tooltip title="Click to upvote">17 <i class="fi-check"></i></span>I'm a link with 17 votes</a></li>
     </ul>
 
-    <p><strong>hottest</strong> are the most upvoted links lately</p>
-    <p><strong>most appreciated</strong> are the most upvoted links all time</p>
+    <p><strong>Hottest</strong> are the most upvoted links lately</p>
+    <p><strong>Most appreciated</strong> are the most upvoted links all time</p>
   </div>
 </div>
 {% endblock %}

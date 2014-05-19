@@ -29,14 +29,14 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=76, widget=forms.PasswordInput)
 
 class RegisterForm(forms.Form):
-    email = forms.EmailField(label='email', widget=forms.TextInput(attrs={'required':'', 'type':'email'}))
-    username = forms.CharField(label='username', max_length=30, widget=forms.TextInput(attrs={'required':''})
+    email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'required':'', 'type':'email'}))
+    username = forms.CharField(label='Username', max_length=30, widget=forms.TextInput(attrs={'required':''})
     )
     password = forms.CharField(
-        label='password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
+        label='Password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
     )
     password_confirm = forms.CharField(
-        label='confirm password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
+        label='Confirm password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
     )
     captcha = CaptchaField()
 
