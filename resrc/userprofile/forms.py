@@ -4,6 +4,7 @@ from django import forms
 
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
+from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
 from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML
@@ -36,7 +37,7 @@ class RegisterForm(forms.Form):
         label='Password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
     )
     password_confirm = forms.CharField(
-        label='Confirm password', max_length=76, widget=forms.PasswordInput(attrs={'required':''})
+            label='Confirm password', max_length=76, widget=forms.PasswordInput(attrs={'required': '', 'data-equalto': 'id_password'})
     )
     captcha = CaptchaField()
 
@@ -58,7 +59,7 @@ class RegisterForm(forms.Form):
             Row(
                 Column(AbideCrispyField('password', clientside_error='A password is required.'), css_class='large-6'),
                 Column(
-                    AbideCrispyField('password_confirm', pattern='pass_confirm', clientside_error='Password mismatch.'),
+                    AbideCrispyField('password_confirm', clientside_error='Password mismatch.'),
                     css_class='large-6'
                 )
             ),
@@ -71,6 +72,10 @@ class RegisterForm(forms.Form):
                 )
             )
         )
+        self.helper.form_id = 'registration'
+        self.helper.method = 'post'
+        self.helper.form_action = reverse('user-register')
+        self.helper.attrs = {'data-abide': ''}
         super(RegisterForm, self).__init__(*args, **kwargs)
 
     def clean(self):
