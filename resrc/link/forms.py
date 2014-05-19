@@ -65,7 +65,7 @@ class NewLinkForm(forms.Form):
                 ),
             ),
             Row(Column(
-                Submit('submit', 'Add', css_class='small button'), css_class='large-12',
+                Submit('submit', 'Add link', css_class='small button'), css_class='large-12',
                 ),)
         )
         super(NewLinkForm, self).__init__(*args, **kwargs)
@@ -136,7 +136,7 @@ class EditLinkForm(forms.Form):
             ),
             Row(
                 Column(
-                    Submit('submit', 'Edit', css_class='small button'),
+                    Submit('submit', 'Save link', css_class='small button'),
                     css_class='large-12',
                 ),
             )
@@ -213,7 +213,7 @@ class SuggestEditForm(forms.Form):
             ),
             Row(
                 Column(
-                    Submit('submit', 'Suggest', css_class='small button'),
+                    Submit('submit', 'Suggest edits', css_class='small button'),
                     css_class='large-12',
                 ),
             )

@@ -131,7 +131,7 @@ class NewListForm(forms.Form):
             ),
             Row(
                 Column(
-                    Submit('submit', 'Save', css_class='small button'),
+                    Submit('submit', 'Create list', css_class='small button'),
                     css_class='large-12',
                 ),
             )
@@ -211,7 +211,7 @@ class EditListForm(forms.Form):
                 ),
                 Row(
                     Column(
-                        Submit('submit', 'Save', css_class='small button'),
+                        Submit('submit', 'Save list', css_class='small button'),
                         css_class='large-6',
                     ),
                     Column(
