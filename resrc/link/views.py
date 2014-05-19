@@ -31,6 +31,10 @@ def single(request, link_pk, link_slug=None):
     newlistform = None
     tags = None
 
+    from pprint import pprint
+    from resrc.utils.automatic_keyword_extraction import get_keywords_from_url
+    pprint(get_keywords_from_url(link.url))
+
     if link_slug is None:
         return redirect(link)
 
