@@ -8149,40 +8149,61 @@ nav.top-bar {
   background-color: #77c4d3;
 }
 
-/* line 19, ../sass/_resrc.scss */
+/* line 20, ../sass/_resrc.scss */
 .contain-to-grid {
   background: none;
 }
 
-/* line 24, ../sass/_resrc.scss */
+/* line 25, ../sass/_resrc.scss */
 .top-bar-section li {
   font-family: Helvetica;
 }
-/* line 26, ../sass/_resrc.scss */
+/* line 27, ../sass/_resrc.scss */
 .top-bar-section li a {
   background-color: #77c4d3;
   color: white;
   font-size: 0.8em;
 }
-/* line 30, ../sass/_resrc.scss */
+/* line 31, ../sass/_resrc.scss */
 .top-bar-section li a:hover, .top-bar-section li a:focus {
   color: #2b3d77;
 }
-/* line 33, ../sass/_resrc.scss */
+/* line 34, ../sass/_resrc.scss */
 .top-bar-section li a:not(.button) {
   background-color: #77c4d3 !important;
 }
 
-/* line 40, ../sass/_resrc.scss */
+@media only screen and (min-width: 58.75em) {
+  /* line 43, ../sass/_resrc.scss */
+  .top-bar-section ul li .add-button {
+    padding-left: 0;
+  }
+  /* line 45, ../sass/_resrc.scss */
+  .top-bar-section ul li .add-button .help-label {
+    display: none;
+  }
+}
+/* line 52, ../sass/_resrc.scss */
 .breadcrumbs > * a:focus {
   text-decoration: underline;
 }
 
-/* line 44, ../sass/_resrc.scss */
+/* line 56, ../sass/_resrc.scss */
 .addthis {
   margin-left: 5px;
 }
 
+/* line 60, ../sass/_resrc.scss */
+.header-buttons {
+  padding-top: 0.6em;
+}
+
+@media only screen and (min-width: 768px) {
+  /* line 65, ../sass/_resrc.scss */
+  .header-buttons {
+    padding-top: 1.4em;
+  }
+}
 /* line 2, ../sass/_lists.scss */
 .markdownform .editable, .markdownform #id_mdcontent {
   line-height: 20px !important;
