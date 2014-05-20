@@ -4,6 +4,7 @@
     "foundation": "zurb/bower-foundation#~5.2.2",
     "tag-it": "*",
     "jquery-ui": "~1.10.4",
-    "nprogress": "~0.1.3"
+    "nprogress": "~0.1.3",
+    "selectize": "~0.9.1"
   }
 }

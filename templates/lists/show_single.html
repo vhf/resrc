@@ -13,8 +13,8 @@
 
 {% block extrahead %}
 <link rel="canonical" href="{{ list.get_absolute_url }}" />
-<link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-<link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+  <link rel="stylesheet" type="text/css" href="{% static "js-custom-themes/jquery-ui/theme/jquery-ui.css" %}" />
+  <link href="{% static "bower_components/tag-it/css/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 
@@ -90,8 +90,8 @@
 
 {% block last_body %}
 {% if request.user.is_authenticated %}
-<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
-<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "bower_components/jquery-ui/ui/minified/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "bower_components/tag-it/js/tag-it.min.js" %}" ></script>
 
 <script>
   window.csrfToken = '{{ csrf_token }}';
