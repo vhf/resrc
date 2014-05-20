@@ -8,7 +8,7 @@ New link
 
 {% block extrahead %}
   <link rel="stylesheet" type="text/css" href="{% static "js/jquery-ui/theme/jquery-ui.css" %}" />
-  <link href="{% static "js/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+  <link href="{% static "bower_components/tag-it/css/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 
@@ -21,8 +21,8 @@ New link
 
 
 {% block last_body %}
-<script type="text/javascript" src="{% static "js/jquery-ui/jquery-ui.min.js" %}" ></script>
-<script type="text/javascript" src="{% static "js/tagit/tag-it.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "bower_components/jquery-ui/ui/minified/jquery-ui.min.js" %}" ></script>
+<script type="text/javascript" src="{% static "bower_components/tag-it/js/tag-it.min.js" %}" ></script>
 <script type="text/javascript">
   $(function(){
       $("#id_tags").tagit({

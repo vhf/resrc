@@ -1,6 +1,9 @@
 {
   "name": "foundation_project",
   "dependencies": {
-    "foundation": "zurb/bower-foundation#~5.2.2"
+    "foundation": "zurb/bower-foundation#~5.2.2",
+    "tag-it": "*",
+    "jquery-ui": "~1.10.4",
+    "nprogress": "~0.1.3"
   }
 }

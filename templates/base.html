@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="{% static "icons/foundation-icons.css" %}">
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700|Open+Sans:300italic,400,300,700' rel='stylesheet' type='text/css'>
   {% block extrahead %}{% endblock %}
-  <script src="{% static "js/vendor/custom.modernizr.js" %}"></script>
+  <script src="{% static "bower_components/modernizr/modernizr.js" %}"></script>
   <link rel="shortcut icon" type="image/png" href="{% static "img/favicon.png" %}">
 </head>
 <body>
@@ -68,12 +68,12 @@
               {{ user.username }}
             </a>
             <ul class="dropdown">
-              <li><a href="{% url "my-links" %}">my links</a></li>
-              <li><a href="{% url "user-lists" user.username %}">my lists</a></li>
-              <li><a href="{% url "upvoted-list" %}">my upvotes</a></li>
-              <li><a href="{% url "user-settings" %}">edit profile</a></li>
-              <li><a href="{% url "user-account" %}">edit account</a></li>
-              <li><a href="{% url "user-logout" %}">logout</a></li>
+              <li><a href="{% url "my-links" %}">My links</a></li>
+              <li><a href="{% url "user-lists" user.username %}">My lists</a></li>
+              <li><a href="{% url "upvoted-list" %}">My upvotes</a></li>
+              <li><a href="{% url "user-settings" %}">Edit profile</a></li>
+              <li><a href="{% url "user-account" %}">Edit account</a></li>
+              <li><a href="{% url "user-logout" %}">Logout</a></li>
             </ul>
           </li>
           {% else %}

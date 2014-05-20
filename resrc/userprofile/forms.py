@@ -104,20 +104,20 @@ class RegisterForm(forms.Form):
 
 
 class ProfileForm(forms.Form):
-    about = forms.CharField(label='about yourself', required=False, widget=forms.Textarea())
-    email = forms.EmailField(label='email')
+    about = forms.CharField(label='About yourself', required=False, widget=forms.Textarea())
+    email = forms.EmailField(label='Email')
 
     # display a select with languages ordered by most used first
     from resrc.language.models import Language
     languages = forms.ModelMultipleChoiceField(
-        label='languages',
+        label='Languages',
         widget=forms.SelectMultiple(),
         queryset=Language.objects.all(),
         help_text='Select the content languages you want to see. \
         Hint : select several languages by holding shift. \
         Hint² : since most content is in English, you might want to keep this one selected.'
     )
-    show_email = forms.BooleanField(label='show email', required=False)
+    show_email = forms.BooleanField(label='Show email', required=False)
 
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()

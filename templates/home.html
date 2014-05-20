@@ -9,7 +9,7 @@
 
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="{% static "js/selectize/css/selectize.css" %}" />
-<link rel="stylesheet" type="text/css" href="{% static "js/nprogress/nprogress.css" %}" />
+<link rel="stylesheet" type="text/css" href="{% static "bower_components/nprogress/nprogress.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "css/selectize.resrc.css" %}" />
 {% endblock %}
 
@@ -161,6 +161,6 @@ if(hideDiv[i] == " hide=True") {
   window.tags = {{ tags_json|safe }};
 </script>
 <script src="{% static "js/selectize/js/standalone/selectize.min.js" %}"></script>
-<script src="{% static "js/nprogress/nprogress.js" %}"></script>
+<script src="{% static "bower_components/nprogress/nprogress.js" %}"></script>
 <script src="{% static "js/search.js" %}"></script>
 {% endblock %}
