@@ -31,8 +31,8 @@ $experimental: true !default;
 $default-float: left;
 
 $primary-color: #027CB6;
-$secondary-color: #FFFFFF;
-$thirdary-color: #EBEBEB;
+$secondary-color: #EBEBEB;
+$thirdary-color: #FFFFFF;
 
 $body-bg: $thirdary-color;
 // $body-font-color: #222;
@@ -146,7 +146,7 @@ $global-radius: 0px;
 // $header-font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
 // $header-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $header-font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-// $header-font-weight: bold;
+$header-font-weight: bold;
 // $header-font-style: normal;
 // $header-font-color: #999;
 $header-font-color: #484848;
@@ -1243,7 +1243,7 @@ $topbar-dropdown-link-bg: lighten($topbar-bg, 5%);
 // $topbar-link-color: #fff;
 // $topbar-link-color-hover: #fff;
 // $topbar-link-color-active: #fff;
-// $topbar-link-weight: bold;
+$topbar-link-weight: bold;
 // $topbar-link-font-size: rem-calc(13px);
 // $topbar-link-hover-lightness: -30%; // Darken by 30%
 $topbar-link-bg-hover: darken($topbar-bg, 5%);
@@ -1251,7 +1251,7 @@ $topbar-link-bg-active: darken($topbar-bg, 5%);
 
 $topbar-dropdown-label-color: #555;
 // $topbar-dropdown-label-text-transform: uppercase;
-// $topbar-dropdown-label-font-weight: bold;
+$topbar-dropdown-label-font-weight: bold;
 // $topbar-dropdown-label-font-size: rem-calc(10px);
 
 // Top menu icon styles
