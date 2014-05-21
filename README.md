@@ -8,10 +8,11 @@ Installing and running the project
 ----------------------------------
 
 ### Dependencies
-* Git
-* Python >=2.6
-* virtualenv (python2 version)
+* [Git](http://www.git-scm.com/)
+* [Python](https://www.python.org/) >=2.6
 * [pip](https://github.com/pypa/pip)
+* [virtualenv](https://pypi.python.org/pypi/virtualenv)
+* [compass](compass-style.org/install/)
 
 ### Installation
 Run the following commands:
@@ -27,6 +28,10 @@ Run the following commands:
 
 Then visit <http://127.0.0.1:8000>
 
+### Compiling the CSS
+
+    cd resrc/assets
+    compass compile
 
 Contributing
 ------------
