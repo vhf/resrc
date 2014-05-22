@@ -113,6 +113,21 @@
   </div>
 </div>
 
+  {% if request.user.is_authenticated %}
+    <div id="add-to-list" class="reveal-modal" data-reveal></div>
+
+    <div id="create-list" class="small reveal-modal" data-reveal>
+      <span id="create-list-message" class="label" style="display:none"></span>
+      {% crispy newlistform %}
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+    <div id="revise-link" class="small reveal-modal" data-reveal>
+      {% crispy reviselinkform %}
+      <a class="close-reveal-modal">&#215;</a>
+    </div>
+
+  {% endif %}
 {% endblock %}
 
 
@@ -120,19 +135,7 @@
   {% if request.user.is_authenticated %}
 <script type="text/javascript" src="{% static "bower_components/jquery-ui/ui/minified/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "bower_components/tag-it/js/tag-it.min.js" %}" ></script>
-  <div id="add-to-list" class="small reveal-modal"></div>
-
-  <div id="create-list" class="small reveal-modal">
-    <span id="create-list-message" class="label" style="display:none"></span>
-    {% crispy newlistform %}
-    <a class="close-reveal-modal">&#215;</a>
-  </div>
-
-  <div id="revise-link" class="small reveal-modal">
-    {% crispy reviselinkform %}
-    <a class="close-reveal-modal">&#215;</a>
-  </div>
-
+  
   <script>
     window.csrfToken = '{{ csrf_token }}';
   </script>
