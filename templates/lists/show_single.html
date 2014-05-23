@@ -85,6 +85,18 @@
   </div>
 </div>
 {% endif %}
+
+
+{% if request.user.is_authenticated %}
+<div id="addmodal" class="reveal-modal" data-reveal>
+  <h2>Add this link</h2>
+  <span id="form-message" class="label" style="display:none"></span>
+  {% crispy form %}
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+{% else %}
+<div id="login-modal" class="reveal-modal" data-reveal></div>
+{% endif %}
 {% endblock %}
 
 
@@ -185,15 +197,7 @@ $(function(){
 
 });
 </script>
-
-<div id="addmodal" class="reveal-modal">
-  <h2>Add this link</h2>
-  <span id="form-message" class="label" style="display:none"></span>
-  {% crispy form %}
-  <a class="close-reveal-modal">&#215;</a>
-</div>
 {% else %}
-<div id="login-modal" class="reveal-modal"></div>
 <script>
 $(function () {
   $('#vote, .votes').click(function() {
