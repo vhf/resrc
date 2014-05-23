@@ -29,13 +29,20 @@ Run the following commands:
 
 ### 2. Compiling the CSS
 
+    cd assets
     foundation update
-    cd resrc/assets
     compass compile
 
 ### 3. Installing the JS assets
-    cd resrc/assets
+
+    cd assets
     bower install
+
+### 4. Launch the server
+
+    python2 manage.py runserver
+
+Then browse to <http://localhost:8000>
 
 
 Contributing
