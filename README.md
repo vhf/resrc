@@ -13,8 +13,10 @@ Installing and running the project
 * [pip](https://github.com/pypa/pip)
 * [virtualenv](https://pypi.python.org/pypi/virtualenv)
 * [compass](compass-style.org/install/)
+* [bower](http://bower.io/) (requires npm)
+* foundation (`gem install foundation`)
 
-### Installation
+### 1. Installation
 Run the following commands:
 
     git clone https://github.com/vhf/resrc.git
@@ -24,14 +26,17 @@ Run the following commands:
     pip install -r requirements.txt
     python2 manage.py syncdb
     python2 manage.py migrate
-    python2 manage.py runserver
 
-Then visit <http://127.0.0.1:8000>
+### 2. Compiling the CSS
 
-### Compiling the CSS
-
+    foundation update
     cd resrc/assets
     compass compile
+
+### 3. Installing the JS assets
+    cd resrc/assets
+    bower install
+
 
 Contributing
 ------------
