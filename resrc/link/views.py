@@ -118,22 +118,6 @@ def single(request, link_pk, link_slug=None):
     })
 
 
-
-def ake(request, link_pk, link_slug):
-    if not request.user.is_staff:
-        raise PermissionDenied
-    link = cache.get('link_%s' % link_pk)
-    if link is None:
-        link = get_object_or_404(Link, pk=link_pk)
-        cache.set('link_%s' % link_pk, link, 60*5)
-
-    from resrc.utils.automatic_keyword_extraction import get_keywords_from_url
-    keywords = get_keywords_from_url(link.url)
-
-    return render_template('links/ake.html', {
-        'keywords': keywords
-    })
-
 @login_required
 def new_link(request, title=None, url=None):
     if title is not None and url is not None:
@@ -313,6 +297,7 @@ def edit_link(request, link_pk):
         cache.set('tags_csv', tags, 60*15)
 
     return render_template('links/new_link.html', {
+        'url': link.url,
         'edit': True,
         'form': form,
         'tags': tags

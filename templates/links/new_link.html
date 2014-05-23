@@ -59,4 +59,34 @@
     });
   });
 </script>
+<script src="//algorithmia.com/assets/javascripts/algorithmia.min.js" type="text/javascript"></script>
+<script>
+var api_key = "a7c2474b72434761b0e9ff6f9332da3f";
+{% if edit %}
+var input = "{{ url }}";
+Algorithmia.query("/tags/AutoTagURL", api_key, input, function(err, result) {
+  if(err) return console.log("error: " + err);
+  $('#div_id_tags').after('<div id="algo"><a href="http://algorithmia.com">Algorithmia</a> powered suggestions : </div>')
+  sug = [];
+  for(res in result) {
+    sug.push(res);
+  }
+  $('#algo').append(sug.join(', ')).append('.');
+});
+{% else %}
+$('#id_url').on('keyup', function() {
+  Algorithmia.query("/tags/AutoTagURL", api_key, $(this).val(), function(err, result) {
+    if(err) return console.log("error: " + err);
+    $('#div_id_tags').after('<div id="algo"></div>')
+    sug = [];
+    for(res in result) {
+      sug.push(res);
+    }
+    $('#algo').html('');
+    $('#algo').append('<a href="http://algorithmia.com">Algorithmia</a> powered suggestions : ').append(sug.join(', ')).append('.');
+  });
+})
+{% endif %}
+
+</script>
 {% endblock last_body %}
