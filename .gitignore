@@ -12,6 +12,7 @@ settings_prod.py
 static/
 assets/css/app.css
 assets/.sass-cache
+assets/bower_components
 Makefile
 coverage/
 resrc/feedback/tests/local_settings.py
