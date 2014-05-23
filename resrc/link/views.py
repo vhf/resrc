@@ -425,3 +425,54 @@ def upvoted_list(request):
         'upvoted_links': upvoted_links,
         'upvoted_lists': upvoted_lists,
     })
+
+
+def search(request):
+    lang_filter = [1]
+    query = request.GET.get('q')
+    if request.user.is_authenticated():
+        from resrc.userprofile.models import Profile
+        profile = Profile.objects.get(user=request.user)
+        lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
+    langs = '_'.join(map(str, lang_filter))
+
+    import hashlib
+    h = hashlib.md5("search-title-%s" % (query)).hexdigest()
+    result = cache.get(h)
+    if result is None:
+        links = Link.objects.all()
+        links = links.filter(title__icontains=query)
+        links = links.filter(language__in=lang_filter)
+        links = links.distinct()
+
+        link_result = []
+        links_pk = []
+        for link in links:
+            link_result.append({
+                'pk': link.pk,
+                'title': link.title,
+                'url': link.get_absolute_url()
+            })
+            links_pk.append(link.pk)
+
+        from resrc.list.models import List
+        lists = List.objects.filter(links__in=links_pk)
+        lists = lists.exclude(is_public=False)
+        lists = lists.filter(language__in=lang_filter)
+        lists = lists.distinct()
+        list_result = []
+        for alist in lists:
+            list_result.append({
+                'pk': alist.pk,
+                'title': alist.title,
+                'url': alist.get_absolute_url()
+            })
+
+        result = []
+        result.append(link_result)
+        result.append(list_result)
+        cache.set(h, result, 60*3)
+
+    result = simplejson.dumps(result)
+    return HttpResponse(result, mimetype="application/javascript")
+

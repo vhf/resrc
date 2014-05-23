@@ -1,11 +1,7 @@
-
-"use strict";
-
 var _gaq = _gaq || [];
 
-// TODO: window.tags and window._gaq_page_name...
-
 $(function () {
+  "use strict";
 
   var selectizeOptions = {
     openOnFocus: false,
@@ -15,14 +11,15 @@ $(function () {
     labelField: 'tag',
     searchField: ['tag'],
     options: window.tags,
-    onChange: search,
-    onInitialize: search,
+    onChange: search_tags,
+    onInitialize: search_tags
   };
 
   $('#selected-tags').selectize(selectizeOptions);
   $('#excluded-tags').selectize(selectizeOptions);
 
-  $('input[name="op"]').on('change', search);
+  $('input[name="op"]').on('change', search_tags);
+  $('#search-title').on('keyup', search_title);
 
   var NProgress = window.NProgress;
   NProgress.configure({ trickleRate: 0.3 });
@@ -33,7 +30,7 @@ $(function () {
     NProgress.done();
   });
 
-  function search () {
+  function search_tags () {
     var op = $('input[name="op"]:checked').val() || 'or',
         selectedTags = $('#selected-tags').val() || '',
         excludedTags = $('#excluded-tags').val() || '',
@@ -60,16 +57,37 @@ $(function () {
         }
       });
     }
-  };
+  }
+
+  function search_title () {
+    var query = $('#search-title').val();
+    if (query.length < 3) {
+      $('#results').hide();
+    }
+    else {
+      _gaq.push(['_trackEvent', 'Search', window._gaq_page_name, query]);
+
+      $.ajax({
+        type:'GET',
+        url: '/link/search?q=' + query,
+        success: function (result) {
+          result = $.parseJSON(result);
+          $('#results').show();
+          injectResults($('#link_results'), result[0]);
+          injectResults($('#list_results'), result[1]);
+        }
+      });
+    }
+  }
 
   function resultLayoutTpl (content) {
     return '<div class="panel"><h5>' + content + '</h5></div>';
-  };
+  }
 
   function resultTpl (index, content) {
-    var content = index + '. <a href="' + content.url + '">' + content.title + '</a>';
+    content = index + '. <a href="' + content.url + '">' + content.title + '</a>';
     return resultLayoutTpl(content);
-  };
+  }
 
   function injectResults ($element, results) {
     $element.empty();
@@ -81,7 +99,7 @@ $(function () {
         $element.append(resultTpl(index, result));
       });
     }
-  };
+  }
 
   function buildQueryString (selectedTags, excludedTags, operand) {
     var query = '';
@@ -97,6 +115,6 @@ $(function () {
       query += ')';
     }
     return query;
-  };
+  }
 
 });
