@@ -2,6 +2,17 @@
   font-size: rem-calc(13px);
 }
 
+@media #{$topbar-media-query} {
+  .top-bar-section ul li {
+    .add-button {
+      padding-left: 0;
+      .help-label {
+        display: none;
+      }
+    }
+  }
+}
+
 .addthis {
   margin-left: 5px;
 }
