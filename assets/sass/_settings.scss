@@ -30,9 +30,13 @@ $experimental: true !default;
 
 $default-float: left;
 
-$primary-color: #027CB6;
+/**********************
+  COLORS
+ *********************/
+$primary-color: #77C4D3;
 $secondary-color: #EBEBEB;
 $thirdary-color: #FFFFFF;
+
 
 $body-bg: $thirdary-color;
 // $body-font-color: #222;
@@ -860,7 +864,8 @@ $crumb-font-size: 1em;
 
 // Background and border styles
 
-$panel-bg: $secondary-color;
+$panel-bg: #F5F792;
+
 $panel-border-style: solid;
 $panel-border-size: 1px;
 
