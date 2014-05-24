@@ -62,5 +62,6 @@ everytime you modify a file, run `./watchmedo.sh`.
 Changelog
 ---------
 
+* 0.8.2 - Upgrade to Zurb Foundation 5
 * 0.8.1 - Less dead code, more tests
 * 0.8.0 - Display version in footer
