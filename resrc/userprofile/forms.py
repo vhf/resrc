@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML
+from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML, InlineField
 
 from captcha.fields import CaptchaField
 
@@ -39,15 +39,26 @@ class LoginForm(forms.Form):
         self.helper.layout = Layout(
             Row(
                 Column(
-                    Field('username'),
-                    Field('password'),
-                    Field('remember'),
+                    InlineField('username'),
+                    InlineField('password'),
+                    InlineField('remember'),
                 )
             ),
             Row(
                 Column(
                     Submit('submit', 'Log in'),
                     HTML('<a href="/" class="button secondary">Cancel</a>'),
+                    css_class='large-6 large-centered'
+                )
+            ),
+            Row(
+                Column(
+                    HTML('<a href="'+reverse('django.contrib.auth.views.password_reset')+'">Forgot your password ?</a>'),
+                    css_class='large-6'
+                ),
+                Column(
+                    HTML('<a href="'+reverse('user-register')+'">Not already registered ?</a>'),
+                    css_class='large-6'
                 )
             )
         )

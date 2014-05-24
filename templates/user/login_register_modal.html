@@ -12,10 +12,8 @@
         {{ login_error }}.
       </div>
       {% endif %}
-      <div class="large-7 large-offset-1 columns">
+      <div class="large-8 columns large-centered">
         {% crispy login_form %}
-        <a href="{% url "django.contrib.auth.views.password_reset" %}">Forgot your password?</a>
-        <a href="{% url "user-register" %}">Not already registered ?</a>
         <input type="hidden" name="next" value="{{ next }}" />
       </div>
     </div>
