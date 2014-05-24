@@ -2,11 +2,10 @@
 {% load staticfiles %}
 
 <div class="section-container auto" data-section>
-  <section{%if register == False %} class="active"{% endif %}>
-    <p class="title" data-section-title>
-      <a href="#">Login</a>
-    </p>
     <div class="content" data-section-content>
+      <div class="row">
+        <h2>Login</h2>
+      </div>
       <div class="row">
         {% if login_error %}
         <div class="alert-box alert">
@@ -17,7 +16,7 @@
           <form method="post" action="{% url "user-login" %}">
             <div class="row">
               <div class="small-4 columns">
-                <label class="right inline" for="id_username">username</label>
+                <label class="right inline" for="id_username">Username</label>
               </div>
               <div class="small-8 columns">
                 <input type="text" name="username" id="id_username" maxlength="30" />
@@ -25,7 +24,7 @@
             </div>
             <div class="row">
               <div class="small-4 columns">
-                <label class="right inline" for="id_password">password</label>
+                <label class="right inline" for="id_password">Password</label>
               </div>
               <div class="small-8 columns">
                 <input type="password" name="password" id="id_password" maxlength="76" />
@@ -58,41 +57,10 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section{%if register %} class="active"{% endif %}>
-  <p class="title" data-section-title>
-    <a href="#">Register</a>
-  </p>
-  <div class="content" data-section-content>
-    <div class="row">
-      <div class="large-12 columns">
-        {% if error %}
-        {{ error }}
-        {% endif %}
-        <form id="registration" method="post" action="{% url "user-register" %}" data-abide>
-          {% crispy register_form %}
-        </div>
-      </div>
-    </div>
-  </section>
 <a class="close-reveal-modal">&#215;</a>
 </div>
 
 <script>
-$(document).foundation('abide', {
-  patterns: {
-    username: /^[a-zA-Z0-9_\.]{3,30}$/,
-    password : /^.+$/,
-    pass_confirm: $('#id_password_confirm').val(),
-  }
-});
-
-$('#registration').on('invalid', function() {
-  return false;
-});
-
-
 $('.button.secondary').click(function(e) {
   e.preventDefault();
   $('#login-modal').foundation('reveal', 'close');

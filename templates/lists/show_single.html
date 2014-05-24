@@ -95,7 +95,7 @@
   <a class="close-reveal-modal">&#215;</a>
 </div>
 {% else %}
-<div id="login-modal" class="reveal-modal" data-reveal></div>
+<div id="login-modal" class="reveal-modal small" data-reveal></div>
 {% endif %}
 {% endblock %}
 
@@ -202,7 +202,7 @@ $(function(){
 $(function () {
   $('#vote, .votes').click(function() {
     $('#login-modal').foundation('reveal', 'open', {
-      url: "http://resrc.io{% url "user-login-modal" %}"
+      url: "{% url "user-login-modal" %}"
     });
   });
   $('.listcontent').find('a').each(function(){
