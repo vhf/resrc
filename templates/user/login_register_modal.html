@@ -2,63 +2,25 @@
 {% load staticfiles %}
 
 <div class="section-container auto" data-section>
-    <div class="content" data-section-content>
-      <div class="row">
-        <h2>Login</h2>
+  <div class="content" data-section-content>
+    <div class="row">
+      <h2>Login</h2>
+    </div>
+    <div class="row">
+      {% if login_error %}
+      <div class="alert-box alert">
+        {{ login_error }}.
       </div>
-      <div class="row">
-        {% if login_error %}
-        <div class="alert-box alert">
-          {{ login_error }}.
-        </div>
-        {% endif %}
-        <div class="large-7 large-offset-1 columns">
-          <form method="post" action="{% url "user-login" %}">
-            <div class="row">
-              <div class="small-4 columns">
-                <label class="right inline" for="id_username">Username</label>
-              </div>
-              <div class="small-8 columns">
-                <input type="text" name="username" id="id_username" maxlength="30" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-4 columns">
-                <label class="right inline" for="id_password">Password</label>
-              </div>
-              <div class="small-8 columns">
-                <input type="password" name="password" id="id_password" maxlength="76" />
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-4 columns">
-              </div>
-              <div class="small-8 columns">
-                <label>
-                  <input type="checkbox" name="remember">
-                  remember
-                </label>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="small-8 small-offset-4 columns">
-                <button type="submit" class="button">
-                  Log in
-                </button>
-                <a href="/" class="button secondary">
-                  Cancel
-                </a>
-              </div>
-            </div>
-            <input type="hidden" name="next" value="{{ next }}" />
-            {% csrf_token %}
-          </form>
-        </div>
+      {% endif %}
+      <div class="large-7 large-offset-1 columns">
+        {% crispy login_form %}
+        <input type="hidden" name="next" value="{{ next }}" />
       </div>
     </div>
-<a class="close-reveal-modal">&#215;</a>
+  </div>
+  <a class="close-reveal-modal">&#215;</a>
 </div>
+
 
 <script>
 $('.button.secondary').click(function(e) {

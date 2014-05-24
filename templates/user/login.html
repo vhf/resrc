@@ -22,7 +22,6 @@ Log in
   <div class="large-12 columns">
     {% if not user.is_authenticated %}
     <div class="section-container auto" data-section>
-      <section class="active">
         <div class="content" data-section-content>
           <div class="row">
             {% if login_error %}
@@ -30,54 +29,12 @@ Log in
               {{ login_error }}.
             </div>
             {% endif %}
-            <div class="large-7 columns">
-              <form method="post" action="{% url "user-login" %}">
-                <div class="row">
-                  <div class="small-4 columns">
-                    <label class="right inline" for="id_username">Username</label>
-                  </div>
-                  <div class="small-8 columns">
-                    <input type="text" name="username" id="id_username" maxlength="30" />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="small-4 columns">
-                    <label class="right inline" for="id_password">Password</label>
-                  </div>
-                  <div class="small-8 columns">
-                    <input type="password" name="password" id="id_password" maxlength="76" />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="small-4 columns">
-                  </div>
-                  <div class="small-8 columns">
-                    <label>
-                      <input type="checkbox" name="remember">
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="small-8 small-offset-4 columns">
-                    <button type="submit" class="button">
-                      Log in
-                    </button>
-                    <a href="/" class="button secondary">
-                      Cancel
-                    </a>
-                    <br />
-                    <a href="{% url "django.contrib.auth.views.password_reset" %}">Forgot your password?</a>
-                  </div>
-                </div>
-                <input type="hidden" name="next" value="{{ next }}" />
-                {% csrf_token %}
-              </form>
+            <div class="large-7 columns large-offset-2 columns">
+                {% crispy login_form %}
+                <a href="{% url "django.contrib.auth.views.password_reset" %}">Forgot your password?</a>
             </div>
           </div>
         </div>
-      </section>
     </div>
     {% else %}
     <p>
@@ -87,20 +44,4 @@ Log in
   </div>
 </div>
 
-{% endblock %}
-
-{% block last_body %}
-<script>
-$(document).foundation('abide', {
-  patterns: {
-    username: /^[a-zA-Z0-9_\.]{3,30}$/,
-    password : /^.+$/,
-    pass_confirm: $('#id_password_confirm').val(),
-  }
-});
-
-$('#registration').on('invalid', function() {
-  return false;
-});
-</script>
 {% endblock %}
