@@ -46,6 +46,8 @@ class Link(models.Model):
 
     language = models.ForeignKey('language.Language', default=1)
 
+    flagged = models.BooleanField(default=False)
+
     tags = TaggableManager()
 
     def save(self, *args, **kwargs):

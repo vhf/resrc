@@ -1,0 +1,24 @@
+{% extends "pages/base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="medium-4 columns">
+    {% for l, code in a %}
+      <a href="{{ l.url }}">{{ code }}</a> <small>: <a href="{{ l.get_absolute_url }}">{{ l.title }}</a></small><br />
+    {% endfor %}
+  </div>
+  <div class="medium-4 columns">
+    {% for l, code in b %}
+      <a href="{{ l.url }}">{{ code }}</a> <small>: <a href="{{ l.get_absolute_url }}">{{ l.title }}</a></small><br />
+    {% endfor %}
+  </div>
+  <div class="medium-4 columns">
+    {% for l, code in c %}
+      <a href="{{ l.url }}">{{ code }}</a> <small>: <a href="{{ l.get_absolute_url }}">{{ l.title }}</a></small><br />
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
+

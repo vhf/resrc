@@ -188,7 +188,7 @@ def new_list(request):
 
             if form.data['url']:
                 opener = urllib2.build_opener()
-                opener.addheaders = [('Accept-Charset', 'utf-8')]
+                opener.addheaders = [('Accept-Charset', 'utf-8'), ('User-agent', 'Mozilla/5.0')]
                 url_response = opener.open(form.data['url'])
                 mdcontent = url_response.read().decode('utf-8')
             else:
@@ -253,7 +253,7 @@ def edit(request, list_pk):
 
             if form.data['url']:
                 opener = urllib2.build_opener()
-                opener.addheaders = [('Accept-Charset', 'utf-8')]
+                opener.addheaders = [('Accept-Charset', 'utf-8'), ('User-agent', 'Mozilla/5.0')]
                 url_response = opener.open(form.data['url'])
                 mdcontent = url_response.read().decode('utf-8')
             else:
@@ -303,7 +303,7 @@ def auto_pull(request, list_pk):
     alist = get_object_or_404(List, pk=list_pk)
 
     opener = urllib2.build_opener()
-    opener.addheaders = [('Accept-Charset', 'utf-8')]
+    opener.addheaders = [('Accept-Charset', 'utf-8'), ('User-agent', 'Mozilla/5.0')]
     url_response = opener.open(alist.url)
     mdcontent = url_response.read().decode('utf-8')
 
