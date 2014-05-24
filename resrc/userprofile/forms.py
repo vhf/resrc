@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from django.core.urlresolvers import reverse
 
 from crispy_forms.helper import FormHelper
-from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML
+from crispy_forms_foundation.layout import Layout, Row, Column, Div, Fieldset, Submit, Field, HTML, InlineField
 
 from captcha.fields import CaptchaField
 
@@ -26,8 +26,43 @@ class AbideCrispyField(Field):
         return super(AbideCrispyField, self).render(form, form_style, context, *args, **kwargs)
 
 class LoginForm(forms.Form):
-    username = forms.CharField(max_length=30)
-    password = forms.CharField(max_length=76, widget=forms.PasswordInput)
+    username = forms.CharField(label='Username', max_length=30, widget=forms.TextInput, required=False)
+    password = forms.CharField(label='Password', max_length=76, widget=forms.PasswordInput, required=False)
+    remember = forms.BooleanField(label='Remember me', required=False)
+
+    def __init__(self, *args, **kwargs):
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_action = reverse('user-login')
+        self.helper.form_class = 'form-horizontal'
+
+        self.helper.layout = Layout(
+            Row(
+                Column(
+                    InlineField('username'),
+                    InlineField('password'),
+                    InlineField('remember'),
+                )
+            ),
+            Row(
+                Column(
+                    Submit('submit', 'Log in'),
+                    HTML('<a href="/" class="button secondary">Cancel</a>'),
+                    css_class='large-6 large-centered'
+                )
+            ),
+            Row(
+                Column(
+                    HTML('<a href="'+reverse('django.contrib.auth.views.password_reset')+'">Forgot your password ?</a>'),
+                    css_class='large-6'
+                ),
+                Column(
+                    HTML('<a href="'+reverse('user-register')+'">Not already registered ?</a>'),
+                    css_class='large-6'
+                )
+            )
+        )
+        super(LoginForm, self).__init__(*args, **kwargs)
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(label='Email', widget=forms.TextInput(attrs={'required':'', 'type':'email'}))
