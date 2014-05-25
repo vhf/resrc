@@ -8,7 +8,7 @@
 {% block extrahead %}
 <link rel="canonical" href="{{ link.get_absolute_url }}" />
 <link rel="stylesheet" type="text/css" href="{% static "js-custom-themes/jquery-ui/theme/jquery-ui.css" %}" />
-<link href="{% static "bower_components/tag-it/css/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "js-custom-themes/tagit/theme/jquery.tagit.css" %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block title %}
@@ -135,7 +135,7 @@
   {% if request.user.is_authenticated %}
 <script type="text/javascript" src="{% static "bower_components/jquery-ui/ui/minified/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "bower_components/tag-it/js/tag-it.min.js" %}" ></script>
-  
+
   <script>
     window.csrfToken = '{{ csrf_token }}';
   </script>
