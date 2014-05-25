@@ -80,7 +80,7 @@
     <h3><a href="{% url "links" %}">Latest Links</a></h3>
     <ul class="no-bullet">
       {% for link in latest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+      <li><i class="fi-link"></i> <span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
       </li>
       <hr>
       {% endfor %}
@@ -103,7 +103,7 @@
     <h3><a href="{% url "links" %}">Hottest Links</a></h3>
     <ul class="no-bullet">
       {% for link in hottest_links %}
-      <li><i class="fi-link"></i><span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
+      <li><i class="fi-link"></i> <span class="votes y-bg" data-type="link" data-id="{{link.link__pk}}" data-type="link"><span class="votes-count"> {{ link.count }} </span><i class="fi-check{% if link.link__pk in upvoted_links %}box{% endif %}"></i></span><a href="{% url "link-single-slug" link.link__pk link.link__slug %}">{{ link.link__title }}</a>
       </li>
       <hr>
       {% endfor %}
