@@ -94,3 +94,7 @@ ul.tagit input[type="text"] {
   background-color: #77c4d3;
   color: white;
 }
+
+.tagit-hidden-field {
+  display: none !important;
+}
