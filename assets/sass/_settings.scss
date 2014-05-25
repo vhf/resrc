@@ -200,9 +200,9 @@ $paragraph-font-size: rem-calc(13px);
 
 // Anchors
 
-// $anchor-text-decoration: none;
-// $anchor-font-color: $primary-color;
-// $anchor-font-color-hover: darken($primary-color, 5%);
+$anchor-text-decoration: none;
+$anchor-font-color: #da0303;
+$anchor-font-color-hover: darken($primary-color, 5%);
 
 // <hr> element
 
@@ -864,7 +864,7 @@ $crumb-font-size: 1em;
 
 // Background and border styles
 
-$panel-bg: #F5F792;
+$panel-bg: #f0efd1;
 
 $panel-border-style: solid;
 $panel-border-size: 1px;
@@ -881,7 +881,7 @@ $panel-border-size: 1px;
 
 // Font colors
 
-// $panel-font-color: #333;
+$panel-font-color: #1b1b1b;
 // $panel-font-color-alt: #fff;
 // $panel-header-adjust: true; // Set to false to keep default header styles
 
