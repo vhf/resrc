@@ -2,6 +2,7 @@
 import json
 
 from resrc.utils import render_template
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.views.decorators.cache import cache_page
@@ -100,3 +101,8 @@ def revision(request):
     return render_template('pages/revision.html', {
         'revised': revised,
     })
+
+
+@staff_member_required
+def dead(request):
+    return render_template('links/dead.html', {})

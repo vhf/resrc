@@ -464,7 +464,7 @@ def search(request):
 
 
 @staff_member_required
-def dead(request):
+def dead(request,a,b):
     import httplib
     def get_status_code(host, path="/"):
         """ This function retreives the status code of a website by requesting
@@ -479,10 +479,8 @@ def dead(request):
         except StandardError:
             return None
 
-    links = Link.objects.all()[:200]
-    a = []
-    b = []
-    c = []
+    links = Link.objects.all()[a:b]
+    result = []
 
 
     for link in links:
@@ -491,19 +489,14 @@ def dead(request):
         host = url.hostname
         path = url.path
         code = get_status_code(host, path)
-        if str(code)[0] == "3":
-            a += [(link, code)]
-        elif str(code)[0] == "4":
-            b += [(link, code)]
-            link.flagged = True
-            link.save()
-        elif str(code)[0] == "5":
-            c += [(link, code)]
-            link.flagged = True
-            link.save()
+        if str(code)[0] == "3" or str(code)[0] == "4" or str(code)[0] == "5":
+            result += [{
+                'id': link.id,
+                'title': link.title,
+                'abs_url': link.get_absolute_url(),
+                'url': link.url,
+                'code': code
+            }]
 
-    return render_template('links/dead.html', {
-        'a': a,
-        'b': b,
-        'c': c,
-    })
+    result = simplejson.dumps(result)
+    return HttpResponse(result, mimetype="application/javascript")

@@ -10,4 +10,5 @@ urlpatterns = patterns(
     url(r'^search$', views.search, name="page-search"),
     url(r'^search/(?P<tags>[^/]*)%(?P<operand>[^/]*)%(?P<excludes>[^/]*)$', views.search),
     url(r'^revision$', views.revision, name="page-revision"),
+    url(r'^dead$', views.dead, name="page-dead"),
 )

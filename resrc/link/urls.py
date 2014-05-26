@@ -16,5 +16,5 @@ urlpatterns = patterns(
     url(r'^popup/(?P<title>.+)/u/(?P<url>.+)$', views.new_link, name="new-link-popup"),
     url(r'^upvotes/$', views.upvoted_list, name="upvoted-list"),
     url(r'^search/$', views.search, name="link-title-search"),
-    url(r'^dead/$', views.dead, name="link-dead"),
+    url(r'^dead/(?P<a>\d+)/(?P<b>\d+)$', views.dead, name="link-dead"),
 )
