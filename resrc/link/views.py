@@ -495,6 +495,7 @@ def dead(request,a,b):
                 'title': link.title,
                 'abs_url': link.get_absolute_url(),
                 'url': link.url,
+                'flagged': link.flagged,
                 'code': code
             }]
 

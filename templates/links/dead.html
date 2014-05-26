@@ -50,8 +50,8 @@
 {% block last_body %}
 <script>
 var from = 0;
-var to = 50;
-var delta = 50;
+var to = 10;
+var delta = 10;
 
 function load(from, to) {
   $.ajax({
@@ -61,12 +61,13 @@ function load(from, to) {
   }).done(function(data) {
     display(data);
   });
+  load(from+delta, to+delta);
 }
 
 function display(links) {
   for (var i = 0; i < links.length; i++) {
     var link = links[i];
-    $('#lines').append('<div class="b"><div class="a c'+link.code+'">'+link.code+'</div><div class="a"><a href="'+link.url+'">###</a> <a href="/a/link/link/'+link.id+'">'+link.title+'</a></div></div>')
+    $('#lines').append('<div class="b"><div class="a c'+link.code+'">'+link.code+'</div><div class="a"><a href="'+link.url+'">'+link.title+'</a></div><div class="a right"><a href="/a/link/link/'+link.id+'">'+link.flagged+'</a></div></div>')
   }
 }
 
