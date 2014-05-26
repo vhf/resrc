@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-:
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
@@ -461,3 +462,41 @@ def search(request):
     result = simplejson.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
 
+
+@staff_member_required
+def dead(request,a,b):
+    import httplib
+    def get_status_code(host, path="/"):
+        """ This function retreives the status code of a website by requesting
+            HEAD data from the host. This means that it only requests the headers.
+            If the host cannot be reached or something else goes wrong, it returns
+            None instead.
+        """
+        try:
+            conn = httplib.HTTPConnection(host)
+            conn.request("HEAD", path)
+            return conn.getresponse().status
+        except StandardError:
+            return None
+
+    links = Link.objects.all()[a:b]
+    result = []
+
+
+    for link in links:
+        from urlparse import urlparse
+        url = urlparse(link.url)
+        host = url.hostname
+        path = url.path
+        code = get_status_code(host, path)
+        if str(code)[0] == "3" or str(code)[0] == "4" or str(code)[0] == "5":
+            result += [{
+                'id': link.id,
+                'title': link.title,
+                'abs_url': link.get_absolute_url(),
+                'url': link.url,
+                'code': code
+            }]
+
+    result = simplejson.dumps(result)
+    return HttpResponse(result, mimetype="application/javascript")
