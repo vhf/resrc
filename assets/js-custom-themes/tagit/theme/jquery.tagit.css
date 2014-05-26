@@ -1,7 +1,7 @@
 ul.tagit {
   padding: 1px 5px;
   overflow: auto;
-  margin-left: inherit; /* usually we don't want the regular ul margins. */
+  margin-left: inherit;
   margin-right: inherit;
 }
 ul.tagit li {
@@ -20,10 +20,11 @@ ul.tagit li.tagit-choice-read-only {
 
 ul.tagit li.tagit-choice-editable {
   padding: .2em 18px .2em .5em;
+  margin-top: 10px;
 }
 
 ul.tagit li.tagit-new {
-  padding: .25em 4px .25em 0;
+  padding: 0px 4px .25em 0;
 }
 
 ul.tagit li.tagit-choice a.tagit-label {
@@ -97,4 +98,20 @@ ul.tagit input[type="text"] {
 
 .tagit-hidden-field {
   display: none !important;
+}
+
+.ui-menu-item > a {
+  font-weight: normal;
+  font-family: "Arvo";
+  text-align: center;
+  text-decoration: none;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  position: relative;
+  margin-bottom: inherit;
+  padding: 0.25rem 0.5rem 0.375rem;
+  font-size: 0.6875rem;
+  background-color: #77c4d3;
+  color: white;
 }
