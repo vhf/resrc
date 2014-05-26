@@ -1,6 +1,15 @@
 {% extends "pages/base.html" %}
 {% block extrahead %}
 <style>
+.a {
+  min-width: 40px;
+  text-align: center;
+  display: inline-block;
+}
+.b {
+  border-bottom: 1px solid #ddd;
+  min-height: 24px;
+}
 .c301 {
   background-color: #5EC7FF;
 }
@@ -16,15 +25,16 @@
 .c500 {
   background-color: #CFFA32;
 }
+.c503 {
+  background-color: #CFFA32;
+}
 </style>
 {% endblock %}
 
 {% block content %}
 
 <div class="row">
-  <div class="medium-10 columns" id="lines">
-  </div>
-  <div class="medium-2 columns" id="codes">
+  <div class="large-12 columns" id="lines">
   </div>
 </div>
 
@@ -49,8 +59,6 @@ function load(from, to) {
     url:"/link/dead/"+from+"/"+to,
     dataType: "json"
   }).done(function(data) {
-    console.log(data);
-    console.log(data.length);
     display(data);
   });
 }
@@ -58,8 +66,7 @@ function load(from, to) {
 function display(links) {
   for (var i = 0; i < links.length; i++) {
     var link = links[i];
-    $('#lines').append('<div><a href="'+link.url+'">###</a> <a href="/a/link/link/'+link.id+'">'+link.title+'</a></div>')
-    $('#codes').append('<div class="c'+link.code+'">'+link.code+'</div>');
+    $('#lines').append('<div class="b"><div class="a c'+link.code+'">'+link.code+'</div><div class="a"><a href="'+link.url+'">###</a> <a href="/a/link/link/'+link.id+'">'+link.title+'</a></div></div>')
   }
 }
 
