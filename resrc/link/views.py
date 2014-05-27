@@ -482,6 +482,9 @@ def dead(request,a,b):
     links = Link.objects.all()[a:b]
     result = []
 
+    if len(links) == 0:
+        raise Http404
+
 
     for link in links:
         from urlparse import urlparse
