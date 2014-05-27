@@ -40,8 +40,12 @@
 
 <div class="row" style="margin-top: 20px;">
   <div class="large-12 columns">
-    <button id="load">LOAD MORE</button>
-    <button id="clear">CLEAR</button>
+    <p><input id="from" placeholder="from"><input id="to" placeholder="to"></p>
+    <p>
+      <button id="load">LOAD</button>
+      <button id="stop">STOP</button>
+      <button id="clear">CLEAR</button>
+    </p>
   </div>
 </div>
 
@@ -52,6 +56,7 @@
 var from = 0;
 var to = 10;
 var delta = 10;
+var stop = false;
 
 function load(from, to) {
   $.ajax({
@@ -60,8 +65,12 @@ function load(from, to) {
     dataType: "json"
   }).done(function(data) {
     display(data);
-    load(from+delta, to+delta);
-  }).fail(function(data){});
+    if(!stop) {
+      load(from+delta, to+delta);
+    }
+  }).fail(function(data){
+    console.log(data);
+  });
 }
 
 function display(links) {
@@ -72,14 +81,21 @@ function display(links) {
 }
 
 $('#load').on('click', function(){
-  from += delta;
-  to += delta;
-  load(from, to);
+  load($('#from').val(), $('#to').val());
+});
+
+$('#stop').on('click', function(){
+  if(stop) {
+    stop = false;
+    $('#stop').html('STOP');
+  } else {
+    stop = true;
+    $('#stop').html('RESET');
+  }
 });
 
 $('#clear').on('click', function(){
   $('#lines').html('');
-  $('#codes').html('');
 });
 
 

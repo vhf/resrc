@@ -84,14 +84,14 @@ def search(request, tags, operand, excludes):
                 # clever "or" trick
                 op = operator.or_
                 tag_qs = reduce(op, (Q(tags__name=tag) for tag in tags))
-                links = Link.objects.filter(tag_qs)
+                links = Link.objects.filter(tag_qs).exclude(flagged=True)
             else:
                 # stupid "and" trick
-                links = Link.objects.filter(tags__name=tags[0])
+                links = Link.objects.filter(tags__name=tags[0]).exclude(flagged=True)
                 for tag in tags:
                     links = links.filter(tags__name=tag)
         else:
-            links = Link.objects.all()
+            links = Link.objects.all().exclude(flagged=True)
         for exclude in excludes:
             links = links.exclude(tags__name=exclude)
 

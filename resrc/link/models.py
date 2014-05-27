@@ -18,6 +18,7 @@ class LinkManager(models.Manager):
         qs = self.get_query_set()
         if lang_filter:
             qs = qs.filter(language__in=lang_filter)
+            qs = qs.exclude(flagged=True)
         qs = qs.values('pk', 'slug', 'title') \
                .order_by('-pubdate')[:limit]
         return qs

@@ -75,7 +75,8 @@ def single(request, link_pk, link_slug=None):
                 # iterate over all n_grams for this n
                 for i in xrange(len(n_gram)):
                     tag_tuple = n_gram[i]
-                    add_similars = Link.objects.filter(tags__name=link_tags[0].name)
+                    add_similars = Link.objects.filter(tags__name=link_tags[0].name)\
+                                               .exclude(flagged=True)
                     for idx in xrange(1, n):
                         add_similars = add_similars.filter(tags__name=tag_tuple[idx].name)
                     add_similars = add_similars.exclude(pk=link.pk)
@@ -394,7 +395,7 @@ def links_page(request):
 
 @login_required
 def my_links(request):
-    links = Link.objects.filter(author=request.user)
+    links = Link.objects.filter(author=request.user).exclude(flagged=True)
 
     return render_template('links/my_links.html', {
         'links': links,
@@ -426,7 +427,7 @@ def search(request):
     h = hashlib.md5("search-title-%s" % (query)).hexdigest()
     result = cache.get(h)
     if result is None:
-        links = Link.objects.all()
+        links = Link.objects.all().exclude(flagged=True)
         links = links.filter(title__icontains=query)
         links = links.filter(language__in=lang_filter)
         links = links.distinct()
@@ -466,6 +467,7 @@ def search(request):
 @staff_member_required
 def dead(request,a,b):
     import httplib
+
     def get_status_code(host, path="/"):
         """ This function retreives the status code of a website by requesting
             HEAD data from the host. This means that it only requests the headers.
@@ -476,7 +478,7 @@ def dead(request,a,b):
             conn = httplib.HTTPConnection(host)
             conn.request("HEAD", path)
             return conn.getresponse().status
-        except StandardError:
+        except:
             return None
 
     links = Link.objects.all()[a:b]
@@ -492,7 +494,7 @@ def dead(request,a,b):
         host = url.hostname
         path = url.path
         code = get_status_code(host, path)
-        if str(code)[0] == "3" or str(code)[0] == "4" or str(code)[0] == "5":
+        if str(code)[0] in ["3", "4", "5"]:
             result += [{
                 'id': link.id,
                 'title': link.title,
