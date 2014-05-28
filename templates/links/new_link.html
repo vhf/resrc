@@ -65,7 +65,7 @@ var api_key = "a7c2474b72434761b0e9ff6f9332da3f";
 {% if edit %}
 Algorithmia.query("/vhf/AutoTagURL", api_key, "{{ url }}", function(err, result) {
   if(err) return console.log("error: " + err);
-  $('#div_id_tags').after('<div id="algo"><a href="http://algorithmia.com">Algorithmia</a> powered suggestions : </div>')
+  $('#div_id_tags').after('<div id="algo">Automatic suggestions : </div><div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
   sug = [];
   for(res in result) {
     sug.push(res);
@@ -83,7 +83,7 @@ $('#id_url').on('keyup', function() {
       for(res in result) {
         sug.push(res);
       }
-      $('#algo').append('<a href="http://algorithmia.com">Algorithmia</a> powered suggestions : ').append(sug.join(', ')).append('.');
+      $('#algo').append('Automatic suggestions : ').append(sug.join(', ')).append('.').append('<div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
     });
   }
 })
