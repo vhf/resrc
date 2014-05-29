@@ -26,16 +26,6 @@
 
 {% block content %}
 
-{#<div class="row">#}
-{#  <div class="large-12 columns">#}
-{#    <p>#}
-{#      {% for name, slug, count in tags %}{% if slug %}#}
-{#      <p class="tag left"><a href="{% url "tag-single-slug" slug %}"><span class="c">{{ count }}</span><span class="t">{{ name }}</span></a></p>#}
-{#      {% endif %}{% endfor %}#}
-{#    </p>#}
-{#  </div>#}
-{#</div>#}
-
 <span itemscope itemtype="http://schema.org/Article">
 
 <div class="row">
@@ -104,6 +94,7 @@
 {% if request.user.is_authenticated %}
 <script type="text/javascript" src="{% static "bower_components/jquery-ui/ui/minified/jquery-ui.min.js" %}" ></script>
 <script type="text/javascript" src="{% static "bower_components/tag-it/js/tag-it.min.js" %}" ></script>
+<script src="//algorithmia.com/assets/javascripts/algorithmia.min.js" type="text/javascript"></script>
 
 <script>
   window.csrfToken = '{{ csrf_token }}';
@@ -144,8 +135,25 @@ $(function(){
           $(this).remove();
         });
 
+
         $('#addmodal').attr('data-link', idx);
         $('#addmodal').foundation('reveal', 'open');
+        $('#algo, .algo').remove();
+
+        var api_key = "a7c2474b72434761b0e9ff6f9332da3f";
+        Algorithmia.query("/vhf/AutoTagURL", api_key, url, function(error, result) {
+          $('#suggest').after('<div id="algo"><label>Automatic suggestions : </label></div><div class="right algo"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
+          sug = [];
+          for(res in result) {
+            sug.push('<a><span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span></a>');
+          }
+          $('#algo').append(sug.join(' '));
+
+          $('.suggest_add').on('click', function() {
+            var $tag = $(this).attr('data-tag');
+            $('#id_tags').tagit("createTag", $tag);
+          });
+        });
       });
     }
   });
@@ -183,7 +191,7 @@ $(function(){
           result = $.parseJSON(result);
           for(var i = 0; i < result.length; i++) {
             tag = result[i]
-            $('#suggest').append('<li><a id="ui-id-'+tag.pk+'"class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'">'+tag.tag+' ('+tag.count+')'+'</a></li>')
+            $('#suggest').append('<li class="tag"><a id="ui-id-'+tag.pk+'" class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'"><span class="c">'+tag.count+'</span><span class="t">'+tag.tag+'</span></a></li>');
 
             $('.suggest_add').on('click', function() {
               var $tag = $(this).attr('data-tag');

@@ -46,7 +46,7 @@
           result = $.parseJSON(result);
           for(var i = 0; i < result.length; i++) {
             tag = result[i]
-            $('#suggest').append('<li class="tag"><a id="ui-id-'+tag.pk+'" class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'"><span class="c">'+tag.count+'</span><span class="t">'+tag.tag+'</span></a></li>')
+            $('#suggest').append('<li class="tag"><a id="ui-id-'+tag.pk+'" class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'"><span class="c">'+tag.count+'</span><span class="t">'+tag.tag+'</span></a></li>');
 
             $('.suggest_add').on('click', function() {
               var $tag = $(this).attr('data-tag');
@@ -62,12 +62,11 @@
 <script>
 var api_key = "a7c2474b72434761b0e9ff6f9332da3f";
 {% if edit %}
-Algorithmia.query("/vhf/AutoTagURL", api_key, "{{ url }}", function(err, result) {
-  if(err) return console.log("error: " + err);
+Algorithmia.query("/vhf/AutoTagURL", api_key, "{{ url }}", function(error, result) {
   $('#div_id_tags').after('<div id="algo"><label>Automatic suggestions : </label></div><div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
   sug = [];
   for(res in result) {
-    sug.push('<span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span>');
+    sug.push('<a><span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span></a>');
   }
   $('#algo').append(sug.join(' '));
 
@@ -78,16 +77,23 @@ Algorithmia.query("/vhf/AutoTagURL", api_key, "{{ url }}", function(err, result)
 });
 {% else %}
 $('#suggest').after('<div id="algo"></div>');
+
+function toggle_spinner(el) {
+  $(el).toggle();
+}
+
 $('#id_url').on('keyup', function() {
+  $('#algo').html('');
+  $('#algo').append('<label>Automatic suggestions : </label>').append('<img id="spinner" src="{% static "img/spinner.gif" %}">');
   if($(this).val().length >= 11) {
-    Algorithmia.query("/vhf/AutoTagURL", api_key, $(this).val(), function(err, result) {
-      if(err) return console.log("error: " + err);
-    $('#algo').html('');
+    Algorithmia.query("/vhf/AutoTagURL", api_key, $(this).val(), function(error, result) {
+      toggle_spinner('#spinner');
+      $('#algo').html('').append('<label>Automatic suggestions : </label>');
       sug = [];
       for(res in result) {
-        sug.push('<span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span>');
+        sug.push('<a><span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span></a>');
       }
-      $('#algo').append('<label>Automatic suggestions : </label>').append(sug.join(' '));
+      $('#algo').append(sug.join(' '));
       $('#algo').append('<div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
       $('.suggest_add').on('click', function() {
         var $tag = $(this).attr('data-tag');
