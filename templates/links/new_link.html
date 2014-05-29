@@ -46,11 +46,10 @@
           result = $.parseJSON(result);
           for(var i = 0; i < result.length; i++) {
             tag = result[i]
-            $('#suggest').append('<li><a id="ui-id-'+tag.pk+'"class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'">'+tag.tag+' ('+tag.count+')'+'</a></li>')
+            $('#suggest').append('<li class="tag"><a id="ui-id-'+tag.pk+'" class="suggest_add" tabindex="-1" data-tag="'+tag.tag+'"><span class="c">'+tag.count+'</span><span class="t">'+tag.tag+'</span></a></li>')
 
             $('.suggest_add').on('click', function() {
               var $tag = $(this).attr('data-tag');
-              console.log($tag);
               $('#id_tags').tagit("createTag", $tag);
             });
           }
@@ -65,12 +64,17 @@ var api_key = "a7c2474b72434761b0e9ff6f9332da3f";
 {% if edit %}
 Algorithmia.query("/vhf/AutoTagURL", api_key, "{{ url }}", function(err, result) {
   if(err) return console.log("error: " + err);
-  $('#div_id_tags').after('<div id="algo">Automatic suggestions : </div><div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
+  $('#div_id_tags').after('<div id="algo"><label>Automatic suggestions : </label></div><div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
   sug = [];
   for(res in result) {
-    sug.push(res);
+    sug.push('<span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span>');
   }
-  $('#algo').append(sug.join(', ')).append('.');
+  $('#algo').append(sug.join(' '));
+
+  $('.suggest_add').on('click', function() {
+    var $tag = $(this).attr('data-tag');
+    $('#id_tags').tagit("createTag", $tag);
+  });
 });
 {% else %}
 $('#suggest').after('<div id="algo"></div>');
@@ -81,9 +85,14 @@ $('#id_url').on('keyup', function() {
     $('#algo').html('');
       sug = [];
       for(res in result) {
-        sug.push(res);
+        sug.push('<span class="tag suggest_add" style="display: inline-block" tabindex="-1" data-tag="'+ res +'"><span class="t">'+res+'</span></span>');
       }
-      $('#algo').append('Automatic suggestions : ').append(sug.join(', ')).append('.').append('<div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
+      $('#algo').append('<label>Automatic suggestions : </label>').append(sug.join(' '));
+      $('#algo').append('<div class="right"><a href="http://algorithmia.com"><img src="{% static "img/algorithmia.png" %}"></a></div>');
+      $('.suggest_add').on('click', function() {
+        var $tag = $(this).attr('data-tag');
+        $('#id_tags').tagit("createTag", $tag);
+      });
     });
   }
 })

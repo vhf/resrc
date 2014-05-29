@@ -52,7 +52,7 @@ class NewLinkForm(forms.Form):
                 Field('tags'), css_class='large-12'
                 ),),
             Row(Column(
-                HTML('<label>Suggested tags:</label>'),
+                HTML('<label>Related tags:</label>'),
                 HTML('<ul id="suggest" class="inline-list"><li></li></ul>'),
                 css_class='large-12'
                 ),),
