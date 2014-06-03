@@ -92,7 +92,6 @@ def register_view(request):
 
     login_error = False
 
-    login_form = LoginForm()
     register_form = RegisterForm()
 
     if request.method == 'POST':
@@ -111,7 +110,6 @@ def register_view(request):
 
     csrf_tk['register_form'] = register_form
     csrf_tk['login_error'] = login_error
-    csrf_tk['login_form']  = login_form
     if 'next' in request.GET:
         csrf_tk['next']  = request.GET.get('next')
     return render_template('user/register.html', csrf_tk)
