@@ -2,7 +2,7 @@
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
-import simplejson
+import json
 from taggit.models import Tag
 
 from resrc.utils import render_template
@@ -46,7 +46,7 @@ def tokeninput_json(request):
             tags_json = Tag.objects.all().select_related('links') \
                 .annotate(freq=Count('link')) \
                 .values('id', 'name', 'freq')
-            result = simplejson.dumps(list(tags_json))
+            result = json.dumps(list(tags_json))
             cache.set("tokeninput-_everything_", result)
     else:
         if result is None :
@@ -54,7 +54,7 @@ def tokeninput_json(request):
             tags_json = Tag.objects.filter(name__icontains=query) \
                 .select_related('links').annotate(freq=Count('link')) \
                 .values('id', 'name', 'freq')
-            result = simplejson.dumps(list(tags_json))
+            result = json.dumps(list(tags_json))
             cache.set("tokeninput-%s" % slugify(query), result)
 
     return HttpResponse(result, mimetype="application/javascript")
@@ -126,14 +126,14 @@ def search(request, tags, operand, excludes):
         result.append(list_result)
         cache.set(h, result, 60*3)
 
-    result = simplejson.dumps(result)
+    result = json.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
 
 
 def related(request, tags):
     tags = tags.split(',')
     related = get_related_tags(tags)[:10]
-    result = simplejson.dumps(related)
+    result = json.dumps(related)
     return HttpResponse(result, mimetype="application/javascript")
 
 

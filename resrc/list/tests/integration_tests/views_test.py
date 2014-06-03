@@ -7,7 +7,7 @@ from resrc.userprofile.tests.factories import ProfileFactory
 from resrc.list.tests.factories import ListFactory
 from resrc.list.models import List
 from django.core.cache import cache
-import simplejson
+import json
 from resrc.language.models import Language
 
 
@@ -80,11 +80,11 @@ class LinkViewTestCase(TestCase):
 
     def test_ajax_add_to_list_or_create(self):
         resp = self.client.get(reverse('ajax-add-to-list-or-create'))
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'fail'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'fail'}))
 
         self.client.login(username=self.user.username, password='test123')
         resp = self.client.get(reverse('ajax-add-to-list-or-create'))
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'fail'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'fail'}))
 
         link = LinkFactory()
         link.author = self.user
@@ -97,25 +97,25 @@ class LinkViewTestCase(TestCase):
             'lk': link.pk,
             'ls': alist.pk
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'added'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'added'}))
 
         resp = self.client.post(reverse('ajax-add-to-list-or-create'), {
             'lk': link.pk,
             'ls': alist.pk
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'removed'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'removed'}))
 
         resp = self.client.post(reverse('ajax-add-to-list-or-create'), {
             'lk': link.pk,
             't': 'toread'
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'added'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'added'}))
 
         resp = self.client.post(reverse('ajax-add-to-list-or-create'), {
             'lk': link.pk,
             't': 'bookmark'
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'added'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'added'}))
 
         resp = self.client.post(reverse('ajax-add-to-list-or-create'), {
             'lk': link.pk,
@@ -156,13 +156,13 @@ class LinkViewTestCase(TestCase):
             'private': True,
             'language': 'en'
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'success'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'success'}))
 
         resp = self.client.post(reverse('ajax-create-list', kwargs={'link_pk': link.pk}), {
             'title': 'My list',
             'description': 'something'
         })
-        self.assertEqual(resp.content, simplejson.dumps({'result': 'invalid'}))
+        self.assertEqual(resp.content, json.dumps({'result': 'invalid'}))
 
 
     def test_new_list(self):

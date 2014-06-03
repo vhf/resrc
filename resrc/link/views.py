@@ -5,7 +5,7 @@ from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-import simplejson
+import json
 
 from taggit.models import Tag
 
@@ -188,7 +188,7 @@ def new_link(request, title=None, url=None):
             alist.html_content = listmarkdown(alist.md_content.strip(u'\ufeff'), alist)
             alist.save()
 
-            data = simplejson.dumps({'result': 'added'})
+            data = json.dumps({'result': 'added'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
             if not 'ajax' in form.data:
@@ -206,7 +206,7 @@ def new_link(request, title=None, url=None):
                     'tags': tags
                 })
             else:
-                data = simplejson.dumps({'result': 'fail'})
+                data = json.dumps({'result': 'fail'})
                 return HttpResponse(data, mimetype="application/javascript")
 
     else:
@@ -318,11 +318,11 @@ def ajax_upvote_link(request, link_pk, list_pk=None):
         cache.delete('hot_lk_10_7')
         if not already_voted:
             link.vote(request.user, list_pk)
-            data = simplejson.dumps({'result': 'voted'})
+            data = json.dumps({'result': 'voted'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
             link.unvote(request.user)
-            data = simplejson.dumps({'result': 'unvoted'})
+            data = json.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
     raise PermissionDenied
 
@@ -360,7 +360,7 @@ def ajax_revise_link(request, link_pk):
             tags=form.data['tags']
         )
         rev.save()
-        data = simplejson.dumps({'result': 'success'})
+        data = json.dumps({'result': 'success'})
         return HttpResponse(data, mimetype="application/javascript")
     else:
         raise PermissionDenied
@@ -460,7 +460,7 @@ def search(request):
         result.append(list_result)
         cache.set(h, result, 60*3)
 
-    result = simplejson.dumps(result)
+    result = json.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")
 
 
@@ -504,5 +504,5 @@ def dead(request,a,b):
                 'code': code
             }]
 
-    result = simplejson.dumps(result)
+    result = json.dumps(result)
     return HttpResponse(result, mimetype="application/javascript")

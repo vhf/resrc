@@ -5,7 +5,7 @@ from django.core.cache import cache
 from django.core.exceptions import PermissionDenied
 from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-import simplejson
+import json
 import urllib2
 
 from resrc.utils import render_template
@@ -103,19 +103,19 @@ def ajax_add_to_list_or_create(request):
             )
             listlink.remove()
             listlink.delete()
-            data = simplejson.dumps({'result': 'removed'})
+            data = json.dumps({'result': 'removed'})
         except ListLinks.DoesNotExist:
             listlink = ListLinks.objects.create(
                 alist=alist,
                 links=link
             )
             listlink.add()
-            data = simplejson.dumps({'result': 'added'})
+            data = json.dumps({'result': 'added'})
 
         return HttpResponse(data, mimetype="application/javascript")
 
     else:
-        data = simplejson.dumps({'result': 'fail'})
+        data = json.dumps({'result': 'fail'})
         return HttpResponse(data, mimetype="application/javascript")
 
 
@@ -169,10 +169,10 @@ def ajax_create_list(request, link_pk):
         listlink.add()
         listlink.save()
 
-        data = simplejson.dumps({'result': 'success'})
+        data = json.dumps({'result': 'success'})
         return HttpResponse(data, mimetype="application/javascript")
     else:
-        data = simplejson.dumps({'result': 'invalid'})
+        data = json.dumps({'result': 'invalid'})
         return HttpResponse(data, mimetype="application/javascript")
 
 
@@ -369,11 +369,11 @@ def ajax_upvote_list(request, list_pk):
         cache.delete('hot_ls_10_7')
         if not already_voted:
             alist.vote(request.user)
-            data = simplejson.dumps({'result': 'voted'})
+            data = json.dumps({'result': 'voted'})
             return HttpResponse(data, mimetype="application/javascript")
         else:
             alist.unvote(request.user)
-            data = simplejson.dumps({'result': 'unvoted'})
+            data = json.dumps({'result': 'unvoted'})
             return HttpResponse(data, mimetype="application/javascript")
     raise PermissionDenied
 
