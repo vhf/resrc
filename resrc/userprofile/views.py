@@ -68,7 +68,11 @@ def login_view(request, modal=False):
             else:
                 login_error = 'Please enter username and password'
 
-    login_form = LoginForm()
+    next = '/'
+    if 'next' in request.GET:
+        next = request.GET['next']
+
+    login_form = LoginForm(({'next': next}),)
     register_form = RegisterForm()
 
     csrf_tk['register_form'] = register_form
