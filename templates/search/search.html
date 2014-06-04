@@ -5,16 +5,10 @@
   <div class="large-12 columns">
     <h2>Search</h2>
 
-    <form method="get" action=".">
-        <table>
-            {{ form.as_table }}
-            <tr>
-                <td>&nbsp;</td>
-                <td>
-                    <input type="submit" value="Search">
-                </td>
-            </tr>
-        </table>
+    <form method="get" action="" class="large-12 columns">
+        <input id="id_q" name="q" type="text">
+        <input type="submit" value="Search" class="submit button small button">
+
 
         {% if query %}
             <h3>Results</h3>
