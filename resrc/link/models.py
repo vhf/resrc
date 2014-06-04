@@ -34,6 +34,8 @@ class Link(models.Model):
 
     title = models.CharField('title', max_length=120)
 
+    content = models.TextField()
+
     slug = models.SlugField(max_length=255)
 
     url = models.URLField('url')

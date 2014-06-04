@@ -155,7 +155,8 @@ EXTERNAL_APPS = [
     'email_obfuscator',
     'disqus',
     'floppyforms',
-    'taggit'
+    'taggit',
+    'haystack',
 ]
 
 INTERNAL_APPS = [
@@ -224,6 +225,15 @@ LOGIN_URL = '/user/login'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/user/user/{0}'.format(u.username)
 }
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Load the production settings, overwrite the existing ones if needed
 try:
