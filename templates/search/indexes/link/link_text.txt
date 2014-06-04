@@ -1,2 +1,2 @@
-{{ obj.title }}
-{{ obj.content }}
+{{ object.title }}
+{{ object.content }}
