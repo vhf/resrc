@@ -39,7 +39,7 @@
         {% with author=link.author %}
         by <a href="{% url "user-url" author.username %}"><span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author.username }}</span></span></a> |
         <span itemprop="datePublished" content="{{ link.pubdate }}">{{ link.pubdate|timesince }}</span> ago |
-        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}"><span class="votes-count"> {{ count }} </span><i class="fi-check{% if voted %}box{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}
+        <span class="votes y-bg" data-type="link" data-id="{{ link.id }}"><span class="votes-count"> {{ count }} </span><i class="fi-check{% if voted %}box{% endif %}"></i></span>{% if author == request.user %} | <a href="{% url "link-edit" link_pk=link.pk %}">edit</a>{% endif %}{% if request.user.is_staff %} | <a href="/a/link/link/{{ link.pk }}">ADMIN</a>{% endif %}
         {%endwith%}
       </p>
     </div>
@@ -112,6 +112,14 @@
     </ul>
   </div>
 </div>
+
+{% if request.user.is_staff %}
+<div class="row">
+  <div class="large-12 columns">
+    <pre>{{ link.content }}</pre>
+  </div>
+</div>
+{% endif %}
 
   {% if request.user.is_authenticated %}
     <div id="add-to-list" class="small reveal-modal" data-reveal></div>

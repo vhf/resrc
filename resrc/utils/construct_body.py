@@ -5,7 +5,8 @@ import os
 
 
 def construct_body(link):
-    if link.content in ['', '˘']:
+    if link.content == u'˘':
+        # this signals that content generation previously failed
         return
     try:
         opener = urllib2.build_opener()
