@@ -22,6 +22,7 @@ Full-text search
 
         {% if query %}
             <script>
+                window._gaq_page_name = 'FTSearchpage';
                 _gaq.push(['_trackEvent', 'Search', window._gaq_page_name, "{{ query }}"]);
             </script>
             <h3>Results</h3>
