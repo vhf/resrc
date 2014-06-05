@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load highlight %}
 
+{% block title %}
+Full-text search
+{% endblock %}
 
 {% block content %}
 <style>
@@ -10,14 +13,17 @@
 </style>
 <div class="row" id="results">
   <div class="large-12 columns">
-    <h2>Search</h2>
+    <h1>Search in links</h1>
 
-    <form method="get" class="large-12 columns">
+    <form method="get" action="/search/" class="large-12 columns">
         <input id="id_q" name="q" type="text" value="{{ query }}">
         <input type="submit" value="Search" class="submit button small button">
 
 
         {% if query %}
+            <script>
+                _gaq.push(['_trackEvent', 'Search', window._gaq_page_name, "{{ query }}"]);
+            </script>
             <h3>Results</h3>
             <p>Your query "{{ query }}" has returned {{ links.count }} result{{ links|pluralize }}</p>
             {% for result in links %}
@@ -40,7 +46,8 @@
                 </div>
             {% endif %}
         {% else %}
-            {# Show some example queries to run, maybe query syntax, something else? #}
+            <p>Hint: use double quotes to search for exact string.</p>
+            <p>Use + operator to include something, - operator to exclude from search results.</p>
         {% endif %}
     </form>
   </div>

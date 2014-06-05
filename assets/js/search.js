@@ -59,27 +59,6 @@ $(function () {
     }
   }
 
-  function search_title () {
-    var query = $('#search-title').val();
-    if (query.length < 3) {
-      $('#results').hide();
-    }
-    else {
-      _gaq.push(['_trackEvent', 'Search', window._gaq_page_name, query]);
-
-      $.ajax({
-        type:'GET',
-        url: '/link/search?q=' + query,
-        success: function (result) {
-          result = $.parseJSON(result);
-          $('#results').show();
-          injectResults($('#link_results'), result[0]);
-          injectResults($('#list_results'), result[1]);
-        }
-      });
-    }
-  }
-
   function resultLayoutTpl (content) {
     return '<div class="panel"><h5>' + content + '</h5></div>';
   }
