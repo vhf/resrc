@@ -98,7 +98,7 @@ def revision(request):
     for rev in revised:
         rev.link.tags = ",".join(rev.link.tags.order_by('name').values_list('name', flat=True))
 
-    links = Link.objects.filter(content=u'˘')
+    links = Link.objects.filter(content=u'˘').exclude(flagged=True)
 
     return render_template('pages/revision.html', {
         'revised': revised,
