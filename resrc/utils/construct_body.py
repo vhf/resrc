@@ -26,7 +26,7 @@ def construct_body(link):
             thefile.write(data)
             thefile.close()
 
-            os.system(("ps2ascii /tmp/%s.pdf /tmp/%s.txt") %(filename , filename))
+            os.system(("ps2txt /tmp/%s.pdf /tmp/%s.txt") %(filename , filename))
 
             link.content = open("/tmp/%s.txt" % filename).read()
             link.save()
