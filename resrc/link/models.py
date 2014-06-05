@@ -34,7 +34,7 @@ class Link(models.Model):
 
     title = models.CharField('title', max_length=120)
 
-    content = models.TextField()
+    content = models.TextField(null=True, blank=True)
 
     slug = models.SlugField(max_length=255)
 
@@ -61,7 +61,8 @@ class Link(models.Model):
             karma_rate(self.author_id, 1)
         cache.set('link_%s' % self.pk, self, 60*5)
         from resrc.utils import construct_body
-        construct_body.construct_body(self)
+        if self.content == '':
+            construct_body.construct_body(self)
         super(Link, self).save(*args, **kwargs)
 
     def do_unique_slug(self):
