@@ -5,6 +5,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 from page.views import home
+from search.views import search
 import settings
 
 urlpatterns = patterns(
@@ -14,7 +15,7 @@ urlpatterns = patterns(
     url(r'^list/', include('resrc.list.urls')),
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
-    (r'^search/', include('haystack.urls')),
+    (r'^search/', search),
     url(r'^a/',  include(admin.site.urls)),
 
     # third party includes

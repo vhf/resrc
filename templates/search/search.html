@@ -3,29 +3,31 @@
 
 
 {% block content %}
+<style>
+.highlighted {
+    font-weight: bold;
+}
+</style>
 <div class="row" id="results">
   <div class="large-12 columns">
     <h2>Search</h2>
 
-    <form method="get" action="" class="large-12 columns">
-        <input id="id_q" name="q" type="text">
+    <form method="get" class="large-12 columns">
+        <input id="id_q" name="q" type="text" value="{{ query }}">
         <input type="submit" value="Search" class="submit button small button">
 
 
         {% if query %}
             <h3>Results</h3>
-
-            {% for result in page.object_list %}
+            <p>Your query "{{ query }}" has returned {{ links.count }} result{{ links|pluralize }}</p>
+            {% for result in links %}
+                <h5><a href="{{ result.object.get_absolute_url }}">{{ result.title }}</a></h5>
                 <p>
-                    <a href="{{ result.object.get_absolute_url }}">{{ result.object.title }}</a>
-                    {% for text in result.highlighted.text %}
-                        <blockquote>
-                        {% with text|striptags as stripped_text %}
-                            {% highlight stripped_text with query %}
-                        {% endwith %}
-                        </blockquote>
-                    {% endfor %}
+                    {% with result.content|striptags as stripped_text %}
+                        {% highlight stripped_text with query %}
+                    {% endwith %}
                 </p>
+
             {% empty %}
                 <p>No results found.</p>
             {% endfor %}
