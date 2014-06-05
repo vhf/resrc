@@ -14,6 +14,7 @@ Installing and running the project
 * [virtualenv](https://pypi.python.org/pypi/virtualenv)
 * [compass](compass-style.org/install/)
 * [bower](http://bower.io/) (requires npm)
+* Elasticsearch
 * foundation (`gem install foundation`)
 
 ### 1. Installation
@@ -62,6 +63,7 @@ everytime you modify a file, run `./watchmedo.sh`.
 Changelog
 ---------
 
+* 0.8.3 - Implements a full-text search engine with ElasticSearch
 * 0.8.2 - Upgrade to Zurb Foundation 5
 * 0.8.1 - Less dead code, more tests
 * 0.8.0 - Display version in footer
