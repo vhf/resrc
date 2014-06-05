@@ -96,6 +96,19 @@ Search by tags
   </div>
 </div>
 
+<div class="row">
+  <div class="large-12 columns">
+    <h1>For these links, content generation for indexing failed</h1>
+  </div>
+  {% for link in links %}
+  <div class="large-12 columns">
+    <a href="{{ link.url }}">{{ link.title }}</a>
+    <iframe class="large-12 columns" src="/a/link/link/{{ link.pk }}/" style="height: 520px"></iframe>
+  </div>
+  <hr />
+  {% endfor %}
+</div>
+
 {% endblock %}
 
 {% block last_body %}

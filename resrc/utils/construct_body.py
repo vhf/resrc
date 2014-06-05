@@ -5,6 +5,8 @@ import os
 
 
 def construct_body(link):
+    if link.content in ['', '˘']:
+        return
     try:
         opener = urllib2.build_opener()
         opener.addheaders = [('Accept-Charset', 'utf-8'), ('User-agent', 'Mozilla/5.0')]
@@ -32,6 +34,9 @@ def construct_body(link):
             from readability.readability import Document
             readable_article = Document(data).summary()
             link.content = readable_article
+            link.save()
+        else:
+            link.content = u'˘'
             link.save()
     except:
         link.content = u'˘'

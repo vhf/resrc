@@ -92,14 +92,17 @@ def revision(request):
     if not request.user.is_staff:
         raise PermissionDenied
 
-    from resrc.link.models import RevisedLink
+    from resrc.link.models import Link, RevisedLink
     revised = RevisedLink.objects.select_related('link').all()
 
     for rev in revised:
         rev.link.tags = ",".join(rev.link.tags.order_by('name').values_list('name', flat=True))
 
+    links = Link.objects.filter(content=u'˘')
+
     return render_template('pages/revision.html', {
         'revised': revised,
+        'links': links,
     })
 
 

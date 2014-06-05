@@ -13,7 +13,7 @@ from resrc.link.models import Link
 from resrc.link.forms import NewLinkForm, EditLinkForm, SuggestEditForm
 from resrc.list.models import List
 from resrc.list.forms import NewListAjaxForm
-from resrc.utils import render_template, construct_body
+from resrc.utils import render_template
 
 
 def single(request, link_pk, link_slug=None):
@@ -38,9 +38,6 @@ def single(request, link_pk, link_slug=None):
 
     if link.slug != link_slug:
         raise Http404
-
-    if True or link.content == '':
-        construct_body.construct_body(link)
 
     reviselinkform = ''
     if request.user.is_authenticated():

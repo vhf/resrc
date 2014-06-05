@@ -60,6 +60,8 @@ class Link(models.Model):
             from resrc.utils.karma import karma_rate
             karma_rate(self.author_id, 1)
         cache.set('link_%s' % self.pk, self, 60*5)
+        from resrc.utils import construct_body
+        construct_body.construct_body(self)
         super(Link, self).save(*args, **kwargs)
 
     def do_unique_slug(self):
