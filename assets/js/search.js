@@ -60,7 +60,7 @@ $(function () {
   }
 
   function resultLayoutTpl (content) {
-    return '<div class="panel"><h5>' + content + '</h5></div>';
+    return '<div><h5>' + content + '</h5></div>';
   }
 
   function resultTpl (index, content) {
