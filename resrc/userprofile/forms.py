@@ -35,8 +35,6 @@ class LoginForm(forms.Form):
         self.helper.form_method = 'post'
         self.helper.form_action = reverse('user-login')
         self.helper.form_class = 'form-horizontal'
-        from pprint import pprint
-        pprint(args)
         self.helper.layout = Layout(
             Row(
                 Column(
