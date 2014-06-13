@@ -200,9 +200,9 @@ $paragraph-font-size: rem-calc(13px);
 
 // Anchors
 
-// $anchor-text-decoration: none;
-// $anchor-font-color: $primary-color;
-// $anchor-font-color-hover: darken($primary-color, 5%);
+$anchor-text-decoration: none;
+$anchor-font-color: #1b1b1b;
+$anchor-font-color-hover: darken($primary-color, 5%);
 
 // <hr> element
 
@@ -864,7 +864,7 @@ $crumb-font-size: 1em;
 
 // Background and border styles
 
-$panel-bg: #F5F792;
+$panel-bg: #fafafa;
 
 $panel-border-style: solid;
 $panel-border-size: 1px;
