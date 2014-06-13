@@ -19,7 +19,6 @@ $(function () {
   $('#excluded-tags').selectize(selectizeOptions);
 
   $('input[name="op"]').on('change', search_tags);
-  $('#search-title').on('keyup', search_title);
 
   var NProgress = window.NProgress;
   NProgress.configure({ trickleRate: 0.3 });

@@ -131,13 +131,14 @@
 </script>
 <script src="{% static "js/votes.js" %}"></script>
 {% else %}
-<div id="login-modal" class="reveal-modal"></div>
+<div id="login-modal" class="reveal-modal" data-reveal></div>
 <script>
 var _gaq = _gaq || [];
 $(function () {
+  $(document).foundation();
   $('#vote, .votes, .arrow-up').click(function() {
     $('#login-modal').foundation('reveal', 'open', {
-      url: "http://resrc.io{% url "user-login-modal" %}"
+      url: "{% url "user-login-modal" %}"
     });
   });
   $('#close').click(function() {
