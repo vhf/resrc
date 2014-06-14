@@ -81,7 +81,7 @@ function display(links) {
 }
 
 $('#load').on('click', function(){
-  load($('#from').val(), $('#to').val());
+  load(parseInt($('#from').val(), 10), parseInt($('#to').val(), 10));
 });
 
 $('#stop').on('click', function(){
