@@ -1,7 +1,6 @@
 {% extends "user/base.html" %}
 {% load emarkdown %}
 {% load markup %}
-{% load email_obfuscator %}
 {% load gravatar %}
 
 {% block title %}
@@ -48,7 +47,7 @@
     </p>
     <p>
       {% if profile.show_email and user.is_authenticated %}
-        email : {{ usr.email|obfuscate_mailto }}
+        email : {{ usr.email }}
       {% endif %}
     </p>
     <p>
