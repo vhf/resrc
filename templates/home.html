@@ -136,7 +136,7 @@
 var _gaq = _gaq || [];
 $(function () {
   $(document).foundation();
-  $('#vote, .votes, .arrow-up').click(function() {
+  $('#vote, .votes').click(function() {
     $('#login-modal').foundation('reveal', 'open', {
       url: "{% url "user-login-modal" %}"
     });
@@ -145,6 +145,28 @@ $(function () {
     document.cookie = "hide=True";
     _gaq.push(['_trackEvent', 'Intervention', 'Hide panel', 'Hide']);
     $('.welcome').remove();
+  });
+
+  $('.votes').hover(function() {
+    var $icon = $(this).find('i').eq(0);
+    var $count = $(this).find('span.votes-count').eq(0);
+    if($icon.hasClass('fi-check')) {
+      $count.html(parseInt($count.html(), 10)+1+' ');
+    } else {
+      $count.html(parseInt($count.html(), 10)-1+' ');
+    }
+    $icon.toggleClass('fi-checkbox');
+    $icon.toggleClass('fi-check');
+  }, function() {
+    var $icon = $(this).find('i').eq(0);
+    var $count = $(this).find('span.votes-count').eq(0);
+    if($icon.hasClass('fi-check')) {
+      $count.html(parseInt($count.html(), 10)+1+' ');
+    } else {
+      $count.html(parseInt($count.html(), 10)-1+' ');
+    }
+    $icon.toggleClass('fi-checkbox');
+    $icon.toggleClass('fi-check');
   });
 });
 

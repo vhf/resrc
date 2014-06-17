@@ -5,7 +5,7 @@ $(function () {
   var VOTED_CLASS = 'fi-checkbox';
   var UNVOTED_CLASS = 'fi-check';
 
-  $('#vote, .votes, .arrow-up').click(function() {
+  $('#vote, .votes').click(function() {
     var $this = $(this);
     var itemType = $this.attr('data-type');
     var itemId = $this.attr('data-id');
@@ -47,27 +47,5 @@ $(function () {
       $icons.toggleClass(UNVOTED_CLASS);
       $votesCounts.text(' ' + newVotesCount + ' ');
     });
-  });
-
-  $('.votes').hover(function() {
-    var $icon = $(this).find('i').eq(0);
-    var $count = $(this).find('span.votes-count').eq(0);
-    if($icon.hasClass('fi-check')) {
-      $count.html(parseInt($count.html(), 10)+1+' ');
-    } else {
-      $count.html(parseInt($count.html(), 10)-1+' ');
-    }
-    $icon.toggleClass(VOTED_CLASS);
-    $icon.toggleClass(UNVOTED_CLASS);
-  }, function() {
-    var $icon = $(this).find('i').eq(0);
-    var $count = $(this).find('span.votes-count').eq(0);
-    if($icon.hasClass('fi-check')) {
-      $count.html(parseInt($count.html(), 10)+1+' ');
-    } else {
-      $count.html(parseInt($count.html(), 10)-1+' ');
-    }
-    $icon.toggleClass(VOTED_CLASS);
-    $icon.toggleClass(UNVOTED_CLASS);
   });
 }(jQuery));
