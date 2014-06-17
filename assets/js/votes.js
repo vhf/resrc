@@ -48,4 +48,26 @@ $(function () {
       $votesCounts.text(' ' + newVotesCount + ' ');
     });
   });
+
+  $('.votes').hover(function() {
+    var $icon = $(this).find('i').eq(0);
+    var $count = $(this).find('span.votes-count').eq(0);
+    if($icon.hasClass('fi-check')) {
+      $count.html(parseInt($count.html(), 10)+1+' ');
+    } else {
+      $count.html(parseInt($count.html(), 10)-1+' ');
+    }
+    $icon.toggleClass(VOTED_CLASS);
+    $icon.toggleClass(UNVOTED_CLASS);
+  }, function() {
+    var $icon = $(this).find('i').eq(0);
+    var $count = $(this).find('span.votes-count').eq(0);
+    if($icon.hasClass('fi-check')) {
+      $count.html(parseInt($count.html(), 10)+1+' ');
+    } else {
+      $count.html(parseInt($count.html(), 10)-1+' ');
+    }
+    $icon.toggleClass(VOTED_CLASS);
+    $icon.toggleClass(UNVOTED_CLASS);
+  });
 }(jQuery));
