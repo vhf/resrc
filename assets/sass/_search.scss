@@ -6,3 +6,8 @@ div.switch input:last-of-type:checked + label, div.switch input:last-of-type:che
   right: 5%;
   left: auto;
 }
+
+div.selectize-input {
+    height: 36px;
+    padding: 0 8px 0 8px;
+}
