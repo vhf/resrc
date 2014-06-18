@@ -18,8 +18,8 @@ def home(request):
         from resrc.userprofile.models import Profile
         profile = Profile.objects.get(user=user)
         lang_filter = profile.languages.all().order_by('name').values_list('pk', flat=True)
-        hot_lk_cache = 'hot_lk_10_30_%s' % '_'.join(map(str, lang_filter))
-        hot_ls_cache = 'hot_ls_10_30_%s' % '_'.join(map(str, lang_filter))
+        hot_lk_cache = 'hot_lk_10_30_{0}'.format('_'.join(map(str, lang_filter)))
+        hot_ls_cache = 'hot_ls_10_30_{0}'.format('_'.join(map(str, lang_filter)))
 
         user_upvoted_lists = Vote.objects.my_upvoted_lists(user)
         user_upvoted_lists = [x['alist__pk'] for x in user_upvoted_lists]

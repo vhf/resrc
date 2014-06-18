@@ -52,14 +52,11 @@ class VoteManager(models.Manager):
 
     def latest_links(self, limit=10, days=1, lang_filter=[1]):
         from resrc.link.models import Link
-        latest = list(Link.objects.latest(limit=limit))
+        latest = list(Link.objects.latest(limit=limit, lang_filter=lang_filter))
         voted = self.get_query_set() \
             .filter(time__gt=datetime.utcnow().replace(tzinfo=utc) - timedelta(days=days)) \
-            .exclude(link=None)
-        if lang_filter:
-            voted = voted.filter(link__language__in=lang_filter)
-
-        voted = voted \
+            .exclude(link=None) \
+            .filter(link__language__in=lang_filter) \
             .values('link__pk', 'link__slug', 'link__title') \
             .annotate(count=Count('id')) \
             .order_by('-link__pubdate')[:limit]
