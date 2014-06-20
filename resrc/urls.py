@@ -25,6 +25,7 @@ urlpatterns = patterns(
 
     url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
     url(r'^account/', include('django.contrib.auth.urls')),
+    url(r'^munin/',include('munin.urls')),
 )
 
 if settings.DEBUG:

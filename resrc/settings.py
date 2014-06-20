@@ -156,6 +156,7 @@ EXTERNAL_APPS = [
     'floppyforms',
     'taggit',
     'haystack',
+    'munin',
 ]
 
 INTERNAL_APPS = [
