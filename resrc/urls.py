@@ -15,6 +15,7 @@ urlpatterns = patterns(
     url(r'^list/', include('resrc.list.urls')),
     url(r'^page/',  include('resrc.page.urls')),
     url(r'^tag/',  include('resrc.tag.urls')),
+    url(r'^munin/',  include('resrc.munin.urls')),
     (r'^search/', search),
     url(r'^a/',  include(admin.site.urls)),
 
