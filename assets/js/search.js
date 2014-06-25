@@ -33,7 +33,7 @@ $(function () {
     var op = $('input[name="op"]:checked').val() || 'or',
         selectedTags = $('#selected-tags').val() || '',
         excludedTags = $('#excluded-tags').val() || '',
-        url = '/search/' + selectedTags +'%25' + op + '%25' + excludedTags,
+        url = '/search/' + encodeURIComponent(selectedTags) +'%25' + op + '%25' + encodeURIComponent(excludedTags),
         query = buildQueryString(selectedTags, excludedTags, op);
 
     if (query.length === 0) {
