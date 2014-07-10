@@ -20,7 +20,7 @@
       <h1>Tag: {{ tag.name }}</h1>
       <div  class="js-masonry" data-masonry-options='{ "itemSelector": ".panel", "gutter": 10 }'>
         {% for link in links %}
-        <div class="panel medium-3">
+        <div class="panel medium-3" {% if link.pk in upvoted_pk %}style="border: 3px solid #77c4d3"{% endif %}>
           <h5><a href="{% url "link-single-slug" link.id link.slug %}">{{ link.title }}</a></h5>
           <ul class="inline inline-list">
             {% for tag2 in link.tags.all %}{% if tag2.name != tag.name %}

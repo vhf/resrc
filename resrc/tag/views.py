@@ -14,10 +14,16 @@ def single(request, tag_slug):
 
     links = Link.objects.filter(tags=tag)
 
+    upvoted_pk = []
+    if request.user.is_authenticated():
+        from resrc.vote.models import Vote
+        upvoted_links = Vote.objects.my_upvoted_links(request.user)
+        upvoted_pk = [x['link__pk'] for x in upvoted_links]
+
     return render_template('tags/show_single.html', {
         'tag': tag,
         'links': links,
-        'request': request,
+        'upvoted_pk': upvoted_pk,
     })
 
 
