@@ -34,3 +34,11 @@
 #id_languages {
   height: 150px;
 }
+
+.panel-highlight {
+  border: 3px solid #77c4d3;
+}
+
+a:visited {
+  color: darken($primary-color, 5%);
+}
