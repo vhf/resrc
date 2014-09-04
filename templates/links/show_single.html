@@ -1,6 +1,4 @@
 {% extends "links/base.html" %}
-{% load disqus_tags %}
-{% disqus_dev %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 {% load cache %}
@@ -90,7 +88,6 @@
     <h5>Please sign in to upvote this resource, save it to your reading list</h5>
     <p>and much more !</p>
     {% endif %}
-    {% disqus_show_comments %}
   </div>
 </div>
 

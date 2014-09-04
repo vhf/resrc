@@ -1,8 +1,6 @@
 {% extends "lists/base.html" %}
 {% load profile %}
 {% load staticfiles %}
-{% load disqus_tags %}
-{% disqus_dev %}
 {% load crispy_forms_tags %}
 {% load emarkdown %}
 
@@ -67,14 +65,6 @@
 </div>
 
 </span>
-
-{% if list.title != reading_list %}
-<div class="row">
-  <div class="large-12 columns">
-    {% disqus_show_comments %}
-  </div>
-</div>
-{% endif %}
 
 
 {% if request.user.is_authenticated %}

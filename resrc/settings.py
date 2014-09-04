@@ -28,7 +28,7 @@ DATABASES = {
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ['.resrc.io', '127.0.0.1', '95.130.12.28']
+ALLOWED_HOSTS = ['.resrc.io', '127.0.0.1', '104.28.8.71']
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -144,7 +144,6 @@ EXTERNAL_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.comments',
     'django.contrib.markup',
     'django.contrib.admin',
 
@@ -152,7 +151,6 @@ EXTERNAL_APPS = [
     'crispy_forms',
     'crispy_forms_foundation',
     'captcha',
-    'disqus',
     'floppyforms',
     'taggit',
     'haystack',
@@ -215,9 +213,6 @@ DEBUG_TOOLBAR_CONFIG = {
 
 CRISPY_FAIL_SILENTLY = not DEBUG
 CRISPY_TEMPLATE_PACK = 'foundation-5'
-
-DISQUS_API_KEY = 'FOOBARFOOBARFOOBARFOOBARFOOBARF'
-DISQUS_WEBSITE_SHORTNAME = 'resrc'
 
 AUTH_PROFILE_MODULE = 'userprofile.Profile'
 LOGIN_URL = '/user/login'
