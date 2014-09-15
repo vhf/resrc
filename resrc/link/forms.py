@@ -9,6 +9,23 @@ from django.conf import settings
 LEVELS = ['', 'beginner', 'intermediate', 'advanced']
 
 
+def lang_choices():
+    # display a select with languages ordered by most used first
+    from resrc.language.models import Language
+    from django.db.models import Count
+    used_langs = Language.objects.all().annotate(
+       c=Count('link')).order_by('-c').values_list()
+    used_langs = [x[1] for x in used_langs]
+
+    used_langs = ['English']
+    lang_choices = []
+    for lang in used_langs:
+        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
+    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+
+    return lang_choices
+
+
 class NewLinkForm(forms.Form):
 
     title = forms.CharField(label='Title', max_length=120)
@@ -20,16 +37,7 @@ class NewLinkForm(forms.Form):
     level = forms.ChoiceField(
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
-    # display a select with languages ordered by most used first
-    from resrc.language.models import Language
-    from django.db.models import Count
-    used_langs = Language.objects.all().annotate(
-        c=Count('link')).order_by('-c').values_list()
-    used_langs = [x[1] for x in used_langs]
-    lang_choices = []
-    for lang in used_langs:
-        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
-    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+    lang_choices = lang_choices()
 
     language = forms.ChoiceField(label='Language', choices=lang_choices)
 
@@ -82,16 +90,7 @@ class EditLinkForm(forms.Form):
     level = forms.ChoiceField(
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
-    # display a select with languages ordered by most used first
-    from resrc.language.models import Language
-    from django.db.models import Count
-    used_langs = Language.objects.all().annotate(
-        c=Count('link')).order_by('-c').values_list()
-    used_langs = [x[1] for x in used_langs]
-    lang_choices = []
-    for lang in used_langs:
-        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
-    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+    lang_choices = lang_choices()
 
     language = forms.ChoiceField(label='Language', choices=lang_choices)
 
@@ -159,16 +158,7 @@ class SuggestEditForm(forms.Form):
     level = forms.ChoiceField(
         label='Level', choices=zip(LEVELS, LEVELS), required=False)
 
-    # display a select with languages ordered by most used first
-    from resrc.language.models import Language
-    from django.db.models import Count
-    used_langs = Language.objects.all().annotate(
-        c=Count('link')).order_by('-c').values_list()
-    used_langs = [x[1] for x in used_langs]
-    lang_choices = []
-    for lang in used_langs:
-        lang_choices += [x for x in settings.LANGUAGES if x[0] == lang]
-    lang_choices += [x for x in settings.LANGUAGES if x not in lang_choices]
+    lang_choices = lang_choices()
 
     language = forms.ChoiceField(label='Language', choices=lang_choices)
 

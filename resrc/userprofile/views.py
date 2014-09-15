@@ -2,7 +2,7 @@
 from django.shortcuts import redirect, get_object_or_404
 from django.http import Http404
 
-from django.contrib.auth.models import User, SiteProfileNotAvailable
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages

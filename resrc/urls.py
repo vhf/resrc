@@ -6,7 +6,6 @@ admin.autodiscover()
 
 from page.views import home
 from search.views import search
-import settings
 
 urlpatterns = patterns(
     '',
@@ -29,6 +28,7 @@ urlpatterns = patterns(
     url(r'^munin/',include('munin.urls')),
 )
 
+import settings
 if settings.DEBUG:
     urlpatterns += patterns(
         '',

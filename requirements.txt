@@ -1,4 +1,4 @@
-django>=1.5,<1.6
+django
 -e git://github.com/vhf/python-markdown-linkfix@master#egg=Markdown-2.3.1
 bleach>=1.2.2
 South>=0.8.2
@@ -12,7 +12,7 @@ django-floppyforms>=1.1
 django-libs>=1.16
 -e git://github.com/pinax/django-mailer.git@919805e25fc18b06487b25414d4e5d5e05a92108#egg=django_mailer-dev
 -e git://github.com/jhgaylor/tldrio-python-client.git@master#egg=tldrio
--e git://github.com/vhf/django-taggit.git@master#egg=django-taggit
+django-taggit
 django-haystack>=2.0.0
 pyelasticsearch>=0.5
 elasticsearch

@@ -144,10 +144,8 @@ EXTERNAL_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.markup',
     'django.contrib.admin',
 
-    'south',
     'crispy_forms',
     'crispy_forms_foundation',
     'captcha',
@@ -231,6 +229,8 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+TEST_RUNNER = 'django.test.simple.DjangoTestSuiteRunner'
 
 # Load the production settings, overwrite the existing ones if needed
 try:

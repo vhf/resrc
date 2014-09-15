@@ -1,3 +1,3 @@
-# -*- coding: utf-8 -*-:
+from django.db import models
 
-# Empty file, used by tests
+# Create your models here.
