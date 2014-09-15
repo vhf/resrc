@@ -4,7 +4,7 @@ from django.contrib import admin
 
 admin.autodiscover()
 
-from page.views import home
+from page.views import HomeView
 from search.views import search
 
 urlpatterns = patterns(
@@ -21,7 +21,7 @@ urlpatterns = patterns(
     # third party includes
     url(r'^ca/', include('captcha.urls')),
 
-    url(r'^$', home, name="home"),
+    url(r'^$', HomeView.as_view(), name="home"),
 
     url(r'^jsi18n/(?P<packages>\S+?)/$', 'django.views.i18n.javascript_catalog'),
     url(r'^account/', include('django.contrib.auth.urls')),

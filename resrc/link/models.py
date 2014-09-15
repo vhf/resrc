@@ -14,7 +14,7 @@ LEVELS = ['beginner', 'intermediate', 'advanced']
 class LinkManager(models.Manager):
 
     def latest(self,limit=10, lang_filter=[1]):
-        qs = self.get_query_set()
+        qs = self.get_queryset()
         if lang_filter:
             qs = qs.filter(language__in=lang_filter)
             qs = qs.exclude(flagged=True)
