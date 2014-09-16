@@ -56,7 +56,6 @@ class HomeView(View):
             tags = Tag.objects.select_related('links') \
                 .annotate(c=Count('link')).order_by('-c') \
                 .all()
-            print tags
             cache.set('tags_all', list(tags), 60*15)
 
         from taggit.models import Tag
