@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-:
-from django.shortcuts import render
 from django.views.generic import View
-
+from django.core.cache import cache
 import json
 
 from resrc.utils import render_template
-from django.contrib.admin.views.decorators import staff_member_required
-from django.core.cache import cache
-from django.core.exceptions import PermissionDenied
-from django.views.decorators.cache import cache_page
 
 
 class AboutView(View):
     def get(self, request):
         return render_template('pages/about.html', {})
+
 
 class HomeView(View):
     def get(self, request):
@@ -73,43 +69,47 @@ class HomeView(View):
         })
 
 
+class SearchView(View):
+    def get(self, request, **kwargs):
+        tags = self.kwargs.get('tags')
+        operand =     self.kwargs.get('operand')
+        excludes =    self.kwargs.get('excludes')
+        lang_filter = self.kwargs.get('lang_filter', [1])
 
-def search(request, tags=None, operand=None, excludes=None, lang_filter=[1]):
-    from taggit.models import Tag
-    all_tags = Tag.objects.all().values_list('name', flat=True)
-    tags_json = json.dumps([{'tag': tag} for tag in all_tags])
+        from taggit.models import Tag
+        all_tags = Tag.objects.all().values_list('name', flat=True)
+        tags_json = json.dumps([{'tag': tag} for tag in all_tags])
 
-    if operand is not None:
-        return render_template('pages/search.html', {
-            'stags': tags,
-            'sop': operand,
-            'sex': excludes,
-            'tags_json': tags_json,
+        if operand is not None:
+            return render_template('pages/search.html', {
+                'stags': tags,
+                'sop': operand,
+                'sex': excludes,
+                'tags_json': tags_json,
+            })
+        else:
+            return render_template('pages/search.html', {
+                'tags_json': tags_json,
+            })
+
+
+class RevisionView(View):
+    def get(self, request):
+
+        from resrc.link.models import Link, RevisedLink
+        revised = RevisedLink.objects.select_related('link').all()
+
+        for rev in revised:
+            rev.link.tags = ",".join(rev.link.tags.order_by('name').values_list('name', flat=True))
+
+        links = Link.objects.filter(content=u'˘').exclude(flagged=True)
+
+        return render_template('pages/revision.html', {
+            'revised': revised,
+            'links': links,
         })
-    else:
-        return render_template('pages/search.html', {
-            'tags_json': tags_json,
-        })
 
 
-def revision(request):
-    if not request.user.is_staff:
-        raise PermissionDenied
-
-    from resrc.link.models import Link, RevisedLink
-    revised = RevisedLink.objects.select_related('link').all()
-
-    for rev in revised:
-        rev.link.tags = ",".join(rev.link.tags.order_by('name').values_list('name', flat=True))
-
-    links = Link.objects.filter(content=u'˘').exclude(flagged=True)
-
-    return render_template('pages/revision.html', {
-        'revised': revised,
-        'links': links,
-    })
-
-
-@staff_member_required
-def dead(request):
-    return render_template('links/dead.html', {})
+class DeadView(View):
+    def get(self, request):
+        return render_template('links/dead.html', {})
