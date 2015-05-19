@@ -153,7 +153,6 @@ EXTERNAL_APPS = [
     'captcha',
     'floppyforms',
     'taggit',
-    'haystack',
     'munin',
 ]
 
@@ -220,17 +219,6 @@ LOGIN_URL = '/user/login'
 ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: '/user/user/{0}'.format(u.username)
 }
-
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9200/',
-        'INDEX_NAME': 'haystack',
-        'TIMEOUT': 120,
-        'BATCH_SIZE': 100,
-    },
-}
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 # Load the production settings, overwrite the existing ones if needed
 try:
