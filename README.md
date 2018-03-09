@@ -1,7 +1,9 @@
-[![](https://img.shields.io/badge/kwak.io-join%20chat-green.svg?style=flat)](https://kwak.io/channel/resrc)
+# Discontinued!
 
-[reSRC.io](http://resrc.io)
-========
+This project ended a long time ago, in 2015.
+At the time of writing, March 2018, I do not even own `resrc.io` anymore.
+
+---
 
 Indexing and gathering all freely available learning resources.
 
