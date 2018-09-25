@@ -160,7 +160,13 @@ def new_link(request, title=None, url=None):
             link.level = data['level']
             link.author = request.user
 
-            if Link.objects.filter(url=data['url']).exists():
+            if url[-1] == '/' and Link.objects.filter(url=data['url'][:-1]).exists():
+                return redirect(Link.objects.get(url=data['url'][:-1]).get_absolute_url())
+
+            elif Link.objects.filter(url=data['url']+'/').exists():
+                return redirect(Link.objects.get(url=data['url']+'/').get_absolute_url())
+
+            elif Link.objects.filter(url=data['url']).exists():
                 return redirect(Link.objects.get(url=data['url']).get_absolute_url())
 
             link.save()
